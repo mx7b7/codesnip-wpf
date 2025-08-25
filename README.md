@@ -8,12 +8,16 @@
 ![License: MIT](https://img.shields.io/badge/License-MIT-green)
 ![Status](https://img.shields.io/badge/Status-Active-success)
 
+## ⬇️Download
+
+[![GitHub Release](https://img.shields.io/github/v/release/mx7b7/codesnip-wpf?sort=semver&display_name=tag)](https://github.com/mx7b7/codesnip-wpf/releases/latest)
+
 ---
 ![Main window](images/main_window_900x487.png)
 
 ---
 
-## Features
+## ✨ Features
 
 - **Local storage using SQLite database** — all snippets are stored privately on your device.
 - **Snippet organization**:
@@ -41,7 +45,7 @@
 
 ---
 
-## Libraries
+## 📚 Libraries
 
 - [AvalonEdit](https://github.com/icsharpcode/AvalonEdit)
 - [CommunityToolkit.Mvvm](https://github.com/CommunityToolkit/dotnet)
@@ -51,7 +55,7 @@
 
 ---
 
-## Code Formatters
+## 🧹 Code Formatters
 
 CodeSnip uses the following code formatters:
 
@@ -64,7 +68,7 @@ CodeSnip uses the following code formatters:
 
 ---
 
-## Building
+## ⚙️ Build
 
 The project source code is located in the `src` directory. To build and run CodeSnip, you'll need the **.NET 8 SDK** or later.
 
@@ -109,7 +113,7 @@ A convenient batch script is included in the root directory to create a portable
 ---
 
 
-## License
+## 📜 License
 
 This project is licensed under the MIT License - see the [LICENSE](LICENSE) file for details.
 
