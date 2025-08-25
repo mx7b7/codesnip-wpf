@@ -1,0 +1,281 @@
+{
+  "Languages": [
+    {
+      "LanguageName": "Ada",
+      "LanguageId": "ada",
+      "Extension": "adb",
+      "DefaultCompilerId": "",
+      "Compilers": []
+    },
+    {
+      "LanguageName": "Assembly",
+      "LanguageId": "assembly",
+      "Extension": "asm",
+      "DefaultCompilerId": "",
+      "Compilers": []
+    },
+    {
+      "LanguageName": "C++",
+      "LanguageId": "c++",
+      "Extension": "cpp",
+      "DefaultCompilerId": "clang2010",
+      "Compilers": [
+        {
+          "LocalId": "e93bb952-7bef-40ab-be95-049096fd5dfd",
+          "Id": "clang2010",
+          "Name": "Clang 20.1",
+          "Flags": "-O3 -Wall -std=c++20"
+        },
+        {
+          "LocalId": "7547ac4e-965b-4bfe-9a70-eef25e706ed4",
+          "Id": "g151",
+          "Name": "GCC 15.1",
+          "Flags": "-O3 -Wall -std=c++23"
+        }
+      ]
+    },
+    {
+      "LanguageName": "Cobol",
+      "LanguageId": "cobol",
+      "Extension": "cob",
+      "DefaultCompilerId": "",
+      "Compilers": []
+    },
+    {
+      "LanguageName": "Crystal",
+      "LanguageId": "crystal",
+      "Extension": "cr",
+      "DefaultCompilerId": "",
+      "Compilers": []
+    },
+    {
+      "LanguageName": "C#",
+      "LanguageId": "csharp",
+      "Extension": "cs",
+      "DefaultCompilerId": "dotnettrunkcsharp",
+      "Compilers": [
+        {
+          "LocalId": "5e59bab8-a92a-4170-907d-8fac2a207c1e",
+          "Id": "dotnettrunkcsharp",
+          "Name": "NET9",
+          "Flags": "-optimize"
+        }
+      ]
+    },
+    {
+      "LanguageName": "D",
+      "LanguageId": "d",
+      "Extension": "d",
+      "DefaultCompilerId": "ldc1_40",
+      "Compilers": [
+        {
+          "LocalId": "895396cf-bb57-4f89-8561-2ea3ab20a002",
+          "Id": "dmd2nightly",
+          "Name": "DMD nightly",
+          "Flags": "-O"
+        },
+        {
+          "LocalId": "fb208107-32f1-417d-ac94-5ad9d327432a",
+          "Id": "ldc1_40",
+          "Name": "LDC 1.40.1",
+          "Flags": "--O3"
+        }
+      ]
+    },
+    {
+      "LanguageName": "Dart",
+      "LanguageId": "dart",
+      "Extension": "erl",
+      "DefaultCompilerId": "",
+      "Compilers": []
+    },
+    {
+      "LanguageName": "Erlang",
+      "LanguageId": "erlang",
+      "Extension": "",
+      "DefaultCompilerId": "",
+      "Compilers": []
+    },
+    {
+      "LanguageName": "Fortran",
+      "LanguageId": "fortran",
+      "Extension": "f90",
+      "DefaultCompilerId": "",
+      "Compilers": []
+    },
+    {
+      "LanguageName": "F#",
+      "LanguageId": "fsharp",
+      "Extension": "fs",
+      "DefaultCompilerId": "",
+      "Compilers": []
+    },
+    {
+      "LanguageName": "Go",
+      "LanguageId": "go",
+      "Extension": "go",
+      "DefaultCompilerId": "",
+      "Compilers": []
+    },
+    {
+      "LanguageName": "Haskell",
+      "LanguageId": "haskell",
+      "Extension": "hs",
+      "DefaultCompilerId": "",
+      "Compilers": []
+    },
+    {
+      "LanguageName": "IL",
+      "LanguageId": "il",
+      "Extension": "il",
+      "DefaultCompilerId": "",
+      "Compilers": []
+    },
+    {
+      "LanguageName": "Java",
+      "LanguageId": "java",
+      "Extension": "java",
+      "DefaultCompilerId": "",
+      "Compilers": []
+    },
+    {
+      "LanguageName": "Javascript",
+      "LanguageId": "javascript",
+      "Extension": "js",
+      "DefaultCompilerId": "",
+      "Compilers": []
+    },
+    {
+      "LanguageName": "Julia",
+      "LanguageId": "julia",
+      "Extension": "jl",
+      "DefaultCompilerId": "",
+      "Compilers": []
+    },
+    {
+      "LanguageName": "Kotlin",
+      "LanguageId": "kotlin",
+      "Extension": "kt",
+      "DefaultCompilerId": "",
+      "Compilers": []
+    },
+    {
+      "LanguageName": "Nim",
+      "LanguageId": "nim",
+      "Extension": "nim",
+      "DefaultCompilerId": "",
+      "Compilers": []
+    },
+    {
+      "LanguageName": "Objective-C++",
+      "LanguageId": "objc++",
+      "Extension": "mm",
+      "DefaultCompilerId": "",
+      "Compilers": []
+    },
+    {
+      "LanguageName": "Pascal",
+      "LanguageId": "pascal",
+      "Extension": "pas",
+      "DefaultCompilerId": "",
+      "Compilers": []
+    },
+    {
+      "LanguageName": "Python",
+      "LanguageId": "python",
+      "Extension": "py",
+      "DefaultCompilerId": "python313",
+      "Compilers": [
+        {
+          "LocalId": "1fb230a5-bc73-441c-9a48-a34ff39c4e01",
+          "Id": "python313",
+          "Name": "Python 3.13",
+          "Flags": ""
+        },
+        {
+          "LocalId": "df32c486-8909-47c5-8b6d-dbbc5cfd5e15",
+          "Id": "python39",
+          "Name": "Python 3.9",
+          "Flags": ""
+        }
+      ]
+    },
+    {
+      "LanguageName": "Ruby",
+      "LanguageId": "ruby",
+      "Extension": "rb",
+      "DefaultCompilerId": "",
+      "Compilers": []
+    },
+    {
+      "LanguageName": "Rust",
+      "LanguageId": "rust",
+      "Extension": "rs",
+      "DefaultCompilerId": "r190",
+      "Compilers": [
+        {
+          "LocalId": "e8854e4e-c87b-4995-a4fb-b33f65803a6c",
+          "Id": "r190",
+          "Name": "rustc 1.9.0",
+          "Flags": ""
+        }
+      ]
+    },
+    {
+      "LanguageName": "Scala",
+      "LanguageId": "scala",
+      "Extension": "scala",
+      "DefaultCompilerId": "",
+      "Compilers": []
+    },
+    {
+      "LanguageName": "Swift",
+      "LanguageId": "swift",
+      "Extension": "swift",
+      "DefaultCompilerId": "",
+      "Compilers": []
+    },
+    {
+      "LanguageName": "TypeScript native",
+      "LanguageId": "typescript",
+      "Extension": "ts",
+      "DefaultCompilerId": "",
+      "Compilers": []
+    },
+    {
+      "LanguageName": "V",
+      "LanguageId": "v",
+      "Extension": "v",
+      "DefaultCompilerId": "",
+      "Compilers": []
+    },
+    {
+      "LanguageName": "Vala",
+      "LanguageId": "vala",
+      "Extension": "vala",
+      "DefaultCompilerId": "",
+      "Compilers": []
+    },
+    {
+      "LanguageName": "Visual Basic",
+      "LanguageId": "vb",
+      "Extension": "vb",
+      "DefaultCompilerId": "",
+      "Compilers": []
+    },
+    {
+      "LanguageName": "WASM",
+      "LanguageId": "wasm",
+      "Extension": "wasm",
+      "DefaultCompilerId": "",
+      "Compilers": []
+    },
+    {
+      "LanguageName": "Zig",
+      "LanguageId": "zig",
+      "Extension": "zig",
+      "DefaultCompilerId": "",
+      "Compilers": []
+    }
+  ]
+}

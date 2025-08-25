@@ -1,0 +1,108 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+	<PropertyGroup>
+		<OutputType>WinExe</OutputType>
+		<TargetFramework>net8.0-windows</TargetFramework>
+		<Nullable>enable</Nullable>
+		<ImplicitUsings>enable</ImplicitUsings>
+		<UseWPF>true</UseWPF>
+		<RunAnalyzersDuringBuild>False</RunAnalyzersDuringBuild>
+		<ApplicationIcon>Resources\icon-2.ico</ApplicationIcon>
+	</PropertyGroup>
+
+	<PropertyGroup>
+		<Version>1.0.0</Version>
+		<Authors>mx7b7</Authors>
+		<Company>mx7b7</Company>
+		<Product>CodeSnip</Product>
+		<Description>A personal snippet manager built with .NET 8 / C# / WPF.</Description>
+		<Copyright>Copyright © mx7b7 $([System.DateTime]::Now.Year)</Copyright>
+	</PropertyGroup>
+
+	<ItemGroup>
+		<Content Include="Resources\icon-2.ico" />
+	</ItemGroup>
+
+	<ItemGroup>
+		<Resource Include="Resources\compilers.json" />
+		<Resource Include="Resources\Highlighting\Dark\as.xshd" />
+		<Resource Include="Resources\Highlighting\Dark\aspx.xshd" />
+		<Resource Include="Resources\Highlighting\Dark\atg.xshd" />
+		<Resource Include="Resources\Highlighting\Dark\bat.xshd" />
+		<Resource Include="Resources\Highlighting\Dark\boo.xshd" />
+		<Resource Include="Resources\Highlighting\Dark\cpp.xshd" />
+		<Resource Include="Resources\Highlighting\Dark\cs.xshd" />
+		<Resource Include="Resources\Highlighting\Dark\css.xshd" />
+		<Resource Include="Resources\Highlighting\Dark\d.xshd" />
+		<Resource Include="Resources\Highlighting\Dark\fs.xshd" />
+		<Resource Include="Resources\Highlighting\Dark\fx.xshd" />
+		<Resource Include="Resources\Highlighting\Dark\html.xshd" />
+		<Resource Include="Resources\Highlighting\Dark\ini.xshd" />
+		<Resource Include="Resources\Highlighting\Dark\java.xshd" />
+		<Resource Include="Resources\Highlighting\Dark\js.xshd" />
+		<Resource Include="Resources\Highlighting\Dark\json.xshd" />
+		<Resource Include="Resources\Highlighting\Dark\md.xshd" />
+		<Resource Include="Resources\Highlighting\Dark\nut.xshd" />
+		<Resource Include="Resources\Highlighting\Dark\pas.xshd" />
+		<Resource Include="Resources\Highlighting\Dark\php.xshd" />
+		<Resource Include="Resources\Highlighting\Dark\plsql.xshd" />
+		<Resource Include="Resources\Highlighting\Dark\ps1.xshd" />
+		<Resource Include="Resources\Highlighting\Dark\py.xshd" />
+		<Resource Include="Resources\Highlighting\Dark\rb.xshd" />
+		<Resource Include="Resources\Highlighting\Dark\rs.xshd" />
+		<Resource Include="Resources\Highlighting\Dark\sql.xshd" />
+		<Resource Include="Resources\Highlighting\Dark\vb.xshd" />
+		<Resource Include="Resources\Highlighting\Dark\vtl.xshd" />
+		<Resource Include="Resources\Highlighting\Dark\xml.xshd" />
+		<Resource Include="Resources\Highlighting\Light\as.xshd" />
+		<Resource Include="Resources\Highlighting\Light\aspx.xshd" />
+		<Resource Include="Resources\Highlighting\Light\atg.xshd" />
+		<Resource Include="Resources\Highlighting\Light\bat.xshd" />
+		<Resource Include="Resources\Highlighting\Light\boo.xshd" />
+		<Resource Include="Resources\Highlighting\Light\cpp.xshd" />
+		<Resource Include="Resources\Highlighting\Light\cs.xshd" />
+		<Resource Include="Resources\Highlighting\Light\css.xshd" />
+		<Resource Include="Resources\Highlighting\Light\d.xshd" />
+		<Resource Include="Resources\Highlighting\Light\fs.xshd" />
+		<Resource Include="Resources\Highlighting\Light\fx.xshd" />
+		<Resource Include="Resources\Highlighting\Light\html.xshd" />
+		<Resource Include="Resources\Highlighting\Light\ini.xshd" />
+		<Resource Include="Resources\Highlighting\Light\java.xshd" />
+		<Resource Include="Resources\Highlighting\Light\js.xshd" />
+		<Resource Include="Resources\Highlighting\Light\json.xshd" />
+		<Resource Include="Resources\Highlighting\Light\md.xshd" />
+		<Resource Include="Resources\Highlighting\Light\nut.xshd" />
+		<Resource Include="Resources\Highlighting\Light\pas.xshd" />
+		<Resource Include="Resources\Highlighting\Light\php.xshd" />
+		<Resource Include="Resources\Highlighting\Light\plsql.xshd" />
+		<Resource Include="Resources\Highlighting\Light\ps1.xshd" />
+		<Resource Include="Resources\Highlighting\Light\py.xshd" />
+		<Resource Include="Resources\Highlighting\Light\rb.xshd" />
+		<Resource Include="Resources\Highlighting\Light\rs.xshd" />
+		<Resource Include="Resources\Highlighting\Light\sql.xshd" />
+		<Resource Include="Resources\Highlighting\Light\tex.xshd" />
+		<Resource Include="Resources\Highlighting\Light\vb.xshd" />
+		<Resource Include="Resources\Highlighting\Light\vtl.xshd" />
+		<Resource Include="Resources\Highlighting\Light\xml.xshd" />
+		<Resource Include="Resources\Icons.xaml" />
+	</ItemGroup>
+	<PropertyGroup>
+		<SatelliteResourceLanguages>en</SatelliteResourceLanguages>
+	</PropertyGroup>
+	<ItemGroup>
+		<PackageReference Include="AvalonEdit" Version="6.3.1.120" />
+		<PackageReference Include="CommunityToolkit.Mvvm" Version="8.4.0" />
+		<PackageReference Include="Dapper" Version="2.1.66" />
+		<PackageReference Include="MahApps.Metro" Version="2.4.10" />
+		<PackageReference Include="Microsoft.Xaml.Behaviors.Wpf" Version="1.1.135" />
+		<PackageReference Include="CSharpier.Core" Version="1.0.3" />
+		<PackageReference Include="System.Data.SQLite.Core" Version="1.0.119" />
+	</ItemGroup>
+	<ItemGroup>
+		<Content Include="Tools\**\*.*">
+			<CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+		</Content>
+	</ItemGroup>
+
+
+</Project>

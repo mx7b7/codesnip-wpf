@@ -1,0 +1,60 @@
+# .clang-format 
+# https://clang.llvm.org/docs/ClangFormatStyleOptions.html
+
+BasedOnStyle: LLVM  #  Google, Chromium,  LLVM, Mozilla, Microsoft, WebKit, GNU
+
+ColumnLimit: 120
+AllowShortBlocksOnASingleLine: true
+AllowShortCaseLabelsOnASingleLine: true
+AllowShortFunctionsOnASingleLine: Inline
+AllowShortIfStatementsOnASingleLine: true
+AllowShortLoopsOnASingleLine: false
+BinPackParameters: fals
+BinPackArguments: false
+#LineEnding: CRLF # LF, CRLF, DeriveLF, DeriveCRLF
+
+---
+
+Language: CSharp
+BasedOnStyle: Microsoft
+AllowShortFunctionsOnASingleLine: All
+AllowShortIfStatementsOnASingleLine: true
+AllowShortLoopsOnASingleLine: true
+AllowShortBlocksOnASingleLine: true
+BinPackParameters: false
+BinPackArguments: false
+IndentWidth: 4
+ColumnLimit: 120
+BreakBeforeBraces: Stroustrup
+AlignAfterOpenBracket: Align 
+
+---
+
+Language: Cpp
+IndentWidth: 2
+ColumnLimit: 80
+BreakBeforeBraces: Stroustrup # Stroustrup, Attach, Linux, Mozilla, Allman, Whitesmiths, GNU, WebKit
+ 
+---
+
+Language: Json
+BreakArrays: false
+ 
+  
+
+
+# AlwaysBreakAfterDefinitionReturnType: false
+#BraceWrapping:
+#  AfterClass: false
+#  AfterControlStatement: false
+#  AfterEnum: false
+#  AfterFunction: false
+#  AfterNamespace: false
+#  AfterStruct: false
+#  AfterUnion: false
+#  BeforeCatch: false
+#  BeforeElse: false
+
+
+
+

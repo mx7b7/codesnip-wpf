@@ -1,0 +1,182 @@
+﻿<?xml version="1.0" encoding="UTF-8"?>
+<SyntaxDefinition name="D" extensions=".d" xmlns="http://icsharpcode.net/sharpdevelop/syntaxdefinition/2008">
+
+	<!-- Definicija boja za različite elemente -->
+	<Color name="Comment"       foreground="#75715E" />
+	<Color name="String"        foreground="#E6DB74" />
+	<Color name="Character"     foreground="#FD971F" />
+	<Color name="Number"        foreground="#AE81FF" />
+	<Color name="Punctuation"   foreground="White" />
+	<Color name="Keywords"      foreground="#F92672" />
+	<Color name="Type"          foreground="#66D9EF" />
+	<Color name="MethodName"    foreground="#A6E22E" />
+	<Color name="Preprocessor"  foreground="#9B9B9B" />
+	
+	<Property name="Extension" value="d" />
+
+	<RuleSet ignoreCase="false">
+
+		<!-- Punctuation: simboli i operatori -->
+		<Rule color="Punctuation">[?,.;()\[\]{}+\-/%*&lt;&gt;^=~!&amp;]+</Rule>
+
+		<!-- Komentari -->
+		<Span color="Comment" begin="//" end="$" />
+		<Span color="Comment" multiline="true" begin="/\*" end="\*/" />
+		<!-- nested comments -->
+		<Span color="Comment" multiline="true" begin="/\+" end="\+/" />
+
+		<!-- Stringovi -->
+		<Span color="String" begin="`" end="`" />
+		<Span color="String" begin="r&quot;" end="&quot;" />
+		<Span color="String" begin="q{" end="}" />
+		<Span color="String">
+			<Begin>"</Begin>
+			<End>"</End>
+			<RuleSet>
+				<!-- Escape sekvence unutar stringa -->
+				<Span begin="\\" end="." />
+			</RuleSet>
+		</Span>
+
+		<!-- Karakteri -->
+		<Span color="Character">
+			<Begin>'</Begin>
+			<End>'</End>
+			<RuleSet>
+				<!-- Escape sekvence unutar karaktera -->
+				<Span begin="\\" end="." />
+			</RuleSet>
+		</Span>
+
+		<!-- Brojevi: heksadecimalni, decimalni, sa eksponentom i podvlakama -->
+		<Rule color="Number">
+			\b0[xX][0-9a-fA-F_]+|\b\d+(_\d+)*(\.\d+(_\d+)*)?([eE][+-]?\d+(_\d+)*)?\b
+		</Rule>
+
+		<!-- Preprocesorske direktive i slične ključne reči -->
+		<Keywords color="Preprocessor">
+			<Word>version</Word>
+			<Word>debug</Word>
+			<Word>pragma</Word>
+			<Word>mixin</Word>
+			<Word>with</Word>
+			<Word>scope</Word>
+		</Keywords>
+
+		<!-- Ključne riječi jezika D -->
+		<Keywords color="Keywords">
+			<Word>invariant</Word>
+			<Word>shared</Word>
+			<Word>immutable</Word>
+			<Word>const</Word>
+			<Word>deprecated</Word>
+			<Word>finalize</Word>
+			
+			<Word>true</Word>
+			<Word>false</Word>
+			<Word>if</Word>
+			<Word>else</Word>
+			<Word>while</Word>
+			<Word>for</Word>
+			<Word>foreach</Word>
+			<Word>foreach_reverse</Word>
+			<Word>switch</Word>
+			<Word>case</Word>
+			<Word>default</Word>
+			<Word>break</Word>
+			<Word>continue</Word>
+			<Word>return</Word>
+			<Word>goto</Word>
+			<Word>try</Word>
+			<Word>catch</Word>
+			<Word>finally</Word>
+			<Word>throw</Word>
+			<Word>new</Word>
+			<Word>delete</Word>
+			<Word>assert</Word>
+			<Word>this</Word>
+			<Word>super</Word>
+			<Word>class</Word>
+			<Word>interface</Word>
+			<Word>struct</Word>
+			<Word>union</Word>
+			<Word>enum</Word>
+			<Word>import</Word>
+			<Word>module</Word>
+			<Word>template</Word>
+			<Word>alias</Word>
+			<Word>static</Word>
+			<Word>public</Word>
+			<Word>private</Word>
+			<Word>protected</Word>
+			<Word>export</Word>
+			<Word>extern</Word>
+			<Word>override</Word>
+			<Word>abstract</Word>
+			<Word>final</Word>
+			<Word>synchronized</Word>
+			<Word>in</Word>
+			<Word>out</Word>
+			<Word>ref</Word>
+			<Word>lazy</Word>
+			<Word>auto</Word>
+			<Word>typeof</Word>
+			<Word>is</Word>
+			<Word>inout</Word>
+			<Word>pure</Word>
+			<Word>nothrow</Word>
+			<Word>@property</Word>
+			<Word>@safe</Word>
+			<Word>@trusted</Word>
+			<Word>@system</Word>
+			<Word>void</Word>
+		</Keywords>
+
+		<!-- Tipovi podataka -->
+		<Keywords color="Type">
+			<Word>var</Word>
+			<Word>bool</Word>
+			<Word>byte</Word>
+			<Word>ubyte</Word>
+			<Word>short</Word>
+			<Word>ushort</Word>
+			<Word>int</Word>
+			<Word>uint</Word>
+			<Word>long</Word>
+			<Word>ulong</Word>
+			<Word>float</Word>
+			<Word>double</Word>
+			<Word>real</Word>
+			<Word>ifloat</Word>
+			<Word>idouble</Word>
+			<Word>ireal</Word>
+			<Word>cfloat</Word>
+			<Word>cdouble</Word>
+			<Word>creal</Word>
+			<Word>char</Word>
+			<Word>wchar</Word>
+			<Word>dchar</Word>
+			
+			<Word>wstring</Word>
+			<Word>dstring</Word>
+			<Word>size_t</Word>
+			<Word>ptrdiff_t</Word>
+			<Word>null</Word>
+			<Word>cent</Word>
+			<Word>ucent</Word>
+			<Word>function</Word>
+			<Word>delegate</Word>
+			<Word>nullptr</Word>
+			<Word>tuple</Word>
+		</Keywords>
+
+		<!-- Pravilo za metode/funkcije -->
+		<!-- Prepoznaje identifikatore ispred otvarajuće zagrade, npr. funkcije -->
+		<Rule color="MethodName">[\d\w_]+(?=(\s*\())</Rule>
+		<!-- Ne boja npr. std.string -->
+		<Rule color="Type">(?&lt;!\bstd\.)\bstring\b</Rule>
+		
+		
+	</RuleSet>
+</SyntaxDefinition>
+

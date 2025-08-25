@@ -1,0 +1,78 @@
+﻿<UserControl x:Class="CodeSnip.Views.CompilerSettingsView.CompilerSettingsView"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:local="clr-namespace:CodeSnip.Views.CompilerSettingsView"
+             xmlns:mah="http://metro.mahapps.com/winfx/xaml/controls"
+             xmlns:helpers="clr-namespace:CodeSnip.Helpers" 
+             d:DataContext="{d:DesignInstance Type=local:CompilerSettingsViewModel}"
+             mc:Ignorable="d" 
+             d:DesignHeight="450" d:DesignWidth="350" >
+    <UserControl.Resources>
+        <helpers:BoolToAddCancelConverter x:Key="BoolToAddCancelConverter"/>
+    </UserControl.Resources>
+    <ScrollViewer VerticalScrollBarVisibility="Auto">
+        <StackPanel Margin="5,0,5,0">
+            <TextBlock Text="Languages:" FontWeight="Bold"/>
+            <ComboBox ItemsSource="{Binding Languages}"
+              SelectedItem="{Binding SelectedLanguage, Mode=TwoWay}"
+              DisplayMemberPath="LanguageName" />
+            <TextBlock Text="Compilers:" FontWeight="Bold" Margin="0,10,0,0"/>
+            <ListBox ItemsSource="{Binding Compilers}"
+             SelectedItem="{Binding SelectedCompiler, Mode=TwoWay}"
+             DisplayMemberPath="Name"
+             Height="120"/>
+            <TextBlock Text="Compiler Id:" FontWeight="Bold" Margin="0,10,0,0"/>
+            <!--<TextBox Text="{Binding CompilerId, Mode=TwoWay}" />-->
+            <TextBox x:Name="InputBox"
+            Text="{Binding CompilerId, Mode=TwoWay}"  Margin="0,10,0,0"
+             mah:TextBoxHelper.ButtonContent="s"
+             mah:TextBoxHelper.ButtonCommand="{Binding ShowHelpCommand}"
+             Style="{DynamicResource MahApps.Styles.TextBox.Button}" />
+            <Popup IsOpen="{Binding IsHelpOpen, Mode=TwoWay}"
+           PlacementTarget="{Binding ElementName=InputBox}"
+           Placement="Top"
+           StaysOpen="False"
+           AllowsTransparency="True"
+           HorizontalOffset="0"
+           VerticalOffset="5"
+           PopupAnimation="Fade">
+                <Border Background="{DynamicResource MahApps.Brushes.Badged.Background}" Padding="10" CornerRadius="5" MaxWidth="150"
+                Effect="{DynamicResource MaterialDesignElevation}" >
+                    <TextBlock Text="{Binding HelpText}" 
+                               Foreground="{DynamicResource MahApps.Brushes.Badged.Foreground}"
+                               TextWrapping="Wrap"/>
+                </Border>
+            </Popup>
+            <TextBlock Text="Compiler name:" FontWeight="Bold" Margin="0,10,0,0"/>
+            <TextBox Text="{Binding CompilerName, Mode=TwoWay}" />
+            <TextBlock Text="Compiler flags:" FontWeight="Bold" Margin="0,10,0,0"/>
+            <TextBox Text="{Binding CompilerFlags, Mode=TwoWay}" />
+            <StackPanel Orientation="Horizontal" Margin="0,10,0,0">
+                <Button Content="{Binding IsAddingLanguage, Converter={StaticResource BoolToAddCancelConverter}}"
+                        Command="{Binding ToggleAddCompilerCommand}" />
+                <Button Content="Save" Margin="10,0,0,0" IsEnabled="{Binding CanSaveCompiler}"
+                        Command="{Binding SaveCompilerCommand}" />
+                <Button Content="Delete" Margin="10,0,0,0" Command="{Binding DeleteCompilerCommand}" />
+                <Button Content="Set default" Margin="10,0,0,0" IsEnabled="{Binding CanSetDefaultCompiler}"
+                        Command="{Binding SetDefaultCommand}" />
+            </StackPanel>
+            <TextBlock Margin="0,20,0,0" VerticalAlignment="Bottom">
+                <TextBlock.ContextMenu>
+                    <ContextMenu DataContext="{Binding PlacementTarget.DataContext, RelativeSource={RelativeSource Self}}">
+                        <MenuItem Header="Copy link" Command="{Binding CopyLinkCommand}" />
+                    </ContextMenu>
+                </TextBlock.ContextMenu>
+                <Hyperlink NavigateUri="{Binding CompilersLink}" 
+                           ToolTip="{Binding CompilersLink}"
+                           ToolTipService.InitialShowDelay="300"
+                           ToolTipService.ShowDuration="3000"
+                           ToolTipService.BetweenShowDelay="100"     
+					RequestNavigate="Hyperlink_RequestNavigate">
+                    <Run Text="{Binding LinkText}"/></Hyperlink>
+            </TextBlock>
+        </StackPanel>
+
+    </ScrollViewer>
+</UserControl>

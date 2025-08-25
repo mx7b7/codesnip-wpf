@@ -1,0 +1,85 @@
+﻿<UserControl x:Class="CodeSnip.Views.SnippetView.SnippetView"
+            xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+            xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+            xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+            xmlns:mah="http://metro.mahapps.com/winfx/xaml/controls"
+            xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+            xmlns:i="http://schemas.microsoft.com/xaml/behaviors"
+            xmlns:snippetview="clr-namespace:CodeSnip.Views.SnippetView" 
+            xmlns:local="clr-namespace:CodeSnip.Helpers"
+            d:DataContext="{d:DesignInstance Type=snippetview:SnippetViewModel}"
+            mc:Ignorable="d" >
+    <UserControl.Resources>
+        <local:BoolToVisibilityConverter x:Key="BoolToVisibilityConverter" />
+        <local:InverseBoolToVisibilityConverter x:Key="InverseBoolToVisibilityConverter" />
+    </UserControl.Resources>
+    <Grid Margin="10">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto"/>
+            <!-- Blok 1 -->
+            <RowDefinition Height="*"/>
+            <!-- Blok 2 -->
+            <RowDefinition Height="Auto"/>
+            <!-- Blok 3 -->
+        </Grid.RowDefinitions>
+        <!-- Blok 1 -->
+        <StackPanel Grid.Row="0">
+            <TextBlock Text="Language:"/>
+            <!-- ..... -->
+            <ComboBox 
+                ItemsSource="{Binding Languages}" 
+                DisplayMemberPath="Name" 
+                SelectedItem="{Binding SelectedLanguage, Mode=TwoWay}" 
+                Visibility="{Binding IsEditMode, Converter={StaticResource InverseBoolToVisibilityConverter}}" />
+            <!-- ..... -->
+            <TextBox x:Name="txtLanguage"
+             Text="{Binding SelectedLanguageName}"
+             IsReadOnly="True"
+              Visibility="{Binding IsEditMode, Converter={StaticResource BoolToVisibilityConverter}}">
+            </TextBox>
+            <TextBlock Text="Category:" Margin="0,10,0,0"/>
+            <!-- ..... -->
+            <ComboBox 
+                ItemsSource="{Binding AvailableCategories}" 
+                DisplayMemberPath="Name" 
+                SelectedItem="{Binding SelectedCategory, Mode=TwoWay}" />
+
+        </StackPanel>
+        <!-- Blok 2 -->
+        <Grid Grid.Row="1">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="Auto"/>
+                <!-- Red za Title -->
+                <RowDefinition Height="Auto"/>
+                <!-- txtTitle -->
+                <RowDefinition Height="Auto"/>
+                <!-- Red za Description -->
+                <RowDefinition Height="*"/>
+                <!-- txtDescription -->
+                <RowDefinition Height="Auto"/>
+                <!-- Red za Tag -->
+                <RowDefinition Height="Auto"/>
+                <!-- txtTag -->
+            </Grid.RowDefinitions>
+            <TextBlock Text="Title:" Margin="0,10,0,0" Grid.Row="0"/>
+            <TextBox 
+                   Text="{Binding Title, 
+                   UpdateSourceTrigger=PropertyChanged, 
+                   ValidatesOnDataErrors=True, 
+                   NotifyOnValidationError=True}"
+                    mah:TextBoxHelper.Watermark="Enter title" Grid.Row="1" Margin="0,0,0,10" MaxLines="1" />
+            <TextBlock Text="Description:" Margin="0,10,0,0" Grid.Row="2"/>
+            <TextBox x:Name="txtDescription" VerticalAlignment="Stretch" Grid.Row="3" Margin="0,0,0,10" TextWrapping="Wrap"
+                     Text="{Binding Snippet.Description}"/>
+            <TextBlock Text="Tag:" Margin="0,10,0,0" Grid.Row="4"/>
+            <TextBox x:Name="txtTag" Grid.Row="5"
+                     Text="{Binding Snippet.Tag}"/>
+        </Grid>
+        <!-- Blok 3 -->
+        <StackPanel Grid.Row="2" Orientation="Horizontal" HorizontalAlignment="Right" Margin="0,20,0,0">
+            <Button x:Name="btnOk" Content="OK" Width="60" Command="{Binding SaveCommand}"/>
+            <Button Content="Cancel" Margin="20,0,0,0" Width="60" Command="{Binding CancelCommand}"/>
+        </StackPanel>
+    </Grid>
+
+</UserControl>

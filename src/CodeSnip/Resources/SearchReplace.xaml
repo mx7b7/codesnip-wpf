@@ -1,0 +1,204 @@
+﻿<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+                    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+                    xmlns:mah="http://metro.mahapps.com/winfx/xaml/controls"
+                    xmlns:avalonedit="http://icsharpcode.net/sharpdevelop/avalonedit"
+                    xmlns:local="clr-namespace:CodeSnip">
+
+    <Style x:Key="ToggleChevronButtonStyle" TargetType="ToggleButton">
+        <Setter Property="Width" Value="16"/>
+        <Setter Property="Height" Value="16"/>
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate TargetType="ToggleButton">
+                    <Grid Width="16" Height="16">
+                        <Path x:Name="ChevronDownPath"
+                              Data="{StaticResource ChevronDown}"
+                              Fill="{DynamicResource MahApps.Brushes.AccentBase}"
+                              Stretch="Uniform"
+                              HorizontalAlignment="Center"
+                              VerticalAlignment="Center" />
+                        <Path x:Name="ChevronUpPath"
+                              Data="{StaticResource ChevronUp}"
+                              Fill="{DynamicResource MahApps.Brushes.AccentBase}"
+                              Stretch="Uniform"
+                              HorizontalAlignment="Center"
+                              VerticalAlignment="Center"
+                              Visibility="Collapsed"/>
+                    </Grid>
+                    <ControlTemplate.Triggers>
+                        <Trigger Property="IsChecked" Value="True">
+                            <Setter TargetName="ChevronDownPath" Property="Visibility" Value="Collapsed"/>
+                            <Setter TargetName="ChevronUpPath" Property="Visibility" Value="Visible"/>
+                        </Trigger>
+                        <Trigger Property="IsMouseOver" Value="True">
+                            <Setter TargetName="ChevronDownPath" Property="Fill" Value="Gray"/>
+                            <Setter TargetName="ChevronUpPath" Property="Fill" Value="Gray"/>
+                        </Trigger>
+                    </ControlTemplate.Triggers>
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+    </Style>
+
+    <ControlTemplate x:Key="SearchReplacePanelTemplate"
+                     TargetType="local:SearchReplacePanel">
+        <Border Background="{DynamicResource MahApps.Brushes.SystemControlBackgroundBaseLow}"
+                BorderBrush="{DynamicResource MahApps.Brushes.SystemControlBackgroundBaseMedium}"
+                BorderThickness="0 0 0 3"
+                HorizontalAlignment="Right"
+                VerticalAlignment="Top"
+                Cursor="Arrow"
+                TextElement.FontFamily="{x:Static SystemFonts.MenuFontFamily}">
+
+            <Grid>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="Auto" />
+                    <ColumnDefinition Width="Auto" />
+                    <ColumnDefinition  Width="Auto" />
+                </Grid.ColumnDefinitions>
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="Auto" />
+                    <RowDefinition Height="Auto" />
+                </Grid.RowDefinitions>
+
+                <ToggleButton Style="{StaticResource ToggleChevronButtonStyle}"
+                              ToolTip="Toggle between search and replace modes"
+                              IsChecked="{Binding IsReplaceMode, RelativeSource={RelativeSource TemplatedParent}}"
+                              Grid.Column="0"
+                              Grid.Row="0"
+                              Margin="2" />
+                <TextBox Name="PART_searchTextBox"
+                         Grid.Column="1"
+                         Grid.Row="0"
+                         Width="200"
+                         Height="24"
+                         Margin="3,3,3,0"
+                         mah:TextBoxHelper.Watermark="Search ..."
+                         Text="{Binding SearchPattern, RelativeSource={RelativeSource TemplatedParent}, UpdateSourceTrigger=PropertyChanged, ValidatesOnExceptions=True}"
+                         mah:TextBoxHelper.ButtonContent="▼"
+                         mah:TextBoxHelper.ButtonFontFamily="Segoe UI"
+                         mah:TextBoxHelper.ButtonCommand="{Binding ShowPopupCommand}"
+                         Style="{DynamicResource MahApps.Styles.TextBox.Button}">
+                </TextBox>
+                <Popup x:Name="PART_SearchOptionsPopup" StaysOpen="False">
+                    <Border Background="{DynamicResource {x:Static SystemColors.WindowBrushKey}}"
+                            BorderBrush="{DynamicResource {x:Static SystemColors.WindowTextBrushKey}}"
+                            BorderThickness="1">
+                        <StackPanel Orientation="Vertical">
+                            <CheckBox IsChecked="{Binding MatchCase, RelativeSource={RelativeSource TemplatedParent}}"
+                                      Content="{Binding Localization.MatchCaseText, RelativeSource={RelativeSource TemplatedParent}}"
+                                      Margin="3" />
+                            <CheckBox IsChecked="{Binding WholeWords, RelativeSource={RelativeSource TemplatedParent}}"
+                                      Content="{Binding Localization.MatchWholeWordsText, RelativeSource={RelativeSource TemplatedParent}}"
+                                      Margin="3" />
+                            <CheckBox IsChecked="{Binding UseRegex, RelativeSource={RelativeSource TemplatedParent}}"
+                                      Content="{Binding Localization.UseRegexText, RelativeSource={RelativeSource TemplatedParent}}"
+                                      Margin="3" />
+                        </StackPanel>
+                    </Border>
+                </Popup>
+
+                <TextBox Name="ReplaceBox"
+                         Visibility="Collapsed"
+                         Grid.Column="1"
+                         Grid.Row="1"
+                         Width="200"
+                         Height="24"
+                         Margin="3 3 3 0"
+                         mah:TextBoxHelper.Watermark="Replace ..."
+                         Text="{Binding ReplacePattern, RelativeSource={RelativeSource TemplatedParent}, UpdateSourceTrigger=PropertyChanged, ValidatesOnExceptions=True}" />
+
+                <StackPanel Orientation="Horizontal"
+                            Grid.Column="2"
+                            Grid.Row="0">
+                    <Button Margin="3"
+                            Height="24"
+                            Width="24"
+                            Padding="3"
+                            Command="avalonedit:SearchCommands.FindPrevious"
+                            ToolTip="{Binding Localization.FindPreviousText, RelativeSource={RelativeSource TemplatedParent}}">
+                        <Viewbox  Stretch="Uniform" >
+                            <Path Data="{StaticResource ArrowPrevious}"
+                                 Fill="{DynamicResource MahApps.Brushes.AccentBase}" />
+                        </Viewbox>
+                    </Button>
+                    <Button Margin="3"
+                            Height="24"
+                            Width="24"
+                            Padding="3"
+                            Command="avalonedit:SearchCommands.FindNext"
+                            ToolTip="{Binding Localization.FindNextText, RelativeSource={RelativeSource TemplatedParent}}">
+                        <Viewbox  Stretch="Uniform" >
+                            <Path Data="{StaticResource ArrowNext}"
+                                  Fill="{DynamicResource MahApps.Brushes.AccentBase}" />
+                        </Viewbox>
+                    </Button>
+                    <Button Height="16"
+                            Width="16"
+                            Margin="3"
+                            HorizontalAlignment="Right"
+                            VerticalAlignment="Top"
+                            Command="avalonedit:SearchCommands.CloseSearchPanel"
+                            VerticalContentAlignment="Center"
+                            HorizontalContentAlignment="Center"
+                            Focusable="False"
+                            ToolTip="Close">
+                        <Path Data="M 0,0 L 8,8 M 8,0 L 0,8"
+                              Stroke="{DynamicResource {x:Static SystemColors.ControlTextBrushKey}}"
+                              StrokeThickness="1" />
+                    </Button>
+                </StackPanel>
+
+                <StackPanel Name="ReplaceButtons"
+                            Visibility="Collapsed"
+                            Orientation="Horizontal"
+                            Grid.Column="2"
+                            Grid.Row="1">
+                    <Button Margin="3"
+                            Height="24"
+                            Width="24"
+                            Padding="0"
+                            Command="local:SearchCommandsEx.ReplaceNext"
+                            ToolTip="Replace next (Alt+R)" >
+                        <Viewbox  Stretch="Uniform" >
+                            <Path Data="{StaticResource Replace}"
+                                  Fill="{DynamicResource MahApps.Brushes.AccentBase}" />
+                        </Viewbox>
+                    </Button>
+                    <Button Margin="3"
+                            Height="24"
+                            Width="24"
+                            Padding="0"
+                            Command="local:SearchCommandsEx.ReplaceAll"
+                            ToolTip="Replace all (Alt+A)">
+                        <Viewbox  Stretch="Uniform" >
+                            <Path Data="{StaticResource ReplaceAll}"
+                                  Fill="{DynamicResource MahApps.Brushes.AccentBase}" />
+                        </Viewbox>
+                    </Button>
+                </StackPanel>
+
+            </Grid>
+        </Border>
+        <ControlTemplate.Triggers>
+            <Trigger Property="IsReplaceMode"
+                     Value="True">
+                <Setter TargetName="ReplaceBox"
+                        Property="Visibility"
+                        Value="Visible" />
+                <Setter TargetName="ReplaceButtons"
+                        Property="Visibility"
+                        Value="Visible" />
+            </Trigger>
+        </ControlTemplate.Triggers>
+    </ControlTemplate>
+
+    <Style TargetType="local:SearchReplacePanel">
+        <Setter Property="FontSize"
+                Value="{x:Static SystemFonts.MessageFontSize}" />
+        <Setter Property="FontFamily"
+                Value="{x:Static SystemFonts.MessageFontFamily}" />
+        <Setter Property="Template"
+                Value="{StaticResource SearchReplacePanelTemplate}" />
+    </Style>
+</ResourceDictionary>

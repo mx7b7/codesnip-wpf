@@ -1,0 +1,217 @@
+<?xml version="1.0"?>
+<!-- syntaxdefinition for C/C++ 2001 by Andrea Paatz and Mike Krueger -->
+<!-- converted to AvalonEdit format by Siegfried Pammer in 2010 -->
+<SyntaxDefinition name="C++" extensions=".c;.h;.cc;.cpp;.hpp" xmlns="http://icsharpcode.net/sharpdevelop/syntaxdefinition/2008">
+	<Color name="Comment"           foreground="#75715E" />
+	<!-- sivo-zelena za komentare -->
+	<Color name="Character"         foreground="#E6DB74" />
+	<!-- narandžasta za char i string -->
+	<Color name="String"            foreground="#E6DB74" />
+	<Color name="Preprocessor"      foreground="#fc9cbf" />
+	<!-- jarko crvena za preprocesorske direktive -->
+	<Color name="Punctuation"       foreground="#F8F8F2" />
+	<!-- krem bela za interpunkciju -->
+	<Color name="MethodName"        foreground="#A6E22E" fontWeight="bold" />
+	<!-- svetlo zelena za imena funkcija -->
+	<Color name="Digits"            foreground="#AE81FF" />
+	<!-- ljubičasta za brojeve -->
+	<Color name="CompoundKeywords"  foreground="#F92672" fontWeight="bold" />
+	<!-- jarko crvena za složene ključne reči -->
+	<Color name="This"              foreground="#F8F8F2" fontWeight="bold" />
+	<!-- osnovna boja za this -->
+	<Color name="Operators"         foreground="#F8F8F2" fontWeight="bold" />
+	<!-- krem bela za operatore -->
+	<Color name="Namespace"         foreground="#66D9EF" fontWeight="bold" />
+	<!-- svetlo plava za namespace -->
+	<Color name="Friend"            foreground="#F92672" />
+	<!-- jarko crvena za friend -->
+	<Color name="Modifiers"         foreground="#66D9EF" fontWeight="bold" />
+	<!-- svetlo plava za modifikatore -->
+	<Color name="TypeKeywords"      foreground="#F92672" />
+	<!-- jarko crvena za tipove -->
+	<Color name="BooleanConstants"  foreground="#F92672" fontWeight="bold" />
+	<!-- jarko crvena za bool -->
+	<Color name="Keywords"          foreground="#F92672" fontWeight="bold" />
+	<!-- jarko crvena za ključne reči -->
+	<Color name="LoopKeywords"      foreground="#F92672" fontWeight="bold" />
+	<!-- jarko crvena za petlje -->
+	<Color name="JumpKeywords"      foreground="#F92672" />
+	<!-- jarko crvena za jump ključne reči -->
+	<Color name="ExceptionHandling" foreground="#F92672" fontWeight="bold" />
+	<!-- jarko crvena za try/catch -->
+	<Color name="ControlFlow"       foreground="#F92672" fontWeight="bold" />
+	<!-- jarko crvena za kontrolu toka -->
+	
+	<Property name="Extension" value="cpp" />
+
+	<RuleSet ignoreCase="false">
+		<Rule color="Punctuation">
+		[?,.;()\[\]{}+\-/%*&lt;&gt;^=~!&amp;]+
+		</Rule>
+		<Keywords color="CompoundKeywords">
+			<Word>__abstract</Word>
+			<Word>__box</Word>
+			<Word>__delegate</Word>
+			<Word>__gc</Word>
+			<Word>__identifier</Word>
+			<Word>__nogc</Word>
+			<Word>__pin</Word>
+			<Word>__property</Word>
+			<Word>__sealed</Word>
+			<Word>__try_cast</Word>
+			<Word>__typeof</Word>
+			<Word>__value</Word>
+			<Word>__event</Word>
+			<Word>__hook</Word>
+			<Word>__raise</Word>
+			<Word>__unhook</Word>
+			<Word>__interface</Word>
+			<Word>ref class</Word>
+			<Word>ref struct</Word>
+			<Word>value class</Word>
+			<Word>value struct</Word>
+			<Word>interface class</Word>
+			<Word>interface struct</Word>
+			<Word>enum class</Word>
+			<Word>enum struct</Word>
+			<Word>delegate</Word>
+			<Word>event</Word>
+			<Word>property</Word>
+			<Word>abstract</Word>
+			<Word>override</Word>
+			<Word>sealed</Word>
+			<Word>generic</Word>
+			<Word>where</Word>
+			<Word>finally</Word>
+			<Word>for each</Word>
+			<Word>gcnew</Word>
+			<Word>in</Word>
+			<Word>initonly</Word>
+			<Word>literal</Word>
+			<Word>nullptr</Word>
+		</Keywords>
+		<Keywords color="This">
+			<Word>this</Word>
+		</Keywords>
+		<Keywords color="Operators">
+			<Word>and</Word>
+			<Word>and_eq</Word>
+			<Word>bitand</Word>
+			<Word>bitor</Word>
+			<Word>new</Word>
+			<Word>not</Word>
+			<Word>not_eq</Word>
+			<Word>or</Word>
+			<Word>or_eq</Word>
+			<Word>xor</Word>
+			<Word>xor_eq</Word>
+		</Keywords>
+		<Keywords color="Namespace">
+			<Word>using</Word>
+			<Word>namespace</Word>
+		</Keywords>
+		<Keywords color="Friend">
+			<Word>friend</Word>
+		</Keywords>
+		<Keywords color="Modifiers">
+			<Word>private</Word>
+			<Word>protected</Word>
+			<Word>public</Word>
+			<Word>const</Word>
+			<Word>volatile</Word>
+			<Word>static</Word>
+		</Keywords>
+		<Keywords color="TypeKeywords">
+			<Word>bool</Word>
+			<Word>char</Word>
+			<Word>unsigned</Word>
+			<Word>union</Word>
+			<Word>virtual</Word>
+			<Word>double</Word>
+			<Word>float</Word>
+			<Word>short</Word>
+			<Word>signed</Word>
+			<Word>void</Word>
+			<Word>class</Word>
+			<Word>enum</Word>
+			<Word>struct</Word>
+		</Keywords>
+		<Keywords color="BooleanConstants">
+			<Word>false</Word>
+			<Word>true</Word>
+		</Keywords>
+		<Keywords color="LoopKeywords">
+			<Word>do</Word>
+			<Word>for</Word>
+			<Word>while</Word>
+		</Keywords>
+		<Keywords color="JumpKeywords">
+			<Word>break</Word>
+			<Word>continue</Word>
+			<Word>goto</Word>
+			<Word>return</Word>
+		</Keywords>
+		<Keywords color="ExceptionHandling">
+			<Word>catch</Word>
+			<Word>throw</Word>
+			<Word>try</Word>
+		</Keywords>
+		<Keywords color="ControlFlow">
+			<Word>case</Word>
+			<Word>else</Word>
+			<Word>if</Word>
+			<Word>switch</Word>
+			<Word>default</Word>
+		</Keywords>
+		<Keywords color="Keywords">
+			<Word>asm</Word>
+			<Word>auto</Word>
+			<Word>compl</Word>
+			<Word>mutable</Word>
+			<Word>const_cast</Word>
+			<Word>delete</Word>
+			<Word>dynamic_cast</Word>
+			<Word>explicit</Word>
+			<Word>export</Word>
+			<Word>extern</Word>
+			<Word>inline</Word>
+			<Word>int</Word>
+			<Word>long</Word>
+			<Word>operator</Word>
+			<Word>register</Word>
+			<Word>reinterpret_cast</Word>
+			<Word>sizeof</Word>
+			<Word>static_cast</Word>
+			<Word>template</Word>
+			<Word>typedef</Word>
+			<Word>typeid</Word>
+			<Word>typename</Word>
+		</Keywords>
+		<Span color="Preprocessor">
+			<Begin>\#</Begin>
+		</Span>
+		<Span color="Comment">
+			<Begin>//</Begin>
+		</Span>
+		<Span color="Comment" multiline="true">
+			<Begin>/\*</Begin>
+			<End>\*/</End>
+		</Span>
+		<Span color="String">
+			<Begin>"</Begin>
+			<End>"</End>
+			<RuleSet>
+				<Span begin="\\" end="." />
+			</RuleSet>
+		</Span>
+		<Span color="Character">
+			<Begin>'</Begin>
+			<End>'</End>
+			<RuleSet>
+				<Span begin="\\" end="." />
+			</RuleSet>
+		</Span>
+		<Rule color="MethodName">[\d\w_]+(?=(\s*\())</Rule>
+		<Rule color="Digits">\b0[xX][0-9a-fA-F]+|(\b\d+(\.[0-9]+)?|\.[0-9]+)([eE][+-]?[0-9]+)?</Rule>
+	</RuleSet>
+</SyntaxDefinition>
