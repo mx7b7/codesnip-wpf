@@ -1,7 +1,14 @@
 ﻿# CodeSnip
 
 **CodeSnip** is a **personal snippet manager** built with **.NET 8 / C# / WPF** using a MVVM architecture.  
+> Organize, search, and format your code snippets — fast, local, and without internet dependency.
 
+![.NET 8](https://img.shields.io/badge/.NET-8.0-blue)
+![Platform](https://img.shields.io/badge/Platform-Windows-lightgrey)
+![License: MIT](https://img.shields.io/badge/License-MIT-green)
+![Status](https://img.shields.io/badge/Status-Active-success)
+
+---
 ![Main window](images/main_window_900x487.png)
 
 ---
