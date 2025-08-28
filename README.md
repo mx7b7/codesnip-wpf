@@ -60,12 +60,14 @@
 CodeSnip uses the following code formatters:
 
 - [black](https://black.readthedocs.io/en/stable/) – Python code formatting
-> **Note:** To use Python code formatting with **black**, you must have both **Python** and **black** installed on your computer.
-- [clang-format](https://clang.llvm.org/docs/ClangFormat.html) – C, C++, C#, Java ... formatting
-- [CSharpier](https://csharpier.com/) – C# code formatting
+- [clang-format](https://clang.llvm.org/docs/ClangFormat.html) – Format C, C++, C#, Java, and more 
+- [csharpier](https://csharpier.com/) – C# code formatting
 - [dfmt](https://github.com/dlang-community/dfmt) – D code formatting
 - [rustfmt](https://github.com/rust-lang/rustfmt) – Rust code formatting
-
+- [ruff](https://github.com/astral-sh/ruff) – Python code formatting
+> **Note:**  
+> Ensure both Python and black are installed to use black.  
+> To use ruff, manually download the ruff executable and place it in the `Tools` directory.
 ---
 
 ## ⚙️ Build

@@ -54,6 +54,14 @@ namespace CodeSnip.Services
             return await TryFormatWithExternalProcessAsync("rustfmt.exe", "", code, timeoutMs);
         }
 
+        /// <summary>
+        /// Formats Python code using ruff.exe from the Tools directory.
+        /// </summary>
+        public static async Task<(bool Success, string? FormattedCode, string? ErrorMessage)> TryFormatCodeWithRuffAsync(string code, int timeoutMs = 5000)
+        {
+            string arguments = "format --no-cache --stdin-filename=temp.py -";
+            return await TryFormatWithExternalProcessAsync("ruff.exe", arguments, code, timeoutMs);
+        }
 
         /// <summary>
         /// A generic helper method to run an external formatting tool from the "Tools" directory.

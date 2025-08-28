@@ -353,31 +353,37 @@
                                     <Path Data="{StaticResource FormatText}" Fill="{DynamicResource MahApps.Brushes.AccentBase}"
                                           Width="16" Height="16" Stretch="Uniform" />
                                 </MenuItem.Icon>
-                                <MenuItem Header="Black" Click="FormatBlack_Click">
+                                <MenuItem Header="black" Click="FormatBlack_Click">
                                     <MenuItem.Icon>
                                         <Path Data="{StaticResource Indent}" Fill="{DynamicResource MahApps.Brushes.AccentBase}"
                                               Width="16" Height="16" Stretch="Uniform" />
                                     </MenuItem.Icon>
                                 </MenuItem>
-                                <MenuItem Header="Clang-format" Click="FormatClang_Click">
+                                <MenuItem Header="clang-format" Click="FormatClang_Click">
                                     <MenuItem.Icon>
                                         <Path Data="{StaticResource Indent}" Fill="{DynamicResource MahApps.Brushes.AccentBase}"
                                               Width="16" Height="16" Stretch="Uniform" />
                                     </MenuItem.Icon>
                                 </MenuItem>
-                                <MenuItem Header="CSharpier" Click="FormatCSharpier_Click">
+                                <MenuItem Header="csharpier" Click="FormatCSharpier_Click">
                                     <MenuItem.Icon>
                                         <Path Data="{StaticResource Indent}" Fill="{DynamicResource MahApps.Brushes.AccentBase}"
                                               Width="16" Height="16" Stretch="Uniform" />
                                     </MenuItem.Icon>
                                 </MenuItem>
-                                <MenuItem Header="Dfmt" Click="FormatDfmt_Click">
+                                <MenuItem Header="dfmt" Click="FormatDfmt_Click">
                                     <MenuItem.Icon>
                                         <Path Data="{StaticResource Indent}" Fill="{DynamicResource MahApps.Brushes.AccentBase}"
                                               Width="16" Height="16" Stretch="Uniform" />
                                     </MenuItem.Icon>
                                 </MenuItem>
-                                <MenuItem Header="Rustfmt" Click="FormatRustfmt_Click">
+                                <MenuItem Header="ruff" Click="FormatRuff_Click">
+                                    <MenuItem.Icon>
+                                        <Path Data="{StaticResource Indent}" Fill="{DynamicResource MahApps.Brushes.AccentBase}"
+                                             Width="16" Height="16" Stretch="Uniform" />
+                                    </MenuItem.Icon>
+                                </MenuItem>
+                                <MenuItem Header="rustfmt" Click="FormatRustfmt_Click">
                                     <MenuItem.Icon>
                                         <Path Data="{StaticResource Indent}" Fill="{DynamicResource MahApps.Brushes.AccentBase}"
                                               Width="16" Height="16" Stretch="Uniform" />

@@ -286,6 +286,25 @@ namespace CodeSnip
             }
         }
 
+        private async void FormatRuff_Click(object sender, RoutedEventArgs e)
+        {
+            string? code = mainViewModel.SelectedSnippet?.Category?.Language?.Code;
+            if (code is not null and "py")
+            {
+                string originalCode = textEditor.Text;
+                var (isSuccess, formatted, error) = await FormattingService.TryFormatCodeWithRuffAsync(originalCode);
+                if (isSuccess)
+                {
+                    textEditor.Document.Text = formatted;
+                }
+                else
+                {
+                    MessageBox.Show(error);
+                }
+
+            }
+        }
+
         private async void FormatRustfmt_Click(object sender, RoutedEventArgs e)
         {
             string? code = mainViewModel.SelectedSnippet?.Category?.Language?.Code;
