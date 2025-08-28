@@ -149,6 +149,40 @@ namespace CodeSnip.Services
             }
         }
 
+        public static bool SyntaxDefinitionExists(string langCode)
+        {
+            if (string.IsNullOrWhiteSpace(langCode))
+                return false;
+
+            string lowerLangCode = langCode.ToLower();
+            string appBase = AppDomain.CurrentDomain.BaseDirectory;
+
+            // 1. Check on disk (both themes)
+            string darkDiskPath = Path.Combine(appBase, "Highlighting", "Dark", $"{lowerLangCode}.xshd");
+            if (File.Exists(darkDiskPath)) return true;
+
+            string lightDiskPath = Path.Combine(appBase, "Highlighting", "Light", $"{lowerLangCode}.xshd");
+            if (File.Exists(lightDiskPath)) return true;
+
+            // 2. Check in resources (both themes)
+            try
+            {
+                Uri darkResourceUri = new Uri($"/CodeSnip;component/Resources/Highlighting/Dark/{lowerLangCode}.xshd", UriKind.Relative);
+                if (Application.GetResourceStream(darkResourceUri) != null) return true;
+
+                Uri lightResourceUri = new Uri($"/CodeSnip;component/Resources/Highlighting/Light/{lowerLangCode}.xshd", UriKind.Relative);
+                if (Application.GetResourceStream(lightResourceUri) != null) return true;
+            }
+            catch (IOException)
+            {
+                // This can happen if the resource assembly isn't found, etc.
+                // It's safe to assume the definition doesn't exist in this case.
+                return false;
+            }
+
+            return false;
+        }
+
         public static void InvalidateCache(string langCode, string themeFolder)
         {
             if (string.IsNullOrWhiteSpace(langCode) || string.IsNullOrWhiteSpace(themeFolder))

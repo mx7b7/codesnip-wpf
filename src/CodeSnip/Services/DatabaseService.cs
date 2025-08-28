@@ -295,30 +295,38 @@ ORDER BY L.Name, C.Name, S.Title";
             return lookup.Values;
         }
 
-        public void SaveLanguage(Language language)
+        public Language SaveLanguage(Language language)
         {
             using var conn = CreateConnection();
             if (language.Id == 0)
             {
-                conn.Execute("INSERT INTO Languages (Code, Name) VALUES (@Code, @Name)", language);
+                var id = conn.ExecuteScalar<int>(
+                    "INSERT INTO Languages (Code, Name) VALUES (@Code, @Name); SELECT last_insert_rowid();",
+                    language);
+                language.Id = id;
             }
             else
             {
-                conn.Execute("UPDATE Languages SET Code = @Code, Name = @Name WHERE ID = @Id", language);
+                conn.Execute(
+                    "UPDATE Languages SET Code = @Code, Name = @Name WHERE ID = @Id",
+                    language);
             }
+            return language;
         }
 
-        public void SaveCategory(Category category)
+        public Category SaveCategory(Category category)
         {
             using var conn = CreateConnection();
             if (category.Id == 0)
             {
-                conn.Execute("INSERT INTO Categories (LanguageId, Name) VALUES (@LanguageId, @Name)", category);
+                var id = conn.ExecuteScalar<int>("INSERT INTO Categories (LanguageId, Name) VALUES (@LanguageId, @Name); SELECT last_insert_rowid();", category);
+                category.Id = id;
             }
             else
             {
                 conn.Execute("UPDATE Categories SET Name = @Name WHERE ID = @Id AND LanguageId = @LanguageId", category);
             }
+            return category;
         }
 
         public void DeleteLanguage(int id)

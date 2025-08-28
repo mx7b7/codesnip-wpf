@@ -41,7 +41,7 @@
                 <Button Content="{Binding IsAddingLanguage, Converter={StaticResource BoolToAddCancelConverter}}"
                         Command="{Binding ToggleAddLanguageCommand}" Grid.Column="0" Margin="0,0,10,0"/>
 
-                <Button Content="Save" Command="{Binding SaveLanguageCommand}" Grid.Column="1" Margin="0,0,10,0" />
+                <Button Content="Save" Command="{Binding SaveLanguageCommand}" IsEnabled="{Binding SaveLanguageCommand.CanExecute}" Grid.Column="1" Margin="0,0,10,0" />
                 <Button Content="Delete Language" Grid.Column="2"
                     Command="{Binding DeleteLanguageCommand}" />
             </Grid>
@@ -76,8 +76,7 @@
                 <Button Content="{Binding IsAddingCategory, Converter={StaticResource BoolToAddCancelConverter}}"
                         Command="{Binding ToggleAddCategoryCommand}" Grid.Column="0" Margin="0,0,10,0" />
 
-                <Button Content="Save" Command="{Binding SaveCategoryCommand}" Grid.Column="1" Margin="0,0,10,0"/>
-
+                <Button Content="Save" Command="{Binding SaveCategoryCommand}" IsEnabled="{Binding SaveCategoryCommand.CanExecute}" Grid.Column="1" Margin="0,0,10,0"/>
                 <Button Content="Delete Category" Grid.Column="2"
                     Command="{Binding DeleteCategoryCommand}" />
             </Grid>
