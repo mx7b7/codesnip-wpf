@@ -28,6 +28,7 @@
   - Syntax highlighting (light/dark mode)
   - Code folding
   - Live editing of `.xshd` syntax definition files inside the app (Only colors and font styles)
+  - Toggle single-line and multi-line comments
 - **Compiler Explorer (Godbolt) integration**:
   - Compile snippets without installing compilers locally
   - Support for 30+ languages
