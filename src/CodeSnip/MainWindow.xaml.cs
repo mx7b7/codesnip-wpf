@@ -11,6 +11,7 @@ using MahApps.Metro.Controls;
 using System.Diagnostics;
 using System.Windows;
 using System.Windows.Controls;
+using System.Windows.Input;
 
 namespace CodeSnip
 {
@@ -25,12 +26,21 @@ namespace CodeSnip
         private readonly DefaultIndentationStrategy defaultIndentationStrategy = new();
         private readonly CSharpIndentationStrategy csharpIndentationStrategy = new();
 
+        public ICommand ToggleSingleLineCommentCommand { get; }
+        public ICommand ToggleMultiLineCommentCommand { get; }
+        public ICommand ToggleInlineBlockCommentCommand { get; }
+
         public MainWindow()
         {
             InitializeComponent();
             mainViewModel = new MainViewModel(this);
             DataContext = mainViewModel;
             mainViewModel.InitializeEditor(textEditor);
+
+            // This wrapping is only to support keyboard shortcuts from the menu items that are bound to these commands.
+            ToggleSingleLineCommentCommand = new RelayCommand(_ => ToggleSingleLineComment_Click(this, new RoutedEventArgs()));
+            ToggleMultiLineCommentCommand = new RelayCommand(_ => ToggleMultiLineLineComment_Click(this, new RoutedEventArgs()));
+            ToggleInlineBlockCommentCommand = new RelayCommand(_ => ToggleInlineBlockComment_Click(this, new RoutedEventArgs()));
 
         }
 
@@ -183,7 +193,7 @@ namespace CodeSnip
         private void SelectAll_Click(object sender, RoutedEventArgs e)
         {
             textEditor.SelectAll();
-            
+
         }
 
         private async void TreeView_SelectedItemChanged(object sender, RoutedPropertyChangedEventArgs<object> e)
@@ -404,6 +414,46 @@ namespace CodeSnip
                         }
                         break;
                 }
+            }
+        }
+
+        private void ToggleSingleLineComment_Click(object sender, RoutedEventArgs e)
+        {
+            string? code = mainViewModel.SelectedSnippet?.Category?.Language?.Code;
+            if (code is not null)
+            {
+                try
+                {
+                    CommentHelper.ToggleCommentByExtension(textEditor, code, useMultiLine: false);
+                }
+                catch (Exception ex) { Debug.WriteLine(ex.Message); }
+            }
+        }
+
+        private void ToggleMultiLineLineComment_Click(object sender, RoutedEventArgs e)
+        {
+            string? code = mainViewModel.SelectedSnippet?.Category?.Language?.Code;
+            if (code is not null)
+            {
+                try
+                {
+                    CommentHelper.ToggleCommentByExtension(textEditor, code, useMultiLine: true);
+                }
+                catch { }
+            }
+        }
+
+        // No menu item for this yet.
+        private void ToggleInlineBlockComment_Click(object sender, RoutedEventArgs e)
+        {
+            string? code = mainViewModel.SelectedSnippet?.Category?.Language?.Code;
+            if (code is not null)
+            {
+                try
+                {
+                    CommentHelper.ToggleInlineCommentByExtension(textEditor, code);
+                }
+                catch { /* skip error */ }
             }
         }
 

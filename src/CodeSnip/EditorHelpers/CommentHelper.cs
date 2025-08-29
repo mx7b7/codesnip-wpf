@@ -32,8 +32,7 @@ namespace CodeSnip.EditorHelpers
     { "sql", "--" },     // SQL
     { "tex", "%" },      // TeX
     { "vb", "'" },       // VB
-    { "vtl","##" },      // Velocity Template Language
-    // After this line no embedded syntax definitions
+    { "vtl","##" },      // Velocity Template Language ( After this line no embedded syntax definition aviable )
     { "vbs", "'" },      // VBScript
     { "vhdl", "--" },    // VHDL
     { "yaml", "#" },     // YAML
@@ -43,48 +42,46 @@ namespace CodeSnip.EditorHelpers
     {"f95", "!" },       // Fortran95
     {"f03", "!" },       // Fortran03
     {"f08", "!" },       // Fortran08
-    {"m","!" },          // MATLAB
-    {"mm","//" },        // Objective-C++
-    {"m4","dnl" },       // M4
-    {"sed","#" },        // Sed
-    {"awk","#" },        // Awk
-    {"raku","#" },       // Raku (Perl 6)
-    {"pl","#" },         // Perl
-    {"pm","#" },         // Perl Module
-    {"t","#" },          // Perl Test Script
-    {"swift","//" },     // Swift
-    {"kt","//" },        // Kotlin
-    {"kts","//" },       // Kotlin Script
-    {"groovy","//" },    // Groovy
-    {"rsrc","//" },      // Resource Script
-    {"rc","//" },        // Resource Script
-    {"nim","#" },        // Nim
-    {"dart","//" },      // Dart
-    {"jl","#" },         // Julia
-    {"r","#" },          // R
-    {"v","//" },         // Verilog
-    {"sv","//" },        // SystemVerilog
-    {"groovy","//" },    // Groovy
-    {"lua","--" },       // Lua
-    {"coffee","#" },     // CoffeeScript
-    {"clj",";" },        // Clojure
-    {"cljs",";" },       // ClojureScript
-    {"scm",";" },        // Scheme
-    {"lisp",";" },       // Lisp
-    {"rkt",";" },        // Racket
-    {"erl","%" },        // Erlang
-    {"hs","--" },        // Haskell
-    {"elm","--" },       // Elm
-    {"ex","#" },         // Elixir
-    {"exs","#" },        // Elixir Script
-    {"nim","#" },        // Nim
-    {"vba","'" },        // VBA
-    {"psm1","#" },       // PowerShell Module
-    {"psd1","#" },       // PowerShell Data File
-    {"makefile","#" },   // Makefile
-    {"mk","#" },         // Makefile alternative extension
-    {"dockerfile","#" }, // Dockerfile
-    {"tf","#" },         // Terraform
+    {"m", "!" },          // MATLAB
+    {"mm", "//" },        // Objective-C++
+    {"m4", "dnl" },       // M4
+    {"sed", "#" },        // Sed
+    {"awk", "#" },        // Awk
+    {"raku", "#" },       // Raku (Perl 6)
+    {"pl", "#" },         // Perl
+    {"pm", "#" },         // Perl Module
+    {"t", "#" },          // Perl Test Script
+    {"swift", "//" },     // Swift
+    {"kt", "//" },        // Kotlin
+    {"kts", "//" },       // Kotlin Script
+    {"groovy", "//" },    // Groovy
+    {"rsrc", "//" },      // Resource Script
+    {"rc", "//" },        // Resource Script
+    {"nim", "#" },        // Nim
+    {"dart", "//" },      // Dart
+    {"jl", "#" },         // Julia
+    {"r", "#" },          // R
+    {"v", "//" },         // Verilog
+    {"sv", "//" },        // SystemVerilog
+    {"lua", "--" },       // Lua
+    {"coffee", "#" },     // CoffeeScript
+    {"clj", ";" },        // Clojure
+    {"cljs", ";" },       // ClojureScript
+    {"scm", ";" },        // Scheme
+    {"lisp", ";" },       // Lisp
+    {"rkt", ";" },        // Racket
+    {"erl", "%" },        // Erlang
+    {"hs", "--" },        // Haskell
+    {"elm", "--" },       // Elm
+    {"ex", "#" },         // Elixir
+    {"exs", "#" },        // Elixir Script
+    {"vba", "'" },        // VBA
+    {"psm1", "#" },       // PowerShell Module
+    {"psd1", "#" },       // PowerShell Data File
+    {"makefile", "#" },   // Makefile
+    {"mk", "#" },         // Makefile alternative extension
+    {"dockerfile", "#" }, // Dockerfile
+    {"tf", "#" },         // Terraform
     {"hcl","#" },        // HashiCorp Configuration Language
 };
 
@@ -107,7 +104,31 @@ namespace CodeSnip.EditorHelpers
     { "sql", ("/*", "*/") },      // SQL
     { "html", ("<!--", "-->") },  // HTML
     { "xml", ("<!--", "-->") },   // XML
-    { "md", ("<!--", "-->") },    // Markdown
+    { "md", ("<!--", "-->") },    // Markdown ( After this line no embedded syntax definition aviable )
+    { "zig", ("/*", "*/") },          // Zig
+    { "mm", ("/*", "*/") },           // Objective-C++
+    { "raku", ("=pod", "=cut") },     // Raku (Perl 6) - POD blokovi
+    { "pl", ("=pod", "=cut") },       // Perl - POD blokovi
+    { "pm", ("=pod", "=cut") },       // Perl Module - POD blokovi
+    { "t", ("=pod", "=cut") },        // Perl Test Script - POD blokovi
+    { "swift", ("/*", "*/") },        // Swift
+    { "kt", ("/*", "*/") },           // Kotlin
+    { "kts", ("/*", "*/") },          // Kotlin Script
+    { "groovy", ("/*", "*/") },       // Groovy
+    { "dart", ("/*", "*/") },         // Dart
+    { "jl", ("#=", "=#") },           // Julia
+    { "v", ("/*", "*/") },            // Verilog
+    { "sv", ("/*", "*/") },           // SystemVerilog
+    { "lua", ("--[[", "]]") },        // Lua
+    { "clj", ("#|", "|#") },          // Clojure
+    { "cljs", ("#|", "|#") },         // ClojureScript
+    { "scm", ("#|", "|#") },          // Scheme
+    { "lisp", ("#|", "|#") },         // Lisp
+    { "rkt", ("#|", "|#") },          // Racket
+    { "hs", ("{-", "-}") },           // Haskell
+    { "psm1", ("<#", "#>") },         // PowerShell Module
+    { "psd1", ("<#", "#>") },         // PowerShell Data File
+    { "hcl", ("/*", "*/") },          // HashiCorp Config Language
 };
 
         public static void ToggleCommentByExtension(TextEditor textEditor, string fileExtension, bool useMultiLine = false)
