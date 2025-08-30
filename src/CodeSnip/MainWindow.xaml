@@ -342,6 +342,43 @@
                                 </MenuItem.Icon>
                             </MenuItem>
                             <Separator />
+                            <MenuItem Header="Copy As">
+                                <MenuItem.Icon>
+                                    <Path Data="{StaticResource ContentCopy}" Fill="{DynamicResource MahApps.Brushes.AccentBase}"
+                                          Width="16" Height="16" Stretch="Uniform" />
+                                </MenuItem.Icon>
+                                <MenuItem Header="Markdown" Click="CopyAsMarkdown_Click">
+                                    <MenuItem.Icon>
+                                        <Path Data="{StaticResource MarkdownFill}" Fill="{DynamicResource MahApps.Brushes.AccentBase}"
+                                              Width="16" Height="16" Stretch="Uniform" />
+                                    </MenuItem.Icon>
+                                </MenuItem>
+                                <MenuItem Header="HTML code" Click="CopyAsHtml_Click">
+                                    <MenuItem.Icon>
+                                        <Path Data="{StaticResource FileHtml}" Fill="{DynamicResource MahApps.Brushes.AccentBase}"
+                                              Width="16" Height="16" Stretch="Uniform" />
+                                    </MenuItem.Icon>
+                                </MenuItem>
+                                <MenuItem Header="BBCode" Click="CopyAsBBCode_Click">
+                                    <MenuItem.Icon>
+                                        <Path Data="{StaticResource CodeBrackets}" Fill="{DynamicResource MahApps.Brushes.AccentBase}"
+                                              Width="16" Height="16" Stretch="Uniform" />
+                                    </MenuItem.Icon>
+                                </MenuItem>
+                                <MenuItem Header="JSON String" Click="CopyAsJsonString_Click">
+                                    <MenuItem.Icon>
+                                        <Path Data="{StaticResource Json}" Fill="{DynamicResource MahApps.Brushes.AccentBase}"
+                                              Width="16" Height="16" Stretch="Uniform" />
+                                    </MenuItem.Icon>
+                                </MenuItem>
+                                <MenuItem Header="Base64 String" Click="CopyAsBase64String_Click">
+                                    <MenuItem.Icon>
+                                        <Path Data="{StaticResource Base64_TMP}" Fill="{DynamicResource MahApps.Brushes.AccentBase}"
+                                              Width="16" Height="16" Stretch="Uniform" />
+                                    </MenuItem.Icon>
+                                </MenuItem>
+                            </MenuItem>
+                            <Separator />
                             <MenuItem Header="Select All" Click="SelectAll_Click">
                                 <MenuItem.Icon>
                                     <Path Data="{StaticResource SelectAll}" Fill="{DynamicResource MahApps.Brushes.AccentBase}"

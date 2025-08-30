@@ -9,6 +9,8 @@ using ICSharpCode.AvalonEdit.Indentation;
 using ICSharpCode.AvalonEdit.Indentation.CSharp;
 using MahApps.Metro.Controls;
 using System.Diagnostics;
+using System.Net;
+using System.Text.Json;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Input;
@@ -158,6 +160,9 @@ namespace CodeSnip
                         break;
                     case "Paste":
                         item.IsEnabled = Clipboard.ContainsText();
+                        break;
+                    case "Copy As":
+                        item.IsEnabled = !string.IsNullOrEmpty(textEditor.SelectedText);
                         break;
                 }
             }
@@ -457,6 +462,98 @@ namespace CodeSnip
             }
         }
 
+        private void CopyAsMarkdown_Click(object sender, RoutedEventArgs e)
+        {
+            if (string.IsNullOrEmpty(textEditor.SelectedText))
+                return;
+
+            string langCode = mainViewModel.SelectedSnippet?.Category?.Language?.Code ?? "";
+            langCode = MapLangCodeToMarkdown(langCode);
+            string markdownCode = $"```{langCode}\n{textEditor.SelectedText}\n```";
+
+
+            try
+            {
+                Clipboard.SetText(markdownCode);
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show($"Failed to copy to clipboard: {ex.Message}");
+            }
+        }
+
+        private void CopyAsHtml_Click(object sender, RoutedEventArgs e)
+        {
+            if (string.IsNullOrEmpty(textEditor.SelectedText))
+                return;
+
+            string encodedCode = WebUtility.HtmlEncode(textEditor.SelectedText);
+            string htmlCode = $"<pre><code>{encodedCode}</code></pre>";
+
+            try
+            {
+                Clipboard.SetText(htmlCode);
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show($"Failed to copy to clipboard: {ex.Message}");
+            }
+        }
+
+        private void CopyAsBBCode_Click(object sender, RoutedEventArgs e)
+        {
+            if (string.IsNullOrEmpty(textEditor.SelectedText))
+                return;
+            string langCode = mainViewModel.SelectedSnippet?.Category?.Language?.Code ?? "";
+            // BBCode often uses the languageCode (exstension) directly. A mapping function could be added if needed. ?
+            //langCode = MapLangCodeToMarkdown(langCode);
+            string bbCode = $"[code={langCode}]{textEditor.SelectedText}[/code]";
+            try
+            {
+                Clipboard.SetText(bbCode);
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show($"Failed to copy to clipboard: {ex.Message}");
+            }
+        }
+
+        private void CopyAsJsonString_Click(object sender, RoutedEventArgs e)
+        {
+            if (string.IsNullOrEmpty(textEditor.SelectedText))
+                return;
+
+            // Serialize the string to get a valid JSON string literal (with quotes and escaped characters)
+            string jsonString = JsonSerializer.Serialize(textEditor.SelectedText);
+
+            try
+            {
+                Clipboard.SetText(jsonString);
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show($"Failed to copy to clipboard: {ex.Message}");
+            }
+        }
+
+        private void CopyAsBase64String_Click(object sender, RoutedEventArgs e)
+        {
+            string selectedText = textEditor.SelectedText;
+            if (string.IsNullOrEmpty(selectedText))
+                return;
+
+            try
+            {
+                byte[] textBytes = System.Text.Encoding.UTF8.GetBytes(selectedText);
+                string base64String = Convert.ToBase64String(textBytes);
+                Clipboard.SetText(base64String);
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show($"Failed to copy to clipboard: {ex.Message}");
+            }
+        }
+
         private void ExportToHtml_Click(object sender, RoutedEventArgs e)
         {
             if (mainViewModel != null && mainViewModel.SelectedSnippet != null)
@@ -553,6 +650,59 @@ namespace CodeSnip
                 FoldingManager.Uninstall(foldingManager);
                 foldingManager = null;
             }
+        }
+
+        private string MapLangCodeToMarkdown(string code)
+        {
+            return code.ToLower() switch
+            {
+                "cs" => "csharp",
+                "cpp" => "cpp",
+                "js" => "javascript",
+                "ts" => "typescript",
+                "py" => "python",
+                "java" => "java",
+                "html" => "html",
+                "xml" => "xml",
+                "json" => "json",
+                "rb" => "ruby",
+                "php" => "php",
+                "go" => "go",
+                "rs" => "rust",
+                "swift" => "swift",
+                "kt" or "kts" => "kotlin",
+                "sh" or "bash" => "bash",
+                "ps1" => "powershell",
+                "sql" => "sql",
+                "d" => "d",
+                "vb" => "vbnet",
+                "lua" => "lua",
+                "md" => "markdown",
+                "yml" or "yaml" => "yaml",
+                "jsonc" => "jsonc",
+                "dockerfile" => "dockerfile",
+                "makefile" => "makefile",
+                "ini" => "ini",
+                "toml" => "toml",
+                "h" => "c", // Header files as C
+                "m" => "objective-c",
+                "mm" => "objective-c++",
+                "hs" => "haskell",
+                "erl" => "erlang",
+                "ex" or "exs" => "elixir",
+                "r" => "r",
+                "jl" => "julia",
+                "scala" => "scala",
+                "f" or "for" or "f90" => "fortran",
+                "ada" or "adb" => "ada",
+                "asm" or "s" => "assembly",
+                "v" or "vh" or "sv" or "svh" => "systemverilog",
+                "vhdl" => "vhdl",
+                "ml" => "ocaml",
+                "nim" => "nim",
+                "zig" => "zig",
+                _ => "", // Default to no language if not recognized
+            };
         }
 
 
