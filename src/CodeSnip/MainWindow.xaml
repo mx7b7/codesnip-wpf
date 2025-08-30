@@ -310,32 +310,32 @@
                     </behaviors:Interaction.Behaviors>
                     <avalonEdit:TextEditor.ContextMenu>
                         <ContextMenu>
-                            <MenuItem Header="Undo" Click="Undo_Click">
+                            <MenuItem Header="Undo" InputGestureText="Ctrl+Z" Click="Undo_Click">
                                 <MenuItem.Icon>
                                     <Path Data="{StaticResource UndoMD}" Fill="{DynamicResource MahApps.Brushes.AccentBase}"
                                           Width="16" Height="16" Stretch="Uniform" />
                                 </MenuItem.Icon>
                             </MenuItem>
-                            <MenuItem Header="Redo" Click="Redo_Click">
+                            <MenuItem Header="Redo" InputGestureText="Ctrl+Y" Click="Redo_Click">
                                 <MenuItem.Icon>
                                     <Path Data="{StaticResource RedoMD}" Fill="{DynamicResource MahApps.Brushes.AccentBase}"
                                           Width="16" Height="16" Stretch="Uniform" />
                                 </MenuItem.Icon>
                             </MenuItem>
                             <Separator />
-                            <MenuItem Header="Cut" Click="Cut_Click">
+                            <MenuItem Header="Cut" InputGestureText="Ctrl+X" Click="Cut_Click">
                                 <MenuItem.Icon>
                                     <Path Data="{StaticResource CutMD}" Fill="{DynamicResource MahApps.Brushes.AccentBase}"
                                             Width="16" Height="16" Stretch="Uniform" />
                                 </MenuItem.Icon>
                             </MenuItem>
-                            <MenuItem Header="Copy" Click="Copy_Click">
+                            <MenuItem Header="Copy" InputGestureText="Ctrl+C" Click="Copy_Click">
                                 <MenuItem.Icon>
                                     <Path Data="{StaticResource CopyMD}" Fill="{DynamicResource MahApps.Brushes.AccentBase}"
                                           Width="16" Height="16" Stretch="Uniform" />
                                 </MenuItem.Icon>
                             </MenuItem>
-                            <MenuItem Header="Paste" Click="Paste_Click">
+                            <MenuItem Header="Paste" InputGestureText="Ctrl+V" Click="Paste_Click">
                                 <MenuItem.Icon>
                                     <Path Data="{StaticResource Paste}" Fill="{DynamicResource MahApps.Brushes.AccentBase}"
                                           Width="16" Height="16" Stretch="Uniform" />
@@ -379,7 +379,7 @@
                                 </MenuItem>
                             </MenuItem>
                             <Separator />
-                            <MenuItem Header="Select All" Click="SelectAll_Click">
+                            <MenuItem Header="Select All" InputGestureText="Ctrl+A" Click="SelectAll_Click">
                                 <MenuItem.Icon>
                                     <Path Data="{StaticResource SelectAll}" Fill="{DynamicResource MahApps.Brushes.AccentBase}"
                                           Width="16" Height="16" Stretch="Uniform" />
