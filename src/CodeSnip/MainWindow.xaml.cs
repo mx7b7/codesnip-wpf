@@ -622,8 +622,7 @@ namespace CodeSnip
 
             if (foldingStrategy != null)
             {
-                if (foldingManager == null)
-                    foldingManager = FoldingManager.Install(textEditor.TextArea);
+                foldingManager ??= FoldingManager.Install(textEditor.TextArea);
 
                 try
                 {
@@ -652,7 +651,7 @@ namespace CodeSnip
             }
         }
 
-        private string MapLangCodeToMarkdown(string code)
+        private static string MapLangCodeToMarkdown(string code)
         {
             return code.ToLower() switch
             {
