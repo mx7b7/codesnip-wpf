@@ -27,7 +27,7 @@
 - **AvalonEdit integration**:
   - Syntax highlighting (light/dark mode)
   - Code folding
-  - Live editing of `.xshd` syntax definition files inside the app (Only colors and font styles)
+  - Live editing of `.xshd` syntax definition files inside the app (colors and font styles)
   - Toggle single-line and multi-line comments
 - **Compiler Explorer (Godbolt) integration**:
   - Compile snippets without installing compilers locally
@@ -40,9 +40,10 @@
   - Modern Metro interface
   - Flyout panels for additional windows (settings, editors, actions, etc.)
   - Automatic loading of theme and syntax definitions
-- **Export options**:
-  - HTML
-  - Original language format
+- **Export & Sharing**:
+  - **"Copy As"**: Copy selected code as Markdown, HTML, BBCode, Base64 or a JSON string.
+  - **Export to File**: Save snippets as HTML or in their original language format.
+
 
 ---
 
