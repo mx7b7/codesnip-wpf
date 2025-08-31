@@ -30,7 +30,7 @@ namespace CodeSnip
 
         public ICommand ToggleSingleLineCommentCommand { get; }
         public ICommand ToggleMultiLineCommentCommand { get; }
-        public ICommand ToggleInlineBlockCommentCommand { get; }
+        public ICommand ToggleCommentSelectionCommand { get; }
 
         public MainWindow()
         {
@@ -42,7 +42,7 @@ namespace CodeSnip
             // This wrapping is only to support keyboard shortcuts from the menu items that are bound to these commands.
             ToggleSingleLineCommentCommand = new RelayCommand(_ => ToggleSingleLineComment_Click(this, new RoutedEventArgs()));
             ToggleMultiLineCommentCommand = new RelayCommand(_ => ToggleMultiLineLineComment_Click(this, new RoutedEventArgs()));
-            ToggleInlineBlockCommentCommand = new RelayCommand(_ => ToggleInlineBlockComment_Click(this, new RoutedEventArgs()));
+            ToggleCommentSelectionCommand = new RelayCommand(_ => ToggleICommentSelection_Click(this, new RoutedEventArgs()));
 
         }
 
@@ -448,8 +448,7 @@ namespace CodeSnip
             }
         }
 
-        // No menu item for this yet.
-        private void ToggleInlineBlockComment_Click(object sender, RoutedEventArgs e)
+        private void ToggleICommentSelection_Click(object sender, RoutedEventArgs e)
         {
             string? code = mainViewModel.SelectedSnippet?.Category?.Language?.Code;
             if (code is not null)

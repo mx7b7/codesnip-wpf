@@ -72,9 +72,9 @@
         <KeyBinding Key="K" Modifiers="Ctrl+Shift"
                 Command="{Binding RelativeSource={RelativeSource AncestorType=Window}, Path=ToggleMultiLineCommentCommand}" />
 
-        <!-- Ctrl + Alt + K : Toggle Inline Block Comment (samo selekcija) -->
-        <KeyBinding Key="K" Modifiers="Ctrl+Alt"
-                Command="{Binding RelativeSource={RelativeSource AncestorType=Window}, Path=ToggleInlineBlockCommentCommand}" />
+        <!-- Ctrl + Shift + I : Toggle Inline Block Comment (samo selekcija) -->
+        <KeyBinding Key="I" Modifiers="Ctrl+Shift"
+                Command="{Binding RelativeSource={RelativeSource AncestorType=Window}, Path=ToggleCommentSelectionCommand}" />
         <!--<KeyBinding Key="F" Modifiers="Ctrl" Command="{Binding SearchReplaceCommand}"/>-->
     </mah:MetroWindow.InputBindings>
     <mah:MetroWindow.LeftWindowCommands>
@@ -398,6 +398,12 @@
                                     </MenuItem.Icon>
                                 </MenuItem>
                                 <MenuItem Header="Toggle MultiLine" Click="ToggleMultiLineLineComment_Click" InputGestureText="Ctrl+Shift+K">
+                                    <MenuItem.Icon>
+                                        <Path Data="{StaticResource CommentTextMultipleThin}" Fill="{DynamicResource MahApps.Brushes.AccentBase}"
+                                              Width="16" Height="16" Stretch="Uniform" />
+                                    </MenuItem.Icon>
+                                </MenuItem>
+                                <MenuItem Header="Toggle Selection" Click="ToggleICommentSelection_Click" InputGestureText="Ctrl+Shift+I">
                                     <MenuItem.Icon>
                                         <Path Data="{StaticResource CommentTextMultipleThin}" Fill="{DynamicResource MahApps.Brushes.AccentBase}"
                                               Width="16" Height="16" Stretch="Uniform" />
