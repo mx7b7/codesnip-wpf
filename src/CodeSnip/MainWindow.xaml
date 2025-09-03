@@ -50,20 +50,20 @@
         </DataTemplate>
     </mah:MetroWindow.Resources>
     <mah:MetroWindow.InputBindings>
-        <!-- Ctrl + S : Save snippet code -->
-        <KeyBinding Key="S" Modifiers="Ctrl" Command="{Binding SaveCodeCommand}"/>
-        <!-- Ctrl + A : Add new snippet -->
-        <KeyBinding Key="A" Modifiers="Ctrl" Command="{Binding AddSnippetCommand}"/>
-        <!-- Ctrl + E : Edit current cnippet metadata -->
-        <KeyBinding Key="E" Modifiers="Ctrl" Command="{Binding EditSnippetCommand}"/>
-        <!-- Ctrl + D : Delete current snippet -->
-        <KeyBinding Key="D" Modifiers="Ctrl" Command="{Binding DeleteSnippetCommand}"/>
-        <!-- Ctrl + L : Open Language/Category management -->
-        <KeyBinding Key="L" Modifiers="Ctrl" Command="{Binding OpenLanguageCategoryCommand}"/>
-        <!-- Ctrl + P : Open application settings -->
-        <KeyBinding Key="P" Modifiers="Ctrl" Command="{Binding OpenSettingsCommand}"/>
-        <!-- Ctrl + R : Open Code Runner window -->
-        <KeyBinding Key="R" Modifiers="Ctrl" Command="{Binding OpenCodeRunnerViewCommand}"/>
+        <!-- Ctrl+Shift + S : Save snippet code -->
+        <KeyBinding Key="S" Modifiers="Ctrl+Shift" Command="{Binding SaveCodeCommand}"/>
+        <!-- Ctrl+Shift + A : Add new snippet -->
+        <KeyBinding Key="A" Modifiers="Ctrl+Shift" Command="{Binding AddSnippetCommand}"/>
+        <!-- Ctrl+Shift + E : Edit current cnippet metadata -->
+        <KeyBinding Key="E" Modifiers="Ctrl+Shift" Command="{Binding EditSnippetCommand}"/>
+        <!-- Ctrl+Shift + D : Delete current snippet -->
+        <KeyBinding Key="D" Modifiers="Ctrl+Shift" Command="{Binding DeleteSnippetCommand}"/>
+        <!-- Ctrl+Shift + L : Open Language/Category management -->
+        <KeyBinding Key="L" Modifiers="Ctrl+Shift" Command="{Binding OpenLanguageCategoryCommand}"/>
+        <!-- Ctrl+Shift + P : Open application settings -->
+        <KeyBinding Key="P" Modifiers="Ctrl+Shift" Command="{Binding OpenSettingsCommand}"/>
+        <!-- Ctrl+Shift + R : Open Code Runner window -->
+        <KeyBinding Key="R" Modifiers="Ctrl+Shift" Command="{Binding OpenCodeRunnerViewCommand}"/>
         <!-- Ctrl + K : Toggle Single-Line Comment -->
         <KeyBinding Key="K" Modifiers="Ctrl"
                 Command="{Binding RelativeSource={RelativeSource AncestorType=Window}, Path=ToggleSingleLineCommentCommand}" />
@@ -220,24 +220,24 @@
                             <Path Data="{Binding OpenCloseIcon}" Fill="{DynamicResource MahApps.Brushes.AccentBase}"
                                  Width="20" Height="20" Stretch="Uniform" />
                         </Button>
-                        <Button  Command="{Binding SaveCodeCommand}" Margin="10,0,0,0" ToolTip="Save snippet&#xA;CTRL+S">
+                        <Button  Command="{Binding SaveCodeCommand}" Margin="10,0,0,0" ToolTip="Save snippet&#xA;Ctrl+Shift+S">
                             <Path Data="{StaticResource Save}" Fill="{DynamicResource MahApps.Brushes.AccentBase}"
                              Width="20" Height="20" Stretch="Uniform" />
                         </Button>
-                        <Button  Command="{Binding AddSnippetCommand}" Margin="5,0,0,0" ToolTip="Add snippet&#xA;CTRL+A">
+                        <Button  Command="{Binding AddSnippetCommand}" Margin="5,0,0,0" ToolTip="Add snippet&#xA;Ctrl+Shift+A">
                             <Path Data="{StaticResource FileAdd}" Fill="{DynamicResource MahApps.Brushes.AccentBase}"
                                   Width="20" Height="20" Stretch="Uniform" />
                         </Button>
-                        <Button  Command="{Binding EditSnippetCommand}" Margin="5,0,0,0" ToolTip="Edit snippet&#xA;CTRL+E">
+                        <Button  Command="{Binding EditSnippetCommand}" Margin="5,0,0,0" ToolTip="Edit snippet&#xA;Ctrl+Shift+E">
                             <Path Data="{StaticResource FileEdit}" Fill="{DynamicResource MahApps.Brushes.AccentBase}"
                                  Width="20" Height="20" Stretch="Uniform" />
                         </Button>
-                        <Button  Command="{Binding DeleteSnippetCommand}" Margin="5,0,0,0" ToolTip="Delete snippet&#xA;CTRL+D">
+                        <Button  Command="{Binding DeleteSnippetCommand}" Margin="5,0,0,0" ToolTip="Delete snippet&#xA;Ctrl+Shift+D">
                             <Path Data="{StaticResource Trash}" Fill="{DynamicResource MahApps.Brushes.AccentBase}"
                                  Width="20" Height="20" Stretch="Uniform" />
                         </Button>
                         <Button x:Name="btnLangCat"  Margin="5,0,0,0" Command="{Binding OpenLanguageCategoryCommand}"
-                                  ToolTip="Language/Category edit&#xA;CTRL+L"
+                                  ToolTip="Language/Category edit&#xA;Ctrl+Shift+L"
                                   IsEnabled="{Binding IsLoadSnippetEnabled, Converter={StaticResource InverseBooleanConverter}}" >
                             <Path Data="{StaticResource CategoryEdit}" Fill="{DynamicResource MahApps.Brushes.AccentBase}"
                                   Width="20" Height="20" Stretch="Uniform" />
@@ -248,7 +248,7 @@
                                   Width="20" Height="20" Stretch="Uniform" />
                         </Button>
                         <Separator />
-                        <Button Margin="5,0,0,0" ToolTip="Run&#xA;CTRL+R"
+                        <Button Margin="5,0,0,0" ToolTip="Run&#xA;Ctrl+Shift+R"
                                 Command="{Binding OpenCodeRunnerViewCommand}" >
                             <Path Data="{StaticResource DebugStart}" Fill="{DynamicResource MahApps.Brushes.AccentBase}"
                                   Width="20" Height="20" Stretch="Uniform" />
@@ -271,7 +271,7 @@
                             <Path Data="{StaticResource ZoomOutMap}" Fill="{DynamicResource MahApps.Brushes.AccentBase}"
                                   Width="20" Height="20" Stretch="Uniform" />
                         </Button>
-                        <Button Margin="5,0,0,0" ToolTip="Search / Replace"  Command="{Binding SearchReplaceCommand}" >
+                        <Button Margin="5,0,0,0" ToolTip="Search-Replace&#xA;Ctrl+F"  Command="{Binding SearchReplaceCommand}" >
                             <Path Data="{StaticResource TextSearch}" Fill="{DynamicResource MahApps.Brushes.AccentBase}"
                                  Width="20" Height="20" Stretch="Uniform" />
                         </Button>
@@ -284,7 +284,7 @@
                             <Path Data="{StaticResource ColorPaletteiOS}" Fill="{DynamicResource MahApps.Brushes.AccentBase}"
                                  Width="20" Height="20" Stretch="Uniform" />
                         </Button>
-                        <Button Margin="5,0,0,0" ToolTip="Settings&#xA;CTRL+P" Command="{Binding OpenSettingsCommand}">
+                        <Button Margin="5,0,0,0" ToolTip="Settings&#xA;Ctrl+Shift+P" Command="{Binding OpenSettingsCommand}">
                             <Path Data="{StaticResource GearBold}" Fill="{DynamicResource MahApps.Brushes.AccentBase}"
                                   Width="20" Height="20" Stretch="Uniform" />
                         </Button>
