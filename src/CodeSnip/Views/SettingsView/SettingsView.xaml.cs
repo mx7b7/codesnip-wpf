@@ -2,9 +2,9 @@
 
 namespace CodeSnip.Views.SettingsView
 {
-    public partial class SetingsView : UserControl
+    public partial class SettingsView : UserControl
     {
-        public SetingsView()
+        public SettingsView()
         {
             InitializeComponent();
         }  

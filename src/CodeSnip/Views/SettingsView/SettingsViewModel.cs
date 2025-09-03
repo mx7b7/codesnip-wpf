@@ -3,6 +3,7 @@ using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
 using ControlzEx.Theming;
 using System.Collections.ObjectModel;
+using System.IO;
 using System.Windows;
 using System.Windows.Media;
 namespace CodeSnip.Views.SettingsView
@@ -12,6 +13,8 @@ namespace CodeSnip.Views.SettingsView
     internal partial class SettingsViewModel : ObservableObject
     {
         private readonly SettingsService _settingsService;
+
+        private readonly DatabaseService _databaseService;
 
         [ObservableProperty]
         private bool isDarkTheme = true;
@@ -58,10 +61,24 @@ namespace CodeSnip.Views.SettingsView
         [ObservableProperty]
         private bool _showEmptyCategories;
 
+        // Database
+        [ObservableProperty]
+        private string _integrityCheckBadge = "";
 
-        public SettingsViewModel(SettingsService settingsService)
+        [ObservableProperty]
+        private string _vacuumBadge = "";
+
+        [ObservableProperty]
+        private string _reindexBadge = "";
+
+        [ObservableProperty]
+        private string _backupBadge = "";
+
+
+        public SettingsViewModel(SettingsService settingsService, DatabaseService databaseService)
         {
             _settingsService = settingsService;
+            _databaseService = databaseService;
             LoadAccents();
             InitializeFromCurrentTheme();
             LoadOnStartup = settingsService.LoadOnStartup;
@@ -71,11 +88,12 @@ namespace CodeSnip.Views.SettingsView
             HyperLinks = _settingsService.EnableHyperinks;
             HighlightLine = _settingsService.HighlightLine;
             IntendationSize = _settingsService.IntendationSize;
-            EnableBraceStyleFolding =_settingsService.EnableBraceStyleFolding;
+            EnableBraceStyleFolding = _settingsService.EnableBraceStyleFolding;
             EnablePythonFolding = _settingsService.EnablePythonFolding;
             EnableXmlFolding = _settingsService.EnableXmlFolding;
             ShowEmptyLanguages = _settingsService.ShowEmptyLanguages;
             ShowEmptyCategories = _settingsService.ShowEmptyCategories;
+            _databaseService = databaseService;
         }
         partial void OnLoadOnStartupChanged(bool value)
         {
@@ -152,7 +170,87 @@ namespace CodeSnip.Views.SettingsView
             _settingsService.EnableFiltering = value;
         }
 
+        [RelayCommand]
+        private async Task IntegrityCheck()
+        {
+            var result = await _databaseService.RunIntegrityCheckAsync();
+            if (result)
+            {
+                IntegrityCheckBadge = "✓";
+                await Task.Delay(1500);
+                IntegrityCheckBadge = "";
+            }
+            else
+            {
+                IntegrityCheckBadge = "✗";
+            }
+        }
 
+        [RelayCommand]
+        private async Task Vacuum()
+        {
+            var result = await _databaseService.RunVacuumAsync();
+            if (result)
+            {
+                VacuumBadge = "✓";
+                await Task.Delay(1500);
+                VacuumBadge = "";
+            }
+            else
+            {
+                VacuumBadge = "✗";
+            }
+        }
+
+        [RelayCommand]
+        private async Task Reindex()
+        {
+            var result = await _databaseService.RunReindexAsync();
+            if (result)
+            {
+                ReindexBadge = "✓";
+                await Task.Delay(1500);
+                ReindexBadge = "";
+            }
+            else
+            {
+                ReindexBadge = "✗";
+            }
+        }
+        [RelayCommand]
+        private async Task Backup()
+        {
+            try
+            {
+                string appFolder = AppDomain.CurrentDomain.BaseDirectory;
+                string dbFilePath = Path.Combine(appFolder, "snippets.sqlite");
+                if (!File.Exists(dbFilePath))
+                {
+                    await DialogService.Instance.ShowMessageAsync("Backup Failed", "Database file not found.");
+                    BackupBadge = "✗";
+                    return;
+                }
+
+                string backupFolder = Path.Combine(appFolder, "Backups");
+                if (!Directory.Exists(backupFolder))
+                    Directory.CreateDirectory(backupFolder);
+
+                string backupFileName = $"snippets-{DateTime.Now:yyyyMMddHHmmss}.sqlite";
+                string backupFilePath = Path.Combine(backupFolder, backupFileName);
+
+                File.Copy(dbFilePath, backupFilePath);
+
+                BackupBadge = "✓";
+                await DialogService.Instance.ShowMessageAsync("Backup Success", $"Backup created:\n{backupFileName}");
+                await Task.Delay(1000);
+                BackupBadge = "";
+            }
+            catch (Exception ex)
+            {
+                BackupBadge = "✗";
+                await DialogService.Instance.ShowMessageAsync("Backup Failed", ex.Message);
+            }
+        }
 
     } // SettingsViewModel
 

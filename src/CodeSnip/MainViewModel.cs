@@ -327,7 +327,7 @@ namespace CodeSnip
             // Store current values before opening the flyout to check for changes later
             bool oldShowEmptyLanguages = ShowEmptyLanguages;
             bool oldShowEmptyCategories = ShowEmptyCategories;
-            var vm = new SettingsViewModel(settingsService);
+            var vm = new SettingsViewModel(settingsService, _databaseService);
             _flyoutService.ShowFlyout("flySettings", vm, "Settings", () =>
             {
                 settingsService.HighlightLine = vm.HighlightLine;

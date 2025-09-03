@@ -31,7 +31,7 @@
         <helpers:BoolToVisibilityConverter x:Key="BoolToVisibilityConverter" />
         
         <DataTemplate DataType="{x:Type settingsView:SettingsViewModel}">
-            <settingsView:SetingsView />
+            <settingsView:SettingsView />
         </DataTemplate>
         <DataTemplate DataType="{x:Type codeRunnerView:CodeRunnerViewModel}">
             <codeRunnerView:CodeRunnerView />

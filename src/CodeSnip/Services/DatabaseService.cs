@@ -341,7 +341,50 @@ ORDER BY L.Name, C.Name, S.Title";
             conn.Execute("DELETE FROM Categories WHERE ID = @Id", new { Id = id });
         }
 
+        public async Task<bool> RunIntegrityCheckAsync()
+        {
+            try
+            {
+                using var conn = CreateConnection();
+                var result = await conn.QueryAsync<string>("PRAGMA integrity_check;");
+                return result.Count() == 1 && result.First() == "ok";
+            }
+            catch (Exception ex)
+            {
+                await DialogService.Instance.ShowMessageAsync("Integrity Check Failed", ex.Message);
+                return false;
+            }
+        }
 
+        public async Task<bool> RunVacuumAsync()
+        {
+            try
+            {
+                using var conn = CreateConnection();
+                await conn.ExecuteAsync("VACUUM;");
+                return true;
+            }
+            catch (Exception ex)
+            {
+                await DialogService.Instance.ShowMessageAsync("Vacuum Failed", ex.Message);
+                return false;
+            }
+        }
+
+        public async Task<bool> RunReindexAsync()
+        {
+            try
+            {
+                using var conn = CreateConnection();
+                await conn.ExecuteAsync("REINDEX;");
+                return true;
+            }
+            catch (Exception ex)
+            {
+                await DialogService.Instance.ShowMessageAsync("Reindex Failed", ex.Message);
+                return false;
+            }
+        }
 
         private const string ddl = @"
             CREATE TABLE IF NOT EXISTS Languages (
