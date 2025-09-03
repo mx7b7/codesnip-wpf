@@ -32,6 +32,8 @@ namespace CodeSnip
         public ICommand ToggleMultiLineCommentCommand { get; }
         public ICommand ToggleCommentSelectionCommand { get; }
 
+        public ICommand OpenAboutCommand { get; }
+
         public MainWindow()
         {
             InitializeComponent();
@@ -43,7 +45,7 @@ namespace CodeSnip
             ToggleSingleLineCommentCommand = new RelayCommand(_ => ToggleSingleLineComment_Click(this, new RoutedEventArgs()));
             ToggleMultiLineCommentCommand = new RelayCommand(_ => ToggleMultiLineLineComment_Click(this, new RoutedEventArgs()));
             ToggleCommentSelectionCommand = new RelayCommand(_ => ToggleCommentSelection_Click(this, new RoutedEventArgs()));
-
+            OpenAboutCommand = new RelayCommand(_ => About_Click(this, new RoutedEventArgs()));
         }
 
         #region IFlyoutService Implementation
@@ -576,6 +578,11 @@ namespace CodeSnip
             }
         }
 
+        private void About_Click(object sender, RoutedEventArgs e)
+        {
+            var aboutWindow = new Views.AboutView.AboutWindow(this);
+            aboutWindow.ShowDialog();
+        }
 
         private void SetupFolding(Snippet snippet)
         {
