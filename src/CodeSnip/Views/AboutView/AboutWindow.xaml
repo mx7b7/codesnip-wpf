@@ -117,7 +117,7 @@
                 </ScrollViewer>
             </mah:MetroTabItem>
 
-            <mah:MetroTabItem Header="Notes">
+            <mah:MetroTabItem Header="Notes" Visibility="Collapsed">
                 <!-- Usage tips -->
             </mah:MetroTabItem>
         </mah:MetroTabControl>
