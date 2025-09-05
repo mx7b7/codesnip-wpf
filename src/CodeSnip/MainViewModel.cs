@@ -112,31 +112,13 @@ namespace CodeSnip
             _flyoutService = flyoutService;
             try
             {
-
-                _databaseService.InitializeDatabaseIfNeeded();
-
                 _menuOpenIcon = Application.Current.Resources["MenuOpen"] as Geometry;
                 _menuCloseIcon = Application.Current.Resources["MenuClose"] as Geometry;
                 if (_menuOpenIcon == null || _menuCloseIcon == null)
                 {
                     throw new InvalidOperationException("Icons not found in resources.");
                 }
-                IsLoadSnippetEnabled = !settingsService.LoadOnStartup;
-                ShowEmptyLanguages = settingsService.ShowEmptyLanguages;
-                ShowEmptyCategories = settingsService.ShowEmptyCategories;
 
-                if (settingsService.LoadOnStartup)
-                {
-                    LoadSnippets();
-                    if (settingsService.LastSnippet != null)
-                    {
-                        RestoreSelectedSnippetState(settingsService.LastSnippet);
-                    }
-                }
-                IsFilteringEnabled = settingsService.EnableFiltering;
-                EnableBraceStyleFolding = settingsService.EnableBraceStyleFolding;
-                EnablePythonFolding = settingsService.EnablePythonFolding;
-                EnableXmlFolding = settingsService.EnableXmlFolding;
                 SplitViewOpenPaneLength = settingsService.PanelLength;
                 WindowX = settingsService.WindowX;
                 WindowY = settingsService.WindowY;
@@ -148,6 +130,13 @@ namespace CodeSnip
                 opt.HighlightCurrentLine = settingsService.HighlightLine;
                 opt.IndentationSize = settingsService.IntendationSize;
 
+                IsFilteringEnabled = settingsService.EnableFiltering;
+                EnableBraceStyleFolding = settingsService.EnableBraceStyleFolding;
+                EnablePythonFolding = settingsService.EnablePythonFolding;
+                EnableXmlFolding = settingsService.EnableXmlFolding;
+                ShowEmptyLanguages = settingsService.ShowEmptyLanguages;
+                ShowEmptyCategories = settingsService.ShowEmptyCategories;
+
             }
             catch (InvalidOperationException ex)
             {
@@ -158,6 +147,47 @@ namespace CodeSnip
                 MessageBox.Show($"Unexpected error:\n{ex.Message}");
             }
 
+        }
+        public async Task InitializeAsync()
+        {
+            await Task.Run(() => _databaseService.InitializeDatabaseIfNeeded());
+
+            IsLoadSnippetEnabled = !settingsService.LoadOnStartup;
+
+            if (settingsService.LoadOnStartup)
+            {
+                var languages = await Task.Run(() => _databaseService.GetSnippets());
+
+                PopulateLanguagesCollection(languages);
+
+                if (settingsService.LastSnippet != null && settingsService.LoadOnStartup)
+                {
+                    RestoreSelectedSnippetState(settingsService.LastSnippet);
+                }
+            }
+        }
+
+        private void PopulateLanguagesCollection(IEnumerable<Language> languages)
+        {
+            Languages.Clear();
+            foreach (var lang in languages)
+            {
+                bool languageHasAnySnippets = false;
+                foreach (var cat in lang.Categories)
+                {
+                    bool categoryHasSnippets = cat.Snippets.Any();
+                    if (categoryHasSnippets)
+                    {
+                        languageHasAnySnippets = true;
+                    }
+
+                    // A category is visible if the setting is on, OR if it has snippets.
+                    cat.IsVisible = ShowEmptyCategories || categoryHasSnippets;
+                }
+                // A language is visible if the setting is on, OR if it has any snippets.
+                lang.IsVisible = ShowEmptyLanguages || languageHasAnySnippets;
+                Languages.Add(lang);
+            }
         }
 
         // Call from the MainWindow constructor
@@ -371,7 +401,7 @@ namespace CodeSnip
                             tmpSnippet.Id);
                     }
                 }
-               
+
                 settingsService.SaveSettings();
             });
         }
@@ -581,24 +611,7 @@ namespace CodeSnip
         public void LoadSnippets()
         {
             var languages = _databaseService.GetSnippets();
-            Languages.Clear();
-            foreach (var lang in languages)
-            {
-                bool languageHasAnySnippets = false;
-                foreach (var cat in lang.Categories)
-                {
-                    bool categoryHasSnippets = cat.Snippets.Any();
-                    if (categoryHasSnippets)
-                    {
-                        languageHasAnySnippets = true;
-                    }
-                    // A category is visible if the setting is on, OR if it has snippets.
-                    cat.IsVisible = ShowEmptyCategories || categoryHasSnippets;
-                }
-                // A language is visible if the setting is on, OR if it has any snippets.
-                lang.IsVisible = ShowEmptyLanguages || languageHasAnySnippets;
-                Languages.Add(lang);
-            }
+            PopulateLanguagesCollection(languages);
         }
 
         private void SaveSettings()

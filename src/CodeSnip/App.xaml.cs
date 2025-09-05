@@ -1,23 +1,32 @@
-﻿using ControlzEx.Theming;
-using System.Windows;
-using System.Windows.Media;
+﻿using System.Windows;
 
 namespace CodeSnip
 {
     public partial class App : Application
     {
+        protected override async void OnStartup(StartupEventArgs e)
+        {
+            base.OnStartup(e);
 
-        //protected override void OnStartup(StartupEventArgs e)
-        //{
-        //    base.OnStartup(e);
+            var splashScreen = new Views.SplashScreenView.SplashScreen();
+            splashScreen.Show();
 
-        //    ThemeManager.Current.AddTheme(new Theme("CustomDarkRed", "CustomDarkRed", "Dark", "Red", Colors.DarkRed, Brushes.DarkRed, true, false));
-        //    ThemeManager.Current.AddTheme(new Theme("CustomLightRed", "CustomLightRed", "Light", "Red", Colors.DarkRed, Brushes.DarkRed, true, false));
+            var mainWindow = new MainWindow();
+            await PerformInitializationAsync(mainWindow);
+            MainWindow = mainWindow;
+            mainWindow.Show();
 
-        //    ThemeManager.Current.AddTheme(RuntimeThemeGenerator.Current.GenerateRuntimeTheme("Dark", Colors.Red));
-        //    ThemeManager.Current.AddTheme(RuntimeThemeGenerator.Current.GenerateRuntimeTheme("Light", Colors.Red));
-        //}
+            splashScreen.Close();
+        }
+        private async Task PerformInitializationAsync(MainWindow mainWindow)
+        {
 
+            if (mainWindow.DataContext is MainViewModel mainViewModel)
+            {
+                await mainViewModel.InitializeAsync();
+            }
+
+        }
     }
 
 }

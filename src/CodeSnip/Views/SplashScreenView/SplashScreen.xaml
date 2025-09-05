@@ -1,0 +1,21 @@
+﻿<mah:MetroWindow  x:Class="CodeSnip.Views.SplashScreenView.SplashScreen"
+                 xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+                 xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+                 xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+                 xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+                 xmlns:mah="http://metro.mahapps.com/winfx/xaml/controls"
+                 mc:Ignorable="d"
+                 Height="110" Width="110"
+                 WindowStyle="None"
+                 AllowsTransparency="True"
+                 Background="Transparent"
+                 WindowStartupLocation="CenterScreen"
+                 ShowInTaskbar="False"
+                 Topmost="True"
+                 ShowTitleBar="False" SizeToContent="WidthAndHeight" BorderBrush="Transparent"
+                 ShowCloseButton="False" ShowMaxRestoreButton="False" ShowMinButton="False" >
+    <Grid>
+        <mah:ProgressRing IsActive="True" Width="100" Height="100" IsLarge="True" />
+    </Grid>
+</mah:MetroWindow>
+
