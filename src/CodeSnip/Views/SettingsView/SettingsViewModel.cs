@@ -235,7 +235,7 @@ namespace CodeSnip.Views.SettingsView
                 if (!Directory.Exists(backupFolder))
                     Directory.CreateDirectory(backupFolder);
 
-                string backupFileName = $"snippets-{DateTime.Now:yyyyMMddHHmmss}.sqlite";
+                string backupFileName = $"snippets-{DateTime.Now:yyyy-MM-dd_HH-mm-ss}.sqlite";
                 string backupFilePath = Path.Combine(backupFolder, backupFileName);
 
                 File.Copy(dbFilePath, backupFilePath);
