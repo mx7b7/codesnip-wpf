@@ -1,4 +1,5 @@
 ﻿using CSharpier.Core.CSharp;
+using CSharpier.Core.Xml;
 using System.Diagnostics;
 using System.IO;
 
@@ -9,6 +10,8 @@ namespace CodeSnip.Services
         private static bool? _isPythonInstalled;
         private static bool? _isBlackInstalled;
 
+        /// <summary>
+        /// Formats C# code using CSharpier's C# formatter.
         public static async Task<(bool isSuccess, string? formattedCode, string? errorMessage)> TryFormatCodeWithCSharpierAsync(string code)
         {
             try
@@ -22,6 +25,20 @@ namespace CodeSnip.Services
             }
         }
 
+        /// <summary>
+        /// Formats XML code using CSharpier's XML formatter.
+        public static async Task<(bool isSuccess, string? formattedCode, string? errorMessage)> TryFormatXmlWithCSharpierAsync(string code)
+        {
+            try
+            {
+                var result = await Task.Run(() => XmlFormatter.Format(code));
+                return (true, result.Code, null);
+            }
+            catch (Exception ex)
+            {
+                return (false, null, ex.Message);
+            }
+        }
 
         /// <summary>
         /// Formats the code using clang-format.

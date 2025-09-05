@@ -269,17 +269,24 @@ namespace CodeSnip
         {
 
             string? code = mainViewModel.SelectedSnippet?.Category?.Language?.Code;
-            if (code is not null and "cs")
+            if (code is not null)
             {
-                string originalCode = textEditor.Text;
-                var (isSuccess, formatted, error) = await FormattingService.TryFormatCodeWithCSharpierAsync(originalCode);
+                var originalCode = textEditor.Text;
+
+                (bool isSuccess, string? formatted, string? error) = code switch
+                {
+                    "cs" => await FormattingService.TryFormatCodeWithCSharpierAsync(originalCode),
+                    "xml" => await FormattingService.TryFormatXmlWithCSharpierAsync(originalCode),
+                    _ => (false, null, $"Formatting for '{code}' is not supported with CSharpier")
+                };
+
                 if (isSuccess)
                 {
-                    textEditor.Document.Text = formatted;
+                    textEditor.Document.Text = formatted!;
                 }
                 else
                 {
-                    MessageBox.Show($"Formatting failed: {error}");
+                    MessageBox.Show($"Formatting failed:\n {error}");
                 }
             }
         }
@@ -357,7 +364,7 @@ namespace CodeSnip
                         }
                         else
                         {
-                            MessageBox.Show(errorDfmt);
+                            MessageBox.Show($"Formatting (dfmt) failed:\n {errorDfmt}");
                         }
                         break;
 
@@ -369,7 +376,7 @@ namespace CodeSnip
                         }
                         else
                         {
-                            MessageBox.Show($"Formatting (CSharpier) failed: {errorCs}");
+                            MessageBox.Show($"Formatting (CSharpier) failed:\n{errorCs}");
                         }
                         break;
 
@@ -381,7 +388,7 @@ namespace CodeSnip
                         }
                         else
                         {
-                            MessageBox.Show(errorBlack);
+                            MessageBox.Show($"Formatting (Black) failed:\n{errorBlack}");
                         }
                         break;
 
@@ -393,8 +400,21 @@ namespace CodeSnip
                         }
                         else
                         {
-                            MessageBox.Show(errorRust);
+                            MessageBox.Show($"Formatting (rustfmt) failed:\n{ errorRust}");
                         }
+                        break;
+
+                    case "xml":
+                        var (successXml, formattedXml, errorXml) = await FormattingService.TryFormatXmlWithCSharpierAsync(originalCode);
+                        if (successXml)
+                        {
+                            textEditor.Document.Text = formattedXml;
+                        }
+                        else
+                        {
+                            MessageBox.Show($"Formatting (CSharpier XML) failed:\n{errorXml}");
+                        }
+
                         break;
 
                     default:
@@ -416,7 +436,7 @@ namespace CodeSnip
                             }
                             else
                             {
-                                MessageBox.Show(errorClang);
+                                MessageBox.Show($"Formatting (clang-format) failed:\n{errorClang}");
                             }
                         }
                         break;
