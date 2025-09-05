@@ -110,42 +110,31 @@ namespace CodeSnip
         public MainViewModel(IFlyoutService flyoutService)
         {
             _flyoutService = flyoutService;
-            try
-            {
-                _menuOpenIcon = Application.Current.Resources["MenuOpen"] as Geometry;
-                _menuCloseIcon = Application.Current.Resources["MenuClose"] as Geometry;
-                if (_menuOpenIcon == null || _menuCloseIcon == null)
-                {
-                    throw new InvalidOperationException("Icons not found in resources.");
-                }
 
-                SplitViewOpenPaneLength = settingsService.PanelLength;
-                WindowX = settingsService.WindowX;
-                WindowY = settingsService.WindowY;
-                WindowWidth = settingsService.WindowWidth;
-                WindowHeight = settingsService.WindowHeight;
-                opt.EnableEmailHyperlinks = settingsService.EnableEmailLinks;
-                opt.EnableHyperlinks = settingsService.EnableHyperinks;
-                opt.ConvertTabsToSpaces = settingsService.TabToSpaces;
-                opt.HighlightCurrentLine = settingsService.HighlightLine;
-                opt.IndentationSize = settingsService.IntendationSize;
-
-                IsFilteringEnabled = settingsService.EnableFiltering;
-                EnableBraceStyleFolding = settingsService.EnableBraceStyleFolding;
-                EnablePythonFolding = settingsService.EnablePythonFolding;
-                EnableXmlFolding = settingsService.EnableXmlFolding;
-                ShowEmptyLanguages = settingsService.ShowEmptyLanguages;
-                ShowEmptyCategories = settingsService.ShowEmptyCategories;
-
-            }
-            catch (InvalidOperationException ex)
+            _menuOpenIcon = Application.Current.Resources["MenuOpen"] as Geometry;
+            _menuCloseIcon = Application.Current.Resources["MenuClose"] as Geometry;
+            if (_menuOpenIcon == null || _menuCloseIcon == null)
             {
-                MessageBox.Show($"Error while starting the application:\n{ex.Message}");
+                throw new InvalidOperationException("Icons not found in resources.");
             }
-            catch (Exception ex)
-            {
-                MessageBox.Show($"Unexpected error:\n{ex.Message}");
-            }
+
+            SplitViewOpenPaneLength = settingsService.PanelLength;
+            WindowX = settingsService.WindowX;
+            WindowY = settingsService.WindowY;
+            WindowWidth = settingsService.WindowWidth;
+            WindowHeight = settingsService.WindowHeight;
+            opt.EnableEmailHyperlinks = settingsService.EnableEmailLinks;
+            opt.EnableHyperlinks = settingsService.EnableHyperinks;
+            opt.ConvertTabsToSpaces = settingsService.TabToSpaces;
+            opt.HighlightCurrentLine = settingsService.HighlightLine;
+            opt.IndentationSize = settingsService.IntendationSize;
+
+            IsFilteringEnabled = settingsService.EnableFiltering;
+            EnableBraceStyleFolding = settingsService.EnableBraceStyleFolding;
+            EnablePythonFolding = settingsService.EnablePythonFolding;
+            EnableXmlFolding = settingsService.EnableXmlFolding;
+            ShowEmptyLanguages = settingsService.ShowEmptyLanguages;
+            ShowEmptyCategories = settingsService.ShowEmptyCategories;
 
         }
         public async Task InitializeAsync()
