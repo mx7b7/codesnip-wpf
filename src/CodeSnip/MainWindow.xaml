@@ -52,8 +52,8 @@
     <mah:MetroWindow.InputBindings>
         <!-- F1 : Open About dialog -->
         <KeyBinding Key="F1" Command="{Binding RelativeSource={RelativeSource AncestorType=Window}, Path=OpenAboutCommand}" />
-        <!-- Ctrl+Shift + S : Save snippet code -->
-        <KeyBinding Key="S" Modifiers="Ctrl+Shift" Command="{Binding SaveCodeCommand}"/>
+        <!-- Ctrl + S : Save snippet code -->
+        <KeyBinding Key="S" Modifiers="Ctrl" Command="{Binding SaveCodeCommand}"/>
         <!-- Ctrl+Shift + A : Add new snippet -->
         <KeyBinding Key="A" Modifiers="Ctrl+Shift" Command="{Binding AddSnippetCommand}"/>
         <!-- Ctrl+Shift + E : Edit current cnippet metadata -->
@@ -228,7 +228,7 @@
                             <Path Data="{Binding OpenCloseIcon}" Fill="{DynamicResource MahApps.Brushes.AccentBase}"
                                  Width="20" Height="20" Stretch="Uniform" />
                         </Button>
-                        <Button  Command="{Binding SaveCodeCommand}" Margin="10,0,0,0" ToolTip="Save snippet&#xA;Ctrl+Shift+S">
+                        <Button  Command="{Binding SaveCodeCommand}" Margin="10,0,0,0" ToolTip="Save snippet&#xA;Ctrl+S">
                             <Path Data="{StaticResource Save}" Fill="{DynamicResource MahApps.Brushes.AccentBase}"
                              Width="20" Height="20" Stretch="Uniform" />
                         </Button>

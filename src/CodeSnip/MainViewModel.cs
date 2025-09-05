@@ -137,6 +137,7 @@ namespace CodeSnip
             ShowEmptyCategories = settingsService.ShowEmptyCategories;
 
         }
+
         public async Task InitializeAsync()
         {
             await Task.Run(() => _databaseService.InitializeDatabaseIfNeeded());
@@ -149,7 +150,7 @@ namespace CodeSnip
 
                 PopulateLanguagesCollection(languages);
 
-                if (settingsService.LastSnippet != null && settingsService.LoadOnStartup)
+                if (settingsService.LastSnippet != null)
                 {
                     RestoreSelectedSnippetState(settingsService.LastSnippet);
                 }
