@@ -3,7 +3,7 @@
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-         xmlns:mah="http://metro.mahapps.com/winfx/xaml/controls"
+        xmlns:mah="http://metro.mahapps.com/winfx/xaml/controls"
         xmlns:avalonEdit="http://icsharpcode.net/sharpdevelop/avalonedit"
         xmlns:behaviors="clr-namespace:Microsoft.Xaml.Behaviors;assembly=Microsoft.Xaml.Behaviors"
         xmlns:helpers="clr-namespace:CodeSnip.Helpers"
@@ -25,11 +25,11 @@
         Width="{Binding WindowWidth, Mode=TwoWay}" Height="{Binding WindowHeight, Mode=TwoWay}" >
     <!--WindowButtonCommandsOverlayBehavior="Never"-->
     <mah:MetroWindow.Resources>
-        
+
         <helpers:InverseBooleanConverter x:Key="InverseBooleanConverter" />
         <helpers:EnumToBooleanConverter x:Key="EnumToBooleanConverter" />
         <helpers:BoolToVisibilityConverter x:Key="BoolToVisibilityConverter" />
-        
+
         <DataTemplate DataType="{x:Type settingsView:SettingsViewModel}">
             <settingsView:SettingsView />
         </DataTemplate>
@@ -54,17 +54,17 @@
         <KeyBinding Key="F1" Command="{Binding RelativeSource={RelativeSource AncestorType=Window}, Path=OpenAboutCommand}" />
         <!-- Ctrl + S : Save snippet code -->
         <KeyBinding Key="S" Modifiers="Ctrl" Command="{Binding SaveCodeCommand}"/>
-        <!-- Ctrl+Shift + A : Add new snippet -->
+        <!-- Ctrl + A : Add new snippet -->
         <KeyBinding Key="A" Modifiers="Ctrl+Shift" Command="{Binding AddSnippetCommand}"/>
-        <!-- Ctrl+Shift + E : Edit current cnippet metadata -->
+        <!-- Ctrl + E : Edit current cnippet metadata -->
         <KeyBinding Key="E" Modifiers="Ctrl+Shift" Command="{Binding EditSnippetCommand}"/>
-        <!-- Ctrl+Shift + D : Delete current snippet -->
+        <!-- Ctrl + D : Delete current snippet -->
         <KeyBinding Key="D" Modifiers="Ctrl+Shift" Command="{Binding DeleteSnippetCommand}"/>
-        <!-- Ctrl+Shift + L : Open Language/Category management -->
+        <!-- Ctrl + L : Open Language/Category management -->
         <KeyBinding Key="L" Modifiers="Ctrl+Shift" Command="{Binding OpenLanguageCategoryCommand}"/>
-        <!-- Ctrl+Shift + P : Open application settings -->
+        <!-- Ctrl + P : Open application settings -->
         <KeyBinding Key="P" Modifiers="Ctrl+Shift" Command="{Binding OpenSettingsCommand}"/>
-        <!-- Ctrl+Shift + R : Open Code Runner window -->
+        <!-- Ctrl + R : Open Code Runner window -->
         <KeyBinding Key="R" Modifiers="Ctrl+Shift" Command="{Binding OpenCodeRunnerViewCommand}"/>
         <!-- Ctrl + K : Toggle Single-Line Comment -->
         <KeyBinding Key="K" Modifiers="Ctrl"
@@ -74,7 +74,7 @@
         <KeyBinding Key="K" Modifiers="Ctrl+Shift"
                 Command="{Binding RelativeSource={RelativeSource AncestorType=Window}, Path=ToggleMultiLineCommentCommand}" />
 
-        <!-- Ctrl + Shift + I : Toggle Inline Block Comment (selected text) -->
+        <!-- Ctrl + Shift + I : Toggle Inline Block Comment (samo selekcija) -->
         <KeyBinding Key="I" Modifiers="Ctrl+Shift"
                 Command="{Binding RelativeSource={RelativeSource AncestorType=Window}, Path=ToggleCommentSelectionCommand}" />
         <!--<KeyBinding Key="F" Modifiers="Ctrl" Command="{Binding SearchReplaceCommand}"/>-->
@@ -104,18 +104,47 @@
                PaneBackground="{x:Null}" CanResizeOpenPane="True" MaximumOpenPaneLength="600" >
             <mah:SplitView.Pane>
                 <Grid>
-                    <GroupBox Header="Snippets" Margin="0,0,2,0">
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="Auto"/>
+                        <!-- Search expander -->
+                        <RowDefinition Height="*"/>
+                        <!-- Snippets expander -->
+                    </Grid.RowDefinitions>
+                    <Expander Header="Search" Grid.Row="0" IsExpanded="False" Margin="0,0,2,3">
+                        <Grid Margin="0,10,0,0" VerticalAlignment="Center">
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="Auto" />
+                                <!-- RadioButton "by Name" -->
+                                <ColumnDefinition Width="Auto" />
+                                <!-- RadioButton "by Tag" -->
+                                <ColumnDefinition Width="10" />
+                                <!-- Razmak -->
+                                <ColumnDefinition Width="*" />
+                                <!-- TextBox za filter -->
+                            </Grid.ColumnDefinitions>
+                            <RadioButton x:Name="rbName" Content="Name" GroupName="FilterMode"
+                                        Grid.Column="0" VerticalAlignment="Center" ToolTip="Search by Name"
+                                        IsChecked="{Binding FilterMode, Converter={StaticResource EnumToBooleanConverter}, ConverterParameter=Name}" />
+                            <RadioButton x:Name="rbTag" Content="Tag" Grid.Column="1" Margin="10,0,0,0"  GroupName="FilterMode"
+                                         VerticalAlignment="Center"  ToolTip="Search by Tag"
+                                        IsChecked="{Binding FilterMode, Converter={StaticResource EnumToBooleanConverter}, ConverterParameter=Tag}" />
+                            <TextBox x:Name="txtFilter" mah:TextBoxHelper.Watermark="Search snippets..." 
+                                     Grid.Column="3" VerticalAlignment="Center"
+                                     IsEnabled="{Binding IsFilteringEnabled, Mode=TwoWay}"
+                                     Text="{Binding FilterText, UpdateSourceTrigger=PropertyChanged}" />
+                        </Grid>
+                    </Expander>
+                    <Expander Header="Snippets" Grid.Row="1" IsExpanded="True" Margin="0,0,2,0">
                         <Grid>
                             <Grid.RowDefinitions>
                                 <RowDefinition Height="*"/>
                                 <!-- TreeView -->
                                 <RowDefinition Height="Auto"/>
-                                <!-- Kontrole ispod TreeView-a -->
-                                <RowDefinition Height="Auto"/>
+                                <!-- Snippets metadata expander -->
                             </Grid.RowDefinitions>
                             <TreeView x:Name="treeSnippets"  Grid.Row="0"
                                  ItemsSource="{Binding Languages}"
-                                 SelectedItemChanged="TreeView_SelectedItemChanged" >
+                                 SelectedItemChanged="TreeView_SelectedItemChanged">
                                 <TreeView.Resources>
                                     <!-- Ikona za jezik -->
                                     <Geometry x:Key="LanguageIcon">M9,15h6m-3,3V12M14,2v6h6M14,2H6A2,2 0 0 0 4,4v16a2,2 0 0 0 2,2h12a2,2 0 0 0 2,-2V8Z</Geometry>
@@ -160,56 +189,32 @@
                                 </TreeView.ItemTemplate>
                             </TreeView>
                             <!-- Kontrole ispod TreeView-a -->
-                            <Grid Grid.Row="1" Margin="0,10,0,0">
-                                <Grid.RowDefinitions>
-                                    <RowDefinition Height="Auto"/>
-                                    <!-- Labela Description -->
-                                    <RowDefinition Height="*"/>
-                                    <!-- TextBox za Description -->
-                                    <RowDefinition Height="Auto"/>
-                                    <!-- Labela Tag -->
-                                    <RowDefinition Height="Auto"/>
-                                    <!-- TextBox za Tag -->
-                                    <RowDefinition Height="Auto"/>
-                                    <!-- RadioButtons i Filter -->
-                                </Grid.RowDefinitions>
-                                <!-- Description label -->
-                                <TextBlock Text="Description:" Margin="0,5,0,5" Grid.Row="0" />
-                                <!-- Description TextBox koji se rasteže -->
-                                <TextBox x:Name="txtDescription" Grid.Row="1" TextWrapping="Wrap" 
+                            <Expander Header="Snippet Metadata" Grid.Row="1" IsExpanded="False" Margin="0,10,0,0">
+                                <Grid>
+                                    <Grid.RowDefinitions>
+                                        <RowDefinition Height="Auto"/>
+                                        <!-- Labela Description -->
+                                        <RowDefinition Height="*"/>
+                                        <!-- TextBox za Description -->
+                                        <RowDefinition Height="Auto"/>
+                                        <!-- Labela Tag -->
+                                        <RowDefinition Height="Auto"/>
+                                        <!-- TextBox za Tag -->
+                                    </Grid.RowDefinitions>
+                                    <!-- Description label -->
+                                    <TextBlock Text="Description:" Margin="0,5,0,5" Grid.Row="0" />
+                                    <!-- Description TextBox koji se rasteže -->
+                                    <TextBox x:Name="txtDescription" Grid.Row="1" TextWrapping="Wrap" 
                                     VerticalScrollBarVisibility="Auto"  Height="80" IsReadOnly="True"
                                           Text="{Binding SelectedSnippet.Description}" Focusable="False"/>
-                                <!-- Tag label -->
-                                <TextBlock Text="Tag:" Margin="0,10,0,5" Grid.Row="2" />
-                                <!-- Tag TextBox -->
-                                <TextBox x:Name="txtTag" Grid.Row="3" Text="{Binding SelectedSnippet.Tag}" IsReadOnly="True" Focusable="False"/>
-                                <!-- RadioButtons i Filter -->
-                                <Grid Margin="0,10,0,0" VerticalAlignment="Center" Grid.Row="4">
-                                    <Grid.ColumnDefinitions>
-                                        <ColumnDefinition Width="Auto" />
-                                        <!-- RadioButton "by Name" -->
-                                        <ColumnDefinition Width="Auto" />
-                                        <!-- RadioButton "by Tag" -->
-                                        <ColumnDefinition Width="10" />
-                                        <!-- Razmak -->
-                                        <ColumnDefinition Width="*" />
-                                        <!-- TextBox za filter -->
-                                    </Grid.ColumnDefinitions>
-
-                                    <RadioButton x:Name="rbName" Content="by Name" GroupName="FilterMode"
-                                                 Grid.Column="0" VerticalAlignment="Center" ToolTip="Search by Name"
-                                                 IsChecked="{Binding FilterMode, Converter={StaticResource EnumToBooleanConverter}, ConverterParameter=Name}" />
-                                    <RadioButton x:Name="rbTag" Content="by Tag" Grid.Column="1" Margin="10,0,0,0"  GroupName="FilterMode"
-                                                 VerticalAlignment="Center"  ToolTip="Search by Tag"
-                                                 IsChecked="{Binding FilterMode, Converter={StaticResource EnumToBooleanConverter}, ConverterParameter=Tag}" />
-                                    <TextBox x:Name="txtFilter" mah:TextBoxHelper.Watermark="Search snippets..." 
-                                         Grid.Column="3" VerticalAlignment="Center"
-                                             IsEnabled="{Binding IsFilteringEnabled, Mode=TwoWay}"
-                                             Text="{Binding FilterText, UpdateSourceTrigger=PropertyChanged}" />
+                                    <!-- Tag label -->
+                                    <TextBlock Text="Tag:" Margin="0,10,0,5" Grid.Row="2" />
+                                    <!-- Tag TextBox -->
+                                    <TextBox x:Name="txtTag" Grid.Row="3" Text="{Binding SelectedSnippet.Tag}" IsReadOnly="True" Focusable="False"/>
                                 </Grid>
-                            </Grid>
+                            </Expander>
                         </Grid>
-                    </GroupBox>
+                    </Expander>
                 </Grid>
             </mah:SplitView.Pane>
             <Grid>
@@ -221,7 +226,6 @@
                     <RowDefinition Height="Auto" />
                     <!-- Status bar -->
                 </Grid.RowDefinitions>
-                <!--<StackPanel Grid.Row="0" Orientation="Horizontal">-->
                 <ToolBarTray Grid.Row="0">
                     <ToolBar x:Name="toolbarMain" Height="40" >
                         <Button Command="{Binding TogglePanelCommand}" ToolTip="Collapse/Expand">
@@ -279,7 +283,7 @@
                             <Path Data="{StaticResource ZoomOutMap}" Fill="{DynamicResource MahApps.Brushes.AccentBase}"
                                   Width="20" Height="20" Stretch="Uniform" />
                         </Button>
-                        <Button Margin="5,0,0,0" ToolTip="Search-Replace&#xA;Ctrl+F"  Command="{Binding SearchReplaceCommand}" >
+                        <Button Margin="5,0,0,0" ToolTip="Search / Replace"  Command="{Binding SearchReplaceCommand}" >
                             <Path Data="{StaticResource TextSearch}" Fill="{DynamicResource MahApps.Brushes.AccentBase}"
                                  Width="20" Height="20" Stretch="Uniform" />
                         </Button>
@@ -299,7 +303,6 @@
 
                     </ToolBar>
                 </ToolBarTray>
-                <!--</StackPanel>-->
                 <avalonEdit:TextEditor
 				x:Name="textEditor"
                 Grid.Row="1"
