@@ -54,17 +54,17 @@
         <KeyBinding Key="F1" Command="{Binding RelativeSource={RelativeSource AncestorType=Window}, Path=OpenAboutCommand}" />
         <!-- Ctrl + S : Save snippet code -->
         <KeyBinding Key="S" Modifiers="Ctrl" Command="{Binding SaveCodeCommand}"/>
-        <!-- Ctrl + A : Add new snippet -->
+        <!-- Ctrll+Shift + A : Add new snippet -->
         <KeyBinding Key="A" Modifiers="Ctrl+Shift" Command="{Binding AddSnippetCommand}"/>
-        <!-- Ctrl + E : Edit current cnippet metadata -->
+        <!-- Ctrll+Shift + E : Edit current cnippet metadata -->
         <KeyBinding Key="E" Modifiers="Ctrl+Shift" Command="{Binding EditSnippetCommand}"/>
-        <!-- Ctrl + D : Delete current snippet -->
+        <!-- Ctrll+Shift + D : Delete current snippet -->
         <KeyBinding Key="D" Modifiers="Ctrl+Shift" Command="{Binding DeleteSnippetCommand}"/>
-        <!-- Ctrl + L : Open Language/Category management -->
+        <!-- Ctrll+Shift + L : Open Language/Category management -->
         <KeyBinding Key="L" Modifiers="Ctrl+Shift" Command="{Binding OpenLanguageCategoryCommand}"/>
-        <!-- Ctrl + P : Open application settings -->
+        <!-- Ctrll+Shift + P : Open application settings -->
         <KeyBinding Key="P" Modifiers="Ctrl+Shift" Command="{Binding OpenSettingsCommand}"/>
-        <!-- Ctrl + R : Open Code Runner window -->
+        <!-- Ctrll+Shift + R : Open Code Runner window -->
         <KeyBinding Key="R" Modifiers="Ctrl+Shift" Command="{Binding OpenCodeRunnerViewCommand}"/>
         <!-- Ctrl + K : Toggle Single-Line Comment -->
         <KeyBinding Key="K" Modifiers="Ctrl"
@@ -110,7 +110,8 @@
                         <RowDefinition Height="*"/>
                         <!-- Snippets expander -->
                     </Grid.RowDefinitions>
-                    <Expander Header="Search" Grid.Row="0" IsExpanded="False" Margin="0,0,2,3">
+                    <Expander Header="Search" Grid.Row="0" Margin="0,0,2,3"
+                              IsExpanded="{Binding IsSearchExpanded, Mode=TwoWay}">
                         <Grid Margin="0,10,0,0" VerticalAlignment="Center">
                             <Grid.ColumnDefinitions>
                                 <ColumnDefinition Width="Auto" />
@@ -134,7 +135,8 @@
                                      Text="{Binding FilterText, UpdateSourceTrigger=PropertyChanged}" />
                         </Grid>
                     </Expander>
-                    <Expander Header="Snippets" Grid.Row="1" IsExpanded="True" Margin="0,0,2,0">
+                    <Expander Header="Snippets" Grid.Row="1" Margin="0,0,2,0"
+                              IsExpanded="{Binding IsSnippetsExpanded, Mode=TwoWay}">
                         <Grid>
                             <Grid.RowDefinitions>
                                 <RowDefinition Height="*"/>
@@ -189,7 +191,8 @@
                                 </TreeView.ItemTemplate>
                             </TreeView>
                             <!-- Kontrole ispod TreeView-a -->
-                            <Expander Header="Snippet Metadata" Grid.Row="1" IsExpanded="False" Margin="0,10,0,0">
+                            <Expander Header="Snippet Metadata" Grid.Row="1" Margin="0,10,0,0"
+                                      IsExpanded="{Binding IsSnippetMetadataExpanded, Mode=TwoWay}">
                                 <Grid>
                                     <Grid.RowDefinitions>
                                         <RowDefinition Height="Auto"/>

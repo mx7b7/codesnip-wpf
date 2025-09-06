@@ -12,6 +12,9 @@
         public int PanelLength { get; set; } = 350;
         public bool ShowEmptyLanguages { get; set; } = false;
         public bool ShowEmptyCategories { get; set; } = false;
+        public bool IsSearchExpanded { get; set; } = false;
+        public bool IsSnippetsExpanded { get; set; } = true;
+        public bool IsSnippetMetadataExpanded { get; set; } = false;
     }
 
     public class EditorSettings

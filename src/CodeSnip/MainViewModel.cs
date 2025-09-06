@@ -78,6 +78,15 @@ namespace CodeSnip
         private double _windowHeight = 600;
 
         [ObservableProperty]
+        private bool _isSearchExpanded = false;
+
+        [ObservableProperty]
+        private bool _isSnippetsExpanded = true;
+
+        [ObservableProperty]
+        private bool _isSnippetMetadataExpanded = true;
+
+        [ObservableProperty]
         private string _filterText = string.Empty;
 
         [ObservableProperty]
@@ -123,6 +132,9 @@ namespace CodeSnip
             WindowY = settingsService.WindowY;
             WindowWidth = settingsService.WindowWidth;
             WindowHeight = settingsService.WindowHeight;
+            IsSearchExpanded = settingsService.IsSearchExpanded;
+            IsSnippetsExpanded = settingsService.IsSnippetsExpanded;
+            IsSnippetMetadataExpanded = settingsService.IsSnippetMetadataExpanded;
             opt.EnableEmailHyperlinks = settingsService.EnableEmailLinks;
             opt.EnableHyperlinks = settingsService.EnableHyperinks;
             opt.ConvertTabsToSpaces = settingsService.TabToSpaces;
@@ -612,6 +624,9 @@ namespace CodeSnip
             settingsService.WindowHeight = (int)WindowHeight;
             settingsService.PanelLength = (int)SplitViewOpenPaneLength;
             settingsService.LastSnippet = SaveSelectedSnippetState();
+            settingsService.IsSearchExpanded = IsSearchExpanded;
+            settingsService.IsSnippetsExpanded = IsSnippetsExpanded;
+            settingsService.IsSnippetMetadataExpanded = IsSnippetMetadataExpanded;
             var theme = ThemeManager.Current.DetectTheme(Application.Current);
             if (theme != null)
             {

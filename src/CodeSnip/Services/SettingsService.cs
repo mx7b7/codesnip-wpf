@@ -57,6 +57,21 @@ namespace CodeSnip.Services
             get => _settings.MainWindow.PanelLength;
             set => _settings.MainWindow.PanelLength = value;
         }
+        public bool IsSearchExpanded
+        {
+            get => _settings.MainWindow.IsSearchExpanded;
+            set => _settings.MainWindow.IsSearchExpanded = value;
+        }
+        public bool IsSnippetsExpanded
+        {
+            get => _settings.MainWindow.IsSnippetsExpanded;
+            set => _settings.MainWindow.IsSnippetsExpanded = value;
+        }
+        public bool IsSnippetMetadataExpanded
+        {
+            get => _settings.MainWindow.IsSnippetMetadataExpanded;
+            set => _settings.MainWindow.IsSnippetMetadataExpanded = value;
+        }
 
         public bool TabToSpaces
         {
