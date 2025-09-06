@@ -57,20 +57,23 @@ namespace CodeSnip.Services
             get => _settings.MainWindow.PanelLength;
             set => _settings.MainWindow.PanelLength = value;
         }
+
         public bool IsSearchExpanded
         {
             get => _settings.MainWindow.IsSearchExpanded;
             set => _settings.MainWindow.IsSearchExpanded = value;
         }
-        public bool IsSnippetsExpanded
-        {
-            get => _settings.MainWindow.IsSnippetsExpanded;
-            set => _settings.MainWindow.IsSnippetsExpanded = value;
-        }
+        
         public bool IsSnippetMetadataExpanded
         {
             get => _settings.MainWindow.IsSnippetMetadataExpanded;
             set => _settings.MainWindow.IsSnippetMetadataExpanded = value;
+        }
+
+        public WindowState WindowState
+        {
+            get => _settings.MainWindow.WindowState;
+            set => _settings.MainWindow.WindowState = value;
         }
 
         public bool TabToSpaces
@@ -84,6 +87,7 @@ namespace CodeSnip.Services
             get => _settings.Editor.EnableEmailLinks;
             set => _settings.Editor.EnableEmailLinks = value;
         }
+        
         public bool EnableHyperinks
         {
             get => _settings.Editor.EnableHyperinks;
@@ -94,16 +98,19 @@ namespace CodeSnip.Services
             get => _settings.Editor.HighlightLine;
             set => _settings.Editor.HighlightLine = value;
         }
+        
         public int IntendationSize
         {
             get => _settings.Editor.IntendationSize;
             set => _settings.Editor.IntendationSize = value;
         }
+
         public bool EnableBraceStyleFolding
         {
             get => _settings.Editor.EnableBraceStyleFolding;
             set => _settings.Editor.EnableBraceStyleFolding = value;
         }
+
         public bool EnablePythonFolding
         {
             get => _settings.Editor.EnablePythonFolding;
@@ -114,11 +121,13 @@ namespace CodeSnip.Services
             get => _settings.Editor.EnableXmlFolding;
             set => _settings.Editor.EnableXmlFolding = value;
         }
+
         public bool ShowEmptyLanguages
         {
             get => _settings.MainWindow.ShowEmptyLanguages;
             set => _settings.MainWindow.ShowEmptyLanguages = value;
         }
+
         public bool ShowEmptyCategories
         {
             get => _settings.MainWindow.ShowEmptyCategories;
@@ -130,6 +139,7 @@ namespace CodeSnip.Services
             get => _settings.Theme.BaseColor;
             set => _settings.Theme.BaseColor = value;
         }
+
         public string AccentColor
         {
             get => _settings.Theme.Accent;

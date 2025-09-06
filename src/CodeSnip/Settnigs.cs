@@ -1,4 +1,6 @@
-﻿namespace CodeSnip
+﻿using System.Windows;
+
+namespace CodeSnip
 {
     public class MainWindowSettings
     {
@@ -13,8 +15,8 @@
         public bool ShowEmptyLanguages { get; set; } = false;
         public bool ShowEmptyCategories { get; set; } = false;
         public bool IsSearchExpanded { get; set; } = false;
-        public bool IsSnippetsExpanded { get; set; } = true;
         public bool IsSnippetMetadataExpanded { get; set; } = false;
+        public WindowState WindowState { get; set; } = WindowState.Normal;
     }
 
     public class EditorSettings

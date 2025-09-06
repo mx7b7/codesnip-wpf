@@ -66,10 +66,10 @@ namespace CodeSnip
         private double _splitViewOpenPaneLength = 350;
 
         [ObservableProperty]
-        private double _windowX = 100;
+        private double _windowX = 0;
 
         [ObservableProperty]
-        private double _windowY = 100;
+        private double _windowY = 0;
 
         [ObservableProperty]
         private double _windowWidth = 800;
@@ -79,9 +79,6 @@ namespace CodeSnip
 
         [ObservableProperty]
         private bool _isSearchExpanded = false;
-
-        [ObservableProperty]
-        private bool _isSnippetsExpanded = true;
 
         [ObservableProperty]
         private bool _isSnippetMetadataExpanded = true;
@@ -106,6 +103,9 @@ namespace CodeSnip
 
         [ObservableProperty]
         private bool _showEmptyCategories = false;
+
+        [ObservableProperty]
+        public WindowState _windowState = WindowState.Normal;
 
         public enum SnippetFilterMode
         {
@@ -133,8 +133,8 @@ namespace CodeSnip
             WindowWidth = settingsService.WindowWidth;
             WindowHeight = settingsService.WindowHeight;
             IsSearchExpanded = settingsService.IsSearchExpanded;
-            IsSnippetsExpanded = settingsService.IsSnippetsExpanded;
             IsSnippetMetadataExpanded = settingsService.IsSnippetMetadataExpanded;
+            WindowState = settingsService.WindowState;
             opt.EnableEmailHyperlinks = settingsService.EnableEmailLinks;
             opt.EnableHyperlinks = settingsService.EnableHyperinks;
             opt.ConvertTabsToSpaces = settingsService.TabToSpaces;
@@ -618,15 +618,18 @@ namespace CodeSnip
 
         private void SaveSettings()
         {
-            settingsService.WindowX = (int)WindowX;
-            settingsService.WindowY = (int)WindowY;
-            settingsService.WindowWidth = (int)WindowWidth;
-            settingsService.WindowHeight = (int)WindowHeight;
             settingsService.PanelLength = (int)SplitViewOpenPaneLength;
             settingsService.LastSnippet = SaveSelectedSnippetState();
             settingsService.IsSearchExpanded = IsSearchExpanded;
-            settingsService.IsSnippetsExpanded = IsSnippetsExpanded;
             settingsService.IsSnippetMetadataExpanded = IsSnippetMetadataExpanded;
+            settingsService.WindowState = WindowState;
+            if (WindowState == WindowState.Normal)
+            {
+                settingsService.WindowX = (int)WindowX;
+                settingsService.WindowY = (int)WindowY;
+                settingsService.WindowWidth = (int)WindowWidth;
+                settingsService.WindowHeight = (int)WindowHeight;
+            }
             var theme = ThemeManager.Current.DetectTheme(Application.Current);
             if (theme != null)
             {
