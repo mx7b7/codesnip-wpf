@@ -54,7 +54,8 @@ namespace CodeSnip.Views.AboutView
             Title = assembly.GetCustomAttribute<AssemblyTitleAttribute>()?.Title ?? "Unknown";
             Description = assembly.GetCustomAttribute<AssemblyDescriptionAttribute>()?.Description ?? string.Empty;
             Company = assembly.GetCustomAttribute<AssemblyCompanyAttribute>()?.Company ?? string.Empty;
-            Version = assembly.GetName().Version?.ToString() ?? "1.0.0";
+            var version = assembly.GetName().Version;
+            Version = version != null ? $"{version.Major}.{version.Minor}.{version.Build}" : "1.0.0";
             Copyright = assembly.GetCustomAttribute<AssemblyCopyrightAttribute>()?.Copyright ?? string.Empty;
         }
     }
