@@ -210,7 +210,7 @@
                                     VerticalScrollBarVisibility="Auto"  Height="80" IsReadOnly="True"
                                           Text="{Binding SelectedSnippet.Description}" Focusable="False"/>
                                     <!-- Tag label -->
-                                    <TextBlock Text="Tag:" Margin="0,10,0,5" Grid.Row="2" />
+                                    <TextBlock Text="Tags:" Margin="0,10,0,5" Grid.Row="2" />
                                     <!-- Tag TextBox -->
                                     <TextBox x:Name="txtTag" Grid.Row="3" Text="{Binding SelectedSnippet.Tag}" IsReadOnly="True" Focusable="False"/>
                                 </Grid>
