@@ -81,7 +81,10 @@ namespace CodeSnip
         private bool _isSearchExpanded = false;
 
         [ObservableProperty]
-        private bool _isSnippetMetadataExpanded = true;
+        private bool _isSnippetsExpanded = true;
+
+        [ObservableProperty]
+        private bool _isSnippetMetadataExpanded = false;
 
         [ObservableProperty]
         private string _filterText = string.Empty;
@@ -197,6 +200,15 @@ namespace CodeSnip
         {
             textEditor.Options = opt;
             _searchReplacePanel = SearchReplacePanel.Install(textEditor);
+        }
+
+        partial void OnIsSearchExpandedChanged(bool value)
+        {
+            // If expanding the search panel, also ensure snippets panel is expanded
+            if (value)
+            {
+                IsSnippetsExpanded = true;
+            }
         }
 
         partial void OnFilterTextChanged(string? oldValue, string newValue)
