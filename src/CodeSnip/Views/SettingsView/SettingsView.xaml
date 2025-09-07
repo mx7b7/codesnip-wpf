@@ -20,7 +20,7 @@
         <!-- Appearance Tab -->
         <mah:MetroTabItem Header="Appearance">
             <ScrollViewer Margin="10,0,0,0" VerticalScrollBarVisibility="Auto" HorizontalScrollBarVisibility="Auto">
-                <Grid>
+                <Grid HorizontalAlignment="Center" VerticalAlignment="Top">
                     <Grid.RowDefinitions>
                         <RowDefinition Height="Auto" />
                         <RowDefinition Height="Auto" />
@@ -57,7 +57,7 @@
         <!-- Application settings Tab -->
         <mah:MetroTabItem Header="Application">
             <ScrollViewer Margin="10,0,0,0" VerticalScrollBarVisibility="Auto" HorizontalScrollBarVisibility="Auto">
-                <StackPanel>
+                <StackPanel HorizontalAlignment="Center" VerticalAlignment="Top">
                     <CheckBox Content="Load snippets on startup" Margin="0,8,0,0"
                               IsChecked="{Binding LoadOnStartup, Mode=TwoWay}" />
                     <CheckBox Content="Enable filtering" Margin="0,8,0,0"
@@ -73,7 +73,7 @@
         <!-- Editor settings Tab -->
         <mah:MetroTabItem Header="Editor">
             <ScrollViewer Margin="10,0,0,0" VerticalScrollBarVisibility="Auto" HorizontalScrollBarVisibility="Auto">
-                <StackPanel HorizontalAlignment="Left">
+                <StackPanel HorizontalAlignment="Center" VerticalAlignment="Top">
                     <CheckBox Content="Convert tabs to spaces" Margin="0,8,0,0"
                               IsChecked="{Binding TabToSpaces, Mode=TwoWay}" />
                     <CheckBox Content="Enable email hyperlinks" Margin="0,8,0,0"
@@ -82,10 +82,13 @@
                               IsChecked="{Binding HyperLinks, Mode=TwoWay}" />
                     <CheckBox Content="Highlight current line" Margin="0,8,0,0"
                               IsChecked="{Binding HighlightLine, Mode=TwoWay}" />
-                    <TextBlock Text="Indentation size:" Margin="0,10,0,0"/>
-                    <mah:NumericUpDown Maximum="10" Minimum="1" NumericInputMode="Numbers" Margin="0,5,0,0"
-                                       ParsingNumberStyle="Integer" TextAlignment="Center" Width="150"
-                                       Value="{Binding IntendationSize, Mode=TwoWay}" />
+                    <StackPanel Orientation="Horizontal" Margin="0,8,0,0" VerticalAlignment="Center" HorizontalAlignment="Center">
+                        <TextBlock Text="Indentation size:" />
+                        <mah:NumericUpDown Maximum="10" Minimum="1" NumericInputMode="Numbers" Margin="5,0,0,0"
+                            ParsingNumberStyle="Integer" TextAlignment="Center" Width="70"
+                            Value="{Binding IntendationSize, Mode=TwoWay}" />
+                    </StackPanel>
+
                     <TextBlock Text="Folding:" FontWeight="Bold" Margin="0,10,0,0"/>
                     <CheckBox Content="Enable Brace Style Folding" Margin="0,8,0,0" ToolTip="C#,C++,Java..."
                               IsChecked="{Binding EnableBraceStyleFolding, Mode=TwoWay}" />
@@ -99,11 +102,11 @@
         <!-- Database settings Tab -->
         <mah:MetroTabItem Header="Database">
             <ScrollViewer Margin="10,0,0,0" VerticalScrollBarVisibility="Auto" HorizontalScrollBarVisibility="Auto">
-                <StackPanel>
+                <StackPanel HorizontalAlignment="Center" VerticalAlignment="Top">
                     <mah:Badged Badge="{Binding IntegrityCheckBadge}" BadgePlacementMode="TopRight"  Margin="0,20,20,20"
                                 BadgeBackground="{Binding IntegrityCheckBadge, Converter={StaticResource ResultToBrushConverter}}">
                         <!--<Button Content="Integrity Check" Command="{Binding IntegrityCheckCommand}" Width="150" />-->
-                        <Button Command="{Binding IntegrityCheckCommand}" Width="150" Height="30">
+                        <Button Command="{Binding IntegrityCheckCommand}" Width="150" Height="30" IsTabStop="False">
                             <StackPanel Orientation="Horizontal" VerticalAlignment="Center" HorizontalAlignment="Center" >
                                 <Path Data="{StaticResource DatabaseCheck}" Fill="{DynamicResource MahApps.Brushes.AccentBase}"
                                       Width="16" Height="16" Stretch="Uniform" />
@@ -115,7 +118,7 @@
                     <mah:Badged Badge="{Binding VacuumBadge}" BadgePlacementMode="TopRight" Margin="0,0,20,20"
                                 BadgeBackground="{Binding VacuumBadge, Converter={StaticResource ResultToBrushConverter}}">
                         <!--<Button Content="Vacuum Database" Command="{Binding VacuumCommand}" Width="150" />-->
-                        <Button Command="{Binding VacuumCommand}" Width="150" Height="30">
+                        <Button Command="{Binding VacuumCommand}" Width="150" Height="30" IsTabStop="False">
                             <StackPanel Orientation="Horizontal" VerticalAlignment="Center" HorizontalAlignment="Center" >
                                 <Path Data="{StaticResource DatabaseFillGear}" Fill="{DynamicResource MahApps.Brushes.AccentBase}"
                                  Width="16" Height="16" Stretch="Uniform" />
@@ -128,7 +131,7 @@
                     <mah:Badged Badge="{Binding ReindexBadge}" BadgePlacementMode="TopRight" Margin="0,0,20,20"
                                 BadgeBackground="{Binding ReindexBadge, Converter={StaticResource ResultToBrushConverter}}">
                         <!--<Button Content="Reindex Database" Command="{Binding ReindexCommand}" Width="150" />-->
-                        <Button Command="{Binding ReindexCommand}" Width="150" Height="30">
+                        <Button Command="{Binding ReindexCommand}" Width="150" Height="30" IsTabStop="False">
                             <StackPanel Orientation="Horizontal" VerticalAlignment="Center" HorizontalAlignment="Center" >
                                 <Path Data="{StaticResource DatabaseFillGear}" Fill="{DynamicResource MahApps.Brushes.AccentBase}"
                                   Width="16" Height="16" Stretch="Uniform" />
@@ -141,7 +144,7 @@
                     <mah:Badged Badge="{Binding BackupBadge}" BadgePlacementMode="TopRight" Margin="0,0,20,20"
                         BadgeBackground="{Binding BackupBadge, Converter={StaticResource ResultToBrushConverter}}">
                         <!--<Button Content="Backup Database" Command="{Binding BackupCommand}" Width="150" />-->
-                        <Button Command="{Binding BackupCommand}" Width="150" Height="30">
+                        <Button Command="{Binding BackupCommand}" Width="150" Height="30" IsTabStop="False">
                             <StackPanel Orientation="Horizontal" VerticalAlignment="Center" HorizontalAlignment="Center" >
                                 <Path Data="{StaticResource DatabaseExport}" Fill="{DynamicResource MahApps.Brushes.AccentBase}"
                                   Width="16" Height="16" Stretch="Uniform" />
