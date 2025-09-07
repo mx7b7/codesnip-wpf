@@ -120,8 +120,8 @@ namespace CodeSnip
         {
             _flyoutService = flyoutService;
 
-            _menuOpenIcon = Application.Current.Resources["MenuOpen"] as Geometry;
-            _menuCloseIcon = Application.Current.Resources["MenuClose"] as Geometry;
+            _menuOpenIcon = Application.Current.Resources["MenuOpen2"] as Geometry;
+            _menuCloseIcon = Application.Current.Resources["MenuClose2"] as Geometry;
             if (_menuOpenIcon == null || _menuCloseIcon == null)
             {
                 throw new InvalidOperationException("Icons not found in resources.");
@@ -644,7 +644,7 @@ namespace CodeSnip
             get
             {
                 return (_menuOpenIcon != null && _menuCloseIcon != null)
-                    ? (IsPaneOpen ? _menuCloseIcon! : _menuOpenIcon!)
+                    ? (IsPaneOpen ? _menuOpenIcon! : _menuCloseIcon!)
                     : null;
             }
         }
