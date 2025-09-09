@@ -32,6 +32,9 @@ namespace CodeSnip.Views.CodeRunnerView
         private string _errorText = "";
 
         [ObservableProperty]
+        private string _asmCode = "";
+
+        [ObservableProperty]
         private string _code = "";
 
         [ObservableProperty]
@@ -79,16 +82,19 @@ namespace CodeSnip.Views.CodeRunnerView
         private async Task CompileSnippetAsync()
         {
             string? langId = _compilersSettings.GetLanguageIdByExtension(Extension); // godbolt languageId (c++, csharp ...)
-            var (stdout, stderr, error) = await _godboltService.CompileAndRunAsync(
+            // Set skipAsm to false to get both execution output and assembler
+            var (stdout, stderr, asm, error) = await _godboltService.CompileAndRunAsync(
                 Code, SelectedCompiler?.Id ?? "", langId ?? "", Flags, true);
 
             Stdout = string.IsNullOrEmpty(stdout) ? "" : stdout;
             ErrorText = RemoveAnsiCodes(stderr);
+            AsmCode = string.IsNullOrEmpty(asm) ? "No assembler output." : asm; //temporary for testing
 
             if (!string.IsNullOrEmpty(error))
             {
                 ErrorText = error;
                 Stdout = "";
+                AsmCode = "";
             }
         }
 

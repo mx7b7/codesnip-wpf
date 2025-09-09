@@ -5,7 +5,6 @@ using System.Net.Http.Json;
 using System.Text;
 using System.Text.Json;
 using System.Text.Json.Serialization;
-using System.Text.RegularExpressions;
 
 namespace CodeSnip.Services
 {
@@ -23,7 +22,7 @@ namespace CodeSnip.Services
             );
         }
 
-        public async Task<(string Stdout, string Stderr, string? ErrorMessage)> CompileAndRunAsync(
+        public async Task<(string Stdout, string Stderr, string? Asm, string? ErrorMessage)> CompileAndRunAsync(
     string sourceCode, string compilerId, string lang, string userArgs = "", bool skipAsm = true)
         {
             try
@@ -44,7 +43,16 @@ namespace CodeSnip.Services
                         Filters = new Filters
                         {
                             Execute = true,
-                            Intel = true
+                            Intel = true,
+                            Labels = true,
+                            DebugCalls = false,
+                            Binary = false,
+                            CommentOnly = true,
+                            Demangle = true,
+                            Trim = false,
+                            BinaryObject = false,
+                            Directives = true,
+                            LibraryCode = false
                         }
                     }
                 };
@@ -55,55 +63,78 @@ namespace CodeSnip.Services
                 if (!response.IsSuccessStatusCode)
                 {
                     var errBody = await response.Content.ReadAsStringAsync();
-                    return ("", "", $"HTTP Error {response.StatusCode}: {errBody}");
+                    return ("", "", null, $"HTTP Error {response.StatusCode}: {errBody}");
                 }
                 var json = await response.Content.ReadAsStringAsync();
                 if (string.IsNullOrWhiteSpace(json))
-                    return ("", "", "Godbolt API vratio je prazan odgovor.");
+                    return ("", "", null, "Godbolt API vratio je prazan odgovor.");
 
                 var options = new JsonSerializerOptions { PropertyNameCaseInsensitive = true };
                 var resp = JsonSerializer.Deserialize<GodboltResponse>(json, options);
                 if (resp == null)
-                    return ("", "", "Neočekivan format odgovora (nije moguće parsirati JSON).");
+                    return ("", "", null, "Neočekivan format odgovora (nije moguće parsirati JSON).");
 
-                var (stdout, stderr) = ParseOutputs(resp);
-                return (stdout, stderr, null); // null means no error
+                var (stdout, stderr, asmList) = ParseOutputs(resp);
+                string? asm = asmList != null
+                    ? string.Join(Environment.NewLine, asmList.Select(a => a.Text))
+                    : null;
+
+                return (stdout, stderr, asm, null);
             }
             catch (Exception ex)
             {
-                return ("", "", $"Error:\n {ex.Message}");
+                return ("", "", null, $"Error:\n {ex.Message}");
             }
         }
 
-        public static (string Stdout, string Stderr) ParseOutputs(GodboltResponse resp)
+        public static (string Stdout, string Stderr, List<AsmLine>? Asm) ParseOutputs(GodboltResponse resp)
         {
-            // User program output – prefer root stdout, fallback to buildResult.stdout
-            string stdout = resp.Stdout != null && resp.Stdout.Count > 0
-                ? string.Join(Environment.NewLine, resp.Stdout.Select(s => s.Text))
-                : (
-                    resp.BuildResult?.Stdout != null && resp.BuildResult.Stdout.Count > 0
-                        ? string.Join(Environment.NewLine, resp.BuildResult.Stdout.Select(s => s.Text))
-                        : ""
-                  );
+            string stdout;
+            string stderr;
+            List<AsmLine>? asm = resp.Asm;
 
-            // Error output – prefer buildResult.stderr, fallback to root.stderr
-            string stderr =
-                resp.BuildResult?.Stderr != null && resp.BuildResult.Stderr.Count > 0
-                    ? string.Join(Environment.NewLine, resp.BuildResult.Stderr.Select(s => s.Text))
-                    : (
-                        resp.Stderr != null && resp.Stderr.Count > 0
-                            ? string.Join(Environment.NewLine, resp.Stderr.Select(s => s.Text))
-                            : ""
-                      );
+            // Case 1: Compile & Execute response (like SaAsm.json). This has an `ExecResult` property.
+            if (resp.ExecResult != null)
+            {
+                stdout = string.Join(Environment.NewLine, resp.ExecResult.Stdout?.Select(s => s.Text) ?? Enumerable.Empty<string>());
 
-            return (stdout, stderr);
-        }
+                var compilerStderr = string.Join(Environment.NewLine, resp.Stderr?.Select(s => s.Text) ?? Enumerable.Empty<string>());
+                var execStderr = string.Join(Environment.NewLine, resp.ExecResult.Stderr?.Select(s => s.Text) ?? Enumerable.Empty<string>());
 
-        public static string RemoveAnsiCodes(string input)
-        {
-            if (string.IsNullOrEmpty(input)) return input;
-            var ansiRegex = new Regex(@"\x1B\[[0-9;]*[mK]");
-            return ansiRegex.Replace(input, "");
+                var stderrBuilder = new StringBuilder();
+                if (!string.IsNullOrWhiteSpace(compilerStderr))
+                {
+                    stderrBuilder.Append(compilerStderr);
+                }
+                if (!string.IsNullOrWhiteSpace(execStderr))
+                {
+                    if (stderrBuilder.Length > 0)
+                    {
+                        stderrBuilder.AppendLine().AppendLine("--- Execution Stderr ---");
+                    }
+                    stderrBuilder.Append(execStderr);
+                }
+                stderr = stderrBuilder.ToString();
+            }
+            // Case 2: Execute-only response (like BezAsm.json). This has no `ExecResult`.
+            else
+            {
+                stdout = string.Join(Environment.NewLine, resp.Stdout?.Select(s => s.Text) ?? Enumerable.Empty<string>());
+
+                // Stderr (compiler warnings for the wrapper) is in the BuildResult.
+                var buildStderr = string.Join(Environment.NewLine, resp.BuildResult?.Stderr?.Select(s => s.Text) ?? Enumerable.Empty<string>());
+                if (!string.IsNullOrWhiteSpace(buildStderr))
+                {
+                    stderr = buildStderr;
+                }
+                else
+                {
+                    // Fallback to root stderr for execution errors.
+                    stderr = string.Join(Environment.NewLine, resp.Stderr?.Select(s => s.Text) ?? Enumerable.Empty<string>());
+                }
+            }
+
+            return (stdout, stderr, asm);
         }
 
         public async Task<(string link, string? errorMessage)> GetShortLinkAsync(
@@ -115,7 +146,7 @@ namespace CodeSnip.Services
                 return ("", "Parameter 'source' cannot be empty.");
             if (string.IsNullOrWhiteSpace(compilerId))
                 return ("", "Parameter 'compilerId' cannot be empty.");
-            
+
             var root = new Root
             {
                 Sessions = new List<Session>
@@ -182,10 +213,22 @@ namespace CodeSnip.Services
     public class GodboltResponse
     {
         public int Code { get; set; }
+
+        // Present in exec-only responses (BezAsm.json)
         public bool DidExecute { get; set; }
         public List<StdText>? Stdout { get; set; }
+
+        // Present in both, but with different meanings.
+        // In compile responses (SaAsm.json), it's compiler stderr.
+        // In exec-only responses, it's runtime stderr.
         public List<StdText>? Stderr { get; set; }
+
+        // Present in exec-only responses. Contains compiler output for the wrapper.
         public BuildResult? BuildResult { get; set; }
+
+        // Present in compile responses (SaAsm.json)
+        public List<AsmLine>? Asm { get; set; }
+        public GodboltResponse? ExecResult { get; set; }
     }
 
     public class BuildResult
@@ -194,8 +237,12 @@ namespace CodeSnip.Services
         public List<StdText>? Stdout { get; set; }
         public List<StdText>? Stderr { get; set; }
     }
-
     public class StdText
+    {
+        public string? Text { get; set; }
+    }
+
+    public class AsmLine
     {
         public string? Text { get; set; }
     }
