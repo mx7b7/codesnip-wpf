@@ -10,7 +10,7 @@
 	<Color name="Number" foreground="DarkMagenta" />
 	<Color name="Keyword" foreground="DarkBlue" fontWeight="bold" />
 
-	<RuleSet>
+	<RuleSet ignoreCase="true">
 		<Span color="Comment" begin=";" />
 		<Span color="String" begin="&quot;" end="&quot;" />
 

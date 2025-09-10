@@ -35,6 +35,7 @@
   - Add and edit available compilers
   - Select compiler and flags
   - View stdout/stderr output
+  - **View assembly output** with syntax highlighting for supported languages
   - Generate shareable shortlinks to [Compiler Explorer](https://godbolt.org/)
 - **UI/UX**:
   - Modern Metro interface
