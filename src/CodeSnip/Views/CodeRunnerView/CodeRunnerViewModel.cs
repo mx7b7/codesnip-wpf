@@ -32,9 +32,6 @@ namespace CodeSnip.Views.CodeRunnerView
         private string _errorText = "";
 
         [ObservableProperty]
-        private string _asmCode = "";
-
-        [ObservableProperty]
         private string _code = "";
 
         [ObservableProperty]
@@ -49,8 +46,19 @@ namespace CodeSnip.Views.CodeRunnerView
         [ObservableProperty]
         private string _reloadBadge = "";
 
+        [ObservableProperty]
+        private string _asmCode = "";
+
+        [ObservableProperty]
+        private string _asmHighlightingName = "asm"; // Default to "asm"
+
+        [ObservableProperty]
+        private bool _showAsm = false;
+
         public CodeRunnerViewModel(string languageExtension, string code, Func<string> getLatestCode)
         {
+            // Set the highlighting name based on the source language extension
+            AsmHighlightingName = MapLanguageExtensionToAsmHighlighting(languageExtension);
             Compilers = _compilersSettings.GetCompilersByExtension(languageExtension);
             var defaultCompilerId = _compilersSettings.GetDefaultCompilerIdByExtension(languageExtension);
             SelectedCompiler = Compilers.FirstOrDefault(c => c.Id == defaultCompilerId) ?? Compilers.FirstOrDefault();
@@ -60,6 +68,19 @@ namespace CodeSnip.Views.CodeRunnerView
             _godboltService = new GodboltService(_httpClient);
                        
         }
+
+        // This method maps the source language extension to the appropriate assembly highlighting definition name.
+        private static string MapLanguageExtensionToAsmHighlighting(string languageExtension)
+        {
+            return languageExtension.ToLowerInvariant() switch
+            {
+                "cs" => "il",
+                "java" => "java-bytecode",
+                "py" => "python-bytecode",
+                _ => "asm", // Default for C++, Rust, D, etc.
+            };
+        }
+
         partial void OnSelectedCompilerChanged(CompilerInfo? value)
         {
             Flags = value?.Flags ?? "";
@@ -84,18 +105,20 @@ namespace CodeSnip.Views.CodeRunnerView
             string? langId = _compilersSettings.GetLanguageIdByExtension(Extension); // godbolt languageId (c++, csharp ...)
             // Set skipAsm to false to get both execution output and assembler
             var (stdout, stderr, asm, error) = await _godboltService.CompileAndRunAsync(
-                Code, SelectedCompiler?.Id ?? "", langId ?? "", Flags, true);
+                Code, SelectedCompiler?.Id ?? "", langId ?? "", Flags, !ShowAsm); // if ShowAsm is true, then SkipAsm must be false
 
             Stdout = string.IsNullOrEmpty(stdout) ? "" : stdout;
             ErrorText = RemoveAnsiCodes(stderr);
-            AsmCode = string.IsNullOrEmpty(asm) ? "No assembler output." : asm; //temporary for testing
+            AsmCode = asm ?? ""; // Store raw asm
 
             if (!string.IsNullOrEmpty(error))
             {
                 ErrorText = error;
                 Stdout = "";
                 AsmCode = "";
+                return;
             }
+            // The AsmCode property is already set. The UI will bind to this directly.SS
         }
 
         [RelayCommand]

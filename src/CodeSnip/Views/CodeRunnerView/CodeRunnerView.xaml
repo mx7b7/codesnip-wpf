@@ -4,6 +4,8 @@
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              xmlns:local="clr-namespace:CodeSnip.Views.CodeRunnerView"
+             xmlns:behaviors="clr-namespace:Microsoft.Xaml.Behaviors;assembly=Microsoft.Xaml.Behaviors"
+             xmlns:avalonEdit="http://icsharpcode.net/sharpdevelop/avalonedit"
              xmlns:mah="http://metro.mahapps.com/winfx/xaml/controls" 
              xmlns:helpers="clr-namespace:CodeSnip.Helpers"
              d:DataContext="{d:DesignInstance Type=local:CodeRunnerViewModel}"
@@ -16,8 +18,6 @@
         <Grid Margin="10">
             <Grid.RowDefinitions>
                 <RowDefinition Height="10"/>
-                <RowDefinition Height="Auto"/>
-                <RowDefinition Height="Auto"/>
                 <RowDefinition Height="Auto"/>
                 <RowDefinition Height="Auto"/>
                 <RowDefinition Height="Auto"/>
@@ -67,12 +67,47 @@
                             Command="{Binding ReloadCommand}" />
                 </mah:Badged>
                 <Button Content="Get link"  Margin="10,0,0,0" Grid.Column="2" Grid.Row="0" TabIndex="2" Command="{Binding GetLinkCommand}"/>
-                <TextBox Grid.Column="3" Grid.Row="0" Margin="10,0,0,0" IsReadOnly="True" Text="{Binding ShortLink}"/>
+                <TextBox Grid.Column="3" Grid.Row="0" Margin="10,0,0,0" IsReadOnly="True" Text="{Binding ShortLink}" />
             </Grid>
-            <TextBlock Text="Stdout:" FontWeight="Bold"  Grid.Row="3" Margin="0,10,0,0"/>
-            <TextBox Height="350" Text="{Binding Stdout}" TextWrapping="Wrap" IsReadOnly="True" Grid.Row="4" IsTabStop="False"/>
-            <TextBlock Text="Stderr:" FontWeight="Bold" Grid.Row="5" Margin="0,10,0,0"/>
-            <TextBox Height="200" Text="{Binding ErrorText}" TextWrapping="Wrap" IsReadOnly="True" Grid.Row="6" IsTabStop="False"/>
+            <CheckBox Content="Show assembler output" IsChecked="{Binding ShowAsm}" Grid.Row="3" Margin="0,10,0,0"/>
+            <mah:MetroTabControl Grid.Row="4" Margin="0,10,0,0"
+                                  Style="{DynamicResource MahApps.Styles.TabControl.Animated}" mah:HeaderedControlHelper.HeaderFontSize="18">
+                <mah:MetroTabItem Header="Output">
+                    <Grid>
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="Auto"/>
+                            <RowDefinition Height="*" />
+                            <RowDefinition Height="Auto"/>
+                            <RowDefinition Height="*" />
+                        </Grid.RowDefinitions>
+
+                        <!-- Stdout -->
+                        <TextBlock Text="Stdout:" FontWeight="Bold" Margin="0,10,0,0" Grid.Row="0"/>
+                        <TextBox Grid.Row="1" Height="300" Text="{Binding Stdout}" IsReadOnly="True" VerticalScrollBarVisibility="Auto" />
+
+                        <!-- Stderr -->
+                        <TextBlock Text="Stderr:" FontWeight="Bold" Margin="0,10,0,0" Grid.Row="2"/>
+                        <TextBox Grid.Row="3" Height="200" Text="{Binding ErrorText}" IsReadOnly="True" Foreground="Red" VerticalScrollBarVisibility="Auto" />
+                    </Grid>
+                </mah:MetroTabItem>
+
+                <mah:MetroTabItem Header="Assembler">
+                    <avalonEdit:TextEditor
+                        x:Name="asmEditor"
+                        FontFamily="Consolas"
+                        IsReadOnly="True"
+                        ShowLineNumbers="True"
+                        Height="550"
+                        VerticalScrollBarVisibility="Auto"
+                        HorizontalScrollBarVisibility="Auto"
+                        Margin="5">
+                        <behaviors:Interaction.Behaviors>
+                            <helpers:AvalonEditTextBindingBehavior BoundText="{Binding AsmCode, Mode=OneWay}" />
+                            <helpers:AvalonEditHighlightingBehavior HighlightingName="{Binding AsmHighlightingName}" />
+                        </behaviors:Interaction.Behaviors>
+                    </avalonEdit:TextEditor>
+                </mah:MetroTabItem>
+            </mah:MetroTabControl>
         </Grid>
     </ScrollViewer>
 </UserControl>

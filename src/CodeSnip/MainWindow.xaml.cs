@@ -70,7 +70,7 @@ namespace CodeSnip
             {
                 case "flyCodeRunner":
                     flyout.Position = Position.Right;
-                    flyout.Width = 500;
+                    flyout.Width = 550;
                     flyout.IsPinned = true;
                     flyout.Theme = FlyoutTheme.Adapt;
                     flyout.CloseButtonIsCancel = true;
