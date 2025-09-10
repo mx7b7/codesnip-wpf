@@ -26,6 +26,7 @@
 	<ItemGroup>
 		<Resource Include="Resources\compilers.json" />
 		<Resource Include="Resources\Highlighting\Dark\as.xshd" />
+		<Resource Include="Resources\Highlighting\Dark\asm.xshd" />
 		<Resource Include="Resources\Highlighting\Dark\aspx.xshd" />
 		<Resource Include="Resources\Highlighting\Dark\atg.xshd" />
 		<Resource Include="Resources\Highlighting\Dark\bat.xshd" />
@@ -55,6 +56,7 @@
 		<Resource Include="Resources\Highlighting\Dark\vtl.xshd" />
 		<Resource Include="Resources\Highlighting\Dark\xml.xshd" />
 		<Resource Include="Resources\Highlighting\Light\as.xshd" />
+		<Resource Include="Resources\Highlighting\Light\asm.xshd" />
 		<Resource Include="Resources\Highlighting\Light\aspx.xshd" />
 		<Resource Include="Resources\Highlighting\Light\atg.xshd" />
 		<Resource Include="Resources\Highlighting\Light\bat.xshd" />
@@ -102,6 +104,10 @@
 		<Content Include="Tools\**\*.*">
 			<CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
 		</Content>
+	</ItemGroup>
+	<ItemGroup>
+	  <None Remove="Resources\Highlighting\Dark\asm.xshd" />
+	  <None Remove="Resources\Highlighting\Light\asm.xshd" />
 	</ItemGroup>
 
 
