@@ -36,6 +36,7 @@
   - Select compiler and flags
   - View stdout/stderr output
   - **View assembly output** with syntax highlighting for supported languages
+    >**Note:** Some compilers may generate a very large amount of assembly code even from a small number of source lines.
   - Generate shareable shortlinks to [Compiler Explorer](https://godbolt.org/)
 - **UI/UX**:
   - Modern Metro interface
