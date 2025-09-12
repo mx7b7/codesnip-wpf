@@ -14,100 +14,104 @@
     <UserControl.Resources>
         <helpers:BoolToVisibilityConverter x:Key="BoolToVisibilityConverter"/>
     </UserControl.Resources>
-    <ScrollViewer VerticalScrollBarVisibility="Auto">
-        <Grid Margin="10">
+    <Grid Margin="10">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="10"/>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="*"/>
+        </Grid.RowDefinitions>
+        <mah:MetroProgressBar Height="10" IsIndeterminate="True" Grid.Row="0">
+            <mah:MetroProgressBar.Style>
+                <Style TargetType="mah:MetroProgressBar" BasedOn="{StaticResource {x:Type mah:MetroProgressBar}}">
+                    <Setter Property="Visibility" Value="Collapsed" />
+                    <Style.Triggers>
+                        <DataTrigger Binding="{Binding IsRunning}" Value="True">
+                            <Setter Property="Visibility" Value="Visible" />
+                        </DataTrigger>
+                    </Style.Triggers>
+                </Style>
+            </mah:MetroProgressBar.Style>
+        </mah:MetroProgressBar>
+        <Grid Grid.Row="1" Margin="0,5,0,0">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="Auto"/>
+                <ColumnDefinition  Width="*"/>
+            </Grid.ColumnDefinitions>
             <Grid.RowDefinitions>
-                <RowDefinition Height="10"/>
-                <RowDefinition Height="Auto"/>
-                <RowDefinition Height="Auto"/>
-                <RowDefinition Height="Auto"/>
+                <RowDefinition />
+                <RowDefinition />
+            </Grid.RowDefinitions>
+            <TextBlock Text="Compiler:" FontWeight="Bold" Grid.Column="0" Grid.Row="0"/>
+            <ComboBox ItemsSource="{Binding Compilers}"
+                        SelectedItem="{Binding SelectedCompiler}"
+                        DisplayMemberPath="Name" Grid.Column="0" Grid.Row="1" Width="120" IsTabStop="False"/>
+            <TextBlock Text="Compiler flags:" FontWeight="Bold" Margin="10,0,0,0" Grid.Column="1" Grid.Row="0" />
+            <TextBox  Text="{Binding Flags}" Grid.Column="1" Grid.Row="1" Margin="10,0,0,0" TabIndex="3"/>
+        </Grid>
+        <Grid  Grid.Row="2" Margin="0,10,0,0">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="80"/>
+                <ColumnDefinition Width="80"/>
+                <ColumnDefinition Width="80"/>
+                <ColumnDefinition Width="*"/>
+            </Grid.ColumnDefinitions>
+            <Grid.RowDefinitions>
                 <RowDefinition Height="Auto"/>
             </Grid.RowDefinitions>
-            <mah:MetroProgressBar Height="10" IsIndeterminate="True" Grid.Row="0">
-                <mah:MetroProgressBar.Style>
-                    <Style TargetType="mah:MetroProgressBar" BasedOn="{StaticResource {x:Type mah:MetroProgressBar}}">
-                        <Setter Property="Visibility" Value="Collapsed" />
-                        <Style.Triggers>
-                            <DataTrigger Binding="{Binding IsRunning}" Value="True">
-                                <Setter Property="Visibility" Value="Visible" />
-                            </DataTrigger>
-                        </Style.Triggers>
-                    </Style>
-                </mah:MetroProgressBar.Style>
-            </mah:MetroProgressBar>
-            <Grid Grid.Row="1" Margin="0,5,0,0">
-                <Grid.ColumnDefinitions>
-                    <ColumnDefinition Width="Auto"/>
-                    <ColumnDefinition  Width="*"/>
-                </Grid.ColumnDefinitions>
-                <Grid.RowDefinitions>
-                    <RowDefinition />
-                    <RowDefinition />
-                </Grid.RowDefinitions>
-                <TextBlock Text="Compiler:" FontWeight="Bold" Grid.Column="0" Grid.Row="0"/>
-                <ComboBox ItemsSource="{Binding Compilers}"
-                            SelectedItem="{Binding SelectedCompiler}"
-                            DisplayMemberPath="Name" Grid.Column="0" Grid.Row="1" Width="120" IsTabStop="False"/>
-                <TextBlock Text="Compiler flags:" FontWeight="Bold" Margin="10,0,0,0" Grid.Column="1" Grid.Row="0" />
-                <TextBox  Text="{Binding Flags}" Grid.Column="1" Grid.Row="1" Margin="10,0,0,0" TabIndex="3"/>
-            </Grid>
-            <Grid  Grid.Row="2" Margin="0,10,0,0">
-                <Grid.ColumnDefinitions>
-                    <ColumnDefinition Width="80"/>
-                    <ColumnDefinition Width="80"/>
-                    <ColumnDefinition Width="80"/>
-                    <ColumnDefinition Width="*"/>
-                </Grid.ColumnDefinitions>
-                <Grid.RowDefinitions>
-                    <RowDefinition Height="Auto"/>
-                </Grid.RowDefinitions>
-                <Button Content="Run" Command="{Binding RunCommand}" Grid.Column="0" Grid.Row="0" TabIndex="0"/>
-                <mah:Badged Badge="{Binding ReloadBadge}" Grid.Column="1" Grid.Row="0" Margin="10,0,0,0" >
-                    <Button Content="Reload" TabIndex="1"           
-                            Command="{Binding ReloadCommand}" />
-                </mah:Badged>
-                <Button Content="Get link"  Margin="10,0,0,0" Grid.Column="2" Grid.Row="0" TabIndex="2" Command="{Binding GetLinkCommand}"/>
-                <TextBox Grid.Column="3" Grid.Row="0" Margin="10,0,0,0" IsReadOnly="True" Text="{Binding ShortLink}" />
-            </Grid>
-            <CheckBox Content="Show assembler output" IsChecked="{Binding ShowAsm}" Grid.Row="3" Margin="0,10,0,0"/>
-            <mah:MetroTabControl Grid.Row="4" Margin="0,10,0,0"
-                                  Style="{DynamicResource MahApps.Styles.TabControl.Animated}" mah:HeaderedControlHelper.HeaderFontSize="18">
-                <mah:MetroTabItem Header="Output">
-                    <Grid>
-                        <Grid.RowDefinitions>
-                            <RowDefinition Height="Auto"/>
-                            <RowDefinition Height="*" />
-                            <RowDefinition Height="Auto"/>
-                            <RowDefinition Height="*" />
-                        </Grid.RowDefinitions>
-
-                        <!-- Stdout -->
-                        <TextBlock Text="Stdout:" FontWeight="Bold" Margin="0,10,0,0" Grid.Row="0"/>
-                        <TextBox Grid.Row="1" Height="300" Text="{Binding Stdout}" IsReadOnly="True" VerticalScrollBarVisibility="Auto" />
-
-                        <!-- Stderr -->
-                        <TextBlock Text="Stderr:" FontWeight="Bold" Margin="0,10,0,0" Grid.Row="2"/>
-                        <TextBox Grid.Row="3" Height="200" Text="{Binding ErrorText}" IsReadOnly="True" Foreground="Red" VerticalScrollBarVisibility="Auto" />
-                    </Grid>
-                </mah:MetroTabItem>
-
-                <mah:MetroTabItem Header="Assembler">
-                    <avalonEdit:TextEditor
-                        x:Name="asmEditor"
-                        FontFamily="Consolas"
-                        IsReadOnly="True"
-                        ShowLineNumbers="True"
-                        Height="550"
-                        VerticalScrollBarVisibility="Auto"
-                        HorizontalScrollBarVisibility="Auto"
-                        Margin="5">
-                        <behaviors:Interaction.Behaviors>
-                            <helpers:AvalonEditTextBindingBehavior BoundText="{Binding AsmCode, Mode=OneWay}" />
-                            <helpers:AvalonEditHighlightingBehavior HighlightingName="{Binding AsmHighlightingName}" />
-                        </behaviors:Interaction.Behaviors>
-                    </avalonEdit:TextEditor>
-                </mah:MetroTabItem>
-            </mah:MetroTabControl>
+            <Button Content="Run" Command="{Binding RunCommand}" Grid.Column="0" Grid.Row="0" TabIndex="0"/>
+            <mah:Badged Badge="{Binding ReloadBadge}" Grid.Column="1" Grid.Row="0" Margin="10,0,0,0" >
+                <Button Content="Reload" TabIndex="1"           
+                        Command="{Binding ReloadCommand}" />
+            </mah:Badged>
+            <Button Content="Get link"  Margin="10,0,0,0" Grid.Column="2" Grid.Row="0" TabIndex="2" Command="{Binding GetLinkCommand}"/>
+            <TextBox Grid.Column="3" Grid.Row="0" Margin="10,0,0,0" IsReadOnly="True" Text="{Binding ShortLink}" />
         </Grid>
-    </ScrollViewer>
+        <CheckBox Content="Show assembler output" IsChecked="{Binding ShowAsm}" Grid.Row="3" Margin="0,10,0,0"/>
+        <mah:MetroTabControl Grid.Row="4" Margin="0,10,0,0"
+                                Style="{DynamicResource MahApps.Styles.TabControl.Animated}" mah:HeaderedControlHelper.HeaderFontSize="18">
+            <mah:MetroTabItem Header="Output">
+                <Grid>
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="Auto"/>
+                        <RowDefinition Height="2*" />
+                        <RowDefinition Height="Auto"/>
+                        <RowDefinition Height="*" />
+                    </Grid.RowDefinitions>
+
+                    <!-- Stdout -->
+                    <TextBlock Text="Stdout:" FontWeight="Bold" Margin="0,10,0,0" Grid.Row="0"/>
+                    <TextBox Grid.Row="1" Text="{Binding Stdout}" IsReadOnly="True" VerticalScrollBarVisibility="Auto" />
+
+                    <!-- Stderr -->
+                    <TextBlock Text="Stderr:" FontWeight="Bold" Margin="0,10,0,0" Grid.Row="2"/>
+                    <TextBox Grid.Row="3" Text="{Binding ErrorText}" IsReadOnly="True" Foreground="#FFF92672" VerticalScrollBarVisibility="Auto" />
+                </Grid>
+            </mah:MetroTabItem>
+
+            <mah:MetroTabItem Header="Assembler">
+                <avalonEdit:TextEditor
+                    x:Name="asmEditor"
+                    FontFamily="Consolas"
+                    IsReadOnly="True"
+                    ShowLineNumbers="True"
+                    VerticalScrollBarVisibility="Auto"
+                    HorizontalScrollBarVisibility="Auto"
+                    Margin="5" >
+                    <behaviors:Interaction.Behaviors>
+                        <helpers:AvalonEditTextBindingBehavior BoundText="{Binding AsmCode, Mode=OneWay}" />
+                        <helpers:AvalonEditHighlightingBehavior HighlightingName="{Binding AsmHighlightingName}" />
+                    </behaviors:Interaction.Behaviors>
+                    <avalonEdit:TextEditor.ContextMenu>
+                        <ContextMenu>
+                            <MenuItem Header="Copy" Command="ApplicationCommands.Copy" />
+                            <MenuItem Header="Select All" Command="ApplicationCommands.SelectAll" />
+                        </ContextMenu>
+                    </avalonEdit:TextEditor.ContextMenu>
+
+                </avalonEdit:TextEditor>
+            </mah:MetroTabItem>
+        </mah:MetroTabControl>
+    </Grid>
 </UserControl>
