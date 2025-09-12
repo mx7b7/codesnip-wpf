@@ -58,7 +58,7 @@
           "LocalId": "5e59bab8-a92a-4170-907d-8fac2a207c1e",
           "Id": "dotnettrunkcsharp",
           "Name": "NET9",
-          "Flags": "-optimize"
+          "Flags": ""
         }
       ]
     },
