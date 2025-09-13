@@ -20,6 +20,8 @@ namespace CodeSnip.Views.CodeRunnerView
         private List<CompilerInfo>? _compilers = [];
 
         [ObservableProperty]
+        [NotifyCanExecuteChangedFor(nameof(RunCommand))]
+        [NotifyCanExecuteChangedFor(nameof(GetLinkCommand))]
         private CompilerInfo? _selectedCompiler;
 
         [ObservableProperty]
@@ -74,7 +76,7 @@ namespace CodeSnip.Views.CodeRunnerView
         {
             return languageExtension.ToLowerInvariant() switch
             {
-                "cs" => "il",
+                //"cs" => "il",
                 "java" => "java-bytecode",
                 "py" => "python-bytecode",
                 _ => "asm", // Default for C++, Rust, D, etc.
@@ -86,7 +88,12 @@ namespace CodeSnip.Views.CodeRunnerView
             Flags = value?.Flags ?? "";
         }
 
-        [RelayCommand]
+        private bool CanExecuteCompilerActions()
+        {
+            return SelectedCompiler != null;
+        }
+
+        [RelayCommand(CanExecute = nameof(CanExecuteCompilerActions))]
         private async Task Run()
         {
             try
@@ -105,7 +112,7 @@ namespace CodeSnip.Views.CodeRunnerView
             string? langId = _compilersSettings.GetLanguageIdByExtension(Extension); // godbolt languageId (c++, csharp ...)
             // Set skipAsm to false to get both execution output and assembler
             var (stdout, stderr, asm, error) = await _godboltService.CompileAndRunAsync(
-                Code, SelectedCompiler?.Id ?? "", langId ?? "", Flags, !ShowAsm); // if ShowAsm is true, then SkipAsm must be false
+                Code, SelectedCompiler!.Id ?? "", langId ?? "", Flags, !ShowAsm); // if ShowAsm is true, then SkipAsm must be false
 
             Stdout = string.IsNullOrEmpty(stdout) ? "" : stdout;
             ErrorText = RemoveAnsiCodes(stderr);
@@ -121,7 +128,7 @@ namespace CodeSnip.Views.CodeRunnerView
             // The AsmCode property is already set. The UI will bind to this directly.SS
         }
 
-        [RelayCommand]
+        [RelayCommand(CanExecute = nameof(CanExecuteCompilerActions))]
         private async Task GetLink()
         {
             try
@@ -138,7 +145,7 @@ namespace CodeSnip.Views.CodeRunnerView
         private async Task GetShortenerLinkAsync()
         {
             string? langId = _compilersSettings.GetLanguageIdByExtension(Extension); // godbolt languageId (c++, csharp ...)
-            var (link, error) = await _godboltService.GetShortLinkAsync(langId ?? "", Code, SelectedCompiler!.Id!, Flags);
+            var (link, error) = await _godboltService.GetShortLinkAsync(langId ?? "", Code, SelectedCompiler!.Id ?? "", Flags);
             ShortLink = string.IsNullOrEmpty(link) ? "" : link;
             ErrorText = string.IsNullOrEmpty(error) ? "" : error;
         }
