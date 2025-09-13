@@ -16,6 +16,8 @@ namespace CodeSnip.Views.SettingsView
 
         private readonly DatabaseService _databaseService;
 
+        private readonly Func<Task>? _onDatabaseActionCompleted;
+
         [ObservableProperty]
         private bool isDarkTheme = true;
 
@@ -75,10 +77,11 @@ namespace CodeSnip.Views.SettingsView
         private string _backupBadge = "";
 
 
-        public SettingsViewModel(SettingsService settingsService, DatabaseService databaseService)
+        public SettingsViewModel(SettingsService settingsService, DatabaseService databaseService, Func<Task>? onDatabaseActionCompleted = null)
         {
             _settingsService = settingsService;
             _databaseService = databaseService;
+            _onDatabaseActionCompleted = onDatabaseActionCompleted;
             LoadAccents();
             InitializeFromCurrentTheme();
             LoadOnStartup = settingsService.LoadOnStartup;
@@ -194,6 +197,7 @@ namespace CodeSnip.Views.SettingsView
             {
                 VacuumBadge = "✓";
                 await Task.Delay(1500);
+                _onDatabaseActionCompleted?.Invoke();
                 VacuumBadge = "";
             }
             else

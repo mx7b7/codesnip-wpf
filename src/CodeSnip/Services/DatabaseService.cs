@@ -386,6 +386,30 @@ ORDER BY L.Name, C.Name, S.Title";
             }
         }
 
+        public async Task<(bool NeedVacuum, double FragmentationPercent)> IsVacuumNeeded()
+        {
+            try
+            {
+                using var conn = CreateConnection();
+
+                var freelistCount = await conn.ExecuteScalarAsync<long>("PRAGMA freelist_count;");
+                var pageCount = await conn.ExecuteScalarAsync<long>("PRAGMA page_count;");
+
+                if (pageCount == 0)
+                    return (false, 0);
+
+                double fragmentationPercent = (double)freelistCount / pageCount;
+                bool needVacuum = fragmentationPercent >= 0.25;
+
+                return (needVacuum, fragmentationPercent);
+            }
+            catch (Exception ex)
+            {
+                await DialogService.Instance.ShowMessageAsync("Vacuum Check Failed", ex.Message);
+                return (false, 0);
+            }
+        }
+
         private const string ddl = @"
             CREATE TABLE IF NOT EXISTS Languages (
                 ID INTEGER PRIMARY KEY AUTOINCREMENT,

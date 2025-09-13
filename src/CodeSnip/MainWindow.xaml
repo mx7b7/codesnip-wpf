@@ -488,7 +488,36 @@
                     </avalonEdit:TextEditor.ContextMenu>
                 </avalonEdit:TextEditor>
                 <StatusBar Grid.Row="2">
-                    <StatusBarItem Content="{Binding StatusMessage}" />
+                    <StatusBarItem DockPanel.Dock="Right" HorizontalAlignment="Right" Padding="5" Margin="0,0,10,0"
+                                   Visibility="{Binding IsDatabaseAlertActive, Converter={StaticResource BoolToVisibilityConverter}}">
+                        <Grid x:Name="DbStatusGrid">
+                            <ToggleButton x:Name="DbStatusButton"
+                                          IsEnabled="{Binding IsDatabaseAlertActive}"
+                                          Style="{StaticResource MahApps.Styles.Button.Chromeless}"
+                                          ToolTip="{Binding DatabaseStatusTooltip}"
+                                          ToolTipService.InitialShowDelay="300"
+                                          ToolTipService.ShowDuration="3000"
+                                          ToolTipService.BetweenShowDelay="100" >
+                                <Path Fill="{DynamicResource MahApps.Brushes.Text}" Data="{StaticResource DatabaseAlert}" Width="16" Height="16" Stretch="Uniform" />
+                            </ToggleButton>
+                            <Popup IsOpen="{Binding Path=IsChecked, Source={x:Reference DbStatusButton}, Mode=TwoWay}"
+                                   PlacementTarget="{Binding Source={x:Reference DbStatusButton}}"
+                                   Placement="Top"
+                                   StaysOpen="False"
+                                   AllowsTransparency="True"
+                                   HorizontalOffset="0"
+                                   VerticalOffset="-5"
+                                   PopupAnimation="Fade">
+                                <Border Background="{DynamicResource MahApps.Brushes.Badged.Background}" Padding="10" CornerRadius="5" MaxWidth="250"
+                                        Effect="{DynamicResource MaterialDesignElevation}">
+                                    <TextBlock Text="{Binding DatabaseStatusPopupMessage}" Foreground="{DynamicResource MahApps.Brushes.Badged.Foreground}" TextWrapping="Wrap"/>
+                                </Border>
+                            </Popup>
+                        </Grid>
+                    </StatusBarItem>
+                    <StatusBarItem>
+                        <TextBlock Text="{Binding StatusMessage}" VerticalAlignment="Center" />
+                    </StatusBarItem>
                 </StatusBar>
             </Grid>
         </mah:SplitView>

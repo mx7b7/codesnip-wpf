@@ -28,6 +28,15 @@ namespace CodeSnip
         private readonly Geometry? _menuOpenIcon;
         private readonly Geometry? _menuCloseIcon;
 
+        [ObservableProperty]
+        private string? databaseStatusTooltip;
+
+        [ObservableProperty]
+        private bool isDatabaseAlertActive;
+
+        [ObservableProperty]
+        private string? databaseStatusPopupMessage;
+
         public ObservableCollection<Language> Languages { get; } = [];
 
         [ObservableProperty]
@@ -153,6 +162,26 @@ namespace CodeSnip
 
         }
 
+        public async Task UpdateDatabaseHealthStatusAsync()
+        {
+            var (needVacuum, fragmentationPercent) = await _databaseService.IsVacuumNeeded();
+
+
+            IsDatabaseAlertActive = needVacuum;
+
+            if (needVacuum)
+            {
+                DatabaseStatusTooltip = $"Database is fragmented: {fragmentationPercent:P1} - click for details.";
+                DatabaseStatusPopupMessage = $"Database fragmentation is at {fragmentationPercent:P1}.\n\n" +
+                    $"It is recommended to perform a VACUUM operation. You can find this option in:\nSettings -> Database tab.";
+            }
+            else
+            {
+                DatabaseStatusTooltip = string.Empty;
+                DatabaseStatusPopupMessage = string.Empty;
+            }
+        }
+
         public async Task InitializeAsync()
         {
             await Task.Run(() => _databaseService.InitializeDatabaseIfNeeded());
@@ -170,6 +199,7 @@ namespace CodeSnip
                     RestoreSelectedSnippetState(settingsService.LastSnippet);
                 }
             }
+            await UpdateDatabaseHealthStatusAsync();
         }
 
         private void PopulateLanguagesCollection(IEnumerable<Language> languages)
@@ -371,7 +401,7 @@ namespace CodeSnip
             // Store current values before opening the flyout to check for changes later
             bool oldShowEmptyLanguages = ShowEmptyLanguages;
             bool oldShowEmptyCategories = ShowEmptyCategories;
-            var vm = new SettingsViewModel(settingsService, _databaseService);
+            var vm = new SettingsViewModel(settingsService, _databaseService, UpdateDatabaseHealthStatusAsync);
             _flyoutService.ShowFlyout("flySettings", vm, "Settings", () =>
             {
                 settingsService.HighlightLine = vm.HighlightLine;
