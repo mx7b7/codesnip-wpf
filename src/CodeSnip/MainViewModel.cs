@@ -25,8 +25,8 @@ namespace CodeSnip
         private readonly SettingsService settingsService = new();
         private readonly IFlyoutService _flyoutService;
 
-        private readonly Geometry? _menuOpenIcon;
-        private readonly Geometry? _menuCloseIcon;
+        private readonly Geometry? _panelOpenIcon;
+        private readonly Geometry? _panelCloseIcon;
 
         [ObservableProperty]
         private string? databaseStatusTooltip;
@@ -132,9 +132,9 @@ namespace CodeSnip
         {
             _flyoutService = flyoutService;
 
-            _menuOpenIcon = Application.Current.Resources["MenuOpen2"] as Geometry;
-            _menuCloseIcon = Application.Current.Resources["MenuClose2"] as Geometry;
-            if (_menuOpenIcon == null || _menuCloseIcon == null)
+            _panelOpenIcon = Application.Current.Resources["PanelLeftOpen"] as Geometry;
+            _panelCloseIcon = Application.Current.Resources["PanelLeftClose"] as Geometry;
+            if (_panelOpenIcon == null || _panelCloseIcon == null)
             {
                 throw new InvalidOperationException("Icons not found in resources.");
             }
@@ -685,8 +685,8 @@ namespace CodeSnip
         {
             get
             {
-                return (_menuOpenIcon != null && _menuCloseIcon != null)
-                    ? (IsPaneOpen ? _menuOpenIcon! : _menuCloseIcon!)
+                return (_panelOpenIcon != null && _panelCloseIcon != null)
+                    ? (IsPaneOpen ? _panelCloseIcon! : _panelOpenIcon!)
                     : null;
             }
         }
