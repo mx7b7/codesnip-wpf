@@ -98,6 +98,7 @@
 		<PackageReference Include="MahApps.Metro" Version="2.4.11" />
 		<PackageReference Include="Microsoft.Xaml.Behaviors.Wpf" Version="1.1.135" />
 		<PackageReference Include="CSharpier.Core" Version="1.1.2" />
+		<PackageReference Include="Notifications.Wpf.Core" Version="2.0.1" />
 		<PackageReference Include="System.Data.SQLite.Core" Version="1.0.119" />
 	</ItemGroup>
 	<ItemGroup>
