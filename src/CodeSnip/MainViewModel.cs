@@ -460,7 +460,7 @@ namespace CodeSnip
 
 
             Snippet? tmpSnippet = null;
-            if (EditingSnippet != null)
+            if (IsEditorModified && EditingSnippet != null)
             {
                 tmpSnippet = EditingSnippet;
                 PerformSave();
