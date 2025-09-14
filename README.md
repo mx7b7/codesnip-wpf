@@ -13,7 +13,7 @@
 [![GitHub Release](https://img.shields.io/github/v/release/mx7b7/codesnip-wpf?sort=semver&display_name=tag)](https://github.com/mx7b7/codesnip-wpf/releases/latest)
 
 ---
-![Main window](images/main_window_900x487.png)
+![Main window](images/main_window_1344x728.png)
 
 ---
 
