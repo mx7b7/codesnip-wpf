@@ -11,8 +11,10 @@
                 <ResourceDictionary Source="pack://application:,,,/MahApps.Metro;component/Styles/Fonts.xaml" />
                 <!-- Theme setting -->
                 <ResourceDictionary Source="pack://application:,,,/MahApps.Metro;component/Styles/Themes/Dark.Sienna.xaml" />
+                
                 <ResourceDictionary Source="pack://application:,,,/CodeSnip;component/Resources/Icons.xaml" />
                 <ResourceDictionary Source="pack://application:,,,/CodeSnip;component/Resources/SearchReplace.xaml" />
+                <ResourceDictionary Source="pack://application:,,,/CodeSnip;component/Resources/Themes/ScrollBarStyles.xaml" />
             </ResourceDictionary.MergedDictionaries>
         </ResourceDictionary>
     </Application.Resources>
