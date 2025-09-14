@@ -119,6 +119,9 @@ namespace CodeSnip
         [ObservableProperty]
         public WindowState _windowState = WindowState.Normal;
 
+        [ObservableProperty]
+        private bool _disableIntendation = false;
+
         public enum SnippetFilterMode
         {
             Name,

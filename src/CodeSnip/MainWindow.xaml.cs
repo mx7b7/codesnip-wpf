@@ -8,6 +8,7 @@ using ICSharpCode.AvalonEdit.Folding;
 using ICSharpCode.AvalonEdit.Indentation;
 using ICSharpCode.AvalonEdit.Indentation.CSharp;
 using MahApps.Metro.Controls;
+using System.ComponentModel;
 using System.Diagnostics;
 using System.Net;
 using System.Text.Json;
@@ -34,6 +35,16 @@ namespace CodeSnip
 
         public ICommand OpenAboutCommand { get; }
 
+        // Languages with C-style braces {} that use CSharpIndentationStrategy and BraceFoldingStrategy
+        private static readonly HashSet<string> braceStyleLanguages =
+        new(StringComparer.OrdinalIgnoreCase)
+        {
+            // Original
+            "as", "cpp", "cs", "d", "fx", "java", "js", "json", "nut", "php", "rs", "swift",
+            "kt", "kts", "groovy", "dart", "v", "sv", "zig", "mm", "h", "c", "go",
+            "css", "hcl"
+        };
+
         public MainWindow()
         {
             InitializeComponent();
@@ -46,6 +57,30 @@ namespace CodeSnip
             ToggleMultiLineCommentCommand = new RelayCommand(_ => ToggleMultiLineLineComment_Click(this, new RoutedEventArgs()));
             ToggleCommentSelectionCommand = new RelayCommand(_ => ToggleCommentSelection_Click(this, new RoutedEventArgs()));
             OpenAboutCommand = new RelayCommand(_ => About_Click(this, new RoutedEventArgs()));
+
+            mainViewModel.PropertyChanged += MainViewModel_PropertyChanged;
+        }
+
+        private void MainViewModel_PropertyChanged(object? sender, PropertyChangedEventArgs e)
+        {
+            // When the indentation toggle changes, re-apply the strategy for the current snippet.
+            if (e.PropertyName == nameof(MainViewModel.DisableIntendation) && mainViewModel.SelectedSnippet != null)
+            {
+                if (mainViewModel.DisableIntendation)
+                {
+                    // If indentation is disabled, it's disabled for ALL languages.
+                    textEditor.TextArea.IndentationStrategy = null;
+                }
+                else
+                {
+                    // If re-enabled, restore the correct strategy based on the current language.
+                    string langCode = mainViewModel.SelectedSnippet.Category?.Language?.Code?.ToLower() ?? string.Empty;
+                    textEditor.TextArea.IndentationStrategy = braceStyleLanguages.Contains(langCode)
+                        ? csharpIndentationStrategy
+                        : defaultIndentationStrategy;
+                }
+
+            }
         }
 
         #region IFlyoutService Implementation
@@ -611,45 +646,32 @@ namespace CodeSnip
 
             string langCode = snippet.Category?.Language?.Code?.ToLower() ?? string.Empty;
 
-            // Determine folding strategy and indentation strategy
-            switch (langCode)
+            if (braceStyleLanguages.Contains(langCode))
             {
-                case "cs":     // C#
-                case "cpp":    // C++
-                case "d":      // Dlang
-                case "js":     // JavaScript
-                case "java":   // Java
-                case "rs":     // Rust
-                case "mm":     // Objective-C++
-                case "go":     // Go
-                case "swift":  // Swift
-                case "kt":     // Kotlin
-                case "php":    // PHP
-                case "zig":    // Zig
-                    textEditor.TextArea.IndentationStrategy = csharpIndentationStrategy;
-                    foldingStrategy = mainViewModel.EnableBraceStyleFolding ? braceFoldingStrategy : null;
-                    break;
-                case "xml":
-                case "html":
-                case "xaml":
-                    textEditor.TextArea.IndentationStrategy = defaultIndentationStrategy;
+                textEditor.TextArea.IndentationStrategy = mainViewModel.DisableIntendation ? null : csharpIndentationStrategy;
+                foldingStrategy = mainViewModel.EnableBraceStyleFolding ? braceFoldingStrategy : null;
+            }
+            else
+            {
+                textEditor.TextArea.IndentationStrategy = mainViewModel.DisableIntendation ? null : defaultIndentationStrategy;
+                if (langCode == "xml")
+                {
                     foldingStrategy = mainViewModel.EnableXmlFolding ? xmlFoldingStrategy : null;
-                    break;
-                case "py":
-                    textEditor.TextArea.IndentationStrategy = defaultIndentationStrategy;
+                }
+                else if (langCode == "py")
+                {
                     foldingStrategy = mainViewModel.EnablePythonFolding ? pythonFoldingStrategy : null;
-                    break;
-                default:
+                }
+                else
+                {
                     foldingStrategy = null;
-                    break;
+                }
             }
 
-            textEditor.Options.AllowScrollBelowDocument = foldingStrategy != null;
-
+            // Install or uninstall the folding manager based on whether a strategy was selected.
             if (foldingStrategy != null)
             {
                 foldingManager ??= FoldingManager.Install(textEditor.TextArea);
-
                 try
                 {
                     switch (foldingStrategy)
@@ -675,6 +697,8 @@ namespace CodeSnip
                 FoldingManager.Uninstall(foldingManager);
                 foldingManager = null;
             }
+
+            textEditor.Options.AllowScrollBelowDocument = foldingStrategy != null;
         }
 
         private static string MapLangCodeToMarkdown(string code)

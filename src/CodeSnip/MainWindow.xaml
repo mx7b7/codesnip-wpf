@@ -292,6 +292,10 @@
                             <Path Data="{StaticResource FormatText}" Fill="{DynamicResource MahApps.Brushes.AccentBase}"
                                   Width="20" Height="20" Stretch="Uniform" />
                         </Button>
+                        <ToggleButton Margin="5,0,0,0" ToolTip="Disable intendation" IsChecked="{Binding DisableIntendation, Mode=TwoWay}">
+                            <Path Data="{StaticResource FormatIndentDecrease}" Fill="{DynamicResource MahApps.Brushes.AccentBase}"
+                                  Width="20" Height="20" Stretch="Uniform" />
+                        </ToggleButton>
                         <Separator />
                         <Button  Margin="5,0,0,0" ToolTip="Highlighting Editor" Command="{Binding OpenHighlightingEditorCommand}">
                             <Path Data="{StaticResource ColorPaletteiOS}" Fill="{DynamicResource MahApps.Brushes.AccentBase}"
