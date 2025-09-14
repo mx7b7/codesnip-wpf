@@ -76,6 +76,12 @@ namespace CodeSnip.Services
             set => _settings.MainWindow.WindowState = value;
         }
 
+        public bool IsNotificationEnabled
+        {
+            get => _settings.MainWindow.IsNotificationEnabled;
+            set => _settings.MainWindow.IsNotificationEnabled = value;
+        }
+
         public bool TabToSpaces
         {
             get => _settings.Editor.TabToSpaces;

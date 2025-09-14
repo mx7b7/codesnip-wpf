@@ -15,6 +15,7 @@
         xmlns:compilerSettingsView="clr-namespace:CodeSnip.Views.CompilerSettingsView"
         xmlns:highlightingEditorView="clr-namespace:CodeSnip.Views.HighlightingEditorView"
         xmlns:controlzex="urn:controlzex"
+        xmlns:notifications="clr-namespace:Notifications.Wpf.Core.Controls;assembly=Notifications.Wpf.Core"
         x:Class="CodeSnip.MainWindow"
         d:DataContext="{d:DesignInstance Type={x:Type local:MainViewModel}}"
         mc:Ignorable="d"
@@ -525,5 +526,9 @@
                 </StatusBar>
             </Grid>
         </mah:SplitView>
+        <notifications:NotificationArea
+            MaxItems="3"
+            x:Name="NotificationWindowArea"
+            Position="TopRight" />
     </Grid>
 </mah:MetroWindow>

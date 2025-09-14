@@ -18,6 +18,7 @@ namespace CodeSnip.Views.SettingsView
 
         private readonly Func<Task>? _onDatabaseActionCompleted;
 
+        // Theme
         [ObservableProperty]
         private bool isDarkTheme = true;
 
@@ -26,13 +27,17 @@ namespace CodeSnip.Views.SettingsView
 
         public ObservableCollection<AccentInfo> AccentColors { get; } = [];
 
+        // Main Window
         [ObservableProperty]
         private bool _loadOnStartup;
 
         [ObservableProperty]
         private bool _enableFiltering;
 
+        [ObservableProperty]
+        private bool _isNotificationEnabled;
 
+        // Editor
         [ObservableProperty]
         public bool _tabToSpaces;
 
@@ -86,6 +91,7 @@ namespace CodeSnip.Views.SettingsView
             InitializeFromCurrentTheme();
             LoadOnStartup = settingsService.LoadOnStartup;
             EnableFiltering = settingsService.EnableFiltering;
+            IsNotificationEnabled = settingsService.IsNotificationEnabled;
             TabToSpaces = _settingsService.TabToSpaces;
             EmailLinks = _settingsService.EnableEmailLinks;
             HyperLinks = _settingsService.EnableHyperinks;

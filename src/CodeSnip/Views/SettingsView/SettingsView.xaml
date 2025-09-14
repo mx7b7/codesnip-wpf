@@ -62,6 +62,8 @@
                               IsChecked="{Binding LoadOnStartup, Mode=TwoWay}" />
                     <CheckBox Content="Enable filtering" Margin="0,8,0,0"
                               IsChecked="{Binding EnableFiltering, Mode=TwoWay}" />
+                    <CheckBox Content="Enable notification" Margin="0,8,0,0"
+                              IsChecked="{Binding IsNotificationEnabled, Mode=TwoWay}" />
                     <CheckBox Content="Show empty languages" Margin="0,8,0,0"
                               IsChecked="{Binding ShowEmptyLanguages, Mode=TwoWay}" />
                     <CheckBox Content="Show empty categories" Margin="0,8,0,0"

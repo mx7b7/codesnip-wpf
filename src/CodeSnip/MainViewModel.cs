@@ -8,6 +8,7 @@ using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
 using ControlzEx.Theming;
 using ICSharpCode.AvalonEdit;
+using Notifications.Wpf.Core;
 using System.Collections.ObjectModel;
 using System.ComponentModel;
 using System.Windows;
@@ -122,6 +123,9 @@ namespace CodeSnip
         [ObservableProperty]
         private bool _disableIntendation = false;
 
+        [ObservableProperty]
+        private bool _isNotificationEnabled = true;
+
         public enum SnippetFilterMode
         {
             Name,
@@ -157,6 +161,7 @@ namespace CodeSnip
             opt.IndentationSize = settingsService.IntendationSize;
 
             IsFilteringEnabled = settingsService.EnableFiltering;
+            IsNotificationEnabled = settingsService.IsNotificationEnabled;
             EnableBraceStyleFolding = settingsService.EnableBraceStyleFolding;
             EnablePythonFolding = settingsService.EnablePythonFolding;
             EnableXmlFolding = settingsService.EnableXmlFolding;
@@ -418,6 +423,7 @@ namespace CodeSnip
                 settingsService.EnableXmlFolding = vm.EnableXmlFolding;
                 settingsService.ShowEmptyLanguages = vm.ShowEmptyLanguages;
                 settingsService.ShowEmptyCategories = vm.ShowEmptyCategories;
+                settingsService.IsNotificationEnabled = vm.IsNotificationEnabled;
 
                 // Instant application
                 opt.HighlightCurrentLine = vm.HighlightLine;
@@ -431,6 +437,7 @@ namespace CodeSnip
                 EnableXmlFolding = vm.EnableXmlFolding;
                 ShowEmptyLanguages = vm.ShowEmptyLanguages;
                 ShowEmptyCategories = vm.ShowEmptyCategories;
+                IsNotificationEnabled = vm.IsNotificationEnabled;
 
                 if (oldShowEmptyLanguages != ShowEmptyLanguages || oldShowEmptyCategories != ShowEmptyCategories)
                 {
@@ -551,7 +558,20 @@ namespace CodeSnip
                 return;
             }
 
-            PerformSave();
+            if (IsEditorModified)
+            {
+                PerformSave();
+                if (!IsNotificationEnabled) return;
+                // Show notification
+                NotificationManager notificationManager = new();
+                var content = new NotificationContent
+                {
+                    Title = "Message",
+                    Message = $"Snippet '{EditingSnippet.Title}' saved at {DateTime.Now:HH:mm:ss}",
+                    Type = NotificationType.Information
+                };
+                await notificationManager.ShowAsync(content, areaName: "NotificationWindowArea", expirationTime: TimeSpan.FromSeconds(3));
+            }
         }
 
         private void PerformSave()

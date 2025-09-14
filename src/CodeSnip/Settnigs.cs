@@ -17,6 +17,7 @@ namespace CodeSnip
         public bool IsSearchExpanded { get; set; } = false;
         public bool IsSnippetMetadataExpanded { get; set; } = false;
         public WindowState WindowState { get; set; } = WindowState.Normal;
+        public bool IsNotificationEnabled { get; set; } = true;
     }
 
     public class EditorSettings
