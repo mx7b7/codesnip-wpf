@@ -95,7 +95,7 @@
 		<PackageReference Include="AvalonEdit" Version="6.3.1.120" />
 		<PackageReference Include="CommunityToolkit.Mvvm" Version="8.4.0" />
 		<PackageReference Include="Dapper" Version="2.1.66" />
-		<PackageReference Include="MahApps.Metro" Version="2.4.10" />
+		<PackageReference Include="MahApps.Metro" Version="2.4.11" />
 		<PackageReference Include="Microsoft.Xaml.Behaviors.Wpf" Version="1.1.135" />
 		<PackageReference Include="CSharpier.Core" Version="1.1.2" />
 		<PackageReference Include="System.Data.SQLite.Core" Version="1.0.119" />
@@ -105,10 +105,6 @@
 			<CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
 		</Content>
 	</ItemGroup>
-	<ItemGroup>
-	  <None Remove="Resources\Highlighting\Dark\asm.xshd" />
-	  <None Remove="Resources\Highlighting\Light\asm.xshd" />
-	</ItemGroup>
-
+	
 
 </Project>
