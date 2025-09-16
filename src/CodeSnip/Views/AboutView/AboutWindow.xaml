@@ -48,7 +48,7 @@
             </mah:MetroTabItem>
 
             <mah:MetroTabItem Header="Dependencies &amp; Tools">
-                <ScrollViewer Margin="10" VerticalScrollBarVisibility="Auto">
+                <ScrollViewer Margin="10" VerticalScrollBarVisibility="Auto" HorizontalScrollBarVisibility="Auto">
                     <StackPanel>
 
                         <mah:MetroHeader Content="Libraries" 
@@ -60,14 +60,24 @@
                         <ItemsControl ItemsSource="{Binding Libraries}">
                             <ItemsControl.ItemTemplate>
                                 <DataTemplate>
-                                    <StackPanel Orientation="Horizontal" Margin="0,5" VerticalAlignment="Center">
-                                        <TextBlock Text="• " FontSize="16" Margin="0,0,5,0" VerticalAlignment="Center" />
-                                        <TextBlock ToolTip="{Binding Url}">
-                                <Hyperlink NavigateUri="{Binding Url}" RequestNavigate="Hyperlink_RequestNavigate">
-                                    <Run Text="{Binding Name}" />
-                                </Hyperlink>
+                                    <Grid Margin="0,5" VerticalAlignment="Center">
+                                        <Grid.ColumnDefinitions>
+                                            <ColumnDefinition Width="10"/>
+                                            <ColumnDefinition Width="*"/>
+                                            <ColumnDefinition Width="200"/>
+                                        </Grid.ColumnDefinitions>
+                                        <TextBlock Grid.Column="0" Text="•" FontSize="16" VerticalAlignment="Center" />
+                                        <TextBlock Grid.Column="1" ToolTip="{Binding Url}" VerticalAlignment="Center">
+                                            <Hyperlink NavigateUri="{Binding Url}" RequestNavigate="Hyperlink_RequestNavigate">
+                                                <Run Text="{Binding Name}" />
+                                            </Hyperlink>
                                         </TextBlock>
-                                    </StackPanel>
+                                        <TextBlock Grid.Column="2" ToolTip="{Binding LicenseUrl}" VerticalAlignment="Center">
+                                            <Hyperlink NavigateUri="{Binding LicenseUrl}" RequestNavigate="Hyperlink_RequestNavigate" >
+                                                <Run Text="{Binding LicenseName}" />
+                                            </Hyperlink>
+                                        </TextBlock>
+                                    </Grid>
                                 </DataTemplate>
                             </ItemsControl.ItemTemplate>
                         </ItemsControl>
@@ -81,14 +91,24 @@
                         <ItemsControl ItemsSource="{Binding Services}">
                             <ItemsControl.ItemTemplate>
                                 <DataTemplate>
-                                    <StackPanel Orientation="Horizontal" Margin="0,5" VerticalAlignment="Center">
-                                        <TextBlock Text="• " FontSize="16" Margin="0,0,5,0" VerticalAlignment="Center" />
-                                        <TextBlock ToolTip="{Binding Url}">
-                                <Hyperlink NavigateUri="{Binding Url}" RequestNavigate="Hyperlink_RequestNavigate">
-                                    <Run Text="{Binding Name}" />
-                                </Hyperlink>
+                                    <Grid Margin="0,5" VerticalAlignment="Center">
+                                        <Grid.ColumnDefinitions>
+                                            <ColumnDefinition Width="10"/>
+                                            <ColumnDefinition Width="*"/>
+                                            <ColumnDefinition Width="200"/>
+                                        </Grid.ColumnDefinitions>
+                                        <TextBlock Grid.Column="0" Text="•" FontSize="16" VerticalAlignment="Center" />
+                                        <TextBlock Grid.Column="1" ToolTip="{Binding Url}" VerticalAlignment="Center">
+                                            <Hyperlink NavigateUri="{Binding Url}" RequestNavigate="Hyperlink_RequestNavigate">
+                                                <Run Text="{Binding Name}" />
+                                            </Hyperlink>
                                         </TextBlock>
-                                    </StackPanel>
+                                        <TextBlock Grid.Column="2" ToolTip="{Binding LicenseUrl}" VerticalAlignment="Center">
+                                            <Hyperlink NavigateUri="{Binding LicenseUrl}" RequestNavigate="Hyperlink_RequestNavigate" >
+                                                <Run Text="{Binding LicenseName}" />
+                                            </Hyperlink>
+                                        </TextBlock>
+                                    </Grid>
                                 </DataTemplate>
                             </ItemsControl.ItemTemplate>
                         </ItemsControl>
@@ -101,14 +121,24 @@
                         <ItemsControl ItemsSource="{Binding Tools}">
                             <ItemsControl.ItemTemplate>
                                 <DataTemplate>
-                                    <StackPanel Orientation="Horizontal" Margin="0,5" VerticalAlignment="Center">
-                                        <TextBlock Text="• " FontSize="16" Margin="0,0,5,0" VerticalAlignment="Center" />
-                                        <TextBlock ToolTip="{Binding Url}">
-                                <Hyperlink NavigateUri="{Binding Url}" RequestNavigate="Hyperlink_RequestNavigate">
-                                    <Run Text="{Binding Name}" />
-                                </Hyperlink>
+                                    <Grid Margin="0,5" VerticalAlignment="Center">
+                                        <Grid.ColumnDefinitions>
+                                            <ColumnDefinition Width="10"/>
+                                            <ColumnDefinition Width="*"/>
+                                            <ColumnDefinition Width="200"/>
+                                        </Grid.ColumnDefinitions>
+                                        <TextBlock Grid.Column="0" Text="•" FontSize="16" VerticalAlignment="Center" />
+                                        <TextBlock Grid.Column="1" ToolTip="{Binding Url}" VerticalAlignment="Center">
+                                            <Hyperlink NavigateUri="{Binding Url}" RequestNavigate="Hyperlink_RequestNavigate">
+                                                <Run Text="{Binding Name}" />
+                                            </Hyperlink>
                                         </TextBlock>
-                                    </StackPanel>
+                                        <TextBlock Grid.Column="2" ToolTip="{Binding LicenseUrl}" VerticalAlignment="Center">
+                                            <Hyperlink NavigateUri="{Binding LicenseUrl}" RequestNavigate="Hyperlink_RequestNavigate" >
+                                                <Run Text="{Binding LicenseName}" />
+                                            </Hyperlink>
+                                        </TextBlock>
+                                    </Grid>
                                 </DataTemplate>
                             </ItemsControl.ItemTemplate>
                         </ItemsControl>
