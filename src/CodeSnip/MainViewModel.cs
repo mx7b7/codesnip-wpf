@@ -467,10 +467,13 @@ namespace CodeSnip
 
 
             Snippet? tmpSnippet = null;
-            if (IsEditorModified && EditingSnippet != null)
+            if (EditingSnippet != null)
             {
                 tmpSnippet = EditingSnippet;
-                PerformSave();
+                if (IsEditorModified)
+                {
+                    PerformSave();
+                }
             }
             var vm = new LanguageCategoryViewModel(_databaseService);
             _flyoutService.ShowFlyout("flyEditLangCat", vm, "Edit Languages Categories", () =>
