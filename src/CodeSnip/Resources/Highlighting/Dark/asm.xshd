@@ -737,6 +737,7 @@
 			<Word>ymmword</Word>
 			<Word>zmmword</Word>
 			<Word>short</Word>
+			<Word>long</Word>
 		</Keywords>
 
 		<Rule color="Directive">
