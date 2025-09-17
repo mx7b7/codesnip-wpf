@@ -94,7 +94,7 @@ namespace CodeSnip.Views.CompilerSettingsView
                 }
                 CompilersLink = $"https://godbolt.org/api/compilers/{value.LanguageId}";
                 LinkText = $"Get more compilers for {value.LanguageName}";
-                HelpText = $"Enter a CompilerId matching a 'Compiler Name' from the list of Godbolt compilers for {value.LanguageName}";
+                HelpText = $"Enter a CompilerId that matches a 'Compiler Name' from the list of Compiler Explorer compilers for {value.LanguageName}";
                 Debug.WriteLine(LinkText);
                 Debug.WriteLine(CompilersLink);
             }
