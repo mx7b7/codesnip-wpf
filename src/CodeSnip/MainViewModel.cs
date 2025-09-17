@@ -346,7 +346,7 @@ namespace CodeSnip
             if (string.IsNullOrEmpty(textToSearch))
                 return false;
 
-            var words = textToSearch.Split([' ', ',', ';', ':', '-', '(', ')', '[', ']', '.'], StringSplitOptions.RemoveEmptyEntries);
+            var words = textToSearch.Split([' ', ',', ';', ':', '-', '_', '.'], StringSplitOptions.RemoveEmptyEntries);
 
             return words.Any(word => word.StartsWith(filter, StringComparison.OrdinalIgnoreCase));
         }
@@ -354,12 +354,23 @@ namespace CodeSnip
         private bool FilterMatch(Snippet snippet)
         {
             if (string.IsNullOrWhiteSpace(FilterText)) return true;
-            return FilterMode switch
+
+            var filterWords = FilterText.Split([' '], StringSplitOptions.RemoveEmptyEntries);
+            if (filterWords.Length == 0) return true;
+
+            foreach (var word in filterWords)
             {
-                SnippetFilterMode.Name => MatchOnWordStart(snippet.Title, FilterText),
-                SnippetFilterMode.Tag => MatchOnWordStart(snippet.Tag, FilterText),
-                _ => false
-            };
+                bool wordMatch = FilterMode switch
+                {
+                    SnippetFilterMode.Name => MatchOnWordStart(snippet.Title, word),
+                    SnippetFilterMode.Tag => MatchOnWordStart(snippet.Tag, word),
+                    _ => false
+                };
+
+                if (!wordMatch)
+                    return false;
+            }
+            return true;
         }
 
 
