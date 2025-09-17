@@ -159,6 +159,7 @@
                                     <Geometry x:Key="CategoryIcon">M3,6h18v2H3V6zm0,5h18v2H3v-2zm0,5h18v2H3v-2z</Geometry>
                                     <!-- Ikona za snippet -->
                                     <Geometry x:Key="SnippetIcon">M5,4h14a2,2 0 0 1 2,2v12a2,2 0 0 1 -2,2H5a2,2 0 0 1 -2,-2V6a2,2 0 0 1 2,-2zm0,2v12h14V6H5zm2,2h10v2H7V8zm0,4h6v2H7v-2z</Geometry>
+                                    <Style TargetType="{x:Type ScrollBar}" BasedOn="{StaticResource TreeViewScrollBar}" />
                                 </TreeView.Resources>
                                 <TreeView.ItemContainerStyle>
                                     <Style TargetType="{x:Type TreeViewItem}">
