@@ -28,7 +28,7 @@ namespace CodeSnip.Views.CodeRunnerView
         private string _flags = "";
 
         [ObservableProperty]
-        private string _stdout = "";
+        private string _stdOut = "";
 
         [ObservableProperty]
         private string _errorText = "";
@@ -56,6 +56,12 @@ namespace CodeSnip.Views.CodeRunnerView
 
         [ObservableProperty]
         private bool _showAsm = false;
+
+        [ObservableProperty]
+        private bool _hasError = false;
+
+        [ObservableProperty]
+        private bool _hasOut = true;
 
         public CodeRunnerViewModel(string languageExtension, string code, Func<string> getLatestCode)
         {
@@ -107,6 +113,16 @@ namespace CodeSnip.Views.CodeRunnerView
             }
         }
 
+        partial void OnErrorTextChanged(string value)
+        {
+            HasError = !string.IsNullOrEmpty(value);
+        }
+
+        partial void OnStdOutChanged(string value)
+        {
+            HasOut = !string.IsNullOrEmpty(value);
+        }
+
         private async Task CompileSnippetAsync()
         {
             string? langId = _compilersSettings.GetLanguageIdByExtension(Extension); // godbolt languageId (c++, csharp ...)
@@ -114,14 +130,14 @@ namespace CodeSnip.Views.CodeRunnerView
             var (stdout, stderr, asm, error) = await _godboltService.CompileAndRunAsync(
                 Code, SelectedCompiler!.Id ?? "", langId ?? "", Flags, !ShowAsm); // if ShowAsm is true, then SkipAsm must be false
 
-            Stdout = string.IsNullOrEmpty(stdout) ? "" : stdout;
+            StdOut = string.IsNullOrEmpty(stdout) ? "" : stdout;
             ErrorText = RemoveAnsiCodes(stderr);
             AsmCode = asm ?? ""; // Store raw asm
 
             if (!string.IsNullOrEmpty(error))
             {
                 ErrorText = error;
-                Stdout = "";
+                StdOut = "";
                 AsmCode = "";
                 return;
             }

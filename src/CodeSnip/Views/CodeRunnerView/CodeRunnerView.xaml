@@ -76,21 +76,23 @@
             <mah:MetroTabItem Header="Output">
                 <Grid>
                     <Grid.RowDefinitions>
-                        <RowDefinition Height="Auto"/>
-                        <RowDefinition Height="2*" />
-                        <RowDefinition Height="Auto"/>
                         <RowDefinition Height="*" />
+                        <RowDefinition Height="Auto" />
                     </Grid.RowDefinitions>
-
-                    <!-- Stdout -->
-                    <TextBlock Text="Stdout:" FontWeight="Bold" Margin="0,10,0,0" Grid.Row="0"/>
-                    <TextBox Grid.Row="1" Text="{Binding Stdout}" IsReadOnly="True" 
-                             VerticalScrollBarVisibility="Auto" HorizontalScrollBarVisibility="Auto"/>
-
-                    <!-- Stderr -->
-                    <TextBlock Text="Stderr:" FontWeight="Bold" Margin="0,10,0,0" Grid.Row="2"/>
-                    <TextBox Grid.Row="3" Text="{Binding ErrorText}" IsReadOnly="True" Foreground="#FFF92672" 
-                             VerticalScrollBarVisibility="Auto" HorizontalScrollBarVisibility="Auto"/>
+                    <Expander Header="Stdout:" IsExpanded="{Binding HasOut}" Grid.Row="0">
+                        <Expander.Resources>
+                            <Style TargetType="{x:Type Expander}" BasedOn="{StaticResource SimpleExpander}" />
+                        </Expander.Resources>
+                        <TextBox Text="{Binding StdOut}" IsReadOnly="True" 
+                     VerticalScrollBarVisibility="Auto" HorizontalScrollBarVisibility="Auto"/>
+                    </Expander>
+                    <Expander Header="Stderr:" IsExpanded="{Binding HasError}" Grid.Row="1">
+                        <Expander.Resources>
+                            <Style TargetType="{x:Type Expander}" BasedOn="{StaticResource SimpleExpander}" />
+                        </Expander.Resources>
+                        <TextBox Text="{Binding ErrorText}" IsReadOnly="True" Foreground="#FFF92672" Margin="0,0,0,2"
+                     VerticalScrollBarVisibility="Auto" HorizontalScrollBarVisibility="Auto"/>
+                    </Expander>
                 </Grid>
             </mah:MetroTabItem>
 
