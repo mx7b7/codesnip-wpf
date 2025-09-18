@@ -199,6 +199,9 @@
                             <!-- Kontrole ispod TreeView-a -->
                             <Expander Header="Snippet Metadata" Grid.Row="1" Margin="0,10,0,0"
                                       IsExpanded="{Binding IsSnippetMetadataExpanded, Mode=TwoWay}">
+                                <Expander.Resources>
+                                    <Style TargetType="{x:Type Expander}" BasedOn="{StaticResource SimpleExpander}" />
+                                </Expander.Resources>
                                 <Grid>
                                     <Grid.RowDefinitions>
                                         <RowDefinition Height="Auto"/>
