@@ -1,6 +1,7 @@
 ﻿using CodeSnip.Services;
 using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
+using System.Diagnostics;
 using System.Net.Http;
 using System.Text.RegularExpressions;
 
@@ -181,5 +182,24 @@ namespace CodeSnip.Views.CodeRunnerView
             await Task.Delay(1000);
             ReloadBadge = "";
         }
+
+        private bool CanNavigateToLink()
+        {
+            return !string.IsNullOrWhiteSpace(ShortLink);
+        }
+
+        [RelayCommand(CanExecute = nameof(CanNavigateToLink))]
+        private void NavigateToLink()
+        {
+            if (!string.IsNullOrWhiteSpace(ShortLink))
+            {
+                if (Uri.TryCreate(ShortLink, UriKind.Absolute, out var uri))
+                {
+                    Process.Start(new ProcessStartInfo(uri.AbsoluteUri) { UseShellExecute = true });
+                }
+            }
+        }
+
+        
     }
 }
