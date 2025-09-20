@@ -127,6 +127,17 @@ namespace CodeSnip.Services
             get => _settings.Editor.EnableXmlFolding;
             set => _settings.Editor.EnableXmlFolding = value;
         }
+        public string EditorFontFamily
+        {
+            get => _settings.Editor.EditorFontFamily;
+            set => _settings.Editor.EditorFontFamily = value;
+        }
+
+        public int EditorFontSize
+        {
+            get => _settings.Editor.EditorFontSize;
+            set => _settings.Editor.EditorFontSize = value;
+        }
 
         public bool ShowEmptyLanguages
         {

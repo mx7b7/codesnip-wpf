@@ -323,9 +323,9 @@
                 <avalonEdit:TextEditor
 				x:Name="textEditor"
                 Grid.Row="1"
-                 Margin="0,10,0,0"
-				FontFamily="Consolas"
-				FontSize="{Binding FontSize}"
+                Margin="0,10,0,0"
+				FontFamily="{Binding EditorFontFamily}"
+				FontSize="{Binding EditorFontSize}"
 				SyntaxHighlighting="C#"
                     ShowLineNumbers="True" 
                     HorizontalScrollBarVisibility="Visible" 

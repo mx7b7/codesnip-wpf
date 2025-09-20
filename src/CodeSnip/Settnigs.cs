@@ -30,6 +30,8 @@ namespace CodeSnip
         public bool EnableBraceStyleFolding { get; set; } = false;
         public bool EnablePythonFolding { get; set; } = false;
         public bool EnableXmlFolding { get; set; } = false;
+        public string EditorFontFamily { get; set; } = "Consolas";
+        public int EditorFontSize { get; set; } = 14;
 
     }
     public class ThemeSettings

@@ -81,6 +81,13 @@ namespace CodeSnip.Views.SettingsView
         [ObservableProperty]
         private string _backupBadge = "";
 
+        [ObservableProperty]
+        private string _editorFontFamily;
+
+        [ObservableProperty]
+        private int _editorFontSize;
+
+        public ObservableCollection<FontFamily> SystemFonts { get; } = new ObservableCollection<FontFamily>(Fonts.SystemFontFamilies);
 
         public SettingsViewModel(SettingsService settingsService, DatabaseService databaseService, Func<Task>? onDatabaseActionCompleted = null)
         {
@@ -100,6 +107,8 @@ namespace CodeSnip.Views.SettingsView
             EnableBraceStyleFolding = _settingsService.EnableBraceStyleFolding;
             EnablePythonFolding = _settingsService.EnablePythonFolding;
             EnableXmlFolding = _settingsService.EnableXmlFolding;
+            EditorFontFamily = _settingsService.EditorFontFamily;
+            EditorFontSize = _settingsService.EditorFontSize;
             ShowEmptyLanguages = _settingsService.ShowEmptyLanguages;
             ShowEmptyCategories = _settingsService.ShowEmptyCategories;
             _databaseService = databaseService;
@@ -177,6 +186,16 @@ namespace CodeSnip.Views.SettingsView
         partial void OnEnableFilteringChanged(bool value)
         {
             _settingsService.EnableFiltering = value;
+        }
+
+        partial void OnEditorFontFamilyChanged(string value)
+        {
+            _settingsService.EditorFontFamily = value;
+        }
+
+        partial void OnEditorFontSizeChanged(int value)
+        {
+            _settingsService.EditorFontSize = value;
         }
 
         [RelayCommand]

@@ -59,7 +59,7 @@ namespace CodeSnip
         private bool isSelected;
 
         [ObservableProperty]
-        private string windowTitle = "codesnip";
+        private string windowTitle = "CodeSnip";
 
         [ObservableProperty]
         private bool _isLoadSnippetEnabled = true;
@@ -67,7 +67,10 @@ namespace CodeSnip
         private bool _isInternalTextUpdate = true;
 
         [ObservableProperty]
-        private double fontSize = 14;
+        private string editorFontFamily = "Consolas";
+
+        [ObservableProperty]
+        private double editorFontSize = 14;
 
         [ObservableProperty]
         private bool isPaneOpen = true;
@@ -165,6 +168,8 @@ namespace CodeSnip
             EnableBraceStyleFolding = settingsService.EnableBraceStyleFolding;
             EnablePythonFolding = settingsService.EnablePythonFolding;
             EnableXmlFolding = settingsService.EnableXmlFolding;
+            EditorFontFamily = settingsService.EditorFontFamily;
+            EditorFontSize = settingsService.EditorFontSize;
             ShowEmptyLanguages = settingsService.ShowEmptyLanguages;
             ShowEmptyCategories = settingsService.ShowEmptyCategories;
 
@@ -432,6 +437,8 @@ namespace CodeSnip
                 settingsService.EnablePythonFolding = vm.EnablePythonFolding;
                 settingsService.EnableBraceStyleFolding = vm.EnableBraceStyleFolding;
                 settingsService.EnableXmlFolding = vm.EnableXmlFolding;
+                settingsService.EditorFontFamily = vm.EditorFontFamily;
+                settingsService.EditorFontSize = vm.EditorFontSize;
                 settingsService.ShowEmptyLanguages = vm.ShowEmptyLanguages;
                 settingsService.ShowEmptyCategories = vm.ShowEmptyCategories;
                 settingsService.IsNotificationEnabled = vm.IsNotificationEnabled;
@@ -446,6 +453,8 @@ namespace CodeSnip
                 EnableBraceStyleFolding = vm.EnableBraceStyleFolding;
                 EnablePythonFolding = vm.EnablePythonFolding;
                 EnableXmlFolding = vm.EnableXmlFolding;
+                EditorFontFamily = vm.EditorFontFamily;
+                EditorFontSize = vm.EditorFontSize;
                 ShowEmptyLanguages = vm.ShowEmptyLanguages;
                 ShowEmptyCategories = vm.ShowEmptyCategories;
                 IsNotificationEnabled = vm.IsNotificationEnabled;
@@ -642,21 +651,21 @@ namespace CodeSnip
         [RelayCommand]
         private void IncreaseFontSize()
         {
-            if (FontSize < 72)
-                FontSize += 1;
+            if (EditorFontSize < 72)
+                EditorFontSize += 1;
         }
 
         [RelayCommand]
         private void DecreaseFontSize()
         {
-            if (FontSize > 6)
-                FontSize -= 1;
+            if (EditorFontSize > 6)
+                EditorFontSize -= 1;
         }
 
         [RelayCommand]
         private void ResetFontSize()
         {
-            FontSize = 14;
+            EditorFontSize = 14;
         }
 
         [RelayCommand]

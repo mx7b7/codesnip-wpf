@@ -75,7 +75,7 @@
         <!-- Editor settings Tab -->
         <mah:MetroTabItem Header="Editor">
             <ScrollViewer Margin="10,0,0,0" VerticalScrollBarVisibility="Auto" HorizontalScrollBarVisibility="Auto">
-                <StackPanel HorizontalAlignment="Center" VerticalAlignment="Top">
+                <StackPanel HorizontalAlignment="Left" VerticalAlignment="Top">
                     <CheckBox Content="Convert tabs to spaces" Margin="0,8,0,0"
                               IsChecked="{Binding TabToSpaces, Mode=TwoWay}" />
                     <CheckBox Content="Enable email hyperlinks" Margin="0,8,0,0"
@@ -84,12 +84,21 @@
                               IsChecked="{Binding HyperLinks, Mode=TwoWay}" />
                     <CheckBox Content="Highlight current line" Margin="0,8,0,0"
                               IsChecked="{Binding HighlightLine, Mode=TwoWay}" />
-                    <StackPanel Orientation="Horizontal" Margin="0,8,0,0" VerticalAlignment="Center" HorizontalAlignment="Center">
-                        <TextBlock Text="Indentation size:" />
-                        <mah:NumericUpDown Maximum="10" Minimum="1" NumericInputMode="Numbers" Margin="5,0,0,0"
-                            ParsingNumberStyle="Integer" TextAlignment="Center" Width="70"
-                            Value="{Binding IntendationSize, Mode=TwoWay}" />
-                    </StackPanel>
+                    <TextBlock Text="Indentation size:" Margin="0,8,0,0"/>
+                    <mah:NumericUpDown Maximum="10" Minimum="1" NumericInputMode="Numbers"
+                                     ParsingNumberStyle="Integer" TextAlignment="Center" Width="150"
+                                     Value="{Binding IntendationSize, Mode=TwoWay}" HorizontalAlignment="Left"/>
+
+                    <TextBlock Text="Font:" Margin="0,8,0,0"/>
+                    <ComboBox ItemsSource="{Binding SystemFonts}" 
+                              SelectedValue="{Binding EditorFontFamily, Mode=TwoWay}" 
+                              SelectedValuePath="Source" 
+                              Width="150" HorizontalAlignment="Left"/>
+
+                    <TextBlock Text="Font size:" Margin="0,8,0,0"/>
+                    <mah:NumericUpDown Maximum="30" Minimum="8" NumericInputMode="Numbers"
+                                     ParsingNumberStyle="Integer" TextAlignment="Center" Width="150"
+                                     Value="{Binding EditorFontSize, Mode=TwoWay}" HorizontalAlignment="Left"/>
 
                     <TextBlock Text="Folding:" FontWeight="Bold" Margin="0,10,0,0"/>
                     <CheckBox Content="Enable Brace Style Folding" Margin="0,8,0,0" ToolTip="C#,C++,Java..."
