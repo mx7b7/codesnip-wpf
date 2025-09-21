@@ -2,6 +2,7 @@
 using System.IO;
 using System.Text.Json;
 using System.Windows;
+using System.Windows.Media;
 
 namespace CodeSnip.Services
 {
@@ -217,6 +218,7 @@ namespace CodeSnip.Services
                     // Attempt to deserialize. If the file is corrupt, Deserialize will return null or throw an exception.
                     // In that case, we use the default settings (?? new AppSettings()).
                     _settings = JsonSerializer.Deserialize<AppSettings>(json) ?? new AppSettings();
+                    ValidateAndCorrectSettings();
                 }
                 catch (JsonException ex)
                 {
@@ -256,5 +258,59 @@ namespace CodeSnip.Services
             ThemeManager.Current.ChangeThemeBaseColor(Application.Current, BaseColor);
             ThemeManager.Current.ChangeThemeColorScheme(Application.Current, AccentColor);
         }
+
+        private void ValidateAndCorrectSettings()
+        {
+            var defaultSettings = new AppSettings();
+
+            // 1. Validate WindowState
+            if (!Enum.IsDefined(typeof(WindowState), _settings.MainWindow.WindowState))
+            {
+                _settings.MainWindow.WindowState = defaultSettings.MainWindow.WindowState; // Reset to 'Normal'
+            }
+
+            // 2. Validate EditorFontFamily
+            var fontExists = Fonts.SystemFontFamilies.Any(f => f.Source.Equals(_settings.Editor.EditorFontFamily, StringComparison.OrdinalIgnoreCase));
+            if (!fontExists)
+            {
+                _settings.Editor.EditorFontFamily = defaultSettings.Editor.EditorFontFamily; // Reset to 'Consolas'
+            }
+
+            // 3. Validate FontWeight properties
+            _settings.TreeViewFont.LanguageFontWeight = ValidateFontWeight(_settings.TreeViewFont.LanguageFontWeight, defaultSettings.TreeViewFont.LanguageFontWeight);
+            _settings.TreeViewFont.CategoryFontWeight = ValidateFontWeight(_settings.TreeViewFont.CategoryFontWeight, defaultSettings.TreeViewFont.CategoryFontWeight);
+            _settings.TreeViewFont.SnippetFontWeight = ValidateFontWeight(_settings.TreeViewFont.SnippetFontWeight, defaultSettings.TreeViewFont.SnippetFontWeight);
+
+            // 4. Validate ThemeSettings
+            var accentExists = ThemeManager.Current.Themes.Any(t => t.ColorScheme.Equals(_settings.Theme.Accent, StringComparison.OrdinalIgnoreCase));
+            if (!accentExists)
+            {
+                _settings.Theme.Accent = defaultSettings.Theme.Accent; // Reset to 'Sienna'
+            }
+
+            if (!_settings.Theme.BaseColor.Equals("Light", StringComparison.OrdinalIgnoreCase) &&
+                !_settings.Theme.BaseColor.Equals("Dark", StringComparison.OrdinalIgnoreCase))
+            {
+                _settings.Theme.BaseColor = defaultSettings.Theme.BaseColor; // Reset to 'Dark'
+            }
+        }
+
+        private string ValidateFontWeight(string fontWeightToValidate, string defaultFontWeight)
+        {
+            if (string.IsNullOrWhiteSpace(fontWeightToValidate))
+            {
+                return defaultFontWeight;
+            }
+            try
+            {
+                new FontWeightConverter().ConvertFromString(fontWeightToValidate);
+                return fontWeightToValidate; // The value is valid
+            }
+            catch
+            {
+                return defaultFontWeight; // The value is invalid, return the default
+            }
+        }
+
     }
 }
