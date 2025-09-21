@@ -8,7 +8,7 @@ namespace CodeSnip.Services
 {
     public class CompilerSettingsService
     {
-        private readonly string _settingsFilePath = "compilers.json";
+        private readonly string _settingsFilePath = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "compilers.json");
         public CompilerSettingsRoot? Settings { get; private set; }
         private readonly Uri compilersResource = new($"/CodeSnip;component/Resources/compilers.json", UriKind.Relative);
         private readonly JsonSerializerOptions _jsonOptions;
@@ -28,39 +28,45 @@ namespace CodeSnip.Services
 
         public void LoadSettings()
         {
-            try
+            if (File.Exists(_settingsFilePath))
             {
-                if (File.Exists(_settingsFilePath))
+                try
                 {
                     string json = File.ReadAllText(_settingsFilePath);
-                    Settings = JsonSerializer.Deserialize<CompilerSettingsRoot>(json, _jsonOptions) ?? new CompilerSettingsRoot();
+                    Settings = JsonSerializer.Deserialize<CompilerSettingsRoot>(json, _jsonOptions);
+                    if (Settings == null || Settings.Languages == null)
+                    {
+                        throw new JsonException("File is invalid or empty.");
+                    }
                 }
-                // Create compilers.json from resource
-                else
+                catch (JsonException ex)
                 {
-                    var info = Application.GetResourceStream(compilersResource);
-                    if (info != null)
-                    {
-                        using var stream = info.Stream;
-                        using var reader = new StreamReader(stream);
-                        string json = reader.ReadToEnd();
-                        Settings = JsonSerializer.Deserialize<CompilerSettingsRoot>(json, _jsonOptions) ?? new CompilerSettingsRoot();
-                    }
-                    else
-                    {
-                        Settings = new CompilerSettingsRoot();
-                    }
-                    if (Settings.Languages == null)
-                        Settings.Languages = new List<LanguageInfo>();
-
+                    MessageBox.Show($"Error parsing 'compilers.json': {ex.Message}\nLoading default compiler settings.", "Compiler Settings Error", MessageBoxButton.OK, MessageBoxImage.Warning);
+                    LoadSettingsFromResource(); // Load from embedded resource
+                    SaveSettings();
+                }
+                catch (Exception ex)
+                {
+                    MessageBox.Show($"An unexpected error occurred while loading 'compilers.json': {ex.Message}\nLoading default compiler settings.", "Compiler Settings Error", MessageBoxButton.OK, MessageBoxImage.Error);
+                    LoadSettingsFromResource();
                     SaveSettings();
                 }
             }
-            catch (Exception ex)
+            else
             {
-                Settings = new CompilerSettingsRoot { Languages = new List<LanguageInfo>() };
-                MessageBox.Show($"Error loading settings:\n{ex.Message}");
+                // File doesn't exist, so create it from resource
+                LoadSettingsFromResource();
+                SaveSettings();
             }
+        }
+
+        private void LoadSettingsFromResource()
+        {
+            var info = Application.GetResourceStream(compilersResource);
+            using var stream = info!.Stream;
+            using var reader = new StreamReader(stream);
+            string json = reader.ReadToEnd();
+            Settings = JsonSerializer.Deserialize<CompilerSettingsRoot>(json, _jsonOptions) ?? new CompilerSettingsRoot { Languages = new List<LanguageInfo>() };
         }
 
         public void SaveSettings()
