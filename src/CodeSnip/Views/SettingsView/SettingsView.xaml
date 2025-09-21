@@ -36,19 +36,49 @@
                     <StackPanel Grid.Row="2">
                         <TextBlock Text="Accent:" FontWeight="Bold" Margin="0,0,0,5"/>
                         <ComboBox  ItemsSource="{Binding AccentColors}"
-                                   SelectedItem="{Binding SelectedAccent, Mode=TwoWay}">
+                        SelectedItem="{Binding SelectedAccent, Mode=TwoWay}">
                             <ComboBox.ItemTemplate>
                                 <DataTemplate>
                                     <StackPanel Orientation="Horizontal" >
                                         <Ellipse Width="16" Height="16"
-                                                 Stroke="Black"
-                                                 StrokeThickness="0.5"
-                                                 Fill="{Binding ColorBrush}" />
+                                        Stroke="Black"
+                                        StrokeThickness="0.5"
+                                        Fill="{Binding ColorBrush}" />
                                         <TextBlock Text="{Binding Name}" VerticalAlignment="Center" Margin="5,0,0,0"/>
                                     </StackPanel>
                                 </DataTemplate>
                             </ComboBox.ItemTemplate>
                         </ComboBox>
+
+                        <TextBlock Text="Language Font Size:" Margin="0,8,0,0" FontWeight="Bold"/>
+                        <mah:NumericUpDown Maximum="30" Minimum="8" NumericInputMode="Numbers" InterceptManualEnter="False"
+                                         ParsingNumberStyle="Integer" TextAlignment="Center" Width="150"
+                                         Value="{Binding LanguageFontSize, Mode=TwoWay}" HorizontalAlignment="Left" />
+
+                        <TextBlock Text="Language Font Weight:" Margin="0,8,0,0" FontWeight="Bold"/>
+                        <ComboBox ItemsSource="{Binding FontWeights}" 
+                                  SelectedItem="{Binding LanguageFontWeight, Mode=TwoWay}" 
+                                  Width="150" HorizontalAlignment="Left" />
+
+                        <TextBlock Text="Category Font Size:" Margin="0,8,0,0" FontWeight="Bold"/>
+                        <mah:NumericUpDown Maximum="30" Minimum="8" NumericInputMode="Numbers" InterceptManualEnter="False"
+                                         ParsingNumberStyle="Integer" TextAlignment="Center" Width="150"
+                                         Value="{Binding CategoryFontSize, Mode=TwoWay}" HorizontalAlignment="Left"/>
+
+                        <TextBlock Text="Category Font Weight:" Margin="0,8,0,0" FontWeight="Bold"/>
+                        <ComboBox ItemsSource="{Binding FontWeights}" 
+                                  SelectedItem="{Binding CategoryFontWeight, Mode=TwoWay}" 
+                                  Width="150" HorizontalAlignment="Left"/>
+
+                        <TextBlock Text="Snippet Font Size:" Margin="0,8,0,0" FontWeight="Bold"/>
+                        <mah:NumericUpDown Maximum="30" Minimum="8" NumericInputMode="Numbers" InterceptManualEnter="False"
+                                         ParsingNumberStyle="Integer" TextAlignment="Center" Width="150"
+                                         Value="{Binding SnippetFontSize, Mode=TwoWay}" HorizontalAlignment="Left"/>
+
+                        <TextBlock Text="Snippet Font Weight:" Margin="0,8,0,0" FontWeight="Bold"/>
+                        <ComboBox ItemsSource="{Binding FontWeights}" 
+                                  SelectedItem="{Binding SnippetFontWeight, Mode=TwoWay}" 
+                                  Width="150" HorizontalAlignment="Left"/>
                     </StackPanel>
                 </Grid>
             </ScrollViewer>
@@ -75,7 +105,7 @@
         <!-- Editor settings Tab -->
         <mah:MetroTabItem Header="Editor">
             <ScrollViewer Margin="10,0,0,0" VerticalScrollBarVisibility="Auto" HorizontalScrollBarVisibility="Auto">
-                <StackPanel HorizontalAlignment="Left" VerticalAlignment="Top">
+                <StackPanel HorizontalAlignment="Center" VerticalAlignment="Top">
                     <CheckBox Content="Convert tabs to spaces" Margin="0,8,0,0"
                               IsChecked="{Binding TabToSpaces, Mode=TwoWay}" />
                     <CheckBox Content="Enable email hyperlinks" Margin="0,8,0,0"

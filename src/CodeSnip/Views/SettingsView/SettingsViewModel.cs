@@ -87,7 +87,27 @@ namespace CodeSnip.Views.SettingsView
         [ObservableProperty]
         private int _editorFontSize;
 
+        [ObservableProperty]
+        private int _languageFontSize;
+
+        [ObservableProperty]
+        private string _languageFontWeight;
+
+        [ObservableProperty]
+        private int _categoryFontSize;
+
+        [ObservableProperty]
+        private string _categoryFontWeight;
+
+        [ObservableProperty]
+        private int _snippetFontSize;
+
+        [ObservableProperty]
+        private string _snippetFontWeight;
+
         public ObservableCollection<FontFamily> SystemFonts { get; } = new ObservableCollection<FontFamily>(Fonts.SystemFontFamilies);
+
+        public List<string> FontWeights { get; } = ["Black", "Bold", "DemiBold", "ExtraBlack", "ExtraBold", "ExtraLight", "Heavy", "Light", "Medium", "Normal", "Regular", "SemiBold", "Thin"];
 
         public SettingsViewModel(SettingsService settingsService, DatabaseService databaseService, Func<Task>? onDatabaseActionCompleted = null)
         {
@@ -109,6 +129,12 @@ namespace CodeSnip.Views.SettingsView
             EnableXmlFolding = _settingsService.EnableXmlFolding;
             EditorFontFamily = _settingsService.EditorFontFamily;
             EditorFontSize = _settingsService.EditorFontSize;
+            LanguageFontSize = _settingsService.LanguageFontSize;
+            LanguageFontWeight = _settingsService.LanguageFontWeight;
+            CategoryFontSize = _settingsService.CategoryFontSize;
+            CategoryFontWeight = _settingsService.CategoryFontWeight;
+            SnippetFontSize = _settingsService.SnippetFontSize;
+            SnippetFontWeight = _settingsService.SnippetFontWeight;
             ShowEmptyLanguages = _settingsService.ShowEmptyLanguages;
             ShowEmptyCategories = _settingsService.ShowEmptyCategories;
             _databaseService = databaseService;
@@ -196,6 +222,36 @@ namespace CodeSnip.Views.SettingsView
         partial void OnEditorFontSizeChanged(int value)
         {
             _settingsService.EditorFontSize = value;
+        }
+
+        partial void OnLanguageFontSizeChanged(int value)
+        {
+            _settingsService.LanguageFontSize = value;
+        }
+
+        partial void OnLanguageFontWeightChanged(string value)
+        {
+            _settingsService.LanguageFontWeight = value;
+        }
+
+        partial void OnCategoryFontSizeChanged(int value)
+        {
+            _settingsService.CategoryFontSize = value;
+        }
+
+        partial void OnCategoryFontWeightChanged(string value)
+        {
+            _settingsService.CategoryFontWeight = value;
+        }
+
+        partial void OnSnippetFontSizeChanged(int value)
+        {
+            _settingsService.SnippetFontSize = value;
+        }
+
+        partial void OnSnippetFontWeightChanged(string value)
+        {
+            _settingsService.SnippetFontWeight = value;
         }
 
         [RelayCommand]

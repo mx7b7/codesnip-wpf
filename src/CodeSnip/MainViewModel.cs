@@ -129,6 +129,24 @@ namespace CodeSnip
         [ObservableProperty]
         private bool _isNotificationEnabled = true;
 
+        [ObservableProperty]
+        private int _languageFontSize = 15;
+
+        [ObservableProperty]
+        private string _languageFontWeight = "SemiBold";
+
+        [ObservableProperty]
+        private int _categoryFontSize = 14;
+
+        [ObservableProperty]
+        private string _categoryFontWeight = "Medium";
+
+        [ObservableProperty]
+        private int _snippetFontSize = 14;
+
+        [ObservableProperty]
+        private string _snippetFontWeight = "Normal";
+
         public enum SnippetFilterMode
         {
             Name,
@@ -149,6 +167,12 @@ namespace CodeSnip
                 throw new InvalidOperationException("Icons not found in resources.");
             }
 
+            LoadSettingsIntoViewModel();
+
+        }
+
+        private void LoadSettingsIntoViewModel()
+        {
             SplitViewOpenPaneLength = settingsService.PanelLength;
             WindowX = settingsService.WindowX;
             WindowY = settingsService.WindowY;
@@ -173,6 +197,12 @@ namespace CodeSnip
             ShowEmptyLanguages = settingsService.ShowEmptyLanguages;
             ShowEmptyCategories = settingsService.ShowEmptyCategories;
 
+            LanguageFontSize = settingsService.LanguageFontSize;
+            LanguageFontWeight = settingsService.LanguageFontWeight;
+            CategoryFontSize = settingsService.CategoryFontSize;
+            CategoryFontWeight = settingsService.CategoryFontWeight;
+            SnippetFontSize = settingsService.SnippetFontSize;
+            SnippetFontWeight = settingsService.SnippetFontWeight;
         }
 
         public async Task UpdateDatabaseHealthStatusAsync()
@@ -439,6 +469,12 @@ namespace CodeSnip
                 settingsService.EnableXmlFolding = vm.EnableXmlFolding;
                 settingsService.EditorFontFamily = vm.EditorFontFamily;
                 settingsService.EditorFontSize = vm.EditorFontSize;
+                settingsService.LanguageFontSize = vm.LanguageFontSize;
+                settingsService.LanguageFontWeight = vm.LanguageFontWeight;
+                settingsService.CategoryFontSize = vm.CategoryFontSize;
+                settingsService.CategoryFontWeight = vm.CategoryFontWeight;
+                settingsService.SnippetFontSize = vm.SnippetFontSize;
+                settingsService.SnippetFontWeight = vm.SnippetFontWeight;
                 settingsService.ShowEmptyLanguages = vm.ShowEmptyLanguages;
                 settingsService.ShowEmptyCategories = vm.ShowEmptyCategories;
                 settingsService.IsNotificationEnabled = vm.IsNotificationEnabled;
@@ -455,6 +491,12 @@ namespace CodeSnip
                 EnableXmlFolding = vm.EnableXmlFolding;
                 EditorFontFamily = vm.EditorFontFamily;
                 EditorFontSize = vm.EditorFontSize;
+                LanguageFontSize = vm.LanguageFontSize;
+                LanguageFontWeight = vm.LanguageFontWeight;
+                CategoryFontSize = vm.CategoryFontSize;
+                CategoryFontWeight = vm.CategoryFontWeight;
+                SnippetFontSize = vm.SnippetFontSize;
+                SnippetFontWeight = vm.SnippetFontWeight;
                 ShowEmptyLanguages = vm.ShowEmptyLanguages;
                 ShowEmptyCategories = vm.ShowEmptyCategories;
                 IsNotificationEnabled = vm.IsNotificationEnabled;
@@ -476,7 +518,7 @@ namespace CodeSnip
                     }
                 }
 
-                settingsService.SaveSettings();
+                //settingsService.SaveSettings(); // Moved to OnWindowClosing
             });
         }
 
