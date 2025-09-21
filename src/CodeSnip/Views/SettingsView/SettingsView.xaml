@@ -20,74 +20,72 @@
         <!-- Appearance Tab -->
         <mah:MetroTabItem Header="Appearance">
             <ScrollViewer Margin="10,0,0,0" VerticalScrollBarVisibility="Auto" HorizontalScrollBarVisibility="Auto">
-                <Grid HorizontalAlignment="Center" VerticalAlignment="Top">
-                    <Grid.RowDefinitions>
-                        <RowDefinition Height="Auto" />
-                        <RowDefinition Height="Auto" />
-                        <RowDefinition Height="Auto" />
-                    </Grid.RowDefinitions>
-                    <TextBlock Text="Base theme:" Grid.Row="0" FontWeight="Bold" />
-                    <StackPanel Orientation="Horizontal" Grid.Row="1" Margin="0,5,0,10">
-                        <RadioButton Content="Light"
-                                     IsChecked="{Binding IsDarkTheme, Converter={StaticResource InverseBooleanConverter}, Mode=TwoWay}" />
-                        <RadioButton Content="Dark"
-                                     IsChecked="{Binding IsDarkTheme, Mode=TwoWay}" Margin="20,0,0,0" />
-                    </StackPanel>
-                    <StackPanel Grid.Row="2">
-                        <TextBlock Text="Accent:" FontWeight="Bold" Margin="0,0,0,5"/>
-                        <ComboBox  ItemsSource="{Binding AccentColors}"
-                        SelectedItem="{Binding SelectedAccent, Mode=TwoWay}">
-                            <ComboBox.ItemTemplate>
-                                <DataTemplate>
-                                    <StackPanel Orientation="Horizontal" >
-                                        <Ellipse Width="16" Height="16"
-                                        Stroke="Black"
-                                        StrokeThickness="0.5"
-                                        Fill="{Binding ColorBrush}" />
-                                        <TextBlock Text="{Binding Name}" VerticalAlignment="Center" Margin="5,0,0,0"/>
-                                    </StackPanel>
-                                </DataTemplate>
-                            </ComboBox.ItemTemplate>
-                        </ComboBox>
+                <StackPanel>
+                    <GroupBox Header="Application theme" Margin="5">
+                        <StackPanel>
+                            <TextBlock Text="Base theme:" />
+                            <StackPanel Orientation="Horizontal" Margin="0,5,0,10">
+                                <RadioButton Content="Light"
+                                             IsChecked="{Binding IsDarkTheme, Converter={StaticResource InverseBooleanConverter}, Mode=TwoWay}" />
+                                <RadioButton Content="Dark"
+                                             IsChecked="{Binding IsDarkTheme, Mode=TwoWay}" Margin="30,0,0,0" />
+                            </StackPanel>
+                            <TextBlock Text="Accent:" Margin="0,0,0,5"/>
+                            <ComboBox ItemsSource="{Binding AccentColors}"
+                                      SelectedItem="{Binding SelectedAccent, Mode=TwoWay}" >
+                                <ComboBox.ItemTemplate>
+                                    <DataTemplate>
+                                        <StackPanel Orientation="Horizontal" >
+                                            <Ellipse Width="16" Height="16"
+                                                     Stroke="Black"
+                                                     StrokeThickness="0.5"
+                                                     Fill="{Binding ColorBrush}" />
+                                            <TextBlock Text="{Binding Name}" VerticalAlignment="Center" Margin="5,0,0,0"/>
+                                        </StackPanel>
+                                    </DataTemplate>
+                                </ComboBox.ItemTemplate>
+                            </ComboBox>
+                        </StackPanel>
+                    </GroupBox>
 
-                        <TextBlock Text="Language Font Size:" Margin="0,8,0,0" FontWeight="Bold"/>
-                        <mah:NumericUpDown Maximum="30" Minimum="8" NumericInputMode="Numbers" InterceptManualEnter="False"
-                                         ParsingNumberStyle="Integer" TextAlignment="Center" Width="150"
-                                         Value="{Binding LanguageFontSize, Mode=TwoWay}" HorizontalAlignment="Left" />
+                    <GroupBox Header="Snippets TreeView fonts" Margin="5,20,5,5">
+                        <StackPanel>
+                            <TextBlock Text="Language Font Size:" Margin="0,8,0,0" />
+                            <mah:NumericUpDown Maximum="30" Minimum="8" NumericInputMode="Numbers" InterceptManualEnter="False"
+                                             ParsingNumberStyle="Integer" TextAlignment="Center" 
+                                             Value="{Binding LanguageFontSize, Mode=TwoWay}" />
 
-                        <TextBlock Text="Language Font Weight:" Margin="0,8,0,0" FontWeight="Bold"/>
-                        <ComboBox ItemsSource="{Binding FontWeights}" 
-                                  SelectedItem="{Binding LanguageFontWeight, Mode=TwoWay}" 
-                                  Width="150" HorizontalAlignment="Left" />
+                            <TextBlock Text="Language Font Weight:" Margin="0,8,0,0" />
+                            <ComboBox ItemsSource="{Binding FontWeights}" 
+                                      SelectedItem="{Binding LanguageFontWeight, Mode=TwoWay}" />
 
-                        <TextBlock Text="Category Font Size:" Margin="0,8,0,0" FontWeight="Bold"/>
-                        <mah:NumericUpDown Maximum="30" Minimum="8" NumericInputMode="Numbers" InterceptManualEnter="False"
-                                         ParsingNumberStyle="Integer" TextAlignment="Center" Width="150"
-                                         Value="{Binding CategoryFontSize, Mode=TwoWay}" HorizontalAlignment="Left"/>
+                            <TextBlock Text="Category Font Size:" Margin="0,8,0,0" />
+                            <mah:NumericUpDown Maximum="30" Minimum="8" NumericInputMode="Numbers" InterceptManualEnter="False"
+                                             ParsingNumberStyle="Integer" TextAlignment="Center" 
+                                             Value="{Binding CategoryFontSize, Mode=TwoWay}" />
 
-                        <TextBlock Text="Category Font Weight:" Margin="0,8,0,0" FontWeight="Bold"/>
-                        <ComboBox ItemsSource="{Binding FontWeights}" 
-                                  SelectedItem="{Binding CategoryFontWeight, Mode=TwoWay}" 
-                                  Width="150" HorizontalAlignment="Left"/>
+                            <TextBlock Text="Category Font Weight:" Margin="0,8,0,0" />
+                            <ComboBox ItemsSource="{Binding FontWeights}" 
+                                      SelectedItem="{Binding CategoryFontWeight, Mode=TwoWay}" />
 
-                        <TextBlock Text="Snippet Font Size:" Margin="0,8,0,0" FontWeight="Bold"/>
-                        <mah:NumericUpDown Maximum="30" Minimum="8" NumericInputMode="Numbers" InterceptManualEnter="False"
-                                         ParsingNumberStyle="Integer" TextAlignment="Center" Width="150"
-                                         Value="{Binding SnippetFontSize, Mode=TwoWay}" HorizontalAlignment="Left"/>
+                            <TextBlock Text="Snippet Font Size:" Margin="0,8,0,0" />
+                            <mah:NumericUpDown Maximum="30" Minimum="8" NumericInputMode="Numbers" InterceptManualEnter="False"
+                                             ParsingNumberStyle="Integer" TextAlignment="Center" 
+                                             Value="{Binding SnippetFontSize, Mode=TwoWay}" />
 
-                        <TextBlock Text="Snippet Font Weight:" Margin="0,8,0,0" FontWeight="Bold"/>
-                        <ComboBox ItemsSource="{Binding FontWeights}" 
-                                  SelectedItem="{Binding SnippetFontWeight, Mode=TwoWay}" 
-                                  Width="150" HorizontalAlignment="Left"/>
-                    </StackPanel>
-                </Grid>
+                            <TextBlock Text="Snippet Font Weight:" Margin="0,8,0,0" />
+                            <ComboBox ItemsSource="{Binding FontWeights}" 
+                                      SelectedItem="{Binding SnippetFontWeight, Mode=TwoWay}" />
+                        </StackPanel>
+                    </GroupBox>
+                </StackPanel>
             </ScrollViewer>
         </mah:MetroTabItem>
 
         <!-- Application settings Tab -->
         <mah:MetroTabItem Header="Application">
             <ScrollViewer Margin="10,0,0,0" VerticalScrollBarVisibility="Auto" HorizontalScrollBarVisibility="Auto">
-                <StackPanel HorizontalAlignment="Center" VerticalAlignment="Top">
+                <StackPanel>
                     <CheckBox Content="Load snippets on startup" Margin="0,8,0,0"
                               IsChecked="{Binding LoadOnStartup, Mode=TwoWay}" />
                     <CheckBox Content="Enable filtering" Margin="0,8,0,0"
@@ -105,7 +103,7 @@
         <!-- Editor settings Tab -->
         <mah:MetroTabItem Header="Editor">
             <ScrollViewer Margin="10,0,0,0" VerticalScrollBarVisibility="Auto" HorizontalScrollBarVisibility="Auto">
-                <StackPanel HorizontalAlignment="Center" VerticalAlignment="Top">
+                <StackPanel>
                     <CheckBox Content="Convert tabs to spaces" Margin="0,8,0,0"
                               IsChecked="{Binding TabToSpaces, Mode=TwoWay}" />
                     <CheckBox Content="Enable email hyperlinks" Margin="0,8,0,0"
@@ -143,7 +141,7 @@
         <!-- Database settings Tab -->
         <mah:MetroTabItem Header="Database">
             <ScrollViewer Margin="10,0,0,0" VerticalScrollBarVisibility="Auto" HorizontalScrollBarVisibility="Auto">
-                <StackPanel HorizontalAlignment="Center" VerticalAlignment="Top">
+                <StackPanel>
                     <mah:Badged Badge="{Binding IntegrityCheckBadge}" BadgePlacementMode="TopRight"  Margin="0,20,20,20"
                                 BadgeBackground="{Binding IntegrityCheckBadge, Converter={StaticResource ResultToBrushConverter}}">
                         <!--<Button Content="Integrity Check" Command="{Binding IntegrityCheckCommand}" Width="150" />-->
