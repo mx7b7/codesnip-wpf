@@ -9,6 +9,7 @@ namespace CodeSnip.Services
     {
         private static bool? _isPythonInstalled;
         private static bool? _isBlackInstalled;
+        private static bool? _isRustfmtInstalled;
 
         /// <summary>
         /// Formats C# code using CSharpier's C# formatter.
@@ -64,11 +65,60 @@ namespace CodeSnip.Services
         }
 
         /// <summary>
-        /// Formats Rust code using rustfmt.exe from the Tools directory.
+        /// Formats Rust code using the `rustfmt` command-line tool.
         /// </summary>
         public static async Task<(bool Success, string? FormattedCode, string? ErrorMessage)> TryFormatCodeWithRustFmtAsync(string code, int timeoutMs = 5000)
         {
-            return await TryFormatWithExternalProcessAsync("rustfmt.exe", "", code, timeoutMs);
+            if (!await IsRustfmtInstalledAsync())
+            {
+                return (false, null, "rustfmt is not installed or not in your PATH.");
+            }
+
+            var startInfo = new ProcessStartInfo
+            {
+                FileName = "rustfmt",
+                Arguments = "", // rustfmt reads from stdin by default
+                RedirectStandardInput = true,
+                RedirectStandardOutput = true,
+                RedirectStandardError = true,
+                UseShellExecute = false,
+                CreateNoWindow = true
+            };
+
+            try
+            {
+                using var process = new Process { StartInfo = startInfo };
+                process.Start();
+
+                await process.StandardInput.WriteAsync(code);
+                process.StandardInput.Close();
+
+                var outputTask = process.StandardOutput.ReadToEndAsync();
+                var errorTask = process.StandardError.ReadToEndAsync();
+
+                using var cts = new CancellationTokenSource(timeoutMs);
+                try
+                {
+                    await process.WaitForExitAsync(cts.Token);
+                }
+                catch (OperationCanceledException)
+                {
+                    try { process.Kill(); } catch { /* Ignore errors */ }
+                    return (false, null, "Timeout: rustfmt took too long to format the code.");
+                }
+
+                string stdError = await errorTask;
+                if (process.ExitCode != 0)
+                {
+                    return (false, null, $"rustfmt formatting error: {stdError.Trim()}");
+                }
+
+                return (true, await outputTask, null);
+            }
+            catch (Exception ex)
+            {
+                return (false, null, $"An exception occurred while running rustfmt: {ex.Message}");
+            }
         }
 
         /// <summary>
@@ -354,6 +404,40 @@ namespace CodeSnip.Services
                 return false;
             }
         }
+
+        static async Task<bool> IsRustfmtInstalledAsync()
+        {
+            if (_isRustfmtInstalled.HasValue)
+                return _isRustfmtInstalled.Value;
+
+            try
+            {
+                var startInfo = new ProcessStartInfo
+                {
+                    FileName = "rustfmt",
+                    Arguments = "--version",
+                    RedirectStandardOutput = true,
+                    RedirectStandardError = true,
+                    UseShellExecute = false,
+                    CreateNoWindow = true
+                };
+
+                using var process = new Process { StartInfo = startInfo };
+                process.Start();
+                string output = await process.StandardOutput.ReadToEndAsync();
+                await process.WaitForExitAsync();
+
+                var result = process.ExitCode == 0 && output.ToLower().Contains("rustfmt");
+                _isRustfmtInstalled = result;
+                return result;
+            }
+            catch
+            {
+                _isRustfmtInstalled = false;
+                return false;
+            }
+        }
+
     }
 
 
