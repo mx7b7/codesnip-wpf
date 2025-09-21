@@ -393,7 +393,7 @@ namespace CodeSnip.Services
                     process.Start();
                     string output = await process.StandardOutput.ReadToEndAsync();
                     await process.WaitForExitAsync();
-                    var result = process.ExitCode == 0 && output.ToLower().Contains("black");
+                    var result = process.ExitCode == 0 && output.Contains("black", StringComparison.CurrentCultureIgnoreCase);
                     _isBlackInstalled = result;
                     return result;
                 }
@@ -427,7 +427,7 @@ namespace CodeSnip.Services
                 string output = await process.StandardOutput.ReadToEndAsync();
                 await process.WaitForExitAsync();
 
-                var result = process.ExitCode == 0 && output.ToLower().Contains("rustfmt");
+                var result = process.ExitCode == 0 && output.Contains("rustfmt", StringComparison.CurrentCultureIgnoreCase);
                 _isRustfmtInstalled = result;
                 return result;
             }
