@@ -87,6 +87,7 @@
 		<Resource Include="Resources\Highlighting\Light\vtl.xshd" />
 		<Resource Include="Resources\Highlighting\Light\xml.xshd" />
 		<Resource Include="Resources\Icons.xaml" />
+		<Resource Include="Resources\splash.png" />
 	</ItemGroup>
 	<PropertyGroup>
 		<SatelliteResourceLanguages>en</SatelliteResourceLanguages>
@@ -105,6 +106,9 @@
 		<Content Include="Tools\**\*.*">
 			<CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
 		</Content>
+	</ItemGroup>
+	<ItemGroup>
+	  <None Remove="Resources\splash.png" />
 	</ItemGroup>
 	
 

@@ -5,7 +5,7 @@
                  xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
                  xmlns:mah="http://metro.mahapps.com/winfx/xaml/controls"
                  mc:Ignorable="d"
-                 Height="110" Width="110"
+                 Height="200" Width="400"
                  WindowStyle="None"
                  AllowsTransparency="True"
                  Background="Transparent"
@@ -13,9 +13,24 @@
                  ShowInTaskbar="False"
                  Topmost="True"
                  ShowTitleBar="False" SizeToContent="WidthAndHeight" BorderBrush="Transparent"
-                 ShowCloseButton="False" ShowMaxRestoreButton="False" ShowMinButton="False" >
-    <Grid>
-        <mah:ProgressRing IsActive="True" Width="100" Height="100" IsLarge="True" />
-    </Grid>
+                 ShowCloseButton="False" ShowMaxRestoreButton="False" ShowMinButton="False" 
+                 Opacity="0"
+                 ContentRendered="SplashScreen_ContentRendered">
+    <mah:MetroWindow.Resources>
+        <Storyboard x:Key="FadeIn">
+            <DoubleAnimation Storyboard.TargetProperty="Opacity" From="0" To="1" Duration="0:0:1" />
+        </Storyboard>
+        <Storyboard x:Key="FadeOut">
+            <DoubleAnimation Storyboard.TargetProperty="Opacity" From="1" To="0" Duration="0:0:1" />
+        </Storyboard>
+    </mah:MetroWindow.Resources>
+    <Border Background="Transparent" CornerRadius="10" BorderBrush="Transparent">
+        <Rectangle Width="340" Height="145" RadiusX="10" RadiusY="10" >
+            <Rectangle.Fill>
+                <ImageBrush ImageSource="/Resources/splash.png" Stretch="Uniform"/>
+            </Rectangle.Fill>
+        </Rectangle>
+        <!-- Ostali elementi -->
+    </Border>
 </mah:MetroWindow>
 
