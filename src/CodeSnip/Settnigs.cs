@@ -40,10 +40,21 @@ namespace CodeSnip
         public string Accent { get; set; } = "Sienna";
     }
 
+    public class TreeViewFontSettings
+    {
+        public int LanguageFontSize { get; set; } = 15;
+        public string LanguageFontWeight { get; set; } = "SemiBold";
+        public int CategoryFontSize { get; set; } = 14;
+        public string CategoryFontWeight { get; set; } = "Medium";
+        public int SnippetFontSize { get; set; } = 14;
+        public string SnippetFontWeight { get; set; } = "Normal";
+    }
+
     public class AppSettings
     {
         public MainWindowSettings MainWindow { get; set; } = new MainWindowSettings();
         public ThemeSettings Theme { get; set; } = new ThemeSettings();
         public EditorSettings Editor { get; set; } = new EditorSettings();
+        public TreeViewFontSettings TreeViewFont { get; set; } = new TreeViewFontSettings();
     }
 }

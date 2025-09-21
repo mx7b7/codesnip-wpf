@@ -163,6 +163,42 @@ namespace CodeSnip.Services
             set => _settings.Theme.Accent = value;
         }
 
+        public int LanguageFontSize
+        {
+            get => _settings.TreeViewFont.LanguageFontSize;
+            set => _settings.TreeViewFont.LanguageFontSize = value;
+        }
+
+        public string LanguageFontWeight
+        {
+            get => _settings.TreeViewFont.LanguageFontWeight;
+            set => _settings.TreeViewFont.LanguageFontWeight = value;
+        }
+
+        public int CategoryFontSize
+        {
+            get => _settings.TreeViewFont.CategoryFontSize;
+            set => _settings.TreeViewFont.CategoryFontSize = value;
+        }
+
+        public string CategoryFontWeight
+        {
+            get => _settings.TreeViewFont.CategoryFontWeight;
+            set => _settings.TreeViewFont.CategoryFontWeight = value;
+        }
+
+        public int SnippetFontSize
+        {
+            get => _settings.TreeViewFont.SnippetFontSize;
+            set => _settings.TreeViewFont.SnippetFontSize = value;
+        }
+
+        public string SnippetFontWeight
+        {
+            get => _settings.TreeViewFont.SnippetFontWeight;
+            set => _settings.TreeViewFont.SnippetFontWeight = value;
+        }
+
         // Constructor: loads settings or creates defaults
         public SettingsService()
         {
