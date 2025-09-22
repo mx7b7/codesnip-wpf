@@ -861,7 +861,7 @@ namespace CodeSnip
             }
         }
 
-        public async Task TrySaveEditingSnippetAsync(Snippet? newSnippet)
+        public async Task ChangeSelectedSnippetAsync(Snippet? newSnippet)
         {
             if (newSnippet == null) return;
 
@@ -892,8 +892,26 @@ namespace CodeSnip
                 {
                     IsEditorModified = false;
                 }
+                // for cancel which is currently not in the ShowConfirmAsync dialog
                 else
                 {
+                    SelectedSnippet = EditingSnippet;
+                    return;
+                }
+            }
+            // Lazy load the snippet code if it hasn't been loaded yet.
+            if (!newSnippet.IsCodeLoaded)
+            {
+                try
+                {
+                    newSnippet.Code = _databaseService.GetSnippetCode(newSnippet.Id);
+                    newSnippet.IsCodeLoaded = true;
+                }
+                catch (Exception ex)
+                {
+                    StatusMessage = $"Error loading snippet '{newSnippet.Title}'";
+                    _ = DialogService.Instance.ShowMessageAsync("Load Error", $"Failed to load content for snippet '{newSnippet.Title}'.\n\nDetails: {ex.Message}");
+                    // Revert the TreeView selection and stop the switch.
                     SelectedSnippet = EditingSnippet;
                     return;
                 }

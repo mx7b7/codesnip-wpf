@@ -35,5 +35,9 @@ namespace CodeSnip.Views.SnippetView
         [ObservableProperty]
         private bool isVisible = true;
 
+        // Not mapped to DB, used for lazy loading state
+        [ObservableProperty]
+        private bool isCodeLoaded = false;
+
     }
 }

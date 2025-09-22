@@ -143,7 +143,7 @@ if __name__ == '__main__':
     S.ID AS SnippetID,
     S.CategoryId AS SnippetCategoryId,
     S.Title AS SnippetTitle,
-    S.Code AS SnippetCode,
+    -- S.Code AS SnippetCode, -- Lazy load this
     S.Description AS SnippetDescription,
     S.Tag AS SnippetTag
 FROM Languages L
@@ -195,7 +195,8 @@ ORDER BY L.Name, C.Name, S.Title";
                             Id = (int)row.SnippetID,
                             CategoryId = (int)row.SnippetCategoryId,
                             Title = (string)row.SnippetTitle,
-                            Code = (string)row.SnippetCode,
+                            //Code = (string)row.SnippetCode,
+                            Code = string.Empty, // Initially empty
                             Description = (string)row.SnippetDescription,
                             Tag = (string)row.SnippetTag,
                             Category = category
@@ -205,6 +206,14 @@ ORDER BY L.Name, C.Name, S.Title";
                 }
             }
             return lookup.Values;
+        }
+
+        public string GetSnippetCode(int snippetId)
+        {
+            using var conn = CreateConnection();
+            return conn.ExecuteScalar<string>(
+                "SELECT Code FROM Snippets WHERE ID = @Id",
+                new { Id = snippetId }) ?? string.Empty;
         }
 
         public Snippet SaveSnippet(Snippet snippet)

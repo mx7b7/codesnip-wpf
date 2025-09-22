@@ -242,7 +242,8 @@ namespace CodeSnip
         {
             if (e.NewValue is Snippet snippet)
             {
-                await mainViewModel.TrySaveEditingSnippetAsync(snippet);
+                // method is called from ViewModel with new selected snippet, if old snippet has been modified asks to save
+                await mainViewModel.ChangeSelectedSnippetAsync(snippet);
 
                 HighlightingService.ApplyHighlighting(textEditor, snippet.Category?.Language?.Code);
 
