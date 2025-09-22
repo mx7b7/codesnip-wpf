@@ -675,26 +675,34 @@ namespace CodeSnip
             if (!confirm)
                 return;
 
-            string snippetTitle = SelectedSnippet.Title;
-            _databaseService.DeleteSnippet(SelectedSnippet.Id);
+            try
+            {
+                string snippetTitle = SelectedSnippet.Title;
+                _databaseService.DeleteSnippet(SelectedSnippet.Id);
 
-            var category = Languages
-                .SelectMany(l => l.Categories)
-                .FirstOrDefault(c => c.Id == SelectedSnippet.CategoryId);
+                var category = Languages
+                    .SelectMany(l => l.Categories)
+                    .FirstOrDefault(c => c.Id == SelectedSnippet.CategoryId);
 
-            category?.Snippets.Remove(SelectedSnippet);
+                category?.Snippets.Remove(SelectedSnippet);
 
-            // Reset the VM state and clear the editor
-            SelectedSnippet = null;
+                // Reset the VM state and clear the editor
+                SelectedSnippet = null;
 
-            _isInternalTextUpdate = true;
-            EditorText = string.Empty;
-            _isInternalTextUpdate = false;
+                _isInternalTextUpdate = true;
+                EditorText = string.Empty;
+                _isInternalTextUpdate = false;
 
-            IsEditorModified = false;
-            EditingSnippet = null;
+                IsEditorModified = false;
+                EditingSnippet = null;
 
-            StatusMessage = $"Snippet '{snippetTitle}' deleted successfully.";
+                StatusMessage = $"Snippet '{snippetTitle}' deleted successfully.";
+            }
+            catch (Exception ex)
+            {
+                StatusMessage = $"Error deleting snippet '{SelectedSnippet?.Title}': {ex.Message}";
+                await DialogService.Instance.ShowMessageAsync("Delete Error", $"Failed to delete snippet '{SelectedSnippet?.Title}'.\n\nDetails: {ex.Message}");
+            }
         }
 
         [RelayCommand]
