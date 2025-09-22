@@ -59,8 +59,7 @@ namespace CodeSnip.Views.SnippetView
             List<Language>? languages,
             DatabaseService? databaseService)
         {
-            if (databaseService == null)
-                throw new ArgumentNullException(nameof(databaseService));
+            ArgumentNullException.ThrowIfNull(databaseService);
 
             _databaseService = databaseService;
             IsEditMode = isEditMode;
@@ -142,7 +141,7 @@ namespace CodeSnip.Views.SnippetView
             }
             catch (Exception ex)
             {
-                MessageBox.Show(ex.Message);
+                _ = DialogService.Instance.ShowMessageAsync("Save Error", $"Failed to save snippet '{Snippet?.Title}'.\n\nDetails: {ex.Message}");
             }
         }
 
