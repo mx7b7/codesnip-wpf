@@ -23,6 +23,7 @@
         MinWidth="600" 
         MinHeight="400"  
         ResizeMode="CanResizeWithGrip"
+        TitleCharacterCasing="Normal"
         Closing="MetroWindow_Closing" 
         Title ="{Binding WindowTitle}" 
         Left="{Binding WindowX, Mode=TwoWay}" 

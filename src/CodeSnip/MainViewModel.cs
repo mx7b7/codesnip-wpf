@@ -929,7 +929,7 @@ namespace CodeSnip
 
         private void UpdateWindowTitle()
         {
-            var title = "codesnip";
+            var title = "CodeSnip";
             if (SelectedSnippet != null)
                 title += " - " + SelectedSnippet.Title;
             if (IsEditorModified)
