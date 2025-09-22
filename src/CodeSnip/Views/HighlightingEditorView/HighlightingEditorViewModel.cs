@@ -160,41 +160,51 @@ namespace CodeSnip.Views.HighlightingEditorView
         [RelayCommand]
         private void ApplyLivePreview()
         {
-
             using var ms = new MemoryStream();
             if (TryGetOriginalXshd(out string? xshdXml) && xshdXml != null)
             {
-                var doc = XDocument.Parse(xshdXml);
-                var ns = doc.Root?.Name.Namespace ?? XNamespace.None;
-
-                doc.Root?.Elements(ns + "Color").Remove();
-
-                foreach (var color in HighlightingColors)
+                try
                 {
-                    var colorElem = new XElement(ns + "Color",
-                        new XAttribute("name", color.Name));
+                    var doc = XDocument.Parse(xshdXml);
+                    var ns = doc.Root?.Name.Namespace ?? XNamespace.None;
 
-                    if (color.Foreground.HasValue)
-                        colorElem.SetAttributeValue("foreground", color.Foreground.Value.ToString());
+                    doc.Root?.Elements(ns + "Color").Remove();
 
-                    if (color.Background.HasValue)
-                        colorElem.SetAttributeValue("background", color.Background.Value.ToString());
+                    foreach (var color in HighlightingColors)
+                    {
+                        var colorElem = new XElement(ns + "Color",
+                            new XAttribute("name", color.Name));
 
-                    if (color.FontWeight != FontWeights.Normal)
-                        colorElem.SetAttributeValue("fontWeight", color.FontWeight.ToString().ToLowerInvariant());
+                        if (color.Foreground.HasValue)
+                            colorElem.SetAttributeValue("foreground", color.Foreground.Value.ToString());
 
-                    if (color.FontStyle != FontStyles.Normal)
-                        colorElem.SetAttributeValue("fontStyle", color.FontStyle.ToString().ToLowerInvariant());
+                        if (color.Background.HasValue)
+                            colorElem.SetAttributeValue("background", color.Background.Value.ToString());
 
-                    doc.Root?.AddFirst(colorElem);
+                        if (color.FontWeight != FontWeights.Normal)
+                            colorElem.SetAttributeValue("fontWeight", color.FontWeight.ToString().ToLowerInvariant());
+
+                        if (color.FontStyle != FontStyles.Normal)
+                            colorElem.SetAttributeValue("fontStyle", color.FontStyle.ToString().ToLowerInvariant());
+
+                        doc.Root?.AddFirst(colorElem);
+                    }
+
+                    doc.Save(ms);
+                    ms.Position = 0;
+
+                    using var finalReader = new XmlTextReader(ms);
+                    var updated = HighlightingLoader.Load(finalReader, HighlightingManager.Instance);
+                    _editor.SyntaxHighlighting = updated;
                 }
-
-                doc.Save(ms);
-                ms.Position = 0;
-
-                using var finalReader = new XmlTextReader(ms);
-                var updated = HighlightingLoader.Load(finalReader, HighlightingManager.Instance);
-                _editor.SyntaxHighlighting = updated;
+                catch (XmlException ex)
+                {
+                    _ = DialogService.Instance.ShowMessageAsync("Parsing Error", $"The original highlighting definition is corrupt and cannot be parsed.\n\nDetails: {ex.Message}");
+                }
+                catch (Exception ex)
+                {
+                    _ = DialogService.Instance.ShowMessageAsync("Error", $"Unexpected error: {ex.Message}");
+                }
             }
         }
 
@@ -215,6 +225,10 @@ namespace CodeSnip.Views.HighlightingEditorView
                 UpdateCustomDefinitionExists();
 
                 await DialogService.Instance.ShowMessageAsync("Success", $"Custom syntax definition saved to:\n{_customXshdPath}");
+            }
+            catch (XmlException ex)
+            {
+                await DialogService.Instance.ShowMessageAsync("Parsing Error", $"Failed to save because the original highlighting definition is corrupt.\n\nDetails: {ex.Message}");
             }
             catch (Exception ex)
             {
