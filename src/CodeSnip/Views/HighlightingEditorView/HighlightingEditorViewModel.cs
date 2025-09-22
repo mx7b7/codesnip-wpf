@@ -162,8 +162,7 @@ namespace CodeSnip.Views.HighlightingEditorView
         {
 
             using var ms = new MemoryStream();
-            string? xshdXml = HighlightingService.CurrentXshdXml;
-            if (xshdXml != null)
+            if (TryGetOriginalXshd(out string? xshdXml) && xshdXml != null)
             {
                 var doc = XDocument.Parse(xshdXml);
                 var ns = doc.Root?.Name.Namespace ?? XNamespace.None;
@@ -210,15 +209,8 @@ namespace CodeSnip.Views.HighlightingEditorView
 
             try
             {
-                string? inputXshdXml = HighlightingService.CurrentXshdXml;
-                if (inputXshdXml == null)
-                {
-                    await DialogService.Instance.ShowMessageAsync("Error", "The original highlighting definition source (XSHD) is not available.");
-                    return;
-                }
-
+                if (!TryGetOriginalXshd(out string? inputXshdXml) || inputXshdXml == null) return;
                 HighlightingSerializer.SaveColorOverrides(inputXshdXml, _customXshdPath, HighlightingColors.ToList());
-
                 HighlightingService.InvalidateCache(_languageCode, _themeName);
                 UpdateCustomDefinitionExists();
 
@@ -228,6 +220,18 @@ namespace CodeSnip.Views.HighlightingEditorView
             {
                 await DialogService.Instance.ShowMessageAsync("Error", $"Failed to save definition: {ex.Message}");
             }
+        }
+
+        private bool TryGetOriginalXshd(out string? xshdXml)
+        {
+            xshdXml = HighlightingService.GetXshdXml(_languageCode, _themeName);
+            if (xshdXml == null)
+            {
+                // This is an async method in a sync context, but it's acceptable for showing a dialog.
+                _ = DialogService.Instance.ShowMessageAsync("Error", "The original highlighting definition source (XSHD) could not be found.");
+                return false;
+            }
+            return true;
         }
 
     }
@@ -297,4 +301,3 @@ namespace CodeSnip.Views.HighlightingEditorView
 
     }
 }
-

@@ -16,7 +16,6 @@ namespace CodeSnip.Services
     {
         // cache: key = "<themeFolder>/<langCode>", value = IHighlightingDefinition
         private static readonly ConcurrentDictionary<string, IHighlightingDefinition> _highlightCache = new();
-        public static string? CurrentXshdXml { get; private set; }
 
         private static void ApplyFoldingMarkerColors(TextEditor editor, string themeBase)
         {
@@ -103,6 +102,34 @@ namespace CodeSnip.Services
         }
 
         /// <summary>
+        /// Gets the raw XSHD XML content for a given language and theme, loading from disk first, then from resources.
+        /// </summary>
+        /// <returns>The XML content as a string, or null if not found.</returns>
+        public static string? GetXshdXml(string langCode, string themeFolder)
+        {
+            string lowerLangCode = langCode.ToLowerInvariant();
+            string relativePath = Path.Combine("Highlighting", themeFolder, $"{lowerLangCode}.xshd");
+            string appBase = AppDomain.CurrentDomain.BaseDirectory;
+            string diskFilePath = Path.Combine(appBase, relativePath);
+
+            if (File.Exists(diskFilePath))
+            {
+                return File.ReadAllText(diskFilePath);
+            }
+
+            Uri resourceUri = new Uri($"/CodeSnip;component/Resources/{relativePath.Replace('\\', '/')}", UriKind.Relative);
+            var resourceInfo = Application.GetResourceStream(resourceUri);
+
+            if (resourceInfo is not null)
+            {
+                using Stream resourceStream = resourceInfo.Stream;
+                using StreamReader reader = new(resourceStream);
+                return reader.ReadToEnd();
+            }
+
+            return null;
+        }
+        /// <summary>
         /// Loads the XSHD definition first from disk, if not found, from resources.
         /// Returns null if not found.
         /// </summary>
@@ -113,29 +140,15 @@ namespace CodeSnip.Services
                 string appBase = AppDomain.CurrentDomain.BaseDirectory;
                 string diskFilePath = Path.Combine(appBase, relativeXshdPath);
 
-                string? xshdXml = null;
+                // Path format is "Highlighting\[Theme]\[lang].xshd"
+                var parts = relativeXshdPath.Split(Path.DirectorySeparatorChar);
+                string themeFolder = parts.Length > 1 ? parts[1] : string.Empty;
+                string langCode = Path.GetFileNameWithoutExtension(relativeXshdPath);
 
-                if (File.Exists(diskFilePath))
-                {
-                    xshdXml = File.ReadAllText(diskFilePath);
-                }
-                else
-                {
-                    Uri resourceUri = new Uri($"/CodeSnip;component/Resources/{relativeXshdPath.Replace('\\', '/')}", UriKind.Relative);
-                    var resourceInfo = Application.GetResourceStream(resourceUri);
-
-                    if (resourceInfo is not null)
-                    {
-                        using Stream resourceStream = resourceInfo.Stream;
-                        using StreamReader reader = new(resourceStream);
-                        xshdXml = reader.ReadToEnd();
-                    }
-                }
+                string? xshdXml = GetXshdXml(langCode, themeFolder);
 
                 if (xshdXml == null)
                     return null;
-
-                CurrentXshdXml = xshdXml;
 
                 using StringReader stringReader = new(xshdXml);
                 using XmlReader xmlReader = XmlReader.Create(stringReader);
