@@ -641,15 +641,22 @@ namespace CodeSnip
 
         private void PerformSave()
         {
-            // This method assumes EditingSnippet is not null.
-            _databaseService.UpdateSnippetCode(EditingSnippet!.Id, EditorText);
+            try
+            {
+                // This method assumes EditingSnippet is not null.
+                _databaseService.UpdateSnippetCode(EditingSnippet!.Id, EditorText);
 
-            EditingSnippet.Code = EditorText; // need this because otherwise the old text is displayed ...
-            UpdateSnippetInMemory(EditingSnippet);
-            StatusMessage = $"Snippet '{EditingSnippet.Title}' saved at {DateTime.Now:HH:mm:ss}";
-            IsEditorModified = false;
-            UpdateWindowTitle();
-
+                EditingSnippet.Code = EditorText; // need this because otherwise the old text is displayed ...
+                UpdateSnippetInMemory(EditingSnippet);
+                StatusMessage = $"Snippet '{EditingSnippet.Title}' saved at {DateTime.Now:HH:mm:ss}";
+                IsEditorModified = false;
+                UpdateWindowTitle();
+            }
+            catch (Exception ex)
+            {
+                StatusMessage = $"Error saving snippet '{EditingSnippet?.Title}': {ex.Message}";
+                _ = DialogService.Instance.ShowMessageAsync("Save Error", $"Failed to save snippet '{EditingSnippet?.Title}'.\n\nDetails: {ex.Message}");
+            }
         }
 
         [RelayCommand]
@@ -857,12 +864,21 @@ namespace CodeSnip
 
                 if (result == true)
                 {
-                    _databaseService.UpdateSnippetCode(EditingSnippet!.Id, EditorText);
-
-                    EditingSnippet.Code = EditorText;
-                    UpdateSnippetInMemory(EditingSnippet);
-                    IsEditorModified = false;
-                    StatusMessage = $"Snippet '{EditingSnippet.Title}' saved at {DateTime.Now:HH:mm:ss}";
+                    try
+                    {
+                        _databaseService.UpdateSnippetCode(EditingSnippet!.Id, EditorText);
+                        EditingSnippet.Code = EditorText;
+                        UpdateSnippetInMemory(EditingSnippet);
+                        IsEditorModified = false;
+                        StatusMessage = $"Snippet '{EditingSnippet.Title}' saved at {DateTime.Now:HH:mm:ss}";
+                    }
+                    catch (Exception ex)
+                    {
+                        StatusMessage = $"Error saving snippet '{EditingSnippet?.Title}': {ex.Message}";
+                        _ = DialogService.Instance.ShowMessageAsync("Save Error", $"Failed to save snippet '{EditingSnippet?.Title}'.\n\nDetails: {ex.Message}");
+                        // If save failed, keep IsEditorModified as true and don't proceed with changing the selected snippet
+                        return;
+                    }
                 }
                 else if (result == false)
                 {
