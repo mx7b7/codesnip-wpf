@@ -26,6 +26,8 @@ namespace CodeSnip
         private readonly SettingsService settingsService = new();
         private readonly IFlyoutService _flyoutService;
 
+        private readonly NotificationManager notificationManager = new();
+
         private readonly Geometry? _panelOpenIcon;
         private readonly Geometry? _panelCloseIcon;
 
@@ -628,14 +630,13 @@ namespace CodeSnip
                 PerformSave();
                 if (!IsNotificationEnabled) return;
                 // Show notification
-                NotificationManager notificationManager = new();
                 var content = new NotificationContent
                 {
                     Title = "Message",
                     Message = $"Snippet '{EditingSnippet.Title}' saved at {DateTime.Now:HH:mm:ss}",
                     Type = NotificationType.Information
                 };
-                await notificationManager.ShowAsync(content, areaName: "NotificationWindowArea", expirationTime: TimeSpan.FromSeconds(3));
+                await notificationManager.ShowAsync(content, areaName: "NotificationWindowArea", expirationTime: TimeSpan.FromSeconds(2));
             }
         }
 
@@ -726,7 +727,7 @@ namespace CodeSnip
         }
 
         [RelayCommand]
-        private void SearchReplace()
+        private void OpenSearchReplace()
         {
             if ((_searchReplacePanel != null && _searchReplacePanel.IsClosed))
             {

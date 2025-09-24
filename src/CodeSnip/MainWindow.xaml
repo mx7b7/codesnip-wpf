@@ -86,7 +86,7 @@
         <!-- Ctrl + Shift + I : Toggle Inline Block Comment (samo selekcija) -->
         <KeyBinding Key="I" Modifiers="Ctrl+Shift"
                 Command="{Binding RelativeSource={RelativeSource AncestorType=Window}, Path=ToggleCommentSelectionCommand}" />
-        <!--<KeyBinding Key="F" Modifiers="Ctrl" Command="{Binding SearchReplaceCommand}"/>-->
+        <!--<KeyBinding Key="F" Modifiers="Ctrl" Command="{Binding OpenSearchReplaceCommand}"/>-->
     </mah:MetroWindow.InputBindings>
     <mah:MetroWindow.LeftWindowCommands>
         <mah:WindowCommands/>
@@ -304,7 +304,7 @@
                             <Path Data="{StaticResource ZoomOutMap}" Fill="{DynamicResource MahApps.Brushes.AccentBase}"
                                   Width="20" Height="20" Stretch="Uniform" />
                         </Button>
-                        <Button Margin="5,0,0,0" ToolTip="Search / Replace"  Command="{Binding SearchReplaceCommand}" >
+                        <Button Margin="5,0,0,0" ToolTip="Search / Replace"  Command="{Binding OpenSearchReplaceCommand}" >
                             <Path Data="{StaticResource TextSearch}" Fill="{DynamicResource MahApps.Brushes.AccentBase}"
                                  Width="20" Height="20" Stretch="Uniform" />
                         </Button>
