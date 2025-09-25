@@ -31,4 +31,13 @@ namespace CodeSnip.Views.AboutView
             e.Handled = true;
         }
     }
+    // This class is used by the XAML resources, so it needs to be accessible.
+    public class DependencyInfo
+    {
+        public string Name { get; set; } = string.Empty;
+        public Uri? Url { get; set; }
+        public string LicenseName { get; set; } = string.Empty;
+        public Uri? LicenseUrl { get; set; }
+    }
+
 }
