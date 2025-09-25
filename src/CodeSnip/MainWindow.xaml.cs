@@ -557,6 +557,30 @@ namespace CodeSnip
             }
         }
 
+        private void CopyAsHtmlColored_Click(object sender, RoutedEventArgs e)
+        {
+            if (string.IsNullOrEmpty(textEditor.SelectedText))
+                return;
+
+            var selection = textEditor.TextArea.Selection;
+            if (selection.IsEmpty)
+                return;
+
+            var htmlOptions = new ICSharpCode.AvalonEdit.Highlighting.HtmlOptions();
+            string fragment = selection.CreateHtmlFragment(htmlOptions);
+
+            string wrappedHtml = $"<div>{fragment}</div>";
+
+            try
+            {
+                Clipboard.SetText(wrappedHtml);
+            }
+            catch (Exception ex)
+            {
+                _ = MessageBox.Show($"Failed to copy to clipboard: {ex.Message}");
+            }
+        }
+
         private void CopyAsBBCode_Click(object sender, RoutedEventArgs e)
         {
             if (string.IsNullOrEmpty(textEditor.SelectedText))
