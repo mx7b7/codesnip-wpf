@@ -3,6 +3,7 @@ using CodeSnip.Services;
 using CodeSnip.Services.Exporters;
 using CodeSnip.Views.HighlightingEditorView;
 using CodeSnip.Views.SnippetView;
+using ICSharpCode.AvalonEdit;
 using ICSharpCode.AvalonEdit.Document;
 using ICSharpCode.AvalonEdit.Folding;
 using ICSharpCode.AvalonEdit.Indentation;
@@ -15,6 +16,8 @@ using System.Text.Json;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Input;
+using System.Windows.Media;
+using System.Windows.Media.Imaging;
 
 namespace CodeSnip
 {
@@ -436,7 +439,7 @@ namespace CodeSnip
                         }
                         else
                         {
-                            MessageBox.Show($"Formatting (rustfmt) failed:\n{ errorRust}");
+                            MessageBox.Show($"Formatting (rustfmt) failed:\n{errorRust}");
                         }
                         break;
 
@@ -635,6 +638,25 @@ namespace CodeSnip
             }
         }
 
+        private void CopyAsImage_Click(object sender, RoutedEventArgs e)
+        {
+            if (textEditor.TextArea.Selection is not ICSharpCode.AvalonEdit.Editing.RectangleSelection selection || selection.IsEmpty)
+            {
+                MessageBox.Show("This action requires a rectangular selection (Alt + Mouse Drag or Alt + Shift + Arrow Keys).", "No Rectangular Selection", MessageBoxButton.OK, MessageBoxImage.Information);
+                return;
+            }
+            try
+            {
+                var bitmap = RenderSelectionToBitmap(selection);
+                Clipboard.SetImage(bitmap);
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show($"Failed to copy selection as image: {ex.Message}", "Error", MessageBoxButton.OK, MessageBoxImage.Error);
+                Clipboard.SetText(ex.Message);
+            }
+        }
+
         private void ExportToHtml_Click(object sender, RoutedEventArgs e)
         {
             if (mainViewModel != null && mainViewModel.SelectedSnippet != null)
@@ -724,6 +746,87 @@ namespace CodeSnip
             }
 
             textEditor.Options.AllowScrollBelowDocument = foldingStrategy != null;
+        }
+
+        private RenderTargetBitmap RenderSelectionToBitmap(ICSharpCode.AvalonEdit.Editing.RectangleSelection selection)
+        {
+            // 1. Get the selected text
+            string selectedText = selection.GetText();
+
+            // 2. Create a new, off-screen TextEditor
+            var virtualEditor = new TextEditor
+            {
+                // 3. Apply the same properties as the main editor
+                FontFamily = textEditor.FontFamily,
+                FontSize = textEditor.FontSize,
+                Background = textEditor.Background,
+                Foreground = textEditor.Foreground,
+                SyntaxHighlighting = textEditor.SyntaxHighlighting,
+                Text = selectedText,
+                Options = textEditor.Options
+            };
+
+            // 4. Force the layout to be calculated
+            var viewbox = new Viewbox { Child = virtualEditor };
+            viewbox.Measure(new Size(double.PositiveInfinity, double.PositiveInfinity));
+            viewbox.Arrange(new Rect(viewbox.DesiredSize));
+
+            // 5. Get the actual dimensions of the content
+            double contentWidth = virtualEditor.TextArea.TextView.ActualWidth;
+            double contentHeight = virtualEditor.TextArea.TextView.ActualHeight;
+
+            if (contentWidth <= 0 || contentHeight <= 0)
+            {
+                throw new InvalidOperationException("The selected content has no visible area to capture.");
+            }
+
+            // Define padding and footer for the watermark ---
+            double padding = 4;
+            double footerHeight = 20;
+            double totalWidth = contentWidth + (2 * padding);
+            double totalHeight = contentHeight + (2 * padding) + footerHeight;
+
+            // Create a DrawingVisual to compose the final image
+            var drawingVisual = new DrawingVisual();
+            using (var dc = drawingVisual.RenderOpen())
+            {
+                // Layer 1: Draw the outer background/border
+                // For a dark theme, a slightly lighter background works well.
+                // For a light theme, a slightly darker one.
+                var editorBg = (textEditor.Background as SolidColorBrush)?.Color ?? Colors.White;
+                var borderColor = Color.Add(editorBg, Color.FromRgb(10, 10, 10));
+                dc.DrawRectangle(new SolidColorBrush(borderColor), null, new Rect(0, 0, totalWidth, totalHeight));
+
+                // Layer 2: Draw the code itself by rendering the virtual editor
+                var codeBrush = new VisualBrush(virtualEditor);
+                dc.DrawRectangle(codeBrush, null, new Rect(padding, padding, contentWidth, contentHeight));
+
+                // Layer 3: Draw the watermark
+                var watermarkText = new FormattedText(
+                    "Generated by CodeSnip",
+                    System.Globalization.CultureInfo.CurrentCulture,
+                    FlowDirection.LeftToRight,
+                    new Typeface(new FontFamily("Segoe UI"), FontStyles.Normal, FontWeights.Normal, FontStretches.Normal),
+                    12,
+                    new SolidColorBrush(Color.FromArgb(128, 170, 170, 170)), // Semi-transparent gray
+                    VisualTreeHelper.GetDpi(this).PixelsPerDip);
+
+                // Position it in the bottom right corner
+                var watermarkPosition = new Point(totalWidth - padding - watermarkText.Width, totalHeight - padding - watermarkText.Height);
+                dc.DrawText(watermarkText, watermarkPosition);
+            }
+
+            // 6. Render the composed DrawingVisual to a bitmap
+            var dpi = VisualTreeHelper.GetDpi(this);
+            var rtb = new RenderTargetBitmap(
+                (int)Math.Ceiling(totalWidth * dpi.DpiScaleX),
+                (int)Math.Ceiling(totalHeight * dpi.DpiScaleY),
+                dpi.PixelsPerInchX,
+                dpi.PixelsPerInchY,
+                PixelFormats.Pbgra32);
+
+            rtb.Render(drawingVisual);
+            return rtb;
         }
 
         private static string MapLangCodeToMarkdown(string code)
