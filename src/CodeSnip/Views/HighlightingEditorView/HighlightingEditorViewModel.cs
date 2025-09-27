@@ -231,6 +231,15 @@ namespace CodeSnip.Views.HighlightingEditorView
                         if (color.FontStyle != FontStyles.Normal)
                             colorElem.SetAttributeValue("fontStyle", color.FontStyle.ToString().ToLowerInvariant());
 
+                        if (color.Underline)
+                            colorElem.SetAttributeValue("underline", "true");
+
+                        if (color.Strikethrough)
+                            colorElem.SetAttributeValue("strikethrough", "true");
+
+                        if (color.FontSize.HasValue)
+                            colorElem.SetAttributeValue("fontSize", color.FontSize.Value.ToString());
+
                         doc.Root?.AddFirst(colorElem);
                     }
 
