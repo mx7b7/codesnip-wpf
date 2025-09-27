@@ -237,11 +237,20 @@ namespace CodeSnip
             {
                 var languages = await Task.Run(() => _databaseService.GetSnippets());
 
-                PopulateLanguagesCollection(languages);
+                var languageList = languages.ToList();
 
-                if (settingsService.LastSnippet != null)
+                if (languageList.Count == 0 && _databaseService.GetSnippets().Any()) // Check if loading failed
                 {
-                    RestoreSelectedSnippetState(settingsService.LastSnippet);
+                    await DialogService.Instance.ShowMessageAsync("Database Load Error",
+                        "Could not load snippets. The database file might be corrupted or the schema might have changed.");
+                }
+                else
+                {
+                    PopulateLanguagesCollection(languageList);
+                    if (settingsService.LastSnippet != null)
+                    {
+                        RestoreSelectedSnippetState(settingsService.LastSnippet);
+                    }
                 }
             }
             await UpdateDatabaseHealthStatusAsync();

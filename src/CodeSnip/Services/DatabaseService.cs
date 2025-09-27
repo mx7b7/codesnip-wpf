@@ -128,9 +128,11 @@ if __name__ == '__main__':
 
         public IEnumerable<Language> GetSnippets()
         {
-            using var conn = CreateConnection();
+            try
+            {
+                using var conn = CreateConnection();
 
-            var sql = @"
+                var sql = @"
  SELECT 
     L.ID AS LanguageID,
     L.Code AS LanguageCode,
@@ -151,61 +153,67 @@ LEFT JOIN Categories C ON C.LanguageId = L.ID
 LEFT JOIN Snippets S ON S.CategoryId = C.ID
 ORDER BY L.Name, C.Name, S.Title";
 
-            var lookup = new Dictionary<int, Language>();
-            //var result = conn.Query(sql).ToList();
-            var result = conn.Query<dynamic>(sql).ToList();
+                var lookup = new Dictionary<int, Language>();
+                //var result = conn.Query(sql).ToList();
+                var result = conn.Query<dynamic>(sql).ToList();
 
-            foreach (var row in result)
-            {
-                // Find or create a language
-                int langId = (int)row.LanguageID;
-                if (!lookup.TryGetValue(langId, out var language))
+                foreach (var row in result)
                 {
-                    language = new Language
+                    // Find or create a language
+                    int langId = (int)row.LanguageID;
+                    if (!lookup.TryGetValue(langId, out var language))
                     {
-                        Id = langId,
-                        Code = (string)row.LanguageCode,
-                        Name = (string)row.LanguageName,
-                        Categories = new ObservableCollection<Category>() // Collection initialization
-                    };
-                    lookup.Add(langId, language);
-                }
-                // Pronađi ili kreiraj kategoriju
-                if (row.CategoryID != null)
-                {
-                    int catId = (int)row.CategoryID;
-                    var category = language.Categories.FirstOrDefault(c => c.Id == catId);
-                    if (category == null)
-                    {
-                        category = new Category
+                        language = new Language
                         {
-                            Id = catId,
-                            LanguageId = (int)row.CategoryLanguageId,
-                            Name = (string)row.CategoryName,
-                            Language = language,
-                            Snippets = new ObservableCollection<Snippet>() // Collection initialization
+                            Id = langId,
+                            Code = (string)row.LanguageCode,
+                            Name = (string)row.LanguageName,
+                            Categories = new ObservableCollection<Category>() // Collection initialization
                         };
-                        language.Categories.Add(category);
+                        lookup.Add(langId, language);
                     }
-                    // Find or create a snippet
-                    if (row.SnippetID != null)
+                    // Find or create a category
+                    if (row.CategoryID != null)
                     {
-                        var snippet = new Snippet
+                        int catId = (int)row.CategoryID;
+                        var category = language.Categories.FirstOrDefault(c => c.Id == catId);
+                        if (category == null)
                         {
-                            Id = (int)row.SnippetID,
-                            CategoryId = (int)row.SnippetCategoryId,
-                            Title = (string)row.SnippetTitle,
-                            //Code = (string)row.SnippetCode,
-                            Code = string.Empty, // Initially empty
-                            Description = (string)row.SnippetDescription,
-                            Tag = (string)row.SnippetTag,
-                            Category = category
-                        };
-                        category.Snippets.Add(snippet);
+                            category = new Category
+                            {
+                                Id = catId,
+                                LanguageId = (int)row.CategoryLanguageId,
+                                Name = (string)row.CategoryName,
+                                Language = language,
+                                Snippets = new ObservableCollection<Snippet>() // Collection initialization
+                            };
+                            language.Categories.Add(category);
+                        }
+                        // Find or create a snippet
+                        if (row.SnippetID != null)
+                        {
+                            var snippet = new Snippet
+                            {
+                                Id = (int)row.SnippetID,
+                                CategoryId = (int)row.SnippetCategoryId,
+                                Title = (string)row.SnippetTitle,
+                                //Code = (string)row.SnippetCode,
+                                Code = string.Empty, // Initially empty
+                                Description = (string)row.SnippetDescription,
+                                Tag = (string)row.SnippetTag,
+                                Category = category
+                            };
+                            category.Snippets.Add(snippet);
+                        }
                     }
                 }
+                return lookup.Values;
             }
-            return lookup.Values;
+            catch (Exception ex)
+            {
+                System.Diagnostics.Debug.WriteLine($"[FATAL] Failed to load snippets from database: {ex}");
+                return Enumerable.Empty<Language>(); // Return an empty list on failure
+            }
         }
 
         public string GetSnippetCode(int snippetId)
