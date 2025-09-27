@@ -11,8 +11,10 @@ using ICSharpCode.AvalonEdit.Indentation.CSharp;
 using MahApps.Metro.Controls;
 using System.ComponentModel;
 using System.Diagnostics;
+using System.IO;
 using System.Net;
 using System.Text.Json;
+using System.Text.RegularExpressions;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Input;
@@ -657,6 +659,53 @@ namespace CodeSnip
             }
         }
 
+        private void ExportToPng_Click(object sender, RoutedEventArgs e)
+        {
+            if (textEditor.TextArea.Selection is not ICSharpCode.AvalonEdit.Editing.RectangleSelection selection || selection.IsEmpty)
+            {
+                MessageBox.Show("This action requires a rectangular selection (Alt + Mouse Drag or Alt + Shift + Arrow Keys).", "No Rectangular Selection", MessageBoxButton.OK, MessageBoxImage.Information);
+                return;
+            }
+
+            if (mainViewModel.SelectedSnippet == null)
+            {
+                MessageBox.Show("Please select a snippet first to determine the filename.", "No Snippet Selected", MessageBoxButton.OK, MessageBoxImage.Warning);
+                return;
+            }
+
+            try
+            {
+                var bitmap = RenderSelectionToBitmap(selection);
+
+                var encoder = new PngBitmapEncoder();
+                encoder.Frames.Add(BitmapFrame.Create(bitmap));
+
+                string exportsDir = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "Exports");
+                Directory.CreateDirectory(exportsDir);
+
+                string snippetTitle = mainViewModel.SelectedSnippet.Title;
+                string invalidChars = new string(Path.GetInvalidFileNameChars());
+                foreach (char c in invalidChars)
+                {
+                    snippetTitle = snippetTitle.Replace(c.ToString(), "_");
+                }
+                // Replace one or more whitespace characters with a single underscore
+                snippetTitle = Regex.Replace(snippetTitle, @"\s+", "_");
+                string filePath = Path.Combine(exportsDir, $"{snippetTitle}.png");
+
+                using (var fileStream = new FileStream(filePath, FileMode.Create))
+                {
+                    encoder.Save(fileStream);
+                }
+
+                MessageBox.Show($"Image successfully saved to:\n{filePath}", "Export Successful", MessageBoxButton.OK, MessageBoxImage.Information);
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show($"Failed to export selection as image: {ex.Message}", "Error", MessageBoxButton.OK, MessageBoxImage.Error);
+            }
+        }
+
         private void ExportToHtml_Click(object sender, RoutedEventArgs e)
         {
             if (mainViewModel != null && mainViewModel.SelectedSnippet != null)
@@ -763,6 +812,8 @@ namespace CodeSnip
                 Foreground = textEditor.Foreground,
                 SyntaxHighlighting = textEditor.SyntaxHighlighting,
                 Text = selectedText,
+                HorizontalScrollBarVisibility = ScrollBarVisibility.Hidden,
+                VerticalScrollBarVisibility = ScrollBarVisibility.Hidden,
                 Options = textEditor.Options
             };
 
