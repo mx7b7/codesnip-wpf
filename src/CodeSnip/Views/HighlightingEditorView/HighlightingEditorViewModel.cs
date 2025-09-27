@@ -13,8 +13,12 @@ using System.Xml.Linq;
 
 namespace CodeSnip.Views.HighlightingEditorView
 {
+    /// <summary>
+    /// Represents a single named color from a highlighting definition, allowing its properties to be edited.
+    /// </summary>
     public partial class HighlightingColorInfo : ObservableObject
     {
+        /// <summary>Gets or sets the name of the color definition (e.g., "Comment", "String").</summary>
         public string Name { get; set; } = string.Empty;
 
         [ObservableProperty]
@@ -29,11 +33,26 @@ namespace CodeSnip.Views.HighlightingEditorView
         [ObservableProperty]
         private FontStyle fontStyle = FontStyles.Normal;
 
+        [ObservableProperty]
+        private bool underline;
+
+        [ObservableProperty]
+        private bool strikethrough;
+
+        [ObservableProperty]
+        private int? fontSize;
+
+        /// <summary>
+        /// Gets the collection of available font weights for the UI.
+        /// </summary>
         public ObservableCollection<FontWeight> AvailableFontWeights { get; } = new ObservableCollection<FontWeight>()
     {
         FontWeights.Normal,
         FontWeights.Bold
     };
+        /// <summary>
+        /// Gets the collection of available font styles for the UI.
+        /// </summary>
         public ObservableCollection<FontStyle> AvailableFontStyles { get; } = new ObservableCollection<FontStyle>()
     {
         FontStyles.Normal,
@@ -42,6 +61,11 @@ namespace CodeSnip.Views.HighlightingEditorView
     };
     }
 
+    /// <summary>
+    /// ViewModel for the Highlighting Editor. It allows users to customize the colors, font weights,
+    /// and styles of a syntax highlighting definition, preview the changes live, and save them as a
+    /// custom '.xshd' file.
+    /// </summary>
     public partial class HighlightingEditorViewModel : ObservableObject
     {
         private readonly IHighlightingDefinition _originalDefinition;
@@ -50,21 +74,34 @@ namespace CodeSnip.Views.HighlightingEditorView
         private readonly string _languageCode;
         private readonly string _customXshdPath;
 
+        /// <summary>Gets or sets the informational message displayed at the top of the editor view.</summary>
         [ObservableProperty]
         private string? message;
 
+        /// <summary>Gets or sets a value indicating whether a custom user-defined highlighting file exists.</summary>
         [ObservableProperty]
         [NotifyCanExecuteChangedFor(nameof(ResetDefinitionCommand))]
         private bool _customDefinitionExists;
 
         private bool CanResetDefinition() => CustomDefinitionExists;
 
+        /// <summary>
+        /// Gets the collection of highlighting colors extracted from the current definition.
+        /// </summary>
         public ObservableCollection<HighlightingColorInfo> HighlightingColors { get; } = new();
 
+        /// <summary>
+        /// Gets or sets the currently selected color item from the list.
+        /// </summary>
         [ObservableProperty]
         private HighlightingColorInfo? selectedColor;
 
 
+        /// <summary>
+        /// Initializes a new instance of the <see cref="HighlightingEditorViewModel"/> class.
+        /// </summary>
+        /// <param name="definition">The active highlighting definition to be edited.</param>
+        /// <param name="editor">The TextEditor instance where live previews will be applied.</param>
         public HighlightingEditorViewModel(IHighlightingDefinition definition, ICSharpCode.AvalonEdit.TextEditor editor)
         {
             _originalDefinition = definition;
@@ -111,6 +148,10 @@ namespace CodeSnip.Views.HighlightingEditorView
             CustomDefinitionExists = File.Exists(_customXshdPath);
         }
 
+        /// <summary>
+        /// Deletes the custom highlighting definition file and reverts the editor to the
+        /// default embedded definition.
+        /// </summary>
         [RelayCommand(CanExecute = nameof(CanResetDefinition))]
         private async Task ResetDefinition()
         {
@@ -157,6 +198,9 @@ namespace CodeSnip.Views.HighlightingEditorView
                 HighlightingColors.Add(color);
         }
 
+        /// <summary>
+        /// Applies the current color and style modifications to the editor for a live preview, without saving to disk.
+        /// </summary>
         [RelayCommand]
         private void ApplyLivePreview()
         {
@@ -208,6 +252,10 @@ namespace CodeSnip.Views.HighlightingEditorView
             }
         }
 
+        /// <summary>
+        /// Saves the current color and style modifications to a custom '.xshd' file in the application's
+        /// 'Highlighting' directory. This overrides the default embedded definition for future sessions.
+        /// </summary>
         [RelayCommand]
         private async Task Save()
         {
@@ -250,6 +298,9 @@ namespace CodeSnip.Views.HighlightingEditorView
 
     }
 
+    /// <summary>
+    /// A helper class to parse color information from an <see cref="IHighlightingDefinition"/>.
+    /// </summary>
     public static class HighlightingParser
     {
         public static List<HighlightingColorInfo> ExtractColors(IHighlightingDefinition definition)
@@ -267,7 +318,10 @@ namespace CodeSnip.Views.HighlightingEditorView
                     Foreground = fg,
                     Background = bg,
                     FontWeight = named.FontWeight ?? FontWeights.Normal,
-                    FontStyle = named.FontStyle ?? FontStyles.Normal
+                    FontStyle = named.FontStyle ?? FontStyles.Normal,
+                    FontSize = named.FontSize,
+                    Underline = named.Underline ?? false,
+                    Strikethrough = named.Strikethrough ?? false
                 };
 
                 result.Add(colorInfo);
@@ -278,35 +332,79 @@ namespace CodeSnip.Views.HighlightingEditorView
     }
 
     /// <summary>
-    /// Loads XSHD from the original file and replaces only the <Color> elements according to the given colors, without changing the rules.
+    /// A helper class to serialize highlighting color changes back into an XSHD file format.
     /// </summary>
     public static class HighlightingSerializer
     {
+        /// <summary>
+        /// Generates a new XSHD file by taking an original XSHD structure and replacing its color definitions with a new set of overrides.
+        /// </summary>
+        /// <param name="xshdXml">The original XSHD content as an XML string.</param>
+        /// <param name="outputPath">The file path where the new XSHD file will be saved.</param>
+        /// <param name="overrides">The list of <see cref="HighlightingColorInfo"/> to write into the new file.</param>
+
         public static void SaveColorOverrides(string xshdXml, string outputPath, List<HighlightingColorInfo> overrides)
         {
             var doc = XDocument.Parse(xshdXml);
             var ns = doc.Root?.Name.Namespace ?? XNamespace.None;
+            var overridesDict = overrides.ToDictionary(o => o.Name);
 
-            doc.Root?.Elements(ns + "Color").Remove();
+            var colorElements = doc.Root?.Elements(ns + "Color").ToList();
 
-            foreach (var color in overrides)
+            if (colorElements != null)
             {
-                var colorElem = new XElement(ns + "Color",
-                    new XAttribute("name", color.Name));
+                foreach (var colorElem in colorElements)
+                {
+                    var name = colorElem.Attribute("name")?.Value;
+                    if (name != null && overridesDict.TryGetValue(name, out var colorOverride))
+                    {
+                        // Preserve and re-apply 'exampleText' to ensure it's last.
+                        var exampleTextAttr = colorElem.Attribute("exampleText");
+                        string? exampleTextValue = exampleTextAttr?.Value;
+                        exampleTextAttr?.Remove();
 
-                if (color.Foreground.HasValue)
-                    colorElem.SetAttributeValue("foreground", color.Foreground.Value.ToString());
+                        // Update other attributes
+                        if (colorOverride.Foreground.HasValue)
+                            colorElem.SetAttributeValue("foreground", colorOverride.Foreground.Value.ToString());
+                        else
+                            colorElem.Attribute("foreground")?.Remove();
 
-                if (color.Background.HasValue)
-                    colorElem.SetAttributeValue("background", color.Background.Value.ToString());
+                        if (colorOverride.Background.HasValue)
+                            colorElem.SetAttributeValue("background", colorOverride.Background.Value.ToString());
+                        else
+                            colorElem.Attribute("background")?.Remove();
 
-                if (color.FontWeight != FontWeights.Normal)
-                    colorElem.SetAttributeValue("fontWeight", color.FontWeight.ToString().ToLowerInvariant());
+                        if (colorOverride.FontWeight != FontWeights.Normal)
+                            colorElem.SetAttributeValue("fontWeight", colorOverride.FontWeight.ToString().ToLowerInvariant());
+                        else
+                            colorElem.Attribute("fontWeight")?.Remove();
 
-                if (color.FontStyle != FontStyles.Normal)
-                    colorElem.SetAttributeValue("fontStyle", color.FontStyle.ToString().ToLowerInvariant());
+                        if (colorOverride.FontStyle != FontStyles.Normal)
+                            colorElem.SetAttributeValue("fontStyle", colorOverride.FontStyle.ToString().ToLowerInvariant());
+                        else
+                            colorElem.Attribute("fontStyle")?.Remove();
 
-                doc.Root?.AddFirst(colorElem);
+                        if (colorOverride.Underline)
+                            colorElem.SetAttributeValue("underline", "true");
+                        else
+                            colorElem.Attribute("underline")?.Remove();
+
+                        if (colorOverride.Strikethrough)
+                            colorElem.SetAttributeValue("strikethrough", "true");
+                        else
+                            colorElem.Attribute("strikethrough")?.Remove();
+
+                        if (colorOverride.FontSize.HasValue)
+                            colorElem.SetAttributeValue("fontSize", colorOverride.FontSize.Value.ToString());
+                        else
+                            colorElem.Attribute("fontSize")?.Remove();
+                        // Re-add 'exampleText' at the end.
+                        if (exampleTextValue != null)
+                        {
+                            colorElem.SetAttributeValue("exampleText", exampleTextValue);
+                        }
+                    }
+                }
             }
 
             Directory.CreateDirectory(Path.GetDirectoryName(outputPath)!);
