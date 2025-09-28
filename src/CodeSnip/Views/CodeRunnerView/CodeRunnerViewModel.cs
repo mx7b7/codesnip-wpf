@@ -66,8 +66,6 @@ namespace CodeSnip.Views.CodeRunnerView
 
         public CodeRunnerViewModel(string languageExtension, string code, Func<string> getLatestCode)
         {
-            // Set the highlighting name based on the source language extension
-            AsmHighlightingName = MapLanguageExtensionToAsmHighlighting(languageExtension);
             Compilers = _compilersSettings.GetCompilersByExtension(languageExtension);
             var defaultCompilerId = _compilersSettings.GetDefaultCompilerIdByExtension(languageExtension);
             SelectedCompiler = Compilers.FirstOrDefault(c => c.Id == defaultCompilerId) ?? Compilers.FirstOrDefault();
@@ -79,20 +77,30 @@ namespace CodeSnip.Views.CodeRunnerView
         }
 
         // This method maps the source language extension to the appropriate assembly highlighting definition name.
-        private static string MapLanguageExtensionToAsmHighlighting(string languageExtension)
+        private static string MapLanguageExtensionToAsmHighlighting(string languageExtension, CompilerInfo? compiler)
         {
+            if (languageExtension.Equals("cs", StringComparison.OrdinalIgnoreCase) &&
+                compiler?.Id?.Contains("ildasm", StringComparison.OrdinalIgnoreCase) == true)
+            {
+                return "il";
+            }
+
             return languageExtension.ToLowerInvariant() switch
             {
-                //"cs" => "il",
+               
                 "java" => "java-bytecode",
-                "py" => "python-bytecode",
                 _ => "asm", // Default for C++, Rust, D, etc.
             };
         }
 
-        partial void OnSelectedCompilerChanged(CompilerInfo? value)
+        partial void OnSelectedCompilerChanged(CompilerInfo? oldValue, CompilerInfo? newValue)
         {
-            Flags = value?.Flags ?? "";
+            Flags = newValue?.Flags ?? "";
+            AsmHighlightingName = MapLanguageExtensionToAsmHighlighting(Extension, newValue);
+            // clear previous outputs
+            AsmCode = "";
+            StdOut = "";
+            ErrorText = "";
         }
 
         private bool CanExecuteCompilerActions()
