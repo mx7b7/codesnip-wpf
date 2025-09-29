@@ -66,12 +66,12 @@ namespace CodeSnip.Views.CodeRunnerView
 
         public CodeRunnerViewModel(string languageExtension, string code, Func<string> getLatestCode)
         {
+            Extension = languageExtension;// set before triggering OnSelectedCompilerChanged beacause it uses it
             Compilers = _compilersSettings.GetCompilersByExtension(languageExtension);
             var defaultCompilerId = _compilersSettings.GetDefaultCompilerIdByExtension(languageExtension);
             SelectedCompiler = Compilers.FirstOrDefault(c => c.Id == defaultCompilerId) ?? Compilers.FirstOrDefault();
             Code = code;
             _getLatestCode = getLatestCode;
-            Extension = languageExtension;
             _godboltService = new GodboltService(_httpClient);
                        
         }
@@ -88,7 +88,7 @@ namespace CodeSnip.Views.CodeRunnerView
             return languageExtension.ToLowerInvariant() switch
             {
                
-                "java" => "java-bytecode",
+                "java" => "javaopc",
                 _ => "asm", // Default for C++, Rust, D, etc.
             };
         }
