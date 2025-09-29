@@ -1,0 +1,233 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<SyntaxDefinition name="JavaOpcodes" extensions=".javaopc" xmlns="http://icsharpcode.net/sharpdevelop/syntaxdefinition/2008">
+	<Color name="Keyword" foreground="Blue" />
+	<Color name="Instruction" foreground="Brown" />
+	<Color name="Number" foreground="DarkBlue" />
+	<Color name="Comment" foreground="SlateGray" />
+	<Color name="Label" foreground="Teal" />
+	<!-- <Color name="DisassemblyKeyword" foreground="#795E26" /> -->
+
+	<Property name="Extension" value="javaopc" />
+
+	<RuleSet>
+		<Keywords color="Keyword">
+			<Word>public</Word>
+			<Word>private</Word>
+			<Word>protected</Word>
+			<Word>static</Word>
+			<Word>final</Word>
+			<Word>class</Word>
+			<Word>interface</Word>
+			<Word>abstract</Word>
+			<Word>void</Word>
+			<Word>int</Word>
+			<Word>double</Word>
+			<Word>float</Word>
+			<Word>boolean</Word>
+			<Word>char</Word>
+			<Word>long</Word>
+			<Word>byte</Word>
+			<Word>short</Word>
+		</Keywords>
+
+		<!-- Constants -->
+		<Keywords color="Instruction">
+			<Word>aconst_null</Word>
+			<Word>dconst_</Word>
+			<Word>fconst_</Word>
+			<Word>iconst_m1</Word>
+			<Word>iconst_</Word>
+			<Word>lconst_</Word>
+		</Keywords>
+
+		<!-- Loads -->
+		<Keywords color="Instruction">
+			<Word>aload</Word>
+			<Word>aaload</Word>
+			<Word>anewarray</Word>
+			<Word>arraylength</Word>
+			<Word>baload</Word>
+			<Word>caload</Word>
+			<Word>daload</Word>
+			<Word>faload</Word>
+			<Word>iaload</Word>
+			<Word>laload</Word>
+			<Word>saload</Word>
+			<Word>getfield</Word>
+			<Word>getstatic</Word>
+			<Word>ldc</Word>
+			<Word>ldc_w</Word>
+			<Word>ldc2_w</Word>
+			<Word>multianewarray</Word>
+			<Word>newarray</Word>
+			<Word>new</Word>
+			<Word>aload_</Word>
+			<Word>dload</Word>
+			<Word>dload_</Word>
+			<Word>fload</Word>
+			<Word>fload_</Word>
+			<Word>iload</Word>
+			<Word>iload_</Word>
+			<Word>lload</Word>
+			<Word>lload_</Word>
+		</Keywords>
+
+		<!-- Stores -->
+		<Keywords color="Instruction">
+			<Word>astore</Word>
+			<Word>astore_</Word>
+			<Word>dstore</Word>
+			<Word>dstore_</Word>
+			<Word>fstore</Word>
+			<Word>fstore_</Word>
+			<Word>istore</Word>
+			<Word>istore_</Word>
+			<Word>lstore</Word>
+			<Word>lstore_</Word>
+			<Word>sastore</Word>
+			<Word>bastore</Word>
+			<Word>fastore</Word>
+			<Word>dastore</Word>
+			<Word>lastore</Word>
+			<Word>iastore</Word>
+			<Word>aastore</Word>
+		</Keywords>
+
+		<!-- Stack -->
+		<Keywords color="Instruction">
+			<Word>dup</Word>
+			<Word>dup_x1</Word>
+			<Word>dup_x2</Word>
+			<Word>dup2</Word>
+			<Word>dup2_x1</Word>
+			<Word>dup2_x2</Word>
+			<Word>pop</Word>
+			<Word>pop2</Word>
+			<Word>swap</Word>
+		</Keywords>
+
+		<!-- Arithmetic -->
+		<Keywords color="Instruction">
+			<Word>dadd</Word>
+			<Word>ddiv</Word>
+			<Word>dmul</Word>
+			<Word>dneg</Word>
+			<Word>drem</Word>
+			<Word>dsub</Word>
+			<Word>fadd</Word>
+			<Word>fdiv</Word>
+			<Word>fmul</Word>
+			<Word>fneg</Word>
+			<Word>frem</Word>
+			<Word>fsub</Word>
+			<Word>iadd</Word>
+			<Word>idiv</Word>
+			<Word>imul</Word>
+			<Word>ineg</Word>
+			<Word>irem</Word>
+			<Word>isub</Word>
+			<Word>ishl</Word>
+			<Word>ishr</Word>
+			<Word>iushr</Word>
+			<Word>ixor</Word>
+			<Word>ladd</Word>
+			<Word>ldiv</Word>
+			<Word>lmul</Word>
+			<Word>lneg</Word>
+			<Word>lrem</Word>
+			<Word>lsub</Word>
+			<Word>lshl</Word>
+			<Word>lshr</Word>
+			<Word>lushr</Word>
+			<Word>lxor</Word>
+			<Word>iand</Word>
+			<Word>land</Word>
+			<Word>ior</Word>
+			<Word>lor</Word>
+		</Keywords>
+
+		<!-- Type Conversion -->
+		<Keywords color="Instruction">
+			<Word>d2f</Word>
+			<Word>d2i</Word>
+			<Word>d2l</Word>
+			<Word>f2d</Word>
+			<Word>f2i</Word>
+			<Word>f2l</Word>
+			<Word>i2b</Word>
+			<Word>i2c</Word>
+			<Word>i2d</Word>
+			<Word>i2f</Word>
+			<Word>i2l</Word>
+			<Word>i2s</Word>
+			<Word>l2d</Word>
+			<Word>l2f</Word>
+			<Word>l2i</Word>
+		</Keywords>
+
+		<!-- Control Flow -->
+		<Keywords color="Instruction">
+			<Word>goto</Word>
+			<Word>goto_w</Word>
+			<Word>jsr</Word>
+			<Word>jsr_w</Word>
+			<Word>ret</Word>
+			<Word>return</Word>
+			<Word>dreturn</Word>
+			<Word>freturn</Word>
+			<Word>ireturn</Word>
+			<Word>lreturn</Word>
+			<Word>areturn</Word>
+			<Word>ifnonnull</Word>
+			<Word>ifnull</Word>
+			<Word>lookupswitch</Word>
+			<Word>tableswitch</Word>
+			<Word>ifeq</Word>
+			<Word>ifne</Word>
+			<Word>if_icmplt</Word>
+			<Word>if_icmpge</Word>
+			<Word>if_icmple</Word>
+			<Word>if_icmpeq</Word>
+			<Word>if_icmpne</Word>
+			<Word>if_icmpgt</Word>
+
+		</Keywords>
+
+		<!-- Methods -->
+		<Keywords color="Instruction">
+			<Word>invokedynamic</Word>
+			<Word>invokeinterface</Word>
+			<Word>invokespecial</Word>
+			<Word>invokestatic</Word>
+			<Word>invokevirtual</Word>
+		</Keywords>
+
+		<!-- Object / Field Operations -->
+		<Keywords color="Instruction">
+			<Word>instanceof</Word>
+			<Word>checkcast</Word>
+			<Word>monitorenter</Word>
+			<Word>monitorexit</Word>
+			<Word>putfield</Word>
+			<Word>putstatic</Word>
+		</Keywords>
+
+		<!-- Misc -->
+		<Keywords color="Instruction">
+			<Word>iinc</Word>
+			<Word>nop</Word>
+			<Word>wide</Word>
+			<Word>sipush</Word>
+			<Word>bipush</Word>
+		</Keywords>
+
+		<!-- Comments -->
+		<Rule color="Comment">//.*$</Rule>
+
+		<!-- Labels: disassembly addresses (e.g., 0:, 1:) -->
+		<Rule color="Label">^\s*\d+:</Rule>
+
+		<Rule color="Number">\b\d+\b</Rule>
+
+	</RuleSet>
+</SyntaxDefinition>

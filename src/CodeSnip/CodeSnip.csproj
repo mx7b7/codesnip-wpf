@@ -41,6 +41,7 @@
 		<Resource Include="Resources\Highlighting\Dark\il.xshd" />
 		<Resource Include="Resources\Highlighting\Dark\ini.xshd" />
 		<Resource Include="Resources\Highlighting\Dark\java.xshd" />
+		<Resource Include="Resources\Highlighting\Dark\javaopc.xshd" />
 		<Resource Include="Resources\Highlighting\Dark\js.xshd" />
 		<Resource Include="Resources\Highlighting\Dark\json.xshd" />
 		<Resource Include="Resources\Highlighting\Dark\md.xshd" />
@@ -72,6 +73,7 @@
 		<Resource Include="Resources\Highlighting\Light\il.xshd" />
 		<Resource Include="Resources\Highlighting\Light\ini.xshd" />
 		<Resource Include="Resources\Highlighting\Light\java.xshd" />
+		<Resource Include="Resources\Highlighting\Light\javaopc.xshd" />
 		<Resource Include="Resources\Highlighting\Light\js.xshd" />
 		<Resource Include="Resources\Highlighting\Light\json.xshd" />
 		<Resource Include="Resources\Highlighting\Light\md.xshd" />
@@ -109,5 +111,6 @@
 			<CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
 		</Content>
 	</ItemGroup>
+	
 	
 </Project>
