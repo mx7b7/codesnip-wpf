@@ -104,7 +104,7 @@
     <mah:MetroWindow.Flyouts>
         <mah:FlyoutsControl x:Name="flyControl"/>
     </mah:MetroWindow.Flyouts>
-    <Grid Margin="2,2,2,2">
+    <Grid Margin="0,1,2,0">
         <mah:SplitView x:Name="SplitViewControl"
                DisplayMode="CompactInline"
                CompactPaneLength="0"
@@ -119,7 +119,7 @@
                         <RowDefinition Height="*"/>
                         <!-- Snippets expander -->
                     </Grid.RowDefinitions>
-                    <Expander Header="Search" Grid.Row="0" Margin="0,0,2,3" IsExpanded="{Binding IsSearchExpanded, Mode=TwoWay}">
+                    <Expander Header="Search" Grid.Row="0" Margin="0,0,2,1" IsExpanded="{Binding IsSearchExpanded, Mode=TwoWay}">
                         <Grid Margin="0,5,0,5" VerticalAlignment="Center">
                             <Grid.ColumnDefinitions>
                                 <ColumnDefinition Width="Auto" />
@@ -155,11 +155,8 @@
                                  ItemsSource="{Binding Languages}"
                                  SelectedItemChanged="TreeView_SelectedItemChanged">
                                 <TreeView.Resources>
-                                    <!-- Ikona za jezik -->
                                     <Geometry x:Key="LanguageIcon">M9,15h6m-3,3V12M14,2v6h6M14,2H6A2,2 0 0 0 4,4v16a2,2 0 0 0 2,2h12a2,2 0 0 0 2,-2V8Z</Geometry>
-                                    <!-- Ikona za kategoriju -->
                                     <Geometry x:Key="CategoryIcon">M3,6h18v2H3V6zm0,5h18v2H3v-2zm0,5h18v2H3v-2z</Geometry>
-                                    <!-- Ikona za snippet -->
                                     <Geometry x:Key="SnippetIcon">M5,4h14a2,2 0 0 1 2,2v12a2,2 0 0 1 -2,2H5a2,2 0 0 1 -2,-2V6a2,2 0 0 1 2,-2zm0,2v12h14V6H5zm2,2h10v2H7V8zm0,4h6v2H7v-2z</Geometry>
                                     <Style TargetType="{x:Type ScrollBar}" BasedOn="{StaticResource TreeViewScrollBar}" />
                                 </TreeView.Resources>
@@ -204,7 +201,7 @@
                                     </HierarchicalDataTemplate>
                                 </TreeView.ItemTemplate>
                             </TreeView>
-                            <!-- Kontrole ispod TreeView-a -->
+                            <!-- Controls below the TreeView -->
                             <Expander Header="Snippet Metadata" Grid.Row="1" Margin="0,10,0,0"
                                       IsExpanded="{Binding IsSnippetMetadataExpanded, Mode=TwoWay}">
                                 <Expander.Resources>
@@ -213,17 +210,17 @@
                                 <Grid>
                                     <Grid.RowDefinitions>
                                         <RowDefinition Height="Auto"/>
-                                        <!-- Labela Description -->
+                                        <!-- Description label -->
                                         <RowDefinition Height="*"/>
-                                        <!-- TextBox za Description -->
+                                        <!-- Description TextBox  -->
                                         <RowDefinition Height="Auto"/>
-                                        <!-- Labela Tag -->
+                                        <!-- Tag Label -->
                                         <RowDefinition Height="Auto"/>
-                                        <!-- TextBox za Tag -->
+                                        <!-- Tag TextBox -->
                                     </Grid.RowDefinitions>
                                     <!-- Description label -->
                                     <TextBlock Text="Description:" Margin="0,0,0,5" Grid.Row="0" />
-                                    <!-- Description TextBox koji se rasteže -->
+                                    <!-- Description TextBox that stretches-->
                                     <TextBox x:Name="txtDescription" Grid.Row="1" TextWrapping="Wrap"  Focusable="False"
                                              VerticalScrollBarVisibility="Auto"  Height="100" IsReadOnly="True" BorderThickness="0.5"
                                              Text="{Binding SelectedSnippet.Description}" />
@@ -257,71 +254,71 @@
                             <Path Data="{StaticResource Save}" Fill="{DynamicResource MahApps.Brushes.AccentBase}"
                              Width="20" Height="20" Stretch="Uniform" />
                         </Button>
-                        <Button  Command="{Binding AddSnippetCommand}" Margin="5,0,0,0" ToolTip="Add snippet&#xA;Ctrl+Shift+A">
+                        <Button  Command="{Binding AddSnippetCommand}" Margin="2,0,0,0" ToolTip="Add snippet&#xA;Ctrl+Shift+A">
                             <Path Data="{StaticResource FileAdd}" Fill="{DynamicResource MahApps.Brushes.AccentBase}"
                                   Width="20" Height="20" Stretch="Uniform" />
                         </Button>
-                        <Button  Command="{Binding EditSnippetCommand}" Margin="5,0,0,0" ToolTip="Edit snippet&#xA;Ctrl+Shift+E">
+                        <Button  Command="{Binding EditSnippetCommand}" Margin="2,0,0,0" ToolTip="Edit snippet&#xA;Ctrl+Shift+E">
                             <Path Data="{StaticResource FileEdit}" Fill="{DynamicResource MahApps.Brushes.AccentBase}"
                                  Width="20" Height="20" Stretch="Uniform" />
                         </Button>
-                        <Button  Command="{Binding DeleteSnippetCommand}" Margin="5,0,0,0" ToolTip="Delete snippet&#xA;Ctrl+Shift+D">
+                        <Button  Command="{Binding DeleteSnippetCommand}" Margin="2,0,0,0" ToolTip="Delete snippet&#xA;Ctrl+Shift+D">
                             <Path Data="{StaticResource Trash}" Fill="{DynamicResource MahApps.Brushes.AccentBase}"
                                  Width="20" Height="20" Stretch="Uniform" />
                         </Button>
-                        <Button x:Name="btnLangCat"  Margin="5,0,0,0" Command="{Binding OpenLanguageCategoryCommand}"
+                        <Button x:Name="btnLangCat"  Margin="2,0,0,0" Command="{Binding OpenLanguageCategoryCommand}"
                                   ToolTip="Language/Category edit&#xA;Ctrl+Shift+L"
                                   IsEnabled="{Binding IsLoadSnippetEnabled, Converter={StaticResource InverseBooleanConverter}}" >
                             <Path Data="{StaticResource CategoryEdit}" Fill="{DynamicResource MahApps.Brushes.AccentBase}"
                                   Width="20" Height="20" Stretch="Uniform" />
                         </Button>
-                        <Button Margin="5,0,0,0" ToolTip="Load snippets" IsEnabled="{Binding IsLoadSnippetEnabled}"
+                        <Button Margin="2,0,0,0" ToolTip="Load snippets" IsEnabled="{Binding IsLoadSnippetEnabled}"
                                 Command="{Binding LoadSnippetsDatabaseCommand}">
                             <Path Data="{StaticResource DatabaseRefresh}" Fill="{DynamicResource MahApps.Brushes.AccentBase}"
                                   Width="20" Height="20" Stretch="Uniform" />
                         </Button>
                         <Separator />
-                        <Button Margin="5,0,0,0" ToolTip="Run&#xA;Ctrl+Shift+R"
+                        <Button ToolTip="Run&#xA;Ctrl+Shift+R"
                                 Command="{Binding OpenCodeRunnerViewCommand}" >
                             <Path Data="{StaticResource DebugStart}" Fill="{DynamicResource MahApps.Brushes.AccentBase}"
                                   Width="20" Height="20" Stretch="Uniform" />
                         </Button>
-                        <Button Margin="5,0,0,0" ToolTip="Compiler explorer settings" 
+                        <Button Margin="2,0,0,0" ToolTip="Compiler explorer settings" 
                                 Command="{Binding OpenCompilerSettingsCommand}">
                             <Path Data="{StaticResource CompilerExplorer}" Fill="{DynamicResource MahApps.Brushes.AccentBase}"
                                   Width="20" Height="20" Stretch="Uniform" />
                         </Button>
                         <Separator />
-                        <Button  Margin="5,0,0,0" Command="{Binding IncreaseFontSizeCommand}" ToolTip="Zoom +">
+                        <Button Command="{Binding IncreaseFontSizeCommand}" ToolTip="Zoom +">
                             <Path Data="{StaticResource ZoomIn}" Fill="{DynamicResource MahApps.Brushes.AccentBase}"
                                   Width="20" Height="20" Stretch="Uniform" />
                         </Button>
-                        <Button  Margin="5,0,0,0" Command="{Binding DecreaseFontSizeCommand}" ToolTip="Zoom -">
+                        <Button  Margin="2,0,0,0" Command="{Binding DecreaseFontSizeCommand}" ToolTip="Zoom -">
                             <Path Data="{StaticResource ZoomOut}" Fill="{DynamicResource MahApps.Brushes.AccentBase}"
                                   Width="20" Height="20" Stretch="Uniform" />
                         </Button>
-                        <Button  Margin="5,0,0,0" Command="{Binding ResetFontSizeCommand}" ToolTip="Reset zoom">
+                        <Button  Margin="2,0,0,0" Command="{Binding ResetFontSizeCommand}" ToolTip="Reset zoom">
                             <Path Data="{StaticResource ZoomOutMap}" Fill="{DynamicResource MahApps.Brushes.AccentBase}"
                                   Width="20" Height="20" Stretch="Uniform" />
                         </Button>
-                        <Button Margin="5,0,0,0" ToolTip="Search / Replace"  Command="{Binding OpenSearchReplaceCommand}" >
+                        <Button Margin="2,0,0,0" ToolTip="Search / Replace"  Command="{Binding OpenSearchReplaceCommand}" >
                             <Path Data="{StaticResource TextSearch}" Fill="{DynamicResource MahApps.Brushes.AccentBase}"
                                  Width="20" Height="20" Stretch="Uniform" />
                         </Button>
-                        <Button Margin="5,0,0,0" ToolTip="Format code" Click="FormatAll_Click">
+                        <Button Margin="2,0,0,0" ToolTip="Format code" Click="FormatAll_Click">
                             <Path Data="{StaticResource FormatText}" Fill="{DynamicResource MahApps.Brushes.AccentBase}"
                                   Width="20" Height="20" Stretch="Uniform" />
                         </Button>
-                        <ToggleButton Margin="5,0,0,0" ToolTip="Disable intendation" IsChecked="{Binding DisableIntendation, Mode=TwoWay}">
+                        <ToggleButton Margin="2,0,0,0" ToolTip="Disable intendation" IsChecked="{Binding DisableIntendation, Mode=TwoWay}">
                             <Path Data="{StaticResource FormatIndentDecrease}" Fill="{DynamicResource MahApps.Brushes.AccentBase}"
                                   Width="20" Height="20" Stretch="Uniform" />
                         </ToggleButton>
                         <Separator />
-                        <Button  Margin="5,0,0,0" ToolTip="Highlighting Editor" Command="{Binding OpenHighlightingEditorCommand}">
+                        <Button ToolTip="Highlighting Editor" Command="{Binding OpenHighlightingEditorCommand}">
                             <Path Data="{StaticResource ColorPaletteiOS}" Fill="{DynamicResource MahApps.Brushes.AccentBase}"
                                  Width="20" Height="20" Stretch="Uniform" />
                         </Button>
-                        <Button Margin="5,0,0,0" ToolTip="Settings&#xA;Ctrl+Shift+P" Command="{Binding OpenSettingsCommand}">
+                        <Button Margin="2,0,0,0" ToolTip="Settings&#xA;Ctrl+Shift+P" Command="{Binding OpenSettingsCommand}">
                             <Path Data="{StaticResource GearBold}" Fill="{DynamicResource MahApps.Brushes.AccentBase}"
                                   Width="20" Height="20" Stretch="Uniform" />
                         </Button>
