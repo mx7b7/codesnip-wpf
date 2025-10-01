@@ -22,6 +22,8 @@
   <Color name="Command2" foreground="#FF5000FF" fontWeight="normal" />
   <Color name="Command3" foreground="#FFFF6000" fontWeight="normal" />
 
+	<Property name="Extension" value="bat" />
+
   <RuleSet ignoreCase="true">
 
     <Span color="String2" multiline="false" begin="&quot;" end="&quot;" >

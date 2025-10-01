@@ -5,6 +5,7 @@
 	<Color name="Keywords" fontWeight="bold" foreground="Blue" exampleText="SELECT FROM"/>
 
 	<Property name="DocCommentMarker" value="///" />
+	<Property name="Extension" value="sql" />
 
 	<RuleSet name="CommentMarkerSet">
 		<Keywords fontWeight="bold" foreground="Red">

@@ -16,6 +16,8 @@
 
   <Color name="PreprocessorLine"           foreground="#FF6666FF" fontWeight="bold" />
 
+  <Property name="Extension" value="nut" />
+
   <RuleSet name="CommentMarkerSet">
 		<Keywords color="CommentMarkerSetTodo">
 			<Word>TODO</Word>

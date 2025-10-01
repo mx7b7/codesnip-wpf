@@ -9,6 +9,8 @@
 	<Color name="FieldName" foreground="DarkMagenta" />
 	<Color name="Punctuation" foreground="Black" />
 
+	<Property name="Extension" value="json" />
+
 	<RuleSet name="String">
 		<Span begin="\\" end="." />
 	</RuleSet>

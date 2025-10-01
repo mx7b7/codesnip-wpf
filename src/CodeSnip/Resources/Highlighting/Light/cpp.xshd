@@ -22,6 +22,9 @@
 	<Color name="JumpKeywords" foreground="#FF000080" />
 	<Color name="ExceptionHandling" foreground="#FF008080" fontWeight="bold" />
 	<Color name="ControlFlow" foreground="#FF0000FF" fontWeight="bold" />
+
+	<Property name="Extension" value="cpp" />
+	
 	<RuleSet ignoreCase="false">
 		<Rule color="Punctuation">
 		[?,.;()\[\]{}+\-/%*&lt;&gt;^=~!&amp;]+

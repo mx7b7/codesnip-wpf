@@ -13,6 +13,8 @@
 	<Color name="Command" fontWeight="bold" foreground="MidnightBlue" />
 	<Color name="Operators" foreground="#FF8515EA" exampleText="-eq"/>
 
+	<Property name="Extension" value="ps1" />
+
 	<RuleSet ignoreCase="true">
 		<Span color="Comment">
 			<Begin>\#</Begin>

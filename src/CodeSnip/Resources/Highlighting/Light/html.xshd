@@ -18,6 +18,9 @@
 	<Color name="EntityReference" foreground="Blue" exampleText="&lt;html background='green'&gt;Hello&amp;nbsp;World! &lt;test /&gt;&lt;/html&gt;" />
 	<Color name="Entities" foreground="#FF008000" exampleText="&lt;html background='green'&gt;Hello&amp;nbsp;World! &lt;test /&gt;&lt;/html&gt;" />
 	<Color name="UnknownAttribute" foreground="Blue" exampleText="&lt;html foo='bar' background='green'&gt;Hello&amp;nbsp;World! &lt;test /&gt;&lt;/html&gt;" />
+
+	<Property name="Extension" value="html" />
+	
 	<RuleSet ignoreCase="true">
 		<Span color="Comment" multiline="true">
 			<Begin>&lt;!--</Begin>

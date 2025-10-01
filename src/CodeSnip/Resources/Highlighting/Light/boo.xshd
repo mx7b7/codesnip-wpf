@@ -2,6 +2,9 @@
 	<Color name="Comment" foreground="Green" />
 	<Color name="String" foreground="Blue" />
 	<Color name="Regex" foreground="#FFFF6600" />
+	
+	<Property name="Extension" value="boo" />
+	
 	<RuleSet>
 		<Span color="Comment" multiline="true">
 			<Begin>"""</Begin>

@@ -7,6 +7,9 @@
 	<Color name="String" foreground="Brown" />
 	<Color name="Number" foreground="DarkRed" />
 	<Color name="Function" foreground="Purple" />
+
+	<Property name="Extension" value="rs" />
+	
 	<RuleSet>
 		<Keywords color="Keyword">
 			<Word>abstract</Word>

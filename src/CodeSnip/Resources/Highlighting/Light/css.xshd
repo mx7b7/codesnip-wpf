@@ -7,6 +7,9 @@
 	<Color name="Value" foreground="Blue" exampleText="p { color: red; }" />
 	<Color name="CurlyBraces" foreground="Black" exampleText="{ }" />
 	<Color name="Colon" foreground="Black" exampleText=":" />
+
+	<Property name="Extension" value="css" />
+	
 	<RuleSet ignoreCase="true">
 		<Span color="Comment" multiline="true">
 			<Begin>/\*</Begin>

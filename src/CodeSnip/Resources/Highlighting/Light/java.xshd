@@ -23,6 +23,9 @@
   <Color name="Literals" foreground="Black" fontWeight="bold" />
   <Color name="CommentTags" foreground="Red" fontWeight="bold" fontStyle="italic" />
   <Color name="JavaDocTags" foreground="DarkGray" fontWeight="bold" fontStyle="italic" />
+
+  <Property name="Extension" value="java" />
+	
   <RuleSet ignoreCase="false">
     <Rule color="Punctuation">
       [?,.()\[\]{}+\-/%*&lt;&gt;^!|]+

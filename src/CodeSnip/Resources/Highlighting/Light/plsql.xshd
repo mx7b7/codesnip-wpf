@@ -7,6 +7,8 @@
   <Color name="ReservedWords" foreground="Blue"   fontWeight="bold" />
   <Color name="Functions"     foreground="Purple" fontWeight="bold" />
 
+  <Property name="Extension" value="plsql" />
+
   <RuleSet ignoreCase="true">
     <Span color="Comment">
       <Begin>--</Begin>

@@ -16,6 +16,9 @@
 	<Color name="ValueTypes" foreground="Red" fontWeight="bold" exampleText="int test = 5;" />
 	<Color name="OtherTypes" foreground="Red" exampleText="object test = null;" />
 	<Color name="AccessModifiers" foreground="Blue" fontWeight="bold" exampleText="public function test() {}" />
+
+	<Property name="Extension" value="php" />
+	
 	<RuleSet>
 		<Span color="Comment">
 			<Begin>\#</Begin>

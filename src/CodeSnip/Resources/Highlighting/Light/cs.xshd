@@ -29,6 +29,8 @@
 	<Color name="TypeKeywords" fontWeight="bold" foreground="DarkCyan" exampleText="if (x is int) { a = x as int; type = typeof(int); size = sizeof(int); c = new object(); }"/>
 	<Color name="SemanticKeywords" fontWeight="bold" foreground="DarkCyan" exampleText="if (args == null) throw new ArgumentNullException(nameof(args));" />
 
+	<Property name="Extension" value="cs" />
+	
 	<Property name="DocCommentMarker" value="///" />
 	
 	<RuleSet name="CommentMarkerSet">

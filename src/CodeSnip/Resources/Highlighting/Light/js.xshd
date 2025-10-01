@@ -11,6 +11,9 @@
 	<Color name="JavaScriptIntrinsics" foreground="Blue" exampleText="Math.random()" />
 	<Color name="JavaScriptLiterals" foreground="Blue" exampleText="return false;" />
 	<Color name="JavaScriptGlobalFunctions" foreground="Blue" exampleText="escape(myString);" />
+
+	<Property name="Extension" value="js" />
+	
 	<RuleSet ignoreCase="false">
 		<Keywords color="JavaScriptKeyWords">
 			<Word>break</Word>

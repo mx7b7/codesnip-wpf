@@ -1,7 +1,6 @@
 ﻿<?xml version="1.0" encoding="UTF-8"?>
 <SyntaxDefinition name="D" extensions=".d" xmlns="http://icsharpcode.net/sharpdevelop/syntaxdefinition/2008">
 
-	<!-- Definicija boja za različite elemente -->
 	<Color name="Comment"       foreground="#75715E" />
 	<Color name="String"        foreground="#E6DB74" />
 	<Color name="Character"     foreground="#FD971F" />
@@ -16,16 +15,13 @@
 
 	<RuleSet ignoreCase="false">
 
-		<!-- Punctuation: simboli i operatori -->
 		<Rule color="Punctuation">[?,.;()\[\]{}+\-/%*&lt;&gt;^=~!&amp;]+</Rule>
 
-		<!-- Komentari -->
 		<Span color="Comment" begin="//" end="$" />
 		<Span color="Comment" multiline="true" begin="/\*" end="\*/" />
 		<!-- nested comments -->
 		<Span color="Comment" multiline="true" begin="/\+" end="\+/" />
 
-		<!-- Stringovi -->
 		<Span color="String" begin="`" end="`" />
 		<Span color="String" begin="r&quot;" end="&quot;" />
 		<Span color="String" begin="q{" end="}" />
@@ -33,27 +29,22 @@
 			<Begin>"</Begin>
 			<End>"</End>
 			<RuleSet>
-				<!-- Escape sekvence unutar stringa -->
 				<Span begin="\\" end="." />
 			</RuleSet>
 		</Span>
 
-		<!-- Karakteri -->
 		<Span color="Character">
 			<Begin>'</Begin>
 			<End>'</End>
 			<RuleSet>
-				<!-- Escape sekvence unutar karaktera -->
 				<Span begin="\\" end="." />
 			</RuleSet>
 		</Span>
 
-		<!-- Brojevi: heksadecimalni, decimalni, sa eksponentom i podvlakama -->
 		<Rule color="Number">
 			\b0[xX][0-9a-fA-F_]+|\b\d+(_\d+)*(\.\d+(_\d+)*)?([eE][+-]?\d+(_\d+)*)?\b
 		</Rule>
 
-		<!-- Preprocesorske direktive i slične ključne reči -->
 		<Keywords color="Preprocessor">
 			<Word>version</Word>
 			<Word>debug</Word>
@@ -63,7 +54,6 @@
 			<Word>scope</Word>
 		</Keywords>
 
-		<!-- Ključne riječi jezika D -->
 		<Keywords color="Keywords">
 			<Word>invariant</Word>
 			<Word>shared</Word>
@@ -132,7 +122,6 @@
 			<Word>void</Word>
 		</Keywords>
 
-		<!-- Tipovi podataka -->
 		<Keywords color="Type">
 			<Word>var</Word>
 			<Word>bool</Word>
@@ -170,10 +159,8 @@
 			<Word>tuple</Word>
 		</Keywords>
 
-		<!-- Pravilo za metode/funkcije -->
-		<!-- Prepoznaje identifikatore ispred otvarajuće zagrade, npr. funkcije -->
 		<Rule color="MethodName">[\d\w_]+(?=(\s*\())</Rule>
-		<!-- Ne boja npr. std.string -->
+		<!-- std.string -->
 		<Rule color="Type">(?&lt;!\bstd\.)\bstring\b</Rule>
 		
 		

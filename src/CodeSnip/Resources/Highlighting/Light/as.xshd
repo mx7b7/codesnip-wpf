@@ -13,6 +13,8 @@
     <Color name="CommentMarkerSet"           foreground="Red"     fontWeight="bold"  />
     <Color name="CommentMarkerSetHackUndone" foreground="#E0E000" fontWeight="bold" />
 
+	<Property name="Extension" value="as" />
+	
     <RuleSet name="CommentMarkerSet">
       <Keywords color="CommentMarkerSet">
         <Word>TODO</Word>

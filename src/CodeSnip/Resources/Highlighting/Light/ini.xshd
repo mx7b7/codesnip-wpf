@@ -22,6 +22,8 @@
 
   <Color name="PropertyName" foreground="Blue"/>
 
+  <Property name="Extension" value="ini" />
+
   <RuleSet ignoreCase="true">
 
     <Span color="String" multiline="false" >

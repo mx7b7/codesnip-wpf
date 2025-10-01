@@ -16,6 +16,8 @@
 
   <Color name="ObjectReference" foreground="#FF006060" exampleText="$Customer.Name" />
 
+	<Property name="Extension" value="vtl" />
+
   <RuleSet ignoreCase="true">
 
     <Span color="String" multiline="false" >

@@ -13,6 +13,8 @@
   <Color name="Functions" foreground="#0B136B" />
   <Color name="MethodCall" foreground="DarkBlue" />
 
+    <Property name="Extension" value="fx" />
+
   <!--Casesensitive-->
   <RuleSet>
     <Rule color="Punctuation">

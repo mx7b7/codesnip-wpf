@@ -7,7 +7,9 @@
 	<Color name="Directives" foreground="#2B91AF" exampleText=".class" />
 	<Color name="Security" foreground="DarkMagenta" exampleText="request" />
 	<Color name="Label" foreground="Black" exampleText="IL_0000:" />
+	
   <Property name="Extension" value="il" />
+	
   <RuleSet ignoreCase="false">
     <Keywords color="Instructions">
       <Word>nop</Word>

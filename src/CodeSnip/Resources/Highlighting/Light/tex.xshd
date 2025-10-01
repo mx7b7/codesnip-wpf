@@ -5,6 +5,8 @@
 
 	<Digits   name = "Digits" bold = "false" italic = "false" color = "Black"/>
 
+	<Property name="Extension" value="tex" />
+
 	<RuleSets>
 		<RuleSet ignorecase = "false">
 		  	<Delimiters>&amp;~!@%^*()-+=|\#/{}[]:;"'&lt;&gt; , .?</Delimiters>

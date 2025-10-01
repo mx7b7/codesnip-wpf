@@ -8,6 +8,8 @@
 	<Color name="Link" foreground="Blue" exampleText="[text](http://example.com)" />
 	<Color name="Image" foreground="Green" exampleText="[text][http://example.com/test.png]" />
 	<Color name="LineBreak" background="LightGray" exampleText="end of line      \r\n2nd line   " />
+
+	<Property name="Extension" value="md" />
 	
 	<RuleSet ignoreCase="true">
 		<Rule color="Heading">

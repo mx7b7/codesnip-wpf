@@ -6,6 +6,9 @@
 	<Color name="Punctuation" foreground="#FF000000" fontWeight="bold" />
 	<Color name="Keywords" foreground="#FF0000FF" fontWeight="bold" />
 	<Color name="String" foreground="#FF006400" />
+
+	<Property name="Extension" value="atg" />
+	
 	<RuleSet ignoreCase="false">
 		<Rule color="Punctuation">
 			[{}\(\)\[\]|+\-=\.]+
