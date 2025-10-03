@@ -5,7 +5,7 @@
 	<Color name="String"        foreground="#E6DB74" />
 	<Color name="Character"     foreground="#FD971F" />
 	<Color name="Number"        foreground="#AE81FF" />
-	<Color name="Punctuation"   foreground="White" />
+	<!--<Color name="Punctuation"   foreground="White" />-->
 	<Color name="Keywords"      foreground="#F92672" />
 	<Color name="Type"          foreground="#66D9EF" />
 	<Color name="MethodName"    foreground="#A6E22E" />
@@ -15,7 +15,7 @@
 
 	<RuleSet ignoreCase="false">
 
-		<Rule color="Punctuation">[?,.;()\[\]{}+\-/%*&lt;&gt;^=~!&amp;]+</Rule>
+		<!--<Rule color="Punctuation">[?,.;()\[\]{}+\-/%*&lt;&gt;^=~!&amp;]+</Rule>-->
 
 		<Span color="Comment" begin="//" end="$" />
 		<Span color="Comment" multiline="true" begin="/\*" end="\*/" />

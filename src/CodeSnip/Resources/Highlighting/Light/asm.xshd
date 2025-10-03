@@ -737,6 +737,10 @@
 			<Word>ymmword</Word>
 			<Word>zmmword</Word>
 			<Word>short</Word>
+			<Word>long</Word>
+			<Word>quad</Word>
+			<Word>zero</Word>
+			<Word>asciz</Word>
 		</Keywords>
 
 		<Rule color="Directive">
