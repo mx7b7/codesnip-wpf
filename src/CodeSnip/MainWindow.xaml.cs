@@ -3,6 +3,7 @@ using CodeSnip.Services;
 using CodeSnip.Services.Exporters;
 using CodeSnip.Views.HighlightingEditorView;
 using CodeSnip.Views.SnippetView;
+using ControlzEx.Theming;
 using ICSharpCode.AvalonEdit;
 using ICSharpCode.AvalonEdit.Document;
 using ICSharpCode.AvalonEdit.Folding;
@@ -574,7 +575,17 @@ namespace CodeSnip
             var htmlOptions = new ICSharpCode.AvalonEdit.Highlighting.HtmlOptions();
             string fragment = selection.CreateHtmlFragment(htmlOptions);
 
-            string wrappedHtml = $"<div>{fragment}</div>";
+            var theme = ThemeManager.Current.DetectTheme(Application.Current);
+            string backgroundColor = "white";
+            string foregroundColor = "black";
+
+            if (theme != null && theme.BaseColorScheme.Equals("Dark", StringComparison.OrdinalIgnoreCase))
+            {
+                backgroundColor = "#252525";
+                foregroundColor = "white";
+            }
+
+            string wrappedHtml = $"<div style=\"background-color: {backgroundColor}; color: {foregroundColor};\">{fragment}</div>";
 
             try
             {
