@@ -21,7 +21,7 @@
         <mah:MetroTabItem Header="Appearance">
             <ScrollViewer Margin="10,0,0,0" VerticalScrollBarVisibility="Auto" HorizontalScrollBarVisibility="Auto">
                 <StackPanel>
-                    <GroupBox Header="Application theme" Margin="5">
+                    <GroupBox Header="Application theme">
                         <GroupBox.Resources>
                             <Style TargetType="{x:Type GroupBox}" BasedOn="{StaticResource MahApps.Styles.GroupBox}"/>
                         </GroupBox.Resources>
@@ -51,19 +51,19 @@
                         </StackPanel>
                     </GroupBox>
 
-                    <GroupBox Header="Snippets TreeView fonts" Margin="5,20,5,5">
+                    <GroupBox Header="Snippets TreeView fonts" Margin="0,20,0,0">
                         <GroupBox.Resources>
                             <Style TargetType="{x:Type GroupBox}" BasedOn="{StaticResource MahApps.Styles.GroupBox}"/>
                         </GroupBox.Resources>
                         <StackPanel>
-                            <TextBlock Text="Language Font Size:" Margin="0,8,0,0" />
+                            <TextBlock Text="Language Font Size:" Margin="0,5,0,0" />
                             <mah:NumericUpDown Maximum="30" Minimum="8" NumericInputMode="Numbers" InterceptManualEnter="False"
                                              ParsingNumberStyle="Integer" TextAlignment="Center" 
                                              Value="{Binding LanguageFontSize, Mode=TwoWay}" />
 
                             <TextBlock Text="Language Font Weight:" Margin="0,8,0,0" />
                             <ComboBox ItemsSource="{Binding FontWeights}" 
-                                      SelectedItem="{Binding LanguageFontWeight, Mode=TwoWay}" />
+                                      SelectedItem="{Binding LanguageFontWeight, Mode=TwoWay}" HorizontalContentAlignment="Center" />
 
                             <TextBlock Text="Category Font Size:" Margin="0,8,0,0" />
                             <mah:NumericUpDown Maximum="30" Minimum="8" NumericInputMode="Numbers" InterceptManualEnter="False"
@@ -72,7 +72,7 @@
 
                             <TextBlock Text="Category Font Weight:" Margin="0,8,0,0" />
                             <ComboBox ItemsSource="{Binding FontWeights}" 
-                                      SelectedItem="{Binding CategoryFontWeight, Mode=TwoWay}" />
+                                      SelectedItem="{Binding CategoryFontWeight, Mode=TwoWay}" HorizontalContentAlignment="Center" />
 
                             <TextBlock Text="Snippet Font Size:" Margin="0,8,0,0" />
                             <mah:NumericUpDown Maximum="30" Minimum="8" NumericInputMode="Numbers" InterceptManualEnter="False"
@@ -81,7 +81,7 @@
 
                             <TextBlock Text="Snippet Font Weight:" Margin="0,8,0,0" />
                             <ComboBox ItemsSource="{Binding FontWeights}" 
-                                      SelectedItem="{Binding SnippetFontWeight, Mode=TwoWay}" />
+                                      SelectedItem="{Binding SnippetFontWeight, Mode=TwoWay}" HorizontalContentAlignment="Center" />
                         </StackPanel>
                     </GroupBox>
                 </StackPanel>
@@ -91,18 +91,23 @@
         <!-- Application settings Tab -->
         <mah:MetroTabItem Header="Application">
             <ScrollViewer Margin="10,0,0,0" VerticalScrollBarVisibility="Auto" HorizontalScrollBarVisibility="Auto">
-                <StackPanel>
-                    <CheckBox Content="Load snippets on startup" Margin="0,8,0,0"
+                <GroupBox VerticalAlignment="Top" Header="Application settings">
+                    <GroupBox.Resources>
+                        <Style TargetType="{x:Type GroupBox}" BasedOn="{StaticResource MahApps.Styles.GroupBox}"/>
+                    </GroupBox.Resources>
+                    <StackPanel>
+                        <CheckBox Content="Load snippets on startup" Margin="0,5,0,0"
                               IsChecked="{Binding LoadOnStartup, Mode=TwoWay}" />
-                    <CheckBox Content="Enable filtering" Margin="0,8,0,0"
+                        <CheckBox Content="Enable filtering" Margin="0,8,0,0"
                               IsChecked="{Binding EnableFiltering, Mode=TwoWay}" />
-                    <CheckBox Content="Enable notification" Margin="0,8,0,0"
+                        <CheckBox Content="Enable notification" Margin="0,8,0,0"
                               IsChecked="{Binding IsNotificationEnabled, Mode=TwoWay}" />
-                    <CheckBox Content="Show empty languages" Margin="0,8,0,0"
+                        <CheckBox Content="Show empty languages" Margin="0,8,0,0"
                               IsChecked="{Binding ShowEmptyLanguages, Mode=TwoWay}" />
-                    <CheckBox Content="Show empty categories" Margin="0,8,0,0"
+                        <CheckBox Content="Show empty categories" Margin="0,8,0,0"
                               IsChecked="{Binding ShowEmptyCategories, Mode=TwoWay}" />
-                </StackPanel>
+                    </StackPanel>
+                </GroupBox>
             </ScrollViewer>
         </mah:MetroTabItem>
 
@@ -110,37 +115,48 @@
         <mah:MetroTabItem Header="Editor">
             <ScrollViewer Margin="10,0,0,0" VerticalScrollBarVisibility="Auto" HorizontalScrollBarVisibility="Auto">
                 <StackPanel>
-                    <CheckBox Content="Convert tabs to spaces" Margin="0,8,0,0"
+                    <GroupBox Header="Editor settings">
+                        <GroupBox.Resources>
+                            <Style TargetType="{x:Type GroupBox}" BasedOn="{StaticResource MahApps.Styles.GroupBox}"/>
+                        </GroupBox.Resources>
+                        <StackPanel>
+                            <CheckBox Content="Convert tabs to spaces" Margin="0,5,0,0"
                               IsChecked="{Binding TabToSpaces, Mode=TwoWay}" />
-                    <CheckBox Content="Enable email hyperlinks" Margin="0,8,0,0"
+                            <CheckBox Content="Enable email hyperlinks" Margin="0,8,0,0"
                               IsChecked="{Binding EmailLinks, Mode=TwoWay}" />
-                    <CheckBox Content="Enable hyperlinks" Margin="0,8,0,0"
+                            <CheckBox Content="Enable hyperlinks" Margin="0,8,0,0"
                               IsChecked="{Binding HyperLinks, Mode=TwoWay}" />
-                    <CheckBox Content="Highlight current line" Margin="0,8,0,0"
+                            <CheckBox Content="Highlight current line" Margin="0,8,0,0"
                               IsChecked="{Binding HighlightLine, Mode=TwoWay}" />
-                    <TextBlock Text="Indentation size:" Margin="0,8,0,0"/>
-                    <mah:NumericUpDown Maximum="10" Minimum="1" NumericInputMode="Numbers"
-                                     ParsingNumberStyle="Integer" TextAlignment="Center" Width="150"
-                                     Value="{Binding IntendationSize, Mode=TwoWay}" HorizontalAlignment="Left"/>
+                            <TextBlock Text="Indentation size:" Margin="0,8,0,0"/>
+                            <mah:NumericUpDown Maximum="10" Minimum="1" NumericInputMode="Numbers"
+                                     ParsingNumberStyle="Integer" TextAlignment="Center"
+                                     Value="{Binding IntendationSize, Mode=TwoWay}" />
 
-                    <TextBlock Text="Font:" Margin="0,8,0,0"/>
-                    <ComboBox ItemsSource="{Binding SystemFonts}" 
+                            <TextBlock Text="Font:" Margin="0,8,0,0"/>
+                            <ComboBox ItemsSource="{Binding SystemFonts}" 
                               SelectedValue="{Binding EditorFontFamily, Mode=TwoWay}" 
-                              SelectedValuePath="Source" 
-                              Width="150" HorizontalAlignment="Left"/>
+                              SelectedValuePath="Source" HorizontalContentAlignment="Center"/>
 
-                    <TextBlock Text="Font size:" Margin="0,8,0,0"/>
-                    <mah:NumericUpDown Maximum="30" Minimum="8" NumericInputMode="Numbers"
-                                     ParsingNumberStyle="Integer" TextAlignment="Center" Width="150"
-                                     Value="{Binding EditorFontSize, Mode=TwoWay}" HorizontalAlignment="Left"/>
-
-                    <TextBlock Text="Folding:" FontWeight="Bold" Margin="0,10,0,0"/>
-                    <CheckBox Content="Enable Brace Style Folding" Margin="0,8,0,0" ToolTip="C#,C++,Java..."
+                            <TextBlock Text="Font size:" Margin="0,8,0,0"/>
+                            <mah:NumericUpDown Maximum="30" Minimum="8" NumericInputMode="Numbers"
+                                     ParsingNumberStyle="Integer" TextAlignment="Center"
+                                     Value="{Binding EditorFontSize, Mode=TwoWay}" />
+                        </StackPanel>
+                    </GroupBox>
+                    <GroupBox Margin="0,20,0,0" Header="Folding">
+                        <GroupBox.Resources>
+                            <Style TargetType="{x:Type GroupBox}" BasedOn="{StaticResource MahApps.Styles.GroupBox}"/>
+                        </GroupBox.Resources>
+                        <StackPanel>
+                            <CheckBox Content="Enable Brace Style Folding" Margin="0,5,0,0" ToolTip="C#,C++,Java..."
                               IsChecked="{Binding EnableBraceStyleFolding, Mode=TwoWay}" />
-                    <CheckBox Content="Enable Python Folding" Margin="0,8,0,0"
+                            <CheckBox Content="Enable Python Folding" Margin="0,8,0,0"
                               IsChecked="{Binding EnablePythonFolding, Mode=TwoWay}" />
-                    <CheckBox Content="Enable XML Folding" Margin="0,8,0,0"
+                            <CheckBox Content="Enable XML Folding" Margin="0,8,0,0"
                               IsChecked="{Binding EnableXmlFolding, Mode=TwoWay}" />
+                        </StackPanel>
+                    </GroupBox>
                 </StackPanel>
             </ScrollViewer>
         </mah:MetroTabItem>
