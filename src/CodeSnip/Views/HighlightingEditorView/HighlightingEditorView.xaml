@@ -7,10 +7,10 @@
              xmlns:local="clr-namespace:CodeSnip.Views.HighlightingEditorView"
              xmlns:behaviors="clr-namespace:Microsoft.Xaml.Behaviors;assembly=Microsoft.Xaml.Behaviors"
              xmlns:helpers="clr-namespace:CodeSnip.Helpers"
+             d:DataContext="{d:DesignInstance Type={x:Type local:HighlightingEditorViewModel}}"
              x:Name="flyHighlightingEditor"
              MinWidth="500"
-             MaxWidth="600"
-             mah:HeaderedControlHelper.HeaderMargin="10"
+             MaxWidth="600"     
              mc:Ignorable="d" 
              d:DesignHeight="400"
              d:DesignWidth="300">
@@ -24,26 +24,39 @@
         <TextBlock Grid.Row="0" Text="{Binding Message}" FontWeight="Bold" Margin="0,0,0,10" />
         <ListBox Grid.Row="1"
          ItemsSource="{Binding HighlightingColors}"
-         SelectedItem="{Binding SelectedColor, Mode=TwoWay}">
+         SelectedItem="{Binding SelectedColor, Mode=TwoWay}"
+         ScrollViewer.HorizontalScrollBarVisibility="Disabled" >
             <ListBox.ItemTemplate>
                 <DataTemplate>
-                    <Border BorderBrush="LightGray" BorderThickness="0,0,0,1" Padding="2">
-                        <StackPanel Orientation="Horizontal" VerticalAlignment="Center" >
-                            <TextBlock Text="{Binding Name}" Width="120" VerticalAlignment="Center" />
-                            <Rectangle Width="16" Height="16" Margin="5,0,0,0" VerticalAlignment="Center">
+                    <Border BorderBrush="{DynamicResource MahApps.Brushes.Gray3}" BorderThickness="0,0,0,1" Padding="2">
+                        <Grid VerticalAlignment="Center">
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="2*" />
+                                <!-- Name -->
+                                <ColumnDefinition Width="Auto" />
+                                <!-- Rectangle -->
+                                <ColumnDefinition Width="Auto" />
+                                <!-- Weight label and combobox -->
+                                <ColumnDefinition Width="Auto" />
+                                <!-- Style label and combobox -->
+                            </Grid.ColumnDefinitions>
+
+                            <TextBlock Text="{Binding Name}" Grid.Column="0" VerticalAlignment="Center" 
+                               TextTrimming="CharacterEllipsis" ToolTip="{Binding Name}" />
+
+                            <Rectangle Width="16" Height="16" Margin="5,0,0,0" VerticalAlignment="Center" Grid.Column="1">
                                 <Rectangle.Fill>
                                     <SolidColorBrush Color="{Binding Foreground}" />
                                 </Rectangle.Fill>
                             </Rectangle>
 
-                            <!-- Label i ComboBox za FontWeight -->
-                            <StackPanel Orientation="Horizontal" VerticalAlignment="Center" Margin="20,0,0,0">
+                            <StackPanel Orientation="Horizontal" VerticalAlignment="Center" Margin="20,0,0,0" Grid.Column="2">
                                 <TextBlock Text="Weight:" VerticalAlignment="Center" Margin="0,0,5,0" />
                                 <ComboBox Width="80"
-                                      SelectedItem="{Binding FontWeight, Mode=TwoWay}"
-                                      ItemsSource="{Binding AvailableFontWeights}"
-                                      IsEditable="False"
-                                      VerticalAlignment="Center">
+                                  SelectedItem="{Binding FontWeight, Mode=TwoWay}"
+                                  ItemsSource="{Binding AvailableFontWeights}"
+                                  IsEditable="False"
+                                  VerticalAlignment="Center">
                                     <ComboBox.ItemTemplate>
                                         <DataTemplate>
                                             <TextBlock Text="{Binding}" />
@@ -51,14 +64,14 @@
                                     </ComboBox.ItemTemplate>
                                 </ComboBox>
                             </StackPanel>
-                            <!-- Label i ComboBox za FontStyle -->
-                            <StackPanel Orientation="Horizontal" VerticalAlignment="Center" Margin="20,0,0,0">
+
+                            <StackPanel Orientation="Horizontal" VerticalAlignment="Center" Margin="20,0,0,0" Grid.Column="3">
                                 <TextBlock Text="Style:" VerticalAlignment="Center" Margin="0,0,5,0" />
                                 <ComboBox Width="80"
-                                      SelectedItem="{Binding FontStyle, Mode=TwoWay}"
-                                      ItemsSource="{Binding AvailableFontStyles}"
-                                      IsEditable="False"
-                                      VerticalAlignment="Center">
+                                  SelectedItem="{Binding FontStyle, Mode=TwoWay}"
+                                  ItemsSource="{Binding AvailableFontStyles}"
+                                  IsEditable="False"
+                                  VerticalAlignment="Center">
                                     <ComboBox.ItemTemplate>
                                         <DataTemplate>
                                             <TextBlock Text="{Binding}" />
@@ -66,7 +79,7 @@
                                     </ComboBox.ItemTemplate>
                                 </ComboBox>
                             </StackPanel>
-                        </StackPanel>
+                        </Grid>
                     </Border>
                 </DataTemplate>
             </ListBox.ItemTemplate>
