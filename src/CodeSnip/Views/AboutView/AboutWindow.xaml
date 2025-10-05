@@ -8,8 +8,10 @@
         d:DataContext="{d:DesignInstance Type=local:AboutWindowModel}"
         xmlns:sys="clr-namespace:System;assembly=mscorlib"
         mc:Ignorable="d"
-        Title="About" Height="400" Width="600"
-        ShowInTaskbar="False" ResizeMode="NoResize"  WindowStartupLocation="CenterOwner" >
+        Title="About CodeSnip" Height="400" Width="600"
+        TitleCharacterCasing="Normal" TitleAlignment="Left"
+        ShowInTaskbar="False" ResizeMode="NoResize"  WindowStartupLocation="CenterOwner" 
+        Style="{DynamicResource MahApps.Styles.MetroWindow.Clean}">
 	<mah:MetroWindow.Resources>
 		<x:Array x:Key="Libraries" Type="{x:Type local:DependencyInfo}">
 			<local:DependencyInfo Name="AvalonEdit" Url="https://github.com/icsharpcode/AvalonEdit" LicenseName="MIT License" LicenseUrl="https://github.com/icsharpcode/AvalonEdit/blob/master/LICENSE" />
@@ -17,6 +19,7 @@
 			<local:DependencyInfo Name="CSharpier.Core" Url="https://csharpier.com/" LicenseName="MIT License" LicenseUrl="https://github.com/belav/csharpier/blob/main/LICENSE" />
 			<local:DependencyInfo Name="Dapper" Url="https://github.com/DapperLib/Dapper" LicenseName="Apache 2.0 License" LicenseUrl="https://github.com/DapperLib/Dapper/blob/main/License.txt" />
 			<local:DependencyInfo Name="MahApps.Metro" Url="https://github.com/MahApps/MahApps.Metro" LicenseName="MIT License" LicenseUrl="https://github.com/MahApps/MahApps.Metro/blob/develop/LICENSE" />
+            <local:DependencyInfo Name="Notifications.Wpf.Core" Url="https://github.com/mjuen/Notifications.Wpf.Core" LicenseName="MIT License" LicenseUrl="https://github.com/mjuen/Notifications.Wpf.Core/blob/master/LICENSE" />
 			<local:DependencyInfo Name="System.Data.SQLite.Core" Url="https://system.data.sqlite.org/" LicenseName="Public Domain" LicenseUrl="https://system.data.sqlite.org/home/doc/trunk/www/copyright.wiki" />
 		</x:Array>
 
