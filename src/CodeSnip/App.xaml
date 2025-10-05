@@ -6,17 +6,18 @@
     <Application.Resources>
         <ResourceDictionary>
             <ResourceDictionary.MergedDictionaries>
-                <!-- MahApps.Metro resource dictionaries. Make sure that all file names are Case Sensitive! -->
-                <ResourceDictionary Source="pack://application:,,,/MahApps.Metro;component/Styles/Controls.xaml" />
-                <ResourceDictionary Source="pack://application:,,,/MahApps.Metro;component/Styles/Fonts.xaml" />
-                <!-- Theme setting -->
-                <ResourceDictionary Source="pack://application:,,,/MahApps.Metro;component/Styles/Themes/Dark.Sienna.xaml" />
-                
-                <ResourceDictionary Source="pack://application:,,,/CodeSnip;component/Resources/Icons.xaml" />
-                <ResourceDictionary Source="pack://application:,,,/CodeSnip;component/Resources/SearchReplace.xaml" />
-                <ResourceDictionary Source="pack://application:,,,/CodeSnip;component/Resources/Themes/ScrollBarStyles.xaml" />
-                <ResourceDictionary Source="pack://application:,,,/CodeSnip;component/Resources/Themes/ExpanderStyles.xaml" />
-            </ResourceDictionary.MergedDictionaries>
-        </ResourceDictionary>
+                    <!-- MahApps.Metro resource dictionaries. Make sure that all file names are Case Sensitive! -->
+                    <ResourceDictionary Source="pack://application:,,,/MahApps.Metro;component/Styles/Controls.xaml" />
+                    <ResourceDictionary Source="pack://application:,,,/MahApps.Metro;component/Styles/Fonts.xaml" />
+                    <!-- Theme setting -->
+                    <ResourceDictionary Source="pack://application:,,,/MahApps.Metro;component/Styles/Themes/Dark.Sienna.xaml" />
+                    <ResourceDictionary Source="pack://application:,,,/MahApps.Metro;component/Styles/Clean/Controls.xaml" />
+
+                    <ResourceDictionary Source="pack://application:,,,/CodeSnip;component/Resources/Icons.xaml" />
+                    <ResourceDictionary Source="pack://application:,,,/CodeSnip;component/Resources/SearchReplace.xaml" />
+                    <ResourceDictionary Source="pack://application:,,,/CodeSnip;component/Resources/Themes/ScrollBarStyles.xaml" />
+                    <ResourceDictionary Source="pack://application:,,,/CodeSnip;component/Resources/Themes/ExpanderStyles.xaml" />
+                </ResourceDictionary.MergedDictionaries>
+            </ResourceDictionary>
     </Application.Resources>
 </Application>

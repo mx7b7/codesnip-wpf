@@ -72,7 +72,7 @@ namespace CodeSnip
         private string editorFontFamily = "Consolas";
 
         [ObservableProperty]
-        private double editorFontSize = 14;
+        private double editorFontSize = 13;
 
         [ObservableProperty]
         private bool isPaneOpen = true;
@@ -132,22 +132,22 @@ namespace CodeSnip
         private bool _isNotificationEnabled = true;
 
         [ObservableProperty]
-        private int _languageFontSize = 15;
+        private int _languageFontSize = 14;
 
         [ObservableProperty]
         private string _languageFontWeight = "SemiBold";
 
         [ObservableProperty]
-        private int _categoryFontSize = 14;
+        private int _categoryFontSize = 13;
 
         [ObservableProperty]
         private string _categoryFontWeight = "Medium";
 
         [ObservableProperty]
-        private int _snippetFontSize = 14;
+        private int _snippetFontSize = 13;
 
         [ObservableProperty]
-        private string _snippetFontWeight = "Normal";
+        private string _snippetFontWeight = "Light";
 
         public enum SnippetFilterMode
         {
@@ -732,7 +732,7 @@ namespace CodeSnip
         [RelayCommand]
         private void ResetFontSize()
         {
-            EditorFontSize = 14;
+            EditorFontSize = settingsService.EditorFontSize;
         }
 
         [RelayCommand]

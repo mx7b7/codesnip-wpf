@@ -4,9 +4,10 @@
     <Style x:Key="SimpleExpander"
            TargetType="{x:Type Expander}"
            BasedOn="{StaticResource MahApps.Styles.Expander}">
-        <Setter Property="BorderThickness" Value="0" />
+        <Setter Property="BorderThickness" Value="1" />
+        <Setter Property="BorderBrush" Value="{DynamicResource MahApps.Brushes.Accent4}" />
         <Setter Property="mah:HeaderedControlHelper.HeaderBackground" Value="Transparent" />
-        <Setter Property="mah:HeaderedControlHelper.HeaderForeground" Value="{StaticResource MahApps.Brushes.Gray3}" />
+        <Setter Property="mah:HeaderedControlHelper.HeaderForeground" Value="{DynamicResource MahApps.Brushes.Gray3}" />
         <!--<Setter Property="mah:ControlsHelper.ContentCharacterCasing" Value="Normal" />-->
         <Setter Property="mah:ExpanderHelper.HeaderDownStyle" Value="{DynamicResource ExpanderDownHeader}" />
     </Style>

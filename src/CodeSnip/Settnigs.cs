@@ -31,7 +31,7 @@ namespace CodeSnip
         public bool EnablePythonFolding { get; set; } = false;
         public bool EnableXmlFolding { get; set; } = false;
         public string EditorFontFamily { get; set; } = "Consolas";
-        public int EditorFontSize { get; set; } = 14;
+        public int EditorFontSize { get; set; } = 13;
 
     }
     public class ThemeSettings
@@ -42,12 +42,12 @@ namespace CodeSnip
 
     public class TreeViewFontSettings
     {
-        public int LanguageFontSize { get; set; } = 15;
+        public int LanguageFontSize { get; set; } = 14;
         public string LanguageFontWeight { get; set; } = "SemiBold";
-        public int CategoryFontSize { get; set; } = 14;
+        public int CategoryFontSize { get; set; } = 13;
         public string CategoryFontWeight { get; set; } = "Medium";
-        public int SnippetFontSize { get; set; } = 14;
-        public string SnippetFontWeight { get; set; } = "Normal";
+        public int SnippetFontSize { get; set; } = 13;
+        public string SnippetFontWeight { get; set; } = "Light";
     }
 
     public class AppSettings

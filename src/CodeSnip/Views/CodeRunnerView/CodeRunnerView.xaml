@@ -90,14 +90,14 @@
                         <RowDefinition Height="*" />
                         <RowDefinition Height="Auto" />
                     </Grid.RowDefinitions>
-                    <Expander Header="Stdout:" IsExpanded="{Binding HasOut}" Grid.Row="0">
+                    <Expander Header="Stdout:" IsExpanded="{Binding HasOut}" Grid.Row="0" Padding="0">
                         <Expander.Resources>
                             <Style TargetType="{x:Type Expander}" BasedOn="{StaticResource SimpleExpander}" />
                         </Expander.Resources>
                         <TextBox Text="{Binding StdOut}" IsReadOnly="True" BorderThickness="0.5"
                      VerticalScrollBarVisibility="Auto" HorizontalScrollBarVisibility="Auto"/>
                     </Expander>
-                    <Expander Header="Stderr:" IsExpanded="{Binding HasError}" Grid.Row="1">
+                    <Expander Header="Stderr:" IsExpanded="{Binding HasError}" Grid.Row="1" Padding="0">
                         <Expander.Resources>
                             <Style TargetType="{x:Type Expander}" BasedOn="{StaticResource SimpleExpander}" />
                         </Expander.Resources>

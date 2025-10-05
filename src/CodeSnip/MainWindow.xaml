@@ -30,7 +30,8 @@
         Top="{Binding WindowY, Mode=TwoWay}" 
         Width="{Binding WindowWidth, Mode=TwoWay}" 
         Height="{Binding WindowHeight, Mode=TwoWay}" 
-        WindowState="{Binding WindowState, Mode=TwoWay}" >
+        WindowState="{Binding WindowState, Mode=TwoWay}" 
+	    Style="{DynamicResource MahApps.Styles.MetroWindow.Clean}" >
     <!--WindowButtonCommandsOverlayBehavior="Never"-->
     <mah:MetroWindow.Resources>
 
@@ -104,13 +105,13 @@
     <mah:MetroWindow.Flyouts>
         <mah:FlyoutsControl x:Name="flyControl"/>
     </mah:MetroWindow.Flyouts>
-    <Grid Margin="0,1,2,0">
+    <Grid>
         <mah:SplitView x:Name="SplitViewControl"
                DisplayMode="CompactInline"
                CompactPaneLength="0"
                OpenPaneLength="{Binding SplitViewOpenPaneLength, Mode=TwoWay}"
                IsPaneOpen="{Binding IsPaneOpen, Mode=TwoWay}"
-               PaneBackground="{x:Null}" CanResizeOpenPane="True" MaximumOpenPaneLength="600" >
+               PaneBackground="{x:Null}" CanResizeOpenPane="True" MaximumOpenPaneLength="600">
             <mah:SplitView.Pane>
                 <Grid>
                     <Grid.RowDefinitions>
@@ -119,7 +120,13 @@
                         <RowDefinition Height="*"/>
                         <!-- Snippets expander -->
                     </Grid.RowDefinitions>
-                    <Expander Header="Search" Grid.Row="0" Margin="0,0,2,1" IsExpanded="{Binding IsSearchExpanded, Mode=TwoWay}">
+                    <Expander Header="Search" Grid.Row="0" IsExpanded="{Binding IsSearchExpanded, Mode=TwoWay}"
+                               mah:HeaderedControlHelper.HeaderFontWeight="Bold" BorderThickness="1,2,2,1" >
+                        <Expander.Resources>
+                            <Style TargetType="{x:Type Expander}" BasedOn="{StaticResource SimpleExpander}">
+                                <Setter Property="mah:HeaderedControlHelper.HeaderForeground" Value="{DynamicResource MahApps.Brushes.AccentBase}" />
+                            </Style>
+                        </Expander.Resources>
                         <Grid Margin="0,5,0,5" VerticalAlignment="Center">
                             <Grid.ColumnDefinitions>
                                 <ColumnDefinition Width="Auto" />
@@ -139,11 +146,18 @@
                                         IsChecked="{Binding FilterMode, Converter={StaticResource EnumToBooleanConverter}, ConverterParameter=Tag}" />
                             <TextBox x:Name="txtFilter" mah:TextBoxHelper.Watermark="Search snippets..." 
                                      Grid.Column="3" VerticalAlignment="Center"
+                                     BorderThickness="0.5"
                                      IsEnabled="{Binding IsFilteringEnabled, Mode=TwoWay}"
                                      Text="{Binding FilterText, UpdateSourceTrigger=PropertyChanged}" />
                         </Grid>
                     </Expander>
-                    <Expander Header="Snippets" Grid.Row="1" Margin="0,0,2,0" IsExpanded="{Binding IsSnippetsExpanded, Mode=TwoWay}">
+                    <Expander Header="Snippets" Grid.Row="1" IsExpanded="{Binding IsSnippetsExpanded, Mode=TwoWay}" 
+                              mah:HeaderedControlHelper.HeaderFontWeight="Bold" BorderThickness="1,1,2,2" Padding="0">
+                        <Expander.Resources>
+                            <Style TargetType="{x:Type Expander}" BasedOn="{StaticResource SimpleExpander}">
+                                <Setter Property="mah:HeaderedControlHelper.HeaderForeground" Value="{DynamicResource MahApps.Brushes.AccentBase}" />
+                            </Style>
+                        </Expander.Resources>
                         <Grid>
                             <Grid.RowDefinitions>
                                 <RowDefinition Height="*"/>
@@ -203,9 +217,12 @@
                             </TreeView>
                             <!-- Controls below the TreeView -->
                             <Expander Header="Snippet Metadata" Grid.Row="1" Margin="0,10,0,0"
-                                      IsExpanded="{Binding IsSnippetMetadataExpanded, Mode=TwoWay}">
+                                      IsExpanded="{Binding IsSnippetMetadataExpanded, Mode=TwoWay}"
+                                       mah:HeaderedControlHelper.HeaderFontWeight="Normal" Padding="0">
                                 <Expander.Resources>
-                                    <Style TargetType="{x:Type Expander}" BasedOn="{StaticResource SimpleExpander}" />
+                                    <Style TargetType="{x:Type Expander}" BasedOn="{StaticResource SimpleExpander}">
+                                        <Setter Property="BorderThickness" Value="0.5" />
+                                    </Style>
                                 </Expander.Resources>
                                 <Grid>
                                     <Grid.RowDefinitions>
@@ -235,97 +252,98 @@
                     </Expander>
                 </Grid>
             </mah:SplitView.Pane>
-            <Grid>
-                <Grid.RowDefinitions>
-                    <RowDefinition Height="Auto" />
-                    <!-- Toolbar -->
-                    <RowDefinition Height="*" />
-                    <!-- AvalonEdit -->
-                    <RowDefinition Height="Auto" />
-                    <!-- Status bar -->
-                </Grid.RowDefinitions>
-                <ToolBarTray Grid.Row="0">
-                    <ToolBar x:Name="toolbarMain" Height="40" >
-                        <Button Command="{Binding TogglePanelCommand}" ToolTip="Collapse/Expand">
-                            <Path Data="{Binding OpenCloseIcon}" Fill="{DynamicResource MahApps.Brushes.AccentBase}"
+            <mah:SplitView.Content>
+                <Grid>
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="Auto" />
+                        <!-- Toolbar -->
+                        <RowDefinition Height="*" />
+                        <!-- AvalonEdit -->
+                        <RowDefinition Height="Auto" />
+                        <!-- Status bar -->
+                    </Grid.RowDefinitions>
+                    <ToolBarTray Grid.Row="0">
+                        <ToolBar x:Name="toolbarMain" Height="40">
+                            <Button Command="{Binding TogglePanelCommand}" ToolTip="Collapse/Expand">
+                                <Path Data="{Binding OpenCloseIcon}" Fill="{DynamicResource MahApps.Brushes.AccentBase}"
                                  Width="20" Height="20" Stretch="Uniform" />
-                        </Button>
-                        <Button  Command="{Binding SaveCodeCommand}" Margin="10,0,0,0" ToolTip="Save snippet&#xA;Ctrl+S">
-                            <Path Data="{StaticResource Save}" Fill="{DynamicResource MahApps.Brushes.AccentBase}"
+                            </Button>
+                            <Button  Command="{Binding SaveCodeCommand}" Margin="10,0,0,0" ToolTip="Save snippet&#xA;Ctrl+S">
+                                <Path Data="{StaticResource Save}" Fill="{DynamicResource MahApps.Brushes.AccentBase}"
                              Width="20" Height="20" Stretch="Uniform" />
-                        </Button>
-                        <Button  Command="{Binding AddSnippetCommand}" Margin="2,0,0,0" ToolTip="Add snippet&#xA;Ctrl+Shift+A">
-                            <Path Data="{StaticResource FileAdd}" Fill="{DynamicResource MahApps.Brushes.AccentBase}"
+                            </Button>
+                            <Button  Command="{Binding AddSnippetCommand}" Margin="2,0,0,0" ToolTip="Add snippet&#xA;Ctrl+Shift+A">
+                                <Path Data="{StaticResource FileAdd}" Fill="{DynamicResource MahApps.Brushes.AccentBase}"
                                   Width="20" Height="20" Stretch="Uniform" />
-                        </Button>
-                        <Button  Command="{Binding EditSnippetCommand}" Margin="2,0,0,0" ToolTip="Edit snippet&#xA;Ctrl+Shift+E">
-                            <Path Data="{StaticResource FileEdit}" Fill="{DynamicResource MahApps.Brushes.AccentBase}"
+                            </Button>
+                            <Button  Command="{Binding EditSnippetCommand}" Margin="2,0,0,0" ToolTip="Edit snippet&#xA;Ctrl+Shift+E">
+                                <Path Data="{StaticResource FileEdit}" Fill="{DynamicResource MahApps.Brushes.AccentBase}"
                                  Width="20" Height="20" Stretch="Uniform" />
-                        </Button>
-                        <Button  Command="{Binding DeleteSnippetCommand}" Margin="2,0,0,0" ToolTip="Delete snippet&#xA;Ctrl+Shift+D">
-                            <Path Data="{StaticResource Trash}" Fill="{DynamicResource MahApps.Brushes.AccentBase}"
+                            </Button>
+                            <Button  Command="{Binding DeleteSnippetCommand}" Margin="2,0,0,0" ToolTip="Delete snippet&#xA;Ctrl+Shift+D">
+                                <Path Data="{StaticResource Trash}" Fill="{DynamicResource MahApps.Brushes.AccentBase}"
                                  Width="20" Height="20" Stretch="Uniform" />
-                        </Button>
-                        <Button x:Name="btnLangCat"  Margin="2,0,0,0" Command="{Binding OpenLanguageCategoryCommand}"
+                            </Button>
+                            <Button x:Name="btnLangCat"  Margin="2,0,0,0" Command="{Binding OpenLanguageCategoryCommand}"
                                   ToolTip="Language/Category edit&#xA;Ctrl+Shift+L"
                                   IsEnabled="{Binding IsLoadSnippetEnabled, Converter={StaticResource InverseBooleanConverter}}" >
-                            <Path Data="{StaticResource CategoryEdit}" Fill="{DynamicResource MahApps.Brushes.AccentBase}"
+                                <Path Data="{StaticResource CategoryEdit}" Fill="{DynamicResource MahApps.Brushes.AccentBase}"
                                   Width="20" Height="20" Stretch="Uniform" />
-                        </Button>
-                        <Button Margin="2,0,0,0" ToolTip="Load snippets" IsEnabled="{Binding IsLoadSnippetEnabled}"
+                            </Button>
+                            <Button Margin="2,0,0,0" ToolTip="Load snippets" IsEnabled="{Binding IsLoadSnippetEnabled}"
                                 Command="{Binding LoadSnippetsDatabaseCommand}">
-                            <Path Data="{StaticResource DatabaseRefresh}" Fill="{DynamicResource MahApps.Brushes.AccentBase}"
+                                <Path Data="{StaticResource DatabaseRefresh}" Fill="{DynamicResource MahApps.Brushes.AccentBase}"
                                   Width="20" Height="20" Stretch="Uniform" />
-                        </Button>
-                        <Separator />
-                        <Button ToolTip="Run&#xA;Ctrl+Shift+R"
+                            </Button>
+                            <Separator />
+                            <Button ToolTip="Run&#xA;Ctrl+Shift+R"
                                 Command="{Binding OpenCodeRunnerViewCommand}" >
-                            <Path Data="{StaticResource DebugStart}" Fill="{DynamicResource MahApps.Brushes.AccentBase}"
+                                <Path Data="{StaticResource DebugStart}" Fill="{DynamicResource MahApps.Brushes.AccentBase}"
                                   Width="20" Height="20" Stretch="Uniform" />
-                        </Button>
-                        <Button Margin="2,0,0,0" ToolTip="Compiler explorer settings" 
+                            </Button>
+                            <Button Margin="2,0,0,0" ToolTip="Compiler explorer settings" 
                                 Command="{Binding OpenCompilerSettingsCommand}">
-                            <Path Data="{StaticResource CompilerExplorer}" Fill="{DynamicResource MahApps.Brushes.AccentBase}"
+                                <Path Data="{StaticResource CompilerExplorer}" Fill="{DynamicResource MahApps.Brushes.AccentBase}"
                                   Width="20" Height="20" Stretch="Uniform" />
-                        </Button>
-                        <Separator />
-                        <Button Command="{Binding IncreaseFontSizeCommand}" ToolTip="Zoom +">
-                            <Path Data="{StaticResource ZoomIn}" Fill="{DynamicResource MahApps.Brushes.AccentBase}"
+                            </Button>
+                            <Separator />
+                            <Button Command="{Binding IncreaseFontSizeCommand}" ToolTip="Zoom +">
+                                <Path Data="{StaticResource ZoomIn}" Fill="{DynamicResource MahApps.Brushes.AccentBase}"
                                   Width="20" Height="20" Stretch="Uniform" />
-                        </Button>
-                        <Button  Margin="2,0,0,0" Command="{Binding DecreaseFontSizeCommand}" ToolTip="Zoom -">
-                            <Path Data="{StaticResource ZoomOut}" Fill="{DynamicResource MahApps.Brushes.AccentBase}"
+                            </Button>
+                            <Button  Margin="2,0,0,0" Command="{Binding DecreaseFontSizeCommand}" ToolTip="Zoom -">
+                                <Path Data="{StaticResource ZoomOut}" Fill="{DynamicResource MahApps.Brushes.AccentBase}"
                                   Width="20" Height="20" Stretch="Uniform" />
-                        </Button>
-                        <Button  Margin="2,0,0,0" Command="{Binding ResetFontSizeCommand}" ToolTip="Reset zoom">
-                            <Path Data="{StaticResource ZoomOutMap}" Fill="{DynamicResource MahApps.Brushes.AccentBase}"
+                            </Button>
+                            <Button  Margin="2,0,0,0" Command="{Binding ResetFontSizeCommand}" ToolTip="Reset zoom">
+                                <Path Data="{StaticResource ZoomOutMap}" Fill="{DynamicResource MahApps.Brushes.AccentBase}"
                                   Width="20" Height="20" Stretch="Uniform" />
-                        </Button>
-                        <Button Margin="2,0,0,0" ToolTip="Search / Replace"  Command="{Binding OpenSearchReplaceCommand}" >
-                            <Path Data="{StaticResource TextSearch}" Fill="{DynamicResource MahApps.Brushes.AccentBase}"
+                            </Button>
+                            <Button Margin="2,0,0,0" ToolTip="Search / Replace"  Command="{Binding OpenSearchReplaceCommand}" >
+                                <Path Data="{StaticResource TextSearch}" Fill="{DynamicResource MahApps.Brushes.AccentBase}"
                                  Width="20" Height="20" Stretch="Uniform" />
-                        </Button>
-                        <Button Margin="2,0,0,0" ToolTip="Format code" Click="FormatAll_Click">
-                            <Path Data="{StaticResource FormatText}" Fill="{DynamicResource MahApps.Brushes.AccentBase}"
+                            </Button>
+                            <Button Margin="2,0,0,0" ToolTip="Format code" Click="FormatAll_Click">
+                                <Path Data="{StaticResource FormatText}" Fill="{DynamicResource MahApps.Brushes.AccentBase}"
                                   Width="20" Height="20" Stretch="Uniform" />
-                        </Button>
-                        <ToggleButton Margin="2,0,0,0" ToolTip="Disable intendation" IsChecked="{Binding DisableIntendation, Mode=TwoWay}">
-                            <Path Data="{StaticResource FormatIndentDecrease}" Fill="{DynamicResource MahApps.Brushes.AccentBase}"
+                            </Button>
+                            <ToggleButton Margin="2,0,0,0" ToolTip="Disable intendation" IsChecked="{Binding DisableIntendation, Mode=TwoWay}">
+                                <Path Data="{StaticResource FormatIndentDecrease}" Fill="{DynamicResource MahApps.Brushes.AccentBase}"
                                   Width="20" Height="20" Stretch="Uniform" />
-                        </ToggleButton>
-                        <Separator />
-                        <Button ToolTip="Highlighting Editor" Command="{Binding OpenHighlightingEditorCommand}">
-                            <Path Data="{StaticResource ColorPaletteiOS}" Fill="{DynamicResource MahApps.Brushes.AccentBase}"
+                            </ToggleButton>
+                            <Separator />
+                            <Button ToolTip="Highlighting Editor" Command="{Binding OpenHighlightingEditorCommand}">
+                                <Path Data="{StaticResource ColorPaletteiOS}" Fill="{DynamicResource MahApps.Brushes.AccentBase}"
                                  Width="20" Height="20" Stretch="Uniform" />
-                        </Button>
-                        <Button Margin="2,0,0,0" ToolTip="Settings&#xA;Ctrl+Shift+P" Command="{Binding OpenSettingsCommand}">
-                            <Path Data="{StaticResource GearBold}" Fill="{DynamicResource MahApps.Brushes.AccentBase}"
+                            </Button>
+                            <Button Margin="2,0,0,0" ToolTip="Settings&#xA;Ctrl+Shift+P" Command="{Binding OpenSettingsCommand}">
+                                <Path Data="{StaticResource GearBold}" Fill="{DynamicResource MahApps.Brushes.AccentBase}"
                                   Width="20" Height="20" Stretch="Uniform" />
-                        </Button>
+                            </Button>
 
-                    </ToolBar>
-                </ToolBarTray>
-                <avalonEdit:TextEditor
+                        </ToolBar>
+                    </ToolBarTray>
+                    <avalonEdit:TextEditor
 				x:Name="textEditor"
                 Grid.Row="1"
                 Margin="0,10,0,0"
@@ -337,209 +355,209 @@
                     VerticalScrollBarVisibility="Visible" 
                     Text="" 
                     BorderBrush="{DynamicResource AccentColorBrush}"
-                    ContextMenuOpening="TextEditor_ContextMenuOpening">
-                    <behaviors:Interaction.Behaviors>
-                        <helpers:AvalonEditTextBindingBehavior BoundText="{Binding EditorText, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" />
-                    </behaviors:Interaction.Behaviors>
-                    <avalonEdit:TextEditor.ContextMenu>
-                        <ContextMenu>
-                            <MenuItem Header="Undo" InputGestureText="Ctrl+Z" Click="Undo_Click">
-                                <MenuItem.Icon>
-                                    <Path Data="{StaticResource UndoMD}" Fill="{DynamicResource MahApps.Brushes.AccentBase}"
+                    ContextMenuOpening="TextEditor_ContextMenuOpening" >
+                        <behaviors:Interaction.Behaviors>
+                            <helpers:AvalonEditTextBindingBehavior BoundText="{Binding EditorText, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" />
+                        </behaviors:Interaction.Behaviors>
+                        <avalonEdit:TextEditor.ContextMenu>
+                            <ContextMenu FontSize="12">
+                                <MenuItem Header="Undo" InputGestureText="Ctrl+Z" Click="Undo_Click">
+                                    <MenuItem.Icon>
+                                        <Path Data="{StaticResource UndoMD}" Fill="{DynamicResource MahApps.Brushes.AccentBase}"
                                           Width="16" Height="16" Stretch="Uniform" />
-                                </MenuItem.Icon>
-                            </MenuItem>
-                            <MenuItem Header="Redo" InputGestureText="Ctrl+Y" Click="Redo_Click">
-                                <MenuItem.Icon>
-                                    <Path Data="{StaticResource RedoMD}" Fill="{DynamicResource MahApps.Brushes.AccentBase}"
+                                    </MenuItem.Icon>
+                                </MenuItem>
+                                <MenuItem Header="Redo" InputGestureText="Ctrl+Y" Click="Redo_Click">
+                                    <MenuItem.Icon>
+                                        <Path Data="{StaticResource RedoMD}" Fill="{DynamicResource MahApps.Brushes.AccentBase}"
                                           Width="16" Height="16" Stretch="Uniform" />
-                                </MenuItem.Icon>
-                            </MenuItem>
-                            <Separator />
-                            <MenuItem Header="Cut" InputGestureText="Ctrl+X" Click="Cut_Click">
-                                <MenuItem.Icon>
-                                    <Path Data="{StaticResource CutMD}" Fill="{DynamicResource MahApps.Brushes.AccentBase}"
+                                    </MenuItem.Icon>
+                                </MenuItem>
+                                <Separator />
+                                <MenuItem Header="Cut" InputGestureText="Ctrl+X" Click="Cut_Click">
+                                    <MenuItem.Icon>
+                                        <Path Data="{StaticResource CutMD}" Fill="{DynamicResource MahApps.Brushes.AccentBase}"
                                             Width="16" Height="16" Stretch="Uniform" />
-                                </MenuItem.Icon>
-                            </MenuItem>
-                            <MenuItem Header="Copy" InputGestureText="Ctrl+C" Click="Copy_Click">
-                                <MenuItem.Icon>
-                                    <Path Data="{StaticResource CopyMD}" Fill="{DynamicResource MahApps.Brushes.AccentBase}"
+                                    </MenuItem.Icon>
+                                </MenuItem>
+                                <MenuItem Header="Copy" InputGestureText="Ctrl+C" Click="Copy_Click">
+                                    <MenuItem.Icon>
+                                        <Path Data="{StaticResource CopyMD}" Fill="{DynamicResource MahApps.Brushes.AccentBase}"
                                           Width="16" Height="16" Stretch="Uniform" />
-                                </MenuItem.Icon>
-                            </MenuItem>
-                            <MenuItem Header="Paste" InputGestureText="Ctrl+V" Click="Paste_Click">
-                                <MenuItem.Icon>
-                                    <Path Data="{StaticResource Paste}" Fill="{DynamicResource MahApps.Brushes.AccentBase}"
+                                    </MenuItem.Icon>
+                                </MenuItem>
+                                <MenuItem Header="Paste" InputGestureText="Ctrl+V" Click="Paste_Click">
+                                    <MenuItem.Icon>
+                                        <Path Data="{StaticResource Paste}" Fill="{DynamicResource MahApps.Brushes.AccentBase}"
                                           Width="16" Height="16" Stretch="Uniform" />
-                                </MenuItem.Icon>
-                            </MenuItem>
-                            <Separator />
-                            <MenuItem Header="Copy As">
-                                <MenuItem.Icon>
-                                    <Path Data="{StaticResource ContentCopy}" Fill="{DynamicResource MahApps.Brushes.AccentBase}"
+                                    </MenuItem.Icon>
+                                </MenuItem>
+                                <Separator />
+                                <MenuItem Header="Copy As">
+                                    <MenuItem.Icon>
+                                        <Path Data="{StaticResource ContentCopy}" Fill="{DynamicResource MahApps.Brushes.AccentBase}"
                                           Width="16" Height="16" Stretch="Uniform" />
-                                </MenuItem.Icon>
-                                <MenuItem Header="Markdown" Click="CopyAsMarkdown_Click">
-                                    <MenuItem.Icon>
-                                        <Path Data="{StaticResource MarkdownFill}" Fill="{DynamicResource MahApps.Brushes.AccentBase}"
-                                              Width="16" Height="16" Stretch="Uniform" />
                                     </MenuItem.Icon>
-                                </MenuItem>
-                                <MenuItem Header="HTML code" Click="CopyAsHtml_Click">
-                                    <MenuItem.Icon>
-                                        <Path Data="{StaticResource FileHtml}" Fill="{DynamicResource MahApps.Brushes.AccentBase}"
+                                    <MenuItem Header="Markdown" Click="CopyAsMarkdown_Click">
+                                        <MenuItem.Icon>
+                                            <Path Data="{StaticResource MarkdownFill}" Fill="{DynamicResource MahApps.Brushes.AccentBase}"
                                               Width="16" Height="16" Stretch="Uniform" />
-                                    </MenuItem.Icon>
-                                </MenuItem>
-                                <MenuItem Header="Colored HTML" Click="CopyAsHtmlColored_Click">
-                                    <MenuItem.Icon>
-                                        <Path Data="{StaticResource FileHtml}" Fill="{DynamicResource MahApps.Brushes.AccentBase}"
+                                        </MenuItem.Icon>
+                                    </MenuItem>
+                                    <MenuItem Header="HTML code" Click="CopyAsHtml_Click">
+                                        <MenuItem.Icon>
+                                            <Path Data="{StaticResource FileHtml}" Fill="{DynamicResource MahApps.Brushes.AccentBase}"
                                               Width="16" Height="16" Stretch="Uniform" />
-                                    </MenuItem.Icon>
-                                </MenuItem>
-                                <MenuItem Header="BBCode" Click="CopyAsBBCode_Click">
-                                    <MenuItem.Icon>
-                                        <Path Data="{StaticResource CodeBrackets}" Fill="{DynamicResource MahApps.Brushes.AccentBase}"
+                                        </MenuItem.Icon>
+                                    </MenuItem>
+                                    <MenuItem Header="Colored HTML" Click="CopyAsHtmlColored_Click">
+                                        <MenuItem.Icon>
+                                            <Path Data="{StaticResource FileHtml}" Fill="{DynamicResource MahApps.Brushes.AccentBase}"
                                               Width="16" Height="16" Stretch="Uniform" />
-                                    </MenuItem.Icon>
-                                </MenuItem>
-                                <MenuItem Header="JSON String" Click="CopyAsJsonString_Click">
-                                    <MenuItem.Icon>
-                                        <Path Data="{StaticResource Json}" Fill="{DynamicResource MahApps.Brushes.AccentBase}"
+                                        </MenuItem.Icon>
+                                    </MenuItem>
+                                    <MenuItem Header="BBCode" Click="CopyAsBBCode_Click">
+                                        <MenuItem.Icon>
+                                            <Path Data="{StaticResource CodeBrackets}" Fill="{DynamicResource MahApps.Brushes.AccentBase}"
                                               Width="16" Height="16" Stretch="Uniform" />
-                                    </MenuItem.Icon>
-                                </MenuItem>
-                                <MenuItem Header="Base64 String" Click="CopyAsBase64String_Click">
-                                    <MenuItem.Icon>
-                                        <Path Data="{StaticResource Base64_TMP}" Fill="{DynamicResource MahApps.Brushes.AccentBase}"
+                                        </MenuItem.Icon>
+                                    </MenuItem>
+                                    <MenuItem Header="JSON String" Click="CopyAsJsonString_Click">
+                                        <MenuItem.Icon>
+                                            <Path Data="{StaticResource Json}" Fill="{DynamicResource MahApps.Brushes.AccentBase}"
                                               Width="16" Height="16" Stretch="Uniform" />
-                                    </MenuItem.Icon>
-                                </MenuItem>
-                                <MenuItem Header="Image" Click="CopyAsImage_Click">
-                                    <MenuItem.Icon>
-                                        <Path Data="{StaticResource ImageSave}" Fill="{DynamicResource MahApps.Brushes.AccentBase}"
+                                        </MenuItem.Icon>
+                                    </MenuItem>
+                                    <MenuItem Header="Base64 String" Click="CopyAsBase64String_Click">
+                                        <MenuItem.Icon>
+                                            <Path Data="{StaticResource Base64_TMP}" Fill="{DynamicResource MahApps.Brushes.AccentBase}"
+                                              Width="16" Height="16" Stretch="Uniform" />
+                                        </MenuItem.Icon>
+                                    </MenuItem>
+                                    <MenuItem Header="Image" Click="CopyAsImage_Click">
+                                        <MenuItem.Icon>
+                                            <Path Data="{StaticResource ImageSave}" Fill="{DynamicResource MahApps.Brushes.AccentBase}"
                                              Width="16" Height="16" Stretch="Uniform" />
-                                    </MenuItem.Icon>
+                                        </MenuItem.Icon>
+                                    </MenuItem>
                                 </MenuItem>
-                            </MenuItem>
-                            <Separator />
-                            <MenuItem Header="Select All" InputGestureText="Ctrl+A" Click="SelectAll_Click">
-                                <MenuItem.Icon>
-                                    <Path Data="{StaticResource SelectAll}" Fill="{DynamicResource MahApps.Brushes.AccentBase}"
+                                <Separator />
+                                <MenuItem Header="Select All" InputGestureText="Ctrl+A" Click="SelectAll_Click">
+                                    <MenuItem.Icon>
+                                        <Path Data="{StaticResource SelectAll}" Fill="{DynamicResource MahApps.Brushes.AccentBase}"
                                           Width="16" Height="16" Stretch="Uniform" />
-                                </MenuItem.Icon>
-                            </MenuItem>
-                            <Separator />
-                            <MenuItem Header="Comment">
-                                <MenuItem.Icon>
-                                    <Path Data="{StaticResource CommentTextBold}" Fill="{DynamicResource MahApps.Brushes.AccentBase}"
+                                    </MenuItem.Icon>
+                                </MenuItem>
+                                <Separator />
+                                <MenuItem Header="Comment">
+                                    <MenuItem.Icon>
+                                        <Path Data="{StaticResource CommentTextBold}" Fill="{DynamicResource MahApps.Brushes.AccentBase}"
                                           Width="16" Height="16" Stretch="Uniform" />
-                                </MenuItem.Icon>
-                                <MenuItem Header="Toggle SingleLine" Click="ToggleSingleLineComment_Click" InputGestureText="Ctrl+K">
-                                    <MenuItem.Icon>
-                                        <Path Data="{StaticResource CommentTextThin}" Fill="{DynamicResource MahApps.Brushes.AccentBase}"
-                                              Width="16" Height="16" Stretch="Uniform" />
                                     </MenuItem.Icon>
-                                </MenuItem>
-                                <MenuItem Header="Toggle MultiLine" Click="ToggleMultiLineLineComment_Click" InputGestureText="Ctrl+Shift+K">
-                                    <MenuItem.Icon>
-                                        <Path Data="{StaticResource CommentTextMultipleThin}" Fill="{DynamicResource MahApps.Brushes.AccentBase}"
+                                    <MenuItem Header="Toggle SingleLine" Click="ToggleSingleLineComment_Click" InputGestureText="Ctrl+K">
+                                        <MenuItem.Icon>
+                                            <Path Data="{StaticResource CommentTextThin}" Fill="{DynamicResource MahApps.Brushes.AccentBase}"
                                               Width="16" Height="16" Stretch="Uniform" />
-                                    </MenuItem.Icon>
-                                </MenuItem>
-                                <MenuItem Header="Toggle Selection" Click="ToggleCommentSelection_Click" InputGestureText="Ctrl+Shift+I">
-                                    <MenuItem.Icon>
-                                        <Path Data="{StaticResource CommentTextMultipleThin}" Fill="{DynamicResource MahApps.Brushes.AccentBase}"
+                                        </MenuItem.Icon>
+                                    </MenuItem>
+                                    <MenuItem Header="Toggle MultiLine" Click="ToggleMultiLineLineComment_Click" InputGestureText="Ctrl+Shift+K">
+                                        <MenuItem.Icon>
+                                            <Path Data="{StaticResource CommentTextMultipleThin}" Fill="{DynamicResource MahApps.Brushes.AccentBase}"
                                               Width="16" Height="16" Stretch="Uniform" />
-                                    </MenuItem.Icon>
+                                        </MenuItem.Icon>
+                                    </MenuItem>
+                                    <MenuItem Header="Toggle Selection" Click="ToggleCommentSelection_Click" InputGestureText="Ctrl+Shift+I">
+                                        <MenuItem.Icon>
+                                            <Path Data="{StaticResource CommentTextMultipleThin}" Fill="{DynamicResource MahApps.Brushes.AccentBase}"
+                                              Width="16" Height="16" Stretch="Uniform" />
+                                        </MenuItem.Icon>
+                                    </MenuItem>
                                 </MenuItem>
-                            </MenuItem>
-                            <Separator />
-                            <MenuItem Header="Export to">
-                                <MenuItem.Icon>
-                                    <Path Data="{StaticResource Export}" Fill="{DynamicResource MahApps.Brushes.AccentBase}"
+                                <Separator />
+                                <MenuItem Header="Export to">
+                                    <MenuItem.Icon>
+                                        <Path Data="{StaticResource Export}" Fill="{DynamicResource MahApps.Brushes.AccentBase}"
                                           Width="16" Height="16" Stretch="Uniform" />
-                                </MenuItem.Icon>
-                                <MenuItem Header="File" Click="ExportToFile_Click" >
-                                    <MenuItem.Icon>
-                                        <Path Data="{StaticResource FileExport}" Fill="{DynamicResource MahApps.Brushes.AccentBase}"
-                                              Width="16" Height="16" Stretch="Uniform" />
                                     </MenuItem.Icon>
-                                </MenuItem>
-                                <MenuItem Header="Html" Click="ExportToHtml_Click">
-                                    <MenuItem.Icon>
-                                        <Path Data="{StaticResource FileHtml}" Fill="{DynamicResource MahApps.Brushes.AccentBase}"
+                                    <MenuItem Header="File" Click="ExportToFile_Click" >
+                                        <MenuItem.Icon>
+                                            <Path Data="{StaticResource FileExport}" Fill="{DynamicResource MahApps.Brushes.AccentBase}"
                                               Width="16" Height="16" Stretch="Uniform" />
-                                    </MenuItem.Icon>
-                                </MenuItem>
-                                <MenuItem Header="Image" Click="ExportToPng_Click">
-                                    <MenuItem.Icon>
-                                        <Path Data="{StaticResource ImageSave}" Fill="{DynamicResource MahApps.Brushes.AccentBase}"
+                                        </MenuItem.Icon>
+                                    </MenuItem>
+                                    <MenuItem Header="Html" Click="ExportToHtml_Click">
+                                        <MenuItem.Icon>
+                                            <Path Data="{StaticResource FileHtml}" Fill="{DynamicResource MahApps.Brushes.AccentBase}"
+                                              Width="16" Height="16" Stretch="Uniform" />
+                                        </MenuItem.Icon>
+                                    </MenuItem>
+                                    <MenuItem Header="Image" Click="ExportToPng_Click">
+                                        <MenuItem.Icon>
+                                            <Path Data="{StaticResource ImageSave}" Fill="{DynamicResource MahApps.Brushes.AccentBase}"
                                              Width="16" Height="16" Stretch="Uniform" />
-                                    </MenuItem.Icon>
+                                        </MenuItem.Icon>
+                                    </MenuItem>
                                 </MenuItem>
-                            </MenuItem>
-                            <Separator />
-                            <MenuItem Header="Format with">
-                                <MenuItem.Icon>
-                                    <Path Data="{StaticResource FormatText}" Fill="{DynamicResource MahApps.Brushes.AccentBase}"
+                                <Separator />
+                                <MenuItem Header="Format with">
+                                    <MenuItem.Icon>
+                                        <Path Data="{StaticResource FormatText}" Fill="{DynamicResource MahApps.Brushes.AccentBase}"
                                           Width="16" Height="16" Stretch="Uniform" />
-                                </MenuItem.Icon>
-                                <MenuItem Header="black" Click="FormatBlack_Click">
-                                    <MenuItem.Icon>
-                                        <Path Data="{StaticResource Indent}" Fill="{DynamicResource MahApps.Brushes.AccentBase}"
-                                              Width="16" Height="16" Stretch="Uniform" />
                                     </MenuItem.Icon>
-                                </MenuItem>
-                                <MenuItem Header="clang-format" Click="FormatClang_Click">
-                                    <MenuItem.Icon>
-                                        <Path Data="{StaticResource Indent}" Fill="{DynamicResource MahApps.Brushes.AccentBase}"
+                                    <MenuItem Header="black" Click="FormatBlack_Click">
+                                        <MenuItem.Icon>
+                                            <Path Data="{StaticResource Indent}" Fill="{DynamicResource MahApps.Brushes.AccentBase}"
                                               Width="16" Height="16" Stretch="Uniform" />
-                                    </MenuItem.Icon>
-                                </MenuItem>
-                                <MenuItem Header="csharpier" Click="FormatCSharpier_Click">
-                                    <MenuItem.Icon>
-                                        <Path Data="{StaticResource Indent}" Fill="{DynamicResource MahApps.Brushes.AccentBase}"
+                                        </MenuItem.Icon>
+                                    </MenuItem>
+                                    <MenuItem Header="clang-format" Click="FormatClang_Click">
+                                        <MenuItem.Icon>
+                                            <Path Data="{StaticResource Indent}" Fill="{DynamicResource MahApps.Brushes.AccentBase}"
                                               Width="16" Height="16" Stretch="Uniform" />
-                                    </MenuItem.Icon>
-                                </MenuItem>
-                                <MenuItem Header="dfmt" Click="FormatDfmt_Click">
-                                    <MenuItem.Icon>
-                                        <Path Data="{StaticResource Indent}" Fill="{DynamicResource MahApps.Brushes.AccentBase}"
+                                        </MenuItem.Icon>
+                                    </MenuItem>
+                                    <MenuItem Header="csharpier" Click="FormatCSharpier_Click">
+                                        <MenuItem.Icon>
+                                            <Path Data="{StaticResource Indent}" Fill="{DynamicResource MahApps.Brushes.AccentBase}"
                                               Width="16" Height="16" Stretch="Uniform" />
-                                    </MenuItem.Icon>
-                                </MenuItem>
-                                <MenuItem Header="ruff" Click="FormatRuff_Click">
-                                    <MenuItem.Icon>
-                                        <Path Data="{StaticResource Indent}" Fill="{DynamicResource MahApps.Brushes.AccentBase}"
+                                        </MenuItem.Icon>
+                                    </MenuItem>
+                                    <MenuItem Header="dfmt" Click="FormatDfmt_Click">
+                                        <MenuItem.Icon>
+                                            <Path Data="{StaticResource Indent}" Fill="{DynamicResource MahApps.Brushes.AccentBase}"
+                                              Width="16" Height="16" Stretch="Uniform" />
+                                        </MenuItem.Icon>
+                                    </MenuItem>
+                                    <MenuItem Header="ruff" Click="FormatRuff_Click">
+                                        <MenuItem.Icon>
+                                            <Path Data="{StaticResource Indent}" Fill="{DynamicResource MahApps.Brushes.AccentBase}"
                                              Width="16" Height="16" Stretch="Uniform" />
-                                    </MenuItem.Icon>
-                                </MenuItem>
-                                <MenuItem Header="rustfmt" Click="FormatRustfmt_Click">
-                                    <MenuItem.Icon>
-                                        <Path Data="{StaticResource Indent}" Fill="{DynamicResource MahApps.Brushes.AccentBase}"
+                                        </MenuItem.Icon>
+                                    </MenuItem>
+                                    <MenuItem Header="rustfmt" Click="FormatRustfmt_Click">
+                                        <MenuItem.Icon>
+                                            <Path Data="{StaticResource Indent}" Fill="{DynamicResource MahApps.Brushes.AccentBase}"
                                               Width="16" Height="16" Stretch="Uniform" />
-                                    </MenuItem.Icon>
+                                        </MenuItem.Icon>
+                                    </MenuItem>
                                 </MenuItem>
-                            </MenuItem>
-                        </ContextMenu>
-                    </avalonEdit:TextEditor.ContextMenu>
-                </avalonEdit:TextEditor>
-                <StatusBar Grid.Row="2">
-                    <StatusBarItem DockPanel.Dock="Right" HorizontalAlignment="Right" Padding="5" Margin="0,0,10,0"
+                            </ContextMenu>
+                        </avalonEdit:TextEditor.ContextMenu>
+                    </avalonEdit:TextEditor>
+                    <StatusBar Grid.Row="2" BorderBrush="{DynamicResource MahApps.Brushes.Accent3}" BorderThickness="0,0.5,0,0.5" FontWeight="Light" Height="27">
+                        <StatusBarItem DockPanel.Dock="Right" HorizontalAlignment="Right" Padding="5" Margin="0,0,10,0"
                                    Visibility="{Binding IsDatabaseAlertActive, Converter={StaticResource BoolToVisibilityConverter}}">
-                        <Grid x:Name="DbStatusGrid">
-                            <ToggleButton x:Name="DbStatusButton"
+                            <Grid x:Name="DbStatusGrid">
+                                <ToggleButton x:Name="DbStatusButton"
                                           IsEnabled="{Binding IsDatabaseAlertActive}"
                                           Style="{StaticResource MahApps.Styles.Button.Chromeless}"
                                           ToolTip="{Binding DatabaseStatusTooltip}"
                                           ToolTipService.InitialShowDelay="300"
                                           ToolTipService.ShowDuration="3000"
                                           ToolTipService.BetweenShowDelay="100" >
-                                <Path Fill="{DynamicResource MahApps.Brushes.Text}" Data="{StaticResource DatabaseAlert}" Width="16" Height="16" Stretch="Uniform" />
-                            </ToggleButton>
-                            <Popup IsOpen="{Binding Path=IsChecked, Source={x:Reference DbStatusButton}, Mode=TwoWay}"
+                                    <Path Fill="{DynamicResource MahApps.Brushes.Text}" Data="{StaticResource DatabaseAlert}" Width="16" Height="16" Stretch="Uniform" />
+                                </ToggleButton>
+                                <Popup IsOpen="{Binding Path=IsChecked, Source={x:Reference DbStatusButton}, Mode=TwoWay}"
                                    PlacementTarget="{Binding Source={x:Reference DbStatusButton}}"
                                    Placement="Top"
                                    StaysOpen="False"
@@ -547,18 +565,19 @@
                                    HorizontalOffset="0"
                                    VerticalOffset="-5"
                                    PopupAnimation="Fade">
-                                <Border Background="{DynamicResource MahApps.Brushes.Badged.Background}" Padding="10" CornerRadius="5" MaxWidth="250"
+                                    <Border Background="{DynamicResource MahApps.Brushes.Badged.Background}" Padding="10" CornerRadius="5" MaxWidth="250"
                                         Effect="{DynamicResource MaterialDesignElevation}">
-                                    <TextBlock Text="{Binding DatabaseStatusPopupMessage}" Foreground="{DynamicResource MahApps.Brushes.Badged.Foreground}" TextWrapping="Wrap"/>
-                                </Border>
-                            </Popup>
-                        </Grid>
-                    </StatusBarItem>
-                    <StatusBarItem>
-                        <TextBlock Text="{Binding StatusMessage}" VerticalAlignment="Center" />
-                    </StatusBarItem>
-                </StatusBar>
-            </Grid>
+                                        <TextBlock Text="{Binding DatabaseStatusPopupMessage}" Foreground="{DynamicResource MahApps.Brushes.Badged.Foreground}" TextWrapping="Wrap"/>
+                                    </Border>
+                                </Popup>
+                            </Grid>
+                        </StatusBarItem>
+                        <StatusBarItem>
+                            <TextBlock Text="{Binding StatusMessage}" VerticalAlignment="Center" />
+                        </StatusBarItem>
+                    </StatusBar>
+                </Grid>
+            </mah:SplitView.Content>
         </mah:SplitView>
         <notifications:NotificationArea
             MaxItems="3"

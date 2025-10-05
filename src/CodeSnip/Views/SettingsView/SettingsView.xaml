@@ -22,6 +22,9 @@
             <ScrollViewer Margin="10,0,0,0" VerticalScrollBarVisibility="Auto" HorizontalScrollBarVisibility="Auto">
                 <StackPanel>
                     <GroupBox Header="Application theme" Margin="5">
+                        <GroupBox.Resources>
+                            <Style TargetType="{x:Type GroupBox}" BasedOn="{StaticResource MahApps.Styles.GroupBox}"/>
+                        </GroupBox.Resources>
                         <StackPanel>
                             <TextBlock Text="Base theme:" />
                             <StackPanel Orientation="Horizontal" Margin="0,5,0,10">
@@ -49,6 +52,9 @@
                     </GroupBox>
 
                     <GroupBox Header="Snippets TreeView fonts" Margin="5,20,5,5">
+                        <GroupBox.Resources>
+                            <Style TargetType="{x:Type GroupBox}" BasedOn="{StaticResource MahApps.Styles.GroupBox}"/>
+                        </GroupBox.Resources>
                         <StackPanel>
                             <TextBlock Text="Language Font Size:" Margin="0,8,0,0" />
                             <mah:NumericUpDown Maximum="30" Minimum="8" NumericInputMode="Numbers" InterceptManualEnter="False"
