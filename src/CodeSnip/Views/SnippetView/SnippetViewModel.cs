@@ -16,9 +16,6 @@ namespace CodeSnip.Views.SnippetView
         private ObservableCollection<Language> _languages = [];
 
         [ObservableProperty]
-        private ObservableCollection<Category> _categories = [];
-
-        [ObservableProperty]
         private ObservableCollection<Category> _availableCategories = [];
 
         [ObservableProperty]
@@ -36,6 +33,7 @@ namespace CodeSnip.Views.SnippetView
         private string? _selectedLanguageName;
 
         [ObservableProperty]
+        [NotifyCanExecuteChangedFor(nameof(SaveCommand))]
         private string? _title = string.Empty;
 
         public string Error => "";
@@ -44,10 +42,9 @@ namespace CodeSnip.Views.SnippetView
         {
             get
             {
-                if (_property == nameof(Title))
+                if (_property == nameof(Title) && string.IsNullOrWhiteSpace(Title))
                 {
-                    if (string.IsNullOrWhiteSpace(Title))
-                        return "Title cannot be empty";
+                    return "Title cannot be empty";
                 }
                 return "";
             }
@@ -57,7 +54,8 @@ namespace CodeSnip.Views.SnippetView
             bool isEditMode,
             Snippet? snippet,
             List<Language>? languages,
-            DatabaseService? databaseService)
+            DatabaseService? databaseService,
+            Category? preselectedCategory = null)
         {
             ArgumentNullException.ThrowIfNull(databaseService);
 
@@ -67,12 +65,19 @@ namespace CodeSnip.Views.SnippetView
             Languages = new ObservableCollection<Language>(languages ?? new List<Language>());
             Snippet = snippet;
 
+            if (preselectedCategory != null)
+            {
+                SelectedCategory = preselectedCategory;
+            }
+
             InitializeSelections();
         }
 
         public bool CanSave()
         {
-            return string.IsNullOrWhiteSpace(this[nameof(Title)]);
+            // The command can be executed if there are no validation errors for the Title
+            // and a category is selected.
+            return string.IsNullOrEmpty(this[nameof(Title)]) && SelectedCategory != null;
         }
 
         private void InitializeSelections()
@@ -86,9 +91,17 @@ namespace CodeSnip.Views.SnippetView
             }
             else
             {
-                SelectedLanguage = Languages.FirstOrDefault();
-                AvailableCategories = new ObservableCollection<Category>(SelectedLanguage?.Categories ?? []);
-                SelectedCategory = AvailableCategories.FirstOrDefault();
+                if (SelectedCategory != null) // A category was pre-selected
+                {
+                    SelectedLanguage = SelectedCategory.Language;
+                    AvailableCategories = new ObservableCollection<Category>(SelectedLanguage?.Categories ?? []);
+                }
+                else // No pre-selection, start from scratch
+                {
+                    SelectedLanguage = Languages.FirstOrDefault();
+                    AvailableCategories = new ObservableCollection<Category>(SelectedLanguage?.Categories ?? []);
+                    SelectedCategory = AvailableCategories.FirstOrDefault();
+                }
             }
         }
 
@@ -97,7 +110,7 @@ namespace CodeSnip.Views.SnippetView
             AvailableCategories = new ObservableCollection<Category>(value?.Categories ?? new ObservableCollection<Category>());
             SelectedLanguageName = value?.Name;
 
-            if (!IsEditMode)
+            if (!IsEditMode && SelectedCategory == null)
                 SelectedCategory = AvailableCategories.FirstOrDefault();
         }
 
@@ -110,14 +123,11 @@ namespace CodeSnip.Views.SnippetView
             }
         }
 
-        [RelayCommand]
+        [RelayCommand(CanExecute = nameof(CanSave))]
         private void Save()
         {
             try
             {
-                if (!CanSave())
-                    return;
-
                 if (SelectedLanguage != null && SelectedCategory != null && Snippet != null)
                 {
                     Snippet.Title = Title ?? string.Empty;

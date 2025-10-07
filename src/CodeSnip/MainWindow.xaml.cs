@@ -2,6 +2,7 @@
 using CodeSnip.Services;
 using CodeSnip.Services.Exporters;
 using CodeSnip.Views.HighlightingEditorView;
+using CodeSnip.Views.LanguageCategoryView;
 using CodeSnip.Views.SnippetView;
 using ControlzEx.Theming;
 using ICSharpCode.AvalonEdit;
@@ -256,6 +257,10 @@ namespace CodeSnip
                 SetupFolding(snippet);
 
                 textEditor.Document.UndoStack.ClearAll();
+            }
+            else if (e.NewValue is Category category)
+            {
+                mainViewModel.SelectedCategory = category;
             }
         }
 

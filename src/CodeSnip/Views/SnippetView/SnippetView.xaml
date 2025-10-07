@@ -49,15 +49,15 @@
         <Grid Grid.Row="1">
             <Grid.RowDefinitions>
                 <RowDefinition Height="Auto"/>
-                <!-- Red za Title -->
+                <!-- Title -->
                 <RowDefinition Height="Auto"/>
                 <!-- txtTitle -->
                 <RowDefinition Height="Auto"/>
-                <!-- Red za Description -->
+                <!-- Description -->
                 <RowDefinition Height="*"/>
                 <!-- txtDescription -->
                 <RowDefinition Height="Auto"/>
-                <!-- Red za Tag -->
+                <!-- Tag -->
                 <RowDefinition Height="Auto"/>
                 <!-- txtTag -->
             </Grid.RowDefinitions>
@@ -77,7 +77,7 @@
         </Grid>
         <!-- Blok 3 -->
         <StackPanel Grid.Row="2" Orientation="Horizontal" HorizontalAlignment="Right" Margin="0,20,0,0">
-            <Button x:Name="btnOk" Content="OK" Width="60" Command="{Binding SaveCommand}"/>
+            <Button x:Name="btnOk" Content="Save" Width="60" Command="{Binding SaveCommand}"  IsEnabled="{Binding SaveCommand.CanExecute}"/>
             <Button Content="Cancel" Margin="20,0,0,0" Width="60" Command="{Binding CancelCommand}"/>
         </StackPanel>
     </Grid>

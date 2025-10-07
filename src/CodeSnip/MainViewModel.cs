@@ -46,6 +46,9 @@ namespace CodeSnip
         private Snippet? _selectedSnippet;
 
         [ObservableProperty]
+        private Category? _selectedCategory;
+
+        [ObservableProperty]
         private string _statusMessage = "Ready";
 
         [ObservableProperty]
@@ -619,7 +622,7 @@ namespace CodeSnip
                 return;
             }
 
-            var vm = new SnippetViewModel(false, new Snippet(), [.. Languages], _databaseService);
+            var vm = new SnippetViewModel(false, new Snippet(), [.. Languages], _databaseService, SelectedCategory);
 
             _flyoutService.ShowFlyout("flySnippet", vm, " Add new snippet");
         }
@@ -953,6 +956,7 @@ namespace CodeSnip
 
             SelectedSnippet = newSnippet;
             EditingSnippet = newSnippet;
+            SelectedCategory = newSnippet.Category;
 
             _isInternalTextUpdate = true;
             EditorText = newSnippet.Code ?? string.Empty;
