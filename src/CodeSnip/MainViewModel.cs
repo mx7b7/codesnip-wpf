@@ -554,10 +554,34 @@ namespace CodeSnip
                 LoadSnippets();
                 if (tmpSnippet != null)
                 {
-                    ExpandAndSelectSnippet(
-                        tmpSnippet.Category?.Language?.Id ?? 0,
-                        tmpSnippet.CategoryId,
-                        tmpSnippet.Id);
+                    // This block handles the edge case where the currently active snippet
+                    // might have been deleted (e.g., via "Force Delete Category") inside the Language/Category editor.
+
+                    // Flatten the entire collection of snippets from the newly loaded data and check if our snippet's ID is still present.
+                    bool snippetStillExists = Languages
+                        .SelectMany(l => l.Categories)
+                        .SelectMany(c => c.Snippets)
+                        .Any(s => s.Id == tmpSnippet.Id);
+
+                    if (snippetStillExists)
+                    {
+                        // The snippet was not deleted. Restore the selection in the TreeView
+                        ExpandAndSelectSnippet(
+                            tmpSnippet.Category?.Language?.Id ?? 0,
+                            tmpSnippet.CategoryId,
+                            tmpSnippet.Id);
+                    }
+                    else
+                    {
+                        // The snippet was deleted. To prevent data inconsistency and potential crashes
+                        // from actions on a "phantom" snippet, we must reset the editor state completely.
+                        SelectedSnippet = null;
+                        EditingSnippet = null;
+                        EditorText = string.Empty;
+                        IsEditorModified = false;
+                        UpdateWindowTitle();
+                        StatusMessage = "The previously selected snippet was deleted.";
+                    }
                 }
 
             });

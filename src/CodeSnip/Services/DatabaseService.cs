@@ -358,6 +358,64 @@ ORDER BY L.Name, C.Name, S.Title";
             conn.Execute("DELETE FROM Categories WHERE ID = @Id", new { Id = id });
         }
 
+        public int CountSnippetsInCategory(int categoryId)
+        {
+            using var conn = CreateConnection();
+            return conn.ExecuteScalar<int>("SELECT COUNT(*) FROM Snippets WHERE CategoryId = @CategoryId", new { CategoryId = categoryId });
+        }
+
+        public int CountSnippetsInLanguage(int languageId)
+        {
+            using var conn = CreateConnection();
+            return conn.ExecuteScalar<int>(@"
+                SELECT COUNT(*) 
+                FROM Snippets s
+                JOIN Categories c ON s.CategoryId = c.ID
+                WHERE c.LanguageId = @LanguageId", new { LanguageId = languageId });
+        }
+
+        public void ForceDeleteCategory(int categoryId)
+        {
+            using var conn = CreateConnection();
+            conn.Open();
+            using var transaction = conn.BeginTransaction();
+            try
+            {
+                // Delete all snippete in category
+                conn.Execute("DELETE FROM Snippets WHERE CategoryId = @CategoryId", new { CategoryId = categoryId }, transaction);
+                // Delete the category itself
+                conn.Execute("DELETE FROM Categories WHERE ID = @Id", new { Id = categoryId }, transaction);
+                transaction.Commit();
+            }
+            catch
+            {
+                transaction.Rollback();
+                throw;
+            }
+        }
+
+        public void ForceDeleteLanguage(int languageId)
+        {
+            using var conn = CreateConnection();
+            conn.Open();
+            using var transaction = conn.BeginTransaction();
+            try
+            {
+                // Delete all snippets in categories of this language
+                conn.Execute("DELETE FROM Snippets WHERE CategoryId IN (SELECT ID FROM Categories WHERE LanguageId = @LanguageId)", new { LanguageId = languageId }, transaction);
+                //  Delete all categories of this language
+                conn.Execute("DELETE FROM Categories WHERE LanguageId = @LanguageId", new { LanguageId = languageId }, transaction);
+                // Delete the language itself
+                conn.Execute("DELETE FROM Languages WHERE ID = @Id", new { Id = languageId }, transaction);
+                transaction.Commit();
+            }
+            catch
+            {
+                transaction.Rollback();
+                throw;
+            }
+        }
+
         public async Task<bool> RunIntegrityCheckAsync()
         {
             try

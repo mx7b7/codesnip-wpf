@@ -6,8 +6,8 @@
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              xmlns:local="clr-namespace:CodeSnip.Views.LanguageCategoryView"
              xmlns:helpers="clr-namespace:CodeSnip.Helpers"
-             mc:Ignorable="d"
-              >
+             d:DataContext="{d:DesignInstance Type={x:Type local:LanguageCategoryViewModel}}"
+             mc:Ignorable="d" >
     <UserControl.Resources>
         <helpers:BoolToAddCancelConverter x:Key="BoolToAddCancelConverter"/>
     </UserControl.Resources>
@@ -37,13 +37,22 @@
                     <ColumnDefinition Width="*"/>
                     <ColumnDefinition Width="*" />
                     <ColumnDefinition Width="*" />
+                    <ColumnDefinition Width="Auto" />
                 </Grid.ColumnDefinitions>
                 <Button Content="{Binding IsAddingLanguage, Converter={StaticResource BoolToAddCancelConverter}}"
                         Command="{Binding ToggleAddLanguageCommand}" Grid.Column="0" Margin="0,0,10,0"/>
 
                 <Button Content="Save" Command="{Binding SaveLanguageCommand}" IsEnabled="{Binding SaveLanguageCommand.CanExecute}" Grid.Column="1" Margin="0,0,10,0" />
-                <Button Content="Delete Language" Grid.Column="2"
+                <Button Content="Delete Language" Grid.Column="2" Margin="0,0,10,0"
                     Command="{Binding DeleteLanguageCommand}" />
+                <Button Grid.Column="3" Command="{Binding ForceDeleteLanguageCommand}" 
+                        ToolTip="Deletes the language and ALL its categories and snippets"
+                        ToolTipService.InitialShowDelay="300"
+                        ToolTipService.ShowDuration="3000"
+                        ToolTipService.BetweenShowDelay="100" >
+                    <Path Data="{StaticResource DeleteAlert}" Fill="Red"
+                         Width="16" Height="16" Stretch="Uniform" />
+                </Button>
             </Grid>
 
             <Separator Margin="0,40,0,40"/>
@@ -72,13 +81,22 @@
                     <ColumnDefinition Width="*" />
                     <ColumnDefinition Width="*" />
                     <ColumnDefinition Width="*" />
+                    <ColumnDefinition Width="Auto" />
                 </Grid.ColumnDefinitions>
                 <Button Content="{Binding IsAddingCategory, Converter={StaticResource BoolToAddCancelConverter}}"
                         Command="{Binding ToggleAddCategoryCommand}" Grid.Column="0" Margin="0,0,10,0" />
 
                 <Button Content="Save" Command="{Binding SaveCategoryCommand}" IsEnabled="{Binding SaveCategoryCommand.CanExecute}" Grid.Column="1" Margin="0,0,10,0"/>
-                <Button Content="Delete Category" Grid.Column="2"
+                <Button Content="Delete Category" Grid.Column="2" Margin="0,0,10,0"
                     Command="{Binding DeleteCategoryCommand}" />
+                <Button Grid.Column="3" Command="{Binding ForceDeleteCategoryCommand}" 
+                        ToolTip="Deletes the category and ALL its snippets"
+                        ToolTipService.InitialShowDelay="300"
+                        ToolTipService.ShowDuration="3000"
+                        ToolTipService.BetweenShowDelay="100" >
+                    <Path Data="{StaticResource DeleteAlert}" Fill="Red"
+                          Width="16" Height="16" Stretch="Uniform" />
+                </Button>
             </Grid>
             <StackPanel Orientation="Horizontal" HorizontalAlignment="Right" Margin="0,30,0,0">
                 <Button Content="Close" Width="80" Margin="0,0,10,0" Command="{Binding CloseCommand}" />

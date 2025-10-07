@@ -228,6 +228,7 @@ namespace CodeSnip.Views.LanguageCategoryView
             {
                 NewLanguageCode = value.Code ?? "";
                 NewLanguageName = value.Name ?? "";
+                SelectedLanguageForCategory = value;
             }
         }
 
@@ -402,12 +403,11 @@ namespace CodeSnip.Views.LanguageCategoryView
                     return;
 
                 _databaseService.DeleteLanguage(SelectedLanguage.Id);
-                Languages.Remove(SelectedLanguage);
-                SelectedLanguage = Languages.FirstOrDefault();
+                HandleLanguageDeletion(SelectedLanguage);
             }
             catch (Exception ex)
             {
-                await DialogService.Instance.ShowMessageAsync("Error", ex.Message);
+                await DialogService.Instance.ShowMessageAsync("Error", $"Failed to delete language '{SelectedLanguage?.Name}'.\n\nDetails: {ex.Message}");
             }
         }
 
@@ -426,8 +426,7 @@ namespace CodeSnip.Views.LanguageCategoryView
                     return;
 
                 _databaseService.DeleteCategory(SelectedCategory.Id);
-                SelectedLanguageForCategory.Categories.Remove(SelectedCategory);
-                SelectedCategory = FilteredCategories.FirstOrDefault();
+                HandleCategoryDeletion(SelectedCategory);
 
             }
             catch (Exception ex)
@@ -438,8 +437,107 @@ namespace CodeSnip.Views.LanguageCategoryView
                 }
                 else
                 {
-                    await DialogService.Instance.ShowMessageAsync("Error", ex.Message);
+                    await DialogService.Instance.ShowMessageAsync("Error", $"Failed to delete category '{SelectedCategory?.Name}'.\n\nDetails: {ex.Message}");
                 }
+            }
+        }
+
+        [RelayCommand]
+        private async Task ForceDeleteLanguage()
+        {
+            if (SelectedLanguage == null)
+            {
+                await DialogService.Instance.ShowMessageAsync("Action Skipped", "Please select a language to delete.");
+                return;
+            }
+
+            int snippetCount = _databaseService.CountSnippetsInLanguage(SelectedLanguage.Id);
+            string message = $"Are you sure you want to permanently delete the language '{SelectedLanguage.Name}'?";
+
+            if (snippetCount > 0)
+            {
+                message += $"\n\nThis will also delete all of its categories and {snippetCount} associated snippets. This action cannot be undone.";
+            }
+            else
+            {
+                message += "\n\nThis will also delete all of its (empty) categories. This action cannot be undone.";
+            }
+
+            bool confirm = await DialogService.Instance.ShowConfirmAsync("Force Delete Confirmation", message);
+
+            if (!confirm)
+                return;
+
+            try
+            {
+                _databaseService.ForceDeleteLanguage(SelectedLanguage.Id);
+                HandleLanguageDeletion(SelectedLanguage);
+            }
+            catch (Exception ex)
+            {
+                await DialogService.Instance.ShowMessageAsync("Error", $"Failed to delete language '{SelectedLanguage?.Name}'.\n\nDetails: {ex.Message}");
+            }
+        }
+
+        [RelayCommand]
+        private async Task ForceDeleteCategory()
+        {
+            if (SelectedCategory == null || SelectedLanguageForCategory == null)
+            {
+                await DialogService.Instance.ShowMessageAsync("Action Skipped", "Please select a category to delete.");
+                return;
+            }
+
+            int snippetCount = _databaseService.CountSnippetsInCategory(SelectedCategory.Id);
+            string message = $"Are you sure you want to permanently delete the category '{SelectedCategory.Name}'?";
+
+            if (snippetCount > 0)
+            {
+                message += $"\n\nThis will also delete {snippetCount} associated snippets. This action cannot be undone.";
+            }
+            else
+            {
+                message += "\n\nThis action cannot be undone.";
+            }
+
+            bool confirm = await DialogService.Instance.ShowConfirmAsync("Force Delete Confirmation", message);
+
+            if (!confirm)
+                return;
+
+            try
+            {
+                _databaseService.ForceDeleteCategory(SelectedCategory.Id);
+                HandleCategoryDeletion(SelectedCategory);
+            }
+            catch (Exception ex)
+            {
+                await DialogService.Instance.ShowMessageAsync("Error", $"Failed to delete category '{SelectedCategory?.Name}'.\n\nDetails: {ex.Message}");
+            }
+        }
+
+        private void HandleLanguageDeletion(Language languageToDelete)
+        {
+            if (languageToDelete == null) return;
+
+            Languages.Remove(languageToDelete);
+            SelectedLanguage = Languages.FirstOrDefault();
+
+            if (SelectedLanguage == null)
+            {
+                NewLanguageCode = string.Empty;
+                NewLanguageName = string.Empty;
+                SelectedLanguageForCategory = null;
+            }
+        }
+
+        private void HandleCategoryDeletion(Category categoryToDelete)
+        {
+            SelectedLanguageForCategory?.Categories.Remove(categoryToDelete);
+            SelectedCategory = FilteredCategories.FirstOrDefault();
+            if (SelectedCategory == null)
+            {
+                NewCategoryName = string.Empty;
             }
         }
 
