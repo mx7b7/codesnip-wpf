@@ -8,15 +8,28 @@ using System.IO;
 
 namespace CodeSnip.Services
 {
+    /// <summary>
+    /// Handles all interactions with the SQLite database, including creating the database,
+    /// seeding initial data, and performing CRUD operations for snippets, languages, and categories.
+    /// </summary>
     public class DatabaseService
     {
         private readonly string _dbPath = "snippets.sqlite";
 
+        /// <summary>
+        /// Creates and returns a new SQLite database connection.
+        /// </summary>
+        /// <returns>An open <see cref="IDbConnection"/> to the SQLite database.</returns>
         public IDbConnection CreateConnection()
         {
             return new SQLiteConnection($"Data Source={_dbPath};foreign keys=true;");
         }
 
+        /// <summary>
+        /// Initializes the database if the file does not exist. This method creates the database schema
+        /// and seeds it with default languages, categories, and a few example snippets.
+        /// </summary>
+        /// <param name="dbSchema">The DDL and DML script to execute for database creation and seeding.</param>
         public void InitializeDatabaseIfNeeded(string dbSchema = ddl)
         {
             if (!File.Exists(_dbPath))
@@ -125,7 +138,11 @@ if __name__ == '__main__':
             }
         }
 
-
+        /// <summary>
+        /// Retrieves all languages, their categories, and associated snippets from the database.
+        /// The snippet code is not loaded initially to support lazy loading.
+        /// </summary>
+        /// <returns>An enumerable collection of <see cref="Language"/> objects, structured hierarchically.</returns>
         public IEnumerable<Language> GetSnippets()
         {
             try
@@ -216,6 +233,11 @@ ORDER BY L.Name, C.Name, S.Title";
             }
         }
 
+        /// <summary>
+        /// Lazily loads the code for a specific snippet from the database.
+        /// </summary>
+        /// <param name="snippetId">The ID of the snippet to retrieve code for.</param>
+        /// <returns>The code content of the snippet as a string.</returns>
         public string GetSnippetCode(int snippetId)
         {
             using var conn = CreateConnection();
@@ -224,6 +246,12 @@ ORDER BY L.Name, C.Name, S.Title";
                 new { Id = snippetId }) ?? string.Empty;
         }
 
+        /// <summary>
+        /// Saves a snippet to the database. Performs an INSERT for a new snippet (Id = 0)
+        /// or an UPDATE for an existing one.
+        /// </summary>
+        /// <param name="snippet">The <see cref="Snippet"/> object to save.</param>
+        /// <returns>The saved <see cref="Snippet"/> object, updated with its new ID if it was an insert.</returns>
         public Snippet SaveSnippet(Snippet snippet)
         {
             using var conn = CreateConnection();
@@ -246,6 +274,11 @@ ORDER BY L.Name, C.Name, S.Title";
             return snippet;
         }
 
+        /// <summary>
+        /// Updates only the code content of a specific snippet in the database.
+        /// </summary>
+        /// <param name="id">The ID of the snippet to update.</param>
+        /// <param name="code">The new code content.</param>
         public void UpdateSnippetCode(int id, string code)
         {
             using var conn = CreateConnection();
@@ -254,12 +287,20 @@ ORDER BY L.Name, C.Name, S.Title";
                 new { Id = id, Code = code });
         }
 
+        /// <summary>
+        /// Deletes a snippet from the database.
+        /// </summary>
+        /// <param name="id">The ID of the snippet to delete.</param>
         public void DeleteSnippet(int id)
         {
             using var conn = CreateConnection();
             conn.Execute("DELETE FROM Snippets WHERE Id = @Id", new { Id = id });
         }
 
+        /// <summary>
+        /// Retrieves all languages and their associated categories from the database, without loading snippets.
+        /// </summary>
+        /// <returns>An enumerable collection of <see cref="Language"/> objects, each containing its list of <see cref="Category"/> objects.</returns>
         public IEnumerable<Language> GetLanguagesWithCategories()
         {
             using var conn = CreateConnection();
@@ -312,6 +353,12 @@ ORDER BY L.Name, C.Name, S.Title";
             return lookup.Values;
         }
 
+        /// <summary>
+        /// Saves a language to the database. Performs an INSERT for a new language (Id = 0)
+        /// or an UPDATE for an existing one.
+        /// </summary>
+        /// <param name="language">The <see cref="Language"/> object to save.</param>
+        /// <returns>The saved <see cref="Language"/> object, updated with its new ID if it was an insert.</returns>
         public Language SaveLanguage(Language language)
         {
             using var conn = CreateConnection();
@@ -331,6 +378,12 @@ ORDER BY L.Name, C.Name, S.Title";
             return language;
         }
 
+        /// <summary>
+        /// Saves a category to the database. Performs an INSERT for a new category (Id = 0)
+        /// or an UPDATE for an existing one.
+        /// </summary>
+        /// <param name="category">The <see cref="Category"/> object to save.</param>
+        /// <returns>The saved <see cref="Category"/> object, updated with its new ID if it was an insert.</returns>
         public Category SaveCategory(Category category)
         {
             using var conn = CreateConnection();
@@ -346,24 +399,44 @@ ORDER BY L.Name, C.Name, S.Title";
             return category;
         }
 
+        /// <summary>
+        /// Deletes a language from the database. Note: This may fail if the language is referenced
+        /// by categories, due to foreign key constraints.
+        /// </summary>
+        /// <param name="id">The ID of the language to delete.</param>
         public void DeleteLanguage(int id)
         {
             using var conn = CreateConnection();
             conn.Execute("DELETE FROM Languages WHERE ID = @Id", new { Id = id });
         }
 
+        /// <summary>
+        /// Deletes a category from the database. Note: This may fail if the category is referenced
+        /// by snippets, due to foreign key constraints.
+        /// </summary>
+        /// <param name="id">The ID of the category to delete.</param>
         public void DeleteCategory(int id)
         {
             using var conn = CreateConnection();
             conn.Execute("DELETE FROM Categories WHERE ID = @Id", new { Id = id });
         }
 
+        /// <summary>
+        /// Counts the number of snippets within a specific category.
+        /// </summary>
+        /// <param name="categoryId">The ID of the category.</param>
+        /// <returns>The total number of snippets in the category.</returns>
         public int CountSnippetsInCategory(int categoryId)
         {
             using var conn = CreateConnection();
             return conn.ExecuteScalar<int>("SELECT COUNT(*) FROM Snippets WHERE CategoryId = @CategoryId", new { CategoryId = categoryId });
         }
 
+        /// <summary>
+        /// Counts the total number of snippets across all categories for a specific language.
+        /// </summary>
+        /// <param name="languageId">The ID of the language.</param>
+        /// <returns>The total number of snippets in the language.</returns>
         public int CountSnippetsInLanguage(int languageId)
         {
             using var conn = CreateConnection();
@@ -374,6 +447,12 @@ ORDER BY L.Name, C.Name, S.Title";
                 WHERE c.LanguageId = @LanguageId", new { LanguageId = languageId });
         }
 
+        /// <summary>
+        /// Deletes a category and all of its associated snippets from the database.
+        /// This method bypasses the 'ON DELETE RESTRICT' foreign key constraint by first
+        /// deleting the child snippets and then the parent category within a transaction.
+        /// </summary>
+        /// <param name="categoryId">The ID of the category to delete.</param>
         public void ForceDeleteCategory(int categoryId)
         {
             using var conn = CreateConnection();
@@ -394,6 +473,12 @@ ORDER BY L.Name, C.Name, S.Title";
             }
         }
 
+        /// <summary>
+        /// Deletes a language, all of its categories, and all snippets contained within those categories.
+        /// This method bypasses the 'ON DELETE RESTRICT' foreign key constraint by performing a
+        /// hierarchical deletion (snippets -> categories -> language) within a transaction.
+        /// </summary>
+        /// <param name="languageId">The ID of the language to delete.</param>
         public void ForceDeleteLanguage(int languageId)
         {
             using var conn = CreateConnection();
@@ -416,6 +501,10 @@ ORDER BY L.Name, C.Name, S.Title";
             }
         }
 
+        /// <summary>
+        /// Runs a database integrity check.
+        /// </summary>
+        /// <returns>A task that resolves to <c>true</c> if the check passes, otherwise <c>false</c>.</returns>
         public async Task<bool> RunIntegrityCheckAsync()
         {
             try
@@ -431,6 +520,10 @@ ORDER BY L.Name, C.Name, S.Title";
             }
         }
 
+        /// <summary>
+        /// Runs the VACUUM command to rebuild the database file, repacking it into a minimal amount of disk space.
+        /// </summary>
+        /// <returns>A task that resolves to <c>true</c> if the operation succeeds, otherwise <c>false</c>.</returns>
         public async Task<bool> RunVacuumAsync()
         {
             try
@@ -446,6 +539,10 @@ ORDER BY L.Name, C.Name, S.Title";
             }
         }
 
+        /// <summary>
+        /// Runs the REINDEX command to rebuild all indices in the database.
+        /// </summary>
+        /// <returns>A task that resolves to <c>true</c> if the operation succeeds, otherwise <c>false</c>.</returns>
         public async Task<bool> RunReindexAsync()
         {
             try
@@ -461,6 +558,11 @@ ORDER BY L.Name, C.Name, S.Title";
             }
         }
 
+        /// <summary>
+        /// Checks the database for fragmentation to determine if a VACUUM operation is needed.
+        /// </summary>
+        /// <returns>A tuple containing a boolean indicating if vacuum is needed (fragmentation >= 25%)
+        /// and the calculated fragmentation percentage.</returns>
         public async Task<(bool NeedVacuum, double FragmentationPercent)> IsVacuumNeeded()
         {
             try

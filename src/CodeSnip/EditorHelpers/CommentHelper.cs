@@ -3,6 +3,9 @@ using ICSharpCode.AvalonEdit.Document;
 
 namespace CodeSnip.EditorHelpers
 {
+    /// <summary>
+    /// Provides utility methods for toggling single-line and multi-line comments in an AvalonEdit TextEditor.
+    /// </summary>
     public static class CommentHelper
     {
         // Languages with single-line comments
@@ -131,6 +134,13 @@ namespace CodeSnip.EditorHelpers
     { "hcl", ("/*", "*/") },          // HashiCorp Config Language
 };
 
+        /// <summary>
+        /// Toggles comments for the selected lines in the TextEditor based on the language's file extension.
+        /// It can handle both single-line and multi-line comment styles.
+        /// </summary>
+        /// <param name="textEditor">The TextEditor instance containing the code.</param>
+        /// <param name="fileExtension">The file extension (e.g., "cs", "py") to determine the comment style.</param>
+        /// <param name="useMultiLine">If true, attempts to use multi-line comments; otherwise, defaults to single-line.</param>
         public static void ToggleCommentByExtension(TextEditor textEditor, string fileExtension, bool useMultiLine = false)
         {
             if (string.IsNullOrEmpty(fileExtension) || textEditor.Document == null)
@@ -277,6 +287,12 @@ namespace CodeSnip.EditorHelpers
             }
         }
 
+        /// <summary>
+        /// Toggles an inline block comment around the exact selected text in the editor.
+        /// This is useful for commenting out a specific part of a line.
+        /// </summary>
+        /// <param name="textEditor">The TextEditor instance.</param>
+        /// <param name="fileExtension">The file extension to determine the block comment delimiters.</param>
         public static void ToggleInlineCommentByExtension(TextEditor textEditor, string fileExtension)
         {
             if (string.IsNullOrEmpty(fileExtension) || textEditor.Document == null)

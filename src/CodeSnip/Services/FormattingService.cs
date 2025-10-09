@@ -5,6 +5,9 @@ using System.IO;
 
 namespace CodeSnip.Services
 {
+    /// <summary>
+    /// Provides services for formatting code snippets using various external and internal formatters.
+    /// </summary>
     public static class FormattingService
     {
         private static bool? _isPythonInstalled;
@@ -12,7 +15,10 @@ namespace CodeSnip.Services
         private static bool? _isRustfmtInstalled;
 
         /// <summary>
-        /// Formats C# code using CSharpier's C# formatter.
+		/// Formats C# code using the built-in CSharpier library.
+		/// </summary>
+		/// <param name="code">The C# code to format.</param>
+		/// <returns>A tuple indicating success, the formatted code, and any error message.</returns>
         public static async Task<(bool isSuccess, string? formattedCode, string? errorMessage)> TryFormatCodeWithCSharpierAsync(string code)
         {
             try
@@ -27,7 +33,10 @@ namespace CodeSnip.Services
         }
 
         /// <summary>
-        /// Formats XML code using CSharpier's XML formatter.
+        /// Formats XML code using the built-in CSharpier library.
+        /// </summary>
+        /// <param name="code">The XML code to format.</param>
+        /// <returns>A tuple indicating success, the formatted code, and any error message.</returns>
         public static async Task<(bool isSuccess, string? formattedCode, string? errorMessage)> TryFormatXmlWithCSharpierAsync(string code)
         {
             try
@@ -42,9 +51,12 @@ namespace CodeSnip.Services
         }
 
         /// <summary>
-        /// Formats the code using clang-format.
-        /// </summary>
-        /// <returns>A tuple indicating success, the formatted code, and any error message.</returns>
+		/// Formats code using the 'clang-format.exe' tool located in the 'Tools' directory.
+		/// </summary>
+		/// <param name="code">The source code to format.</param>
+		/// <param name="timeoutMs">The timeout in milliseconds for the process.</param>
+		/// <param name="assumeFilename">An optional filename to help clang-format determine the language and style.</param>
+		/// <returns>A tuple indicating success, the formatted code, and any error message.</returns>
         public static async Task<(bool Success, string? FormattedCode, string? ErrorMessage)> TryFormatCodeWithClangAsync(string code, int timeoutMs = 5000, string? assumeFilename = null)
         {
             string arguments = "";
@@ -57,16 +69,22 @@ namespace CodeSnip.Services
         }
 
         /// <summary>
-        /// Formats D code using dfmt.exe from the Tools directory.
-        /// </summary>
+		/// Formats D code using the 'dfmt.exe' tool from the 'Tools' directory.
+		/// </summary>
+		/// <param name="code">The D code to format.</param>
+		/// <param name="timeoutMs">The timeout in milliseconds for the process.</param>
+		/// <returns>A tuple indicating success, the formatted code, and any error message.</returns>
         public static async Task<(bool Success, string? FormattedCode, string? ErrorMessage)> TryFormatCodeWithDfmtAsync(string code, int timeoutMs = 5000)
         {
             return await TryFormatWithExternalProcessAsync("dfmt.exe", "", code, timeoutMs);
         }
 
         /// <summary>
-        /// Formats Rust code using the `rustfmt` command-line tool.
+        /// Formats Rust code using the `rustfmt` command-line tool, if available in the system's PATH.
         /// </summary>
+        /// <param name="code">The Rust code to format.</param>
+        /// <param name="timeoutMs">The timeout in milliseconds for the process.</param>
+        /// <returns>A tuple indicating success, the formatted code, and any error message.</returns>
         public static async Task<(bool Success, string? FormattedCode, string? ErrorMessage)> TryFormatCodeWithRustFmtAsync(string code, int timeoutMs = 5000)
         {
             if (!await IsRustfmtInstalledAsync())
@@ -122,8 +140,11 @@ namespace CodeSnip.Services
         }
 
         /// <summary>
-        /// Formats Python code using ruff.exe from the Tools directory.
-        /// </summary>
+		/// Formats Python code using the 'ruff.exe' tool from the 'Tools' directory.
+		/// </summary>
+		/// <param name="code">The Python code to format.</param>
+		/// <param name="timeoutMs">The timeout in milliseconds for the process.</param>
+		/// <returns>A tuple indicating success, the formatted code, and any error message.</returns>
         public static async Task<(bool Success, string? FormattedCode, string? ErrorMessage)> TryFormatCodeWithRuffAsync(string code, int timeoutMs = 5000)
         {
             string arguments = "format --no-cache --stdin-filename=temp.py -";
@@ -131,8 +152,13 @@ namespace CodeSnip.Services
         }
 
         /// <summary>
-        /// A generic helper method to run an external formatting tool from the "Tools" directory.
+        /// A generic helper method to run an external formatting tool from the 'Tools' directory.
         /// </summary>
+        /// <param name="executableName">The name of the executable file (e.g., 'dfmt.exe').</param>
+        /// <param name="arguments">The command-line arguments to pass to the executable.</param>
+        /// <param name="code">The source code to pass to the process's standard input.</param>
+        /// <param name="timeoutMs">The timeout in milliseconds for the process.</param>
+        /// <returns>A tuple indicating success, the formatted code from standard output, and any error message from standard error.</returns>
         private static async Task<(bool Success, string? FormattedCode, string? ErrorMessage)> TryFormatWithExternalProcessAsync(
             string executableName,
             string arguments,
@@ -202,7 +228,12 @@ namespace CodeSnip.Services
             }
         }
 
-
+        /// <summary>
+		/// Formats Python code using the 'black' formatter via an installed Python environment.
+		/// </summary>
+		/// <param name="code">The Python code to format.</param>
+		/// <param name="timeoutMs">The timeout in milliseconds for the process.</param>
+		/// <returns>A tuple indicating success, the formatted code, and any error message.</returns>
         public static async Task<(bool Success, string? FormattedCode, string? ErrorMessage)> TryFormatCodeWithBlackAsync(string code, int timeoutMs = 5000)
         {
             if (!await IsPythonInstalledAsync())
@@ -267,7 +298,12 @@ namespace CodeSnip.Services
             }
         }
 
-
+        /// <summary>
+		/// Formats a Python file in-place using the 'black' formatter.
+		/// </summary>
+		/// <param name="code">The Python code to write to a temporary file and format.</param>
+		/// <param name="timeoutMs">The timeout in milliseconds for the process.</param>
+		/// <returns>A tuple indicating success, the formatted code, and any error message.</returns>
         public static async Task<(bool Success, string? FormattedCode, string? ErrorMessage)> TryFormatCodeWithBlackFileAsync(string code, int timeoutMs = 5000)
         {
             if (!await IsPythonInstalledAsync())
@@ -439,7 +475,6 @@ namespace CodeSnip.Services
         }
 
     }
-
 
 }
 
