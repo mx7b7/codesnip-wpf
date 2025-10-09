@@ -247,20 +247,29 @@ namespace CodeSnip
 
         private async void TreeView_SelectedItemChanged(object sender, RoutedPropertyChangedEventArgs<object> e)
         {
-            if (e.NewValue is Snippet snippet)
+            switch (e.NewValue)
             {
-                // method is called from ViewModel with new selected snippet, if old snippet has been modified asks to save
-                await mainViewModel.ChangeSelectedSnippetAsync(snippet);
+                case Snippet snippet:
+                    // method is called from ViewModel with new selected snippet, if old snippet has been modified asks to save
+                    await mainViewModel.ChangeSelectedSnippetAsync(snippet);
 
-                HighlightingService.ApplyHighlighting(textEditor, snippet.Category?.Language?.Code);
+                    HighlightingService.ApplyHighlighting(textEditor, snippet.Category?.Language?.Code);
 
-                SetupFolding(snippet);
+                    SetupFolding(snippet);
 
-                textEditor.Document.UndoStack.ClearAll();
-            }
-            else if (e.NewValue is Category category)
-            {
-                mainViewModel.SelectedCategory = category;
+                    textEditor.Document.UndoStack.ClearAll();
+                    break;
+
+                case Category category:
+                    mainViewModel.SelectedCategory = category;
+                    break;
+
+                case Language lang:
+                    mainViewModel.SelectedCategory = lang.Categories.FirstOrDefault();
+                    break;
+
+                default:
+                    break;
             }
         }
 
