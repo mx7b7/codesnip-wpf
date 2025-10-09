@@ -23,15 +23,17 @@
         MinWidth="600" 
         MinHeight="400"  
         ResizeMode="CanResizeWithGrip"
+        TitleAlignment="Left"
         TitleCharacterCasing="Normal"
-        Closing="MetroWindow_Closing" 
         Title ="{Binding WindowTitle}" 
         Left="{Binding WindowX, Mode=TwoWay}" 
         Top="{Binding WindowY, Mode=TwoWay}" 
         Width="{Binding WindowWidth, Mode=TwoWay}" 
         Height="{Binding WindowHeight, Mode=TwoWay}" 
         WindowState="{Binding WindowState, Mode=TwoWay}" 
-	    Style="{DynamicResource MahApps.Styles.MetroWindow.Clean}" >
+	    Style="{DynamicResource MahApps.Styles.MetroWindow.Clean}" 
+        IconTemplate="{StaticResource AppIconTemplate}"
+        Closing="MetroWindow_Closing" >
     <!--WindowButtonCommandsOverlayBehavior="Never"-->
     <mah:MetroWindow.Resources>
 
@@ -96,7 +98,7 @@
         <mah:WindowCommands>
             <Button Click="About_Click" ToolTip="About" Margin="0,0,10,0">
                 <Path Data="{StaticResource InfoCircle}" Fill="{DynamicResource MahApps.Brushes.Button.Border}"
-                      Width="16" Height="16" Stretch="Uniform">
+                      Width="20" Height="20" Stretch="Uniform">
                 </Path>
             </Button>
         </mah:WindowCommands>
@@ -105,7 +107,7 @@
     <mah:MetroWindow.Flyouts>
         <mah:FlyoutsControl x:Name="flyControl"/>
     </mah:MetroWindow.Flyouts>
-    <Grid>
+    <Grid Margin="0,2,0,0">
         <mah:SplitView x:Name="SplitViewControl"
                DisplayMode="CompactInline"
                CompactPaneLength="0"
