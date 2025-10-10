@@ -1,27 +1,25 @@
-﻿<?xml version="1.0" encoding="UTF-8"?>
-<SyntaxDefinition name="D" extensions=".d" xmlns="http://icsharpcode.net/sharpdevelop/syntaxdefinition/2008">
-
-	<Color name="Comment"       foreground="Green" />
-	<Color name="String"        foreground="Fuchsia" />
-	<Color name="Character"     foreground="Fuchsia" />
-	<Color name="Number"        foreground="DarkBlue" />
-	<!--<Color name="Punctuation"   foreground="DarkGreen" />-->
-	<Color name="Keywords"      foreground="#FF0000FF" />
-	<Color name="Type"          foreground="#FFFF0000" />
-	<Color name="MethodName"    foreground="MidnightBlue" />
-	<Color name="Preprocessor"  foreground="#FF0000FF" />
-
+﻿<?xml version="1.0" encoding="utf-8"?>
+<SyntaxDefinition name="D" extensions=".d"
+	xmlns="http://icsharpcode.net/sharpdevelop/syntaxdefinition/2008">
+	<!-- vscode Light Modern-->
+	<Color name="Comment" foreground="#FF008000" />
+	<Color name="String" foreground="#FFA31515" />
+	<Color name="Character" foreground="#FFA31515" />
+	<Color name="Number" foreground="#FF098658" />
+	<!-- <Color name="Punctuation"   foreground="DarkGreen" /> -->
+	<Color name="Keywords" foreground="#FFAF00DB" />
+	<Color name="Type" foreground="#FF0000FF" />
+	<Color name="MethodName" foreground="#FF795E26" />
+	<Color name="Preprocessor" foreground="#FF0000FF" />
 	<Property name="Extension" value="d" />
-
 	<RuleSet ignoreCase="false">
 
-		<!--<Rule color="Punctuation">[?,.;()\[\]{}+\-/%*&lt;&gt;^=~!&amp;]+</Rule>-->
+		<!-- <Rule color="Punctuation">[?,.;()\[\]{}+\-/%*&lt;&gt;^+~!|&amp;]+</Rule> -->
 
 		<Span color="Comment" begin="//" end="$" />
 		<Span color="Comment" multiline="true" begin="/\*" end="\*/" />
 		<!-- nested comments -->
 		<Span color="Comment" multiline="true" begin="/\+" end="\+/" />
-
 		<Span color="String" begin="`" end="`" />
 		<Span color="String" begin="r&quot;" end="&quot;" />
 		<Span color="String" begin="q{" end="}" />
@@ -32,7 +30,6 @@
 				<Span begin="\\" end="." />
 			</RuleSet>
 		</Span>
-
 		<Span color="Character">
 			<Begin>'</Begin>
 			<End>'</End>
@@ -41,8 +38,23 @@
 			</RuleSet>
 		</Span>
 
+		<!-- 
+			Example matches:
+			- 0x1A3FUL       (hexadecimal with unsigned long suffix)
+			- 0b1010_1101u   (binary with unsigned suffix and underscores)
+			- 123_456.789e+10f (decimal floating-point with exponent and float suffix)
+			- 42L            (decimal long integer)
+			- 3.14159        (decimal floating-point number)
+		  -->
 		<Rule color="Number">
-			\b0[xX][0-9a-fA-F_]+|\b\d+(_\d+)*(\.\d+(_\d+)*)?([eE][+-]?\d+(_\d+)*)?\b
+			\b(
+			0[xX][0-9a-fA-F_]+((u|U)?(l|L)?|(l|L)?(u|U)?)? |           # hex
+			0[bB][01_]+((u|U)?(l|L)?|(l|L)?(u|U)?)? |                  # binary
+			\d+(_\d+)*(\.\d+(_\d+)*)?([eE][+-]?\d+(_\d+)*)?            # decimal
+			(
+			(f|F)(i)?|L(i)?|i| (u|U)?(l|L)?|(l|L)?(u|U)?             # sufix
+			)?
+			)\b
 		</Rule>
 
 		<Keywords color="Preprocessor">
@@ -50,118 +62,132 @@
 			<Word>debug</Word>
 			<Word>pragma</Word>
 			<Word>mixin</Word>
-			<Word>with</Word>
 			<Word>scope</Word>
+			<Word>unittest</Word>
 		</Keywords>
-
 		<Keywords color="Keywords">
-			<Word>invariant</Word>
-			<Word>shared</Word>
-			<Word>immutable</Word>
+			<Word>abstract</Word>
+			<Word>alias</Word>
+			<Word>align</Word>
+			<Word>asm</Word>
+			<Word>assert</Word>
+			<Word>auto</Word>
+			<Word>body</Word>
+			<Word>break</Word>
+			<Word>case</Word>
+			<Word>cast</Word>
+			<Word>catch</Word>
+			<Word>class</Word>
 			<Word>const</Word>
+			<Word>continue</Word>
+			<Word>default</Word>
+			<Word>delete</Word>
 			<Word>deprecated</Word>
-			<Word>finalize</Word>
-
-			<Word>true</Word>
-			<Word>false</Word>
-			<Word>if</Word>
+			<Word>do</Word>
 			<Word>else</Word>
-			<Word>while</Word>
+			<Word>enum</Word>
+			<Word>export</Word>
+			<Word>extern</Word>
+			<Word>final</Word>
+			<Word>finalize</Word>
+			<Word>finally</Word>
 			<Word>for</Word>
 			<Word>foreach</Word>
 			<Word>foreach_reverse</Word>
-			<Word>switch</Word>
-			<Word>case</Word>
-			<Word>default</Word>
-			<Word>break</Word>
-			<Word>continue</Word>
-			<Word>return</Word>
 			<Word>goto</Word>
-			<Word>try</Word>
-			<Word>catch</Word>
-			<Word>finally</Word>
-			<Word>throw</Word>
-			<Word>new</Word>
-			<Word>delete</Word>
-			<Word>assert</Word>
-			<Word>this</Word>
-			<Word>super</Word>
-			<Word>class</Word>
-			<Word>interface</Word>
-			<Word>struct</Word>
-			<Word>union</Word>
-			<Word>enum</Word>
+			<Word>if</Word>
+			<Word>immutable</Word>
 			<Word>import</Word>
+			<Word>in</Word>
+			<Word>inout</Word>
+			<Word>interface</Word>
+			<Word>invariant</Word>
+			<Word>is</Word>
+			<Word>lazy</Word>
+			<Word>macro</Word>
 			<Word>module</Word>
-			<Word>template</Word>
-			<Word>alias</Word>
-			<Word>static</Word>
-			<Word>public</Word>
+			<Word>new</Word>
+			<Word>nothrow</Word>
+			<Word>out</Word>
+			<Word>override</Word>
 			<Word>private</Word>
 			<Word>protected</Word>
-			<Word>export</Word>
-			<Word>extern</Word>
-			<Word>override</Word>
-			<Word>abstract</Word>
-			<Word>final</Word>
-			<Word>synchronized</Word>
-			<Word>in</Word>
-			<Word>out</Word>
-			<Word>ref</Word>
-			<Word>lazy</Word>
-			<Word>auto</Word>
-			<Word>typeof</Word>
-			<Word>is</Word>
-			<Word>inout</Word>
+			<Word>public</Word>
 			<Word>pure</Word>
-			<Word>nothrow</Word>
-			<Word>@property</Word>
-			<Word>@safe</Word>
-			<Word>@trusted</Word>
-			<Word>@system</Word>
+			<Word>ref</Word>
+			<Word>return</Word>
+			<Word>shared</Word>
+			<Word>static</Word>
+			<Word>struct</Word>
+			<Word>super</Word>
+			<Word>switch</Word>
+			<Word>synchronized</Word>
+			<Word>template</Word>
+			<Word>this</Word>
+			<Word>throw</Word>
+			<Word>try</Word>
+			<Word>typedef</Word>
+			<Word>typeid</Word>
+			<Word>typeof</Word>
+			<Word>union</Word>
 			<Word>void</Word>
+			<Word>volatile</Word>
+			<Word>while</Word>
+			<Word>with</Word>
+			<Word>__FILE__</Word>
+			<Word>__LINE__</Word>
+			<Word>__gshared</Word>
+			<Word>__thread</Word>
+			<Word>__traits</Word>
+			<Word>__DATE__</Word>
+			<Word>__EOF__</Word>
+			<Word>__TIME__</Word>
+			<Word>__TIMESTAMP__</Word>
+			<Word>__VENDOR__</Word>
+			<Word>__VERSION__</Word>
 		</Keywords>
-
 		<Keywords color="Type">
-			<Word>var</Word>
 			<Word>bool</Word>
 			<Word>byte</Word>
-			<Word>ubyte</Word>
-			<Word>short</Word>
-			<Word>ushort</Word>
-			<Word>int</Word>
-			<Word>uint</Word>
-			<Word>long</Word>
-			<Word>ulong</Word>
-			<Word>float</Word>
-			<Word>double</Word>
-			<Word>real</Word>
-			<Word>ifloat</Word>
-			<Word>idouble</Word>
-			<Word>ireal</Word>
-			<Word>cfloat</Word>
 			<Word>cdouble</Word>
-			<Word>creal</Word>
-			<Word>char</Word>
-			<Word>wchar</Word>
-			<Word>dchar</Word>
-
-			<Word>wstring</Word>
-			<Word>dstring</Word>
-			<Word>size_t</Word>
-			<Word>ptrdiff_t</Word>
-			<Word>null</Word>
 			<Word>cent</Word>
-			<Word>ucent</Word>
-			<Word>function</Word>
+			<Word>cfloat</Word>
+			<Word>char</Word>
+			<Word>creal</Word>
+			<Word>dchar</Word>
 			<Word>delegate</Word>
+			<Word>double</Word>
+			<Word>dstring</Word>
+			<Word>false</Word>
+			<Word>float</Word>
+			<Word>function</Word>
+			<Word>idouble</Word>
+			<Word>ifloat</Word>
+			<Word>int</Word>
+			<Word>ireal</Word>
+			<Word>long</Word>
+			<Word>null</Word>
 			<Word>nullptr</Word>
+			<Word>ptrdiff_t</Word>
+			<Word>real</Word>
+			<Word>short</Word>
+			<Word>size_t</Word>
+			<Word>true</Word>
 			<Word>tuple</Word>
+			<Word>ubyte</Word>
+			<Word>ucent</Word>
+			<Word>uint</Word>
+			<Word>ulong</Word>
+			<Word>ushort</Word>
+			<Word>var</Word>
+			<Word>wchar</Word>
+			<Word>wstring</Word>
 		</Keywords>
-
+		<!-- keywords that start with @ -> @property, @safe... -->
+		<Rule color="Keywords">@[\w_][\w\d_]*</Rule>
 		<Rule color="MethodName">[\d\w_]+(?=(\s*\())</Rule>
 		<!-- std.string -->
 		<Rule color="Type">(?&lt;!\bstd\.)\bstring\b</Rule>
+
 	</RuleSet>
 </SyntaxDefinition>
-
