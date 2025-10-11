@@ -36,6 +36,10 @@ namespace CodeSnip
         private readonly DefaultIndentationStrategy defaultIndentationStrategy = new();
         private readonly CSharpIndentationStrategy csharpIndentationStrategy = new();
 
+        private static readonly Brush s_darkThemeHighlighterBrush = new SolidColorBrush(Color.FromArgb(60, 220, 220, 220));
+        private static readonly Brush s_lightThemeHighlighterBrush = new SolidColorBrush(Color.FromArgb(60, 100, 100, 100));
+
+
         public ICommand ToggleSingleLineCommentCommand { get; }
         public ICommand ToggleMultiLineCommentCommand { get; }
         public ICommand ToggleCommentSelectionCommand { get; }
@@ -54,6 +58,9 @@ namespace CodeSnip
 
         public MainWindow()
         {
+            s_darkThemeHighlighterBrush.Freeze();
+            s_lightThemeHighlighterBrush.Freeze();
+
             InitializeComponent();
             mainViewModel = new MainViewModel(this);
             DataContext = mainViewModel;
@@ -66,6 +73,37 @@ namespace CodeSnip
             OpenAboutCommand = new RelayCommand(_ => About_Click(this, new RoutedEventArgs()));
 
             mainViewModel.PropertyChanged += MainViewModel_PropertyChanged;
+
+            mainViewModel.ReplaceLineHighlightRendererRequested += () =>
+            {
+                ReplaceCurrentLineRenderer(textEditor);
+            };
+            ReplaceCurrentLineRenderer(textEditor);
+        }
+
+        private static void ReplaceCurrentLineRenderer(TextEditor editor)
+        {
+            var textView = editor.TextArea.TextView;
+
+            // Detect current theme (light or dark)
+            var currentTheme = ThemeManager.Current.DetectTheme(Application.Current);
+            bool isDarkTheme = currentTheme?.BaseColorScheme.Equals("Dark", StringComparison.OrdinalIgnoreCase) ?? true;
+
+            // Choose appropriate brush based on theme
+            Brush borderBrush = isDarkTheme ? s_darkThemeHighlighterBrush : s_lightThemeHighlighterBrush;
+
+            // 3. Remove existing CurrentLineHighlighter instances to avoid duplicates.
+            var renderersToRemove = textView.BackgroundRenderers
+                .Where(r => r is CurrentLineHighlighter || r.GetType().Name == "CurrentLineHighlightRenderer")
+                .ToList();
+
+            foreach (var renderer in renderersToRemove)
+            {
+                textView.BackgroundRenderers.Remove(renderer);
+            }
+
+            // Add the new CurrentLineHighlighter with the selected brush.
+            textView.BackgroundRenderers.Add(new CurrentLineHighlighter(editor, borderBrush));
         }
 
         private void MainViewModel_PropertyChanged(object? sender, PropertyChangedEventArgs e)

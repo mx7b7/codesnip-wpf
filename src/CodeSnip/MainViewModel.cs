@@ -26,6 +26,8 @@ namespace CodeSnip
         private readonly SettingsService settingsService = new();
         private readonly IFlyoutService _flyoutService;
 
+        public event Action? ReplaceLineHighlightRendererRequested; // Event to request replacing the line highlight renderer
+
         private readonly NotificationManager notificationManager = new();
 
         private readonly Geometry? _panelOpenIcon;
@@ -531,7 +533,8 @@ namespace CodeSnip
                             tmpSnippet.Id);
                     }
                 }
-
+                // Raise event to notify MainWindow to replace the line highlight renderer
+                ReplaceLineHighlightRendererRequested?.Invoke();
                 //settingsService.SaveSettings(); // Moved to OnWindowClosing
             });
         }
