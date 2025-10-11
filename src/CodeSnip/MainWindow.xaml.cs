@@ -132,13 +132,11 @@ namespace CodeSnip
 
         public bool IsFlyoutOpen(string tag)
         {
-            return flyControl.Items.OfType<Flyout>().Any(f => f.Tag is string flyoutTag && flyoutTag == tag && f.IsOpen);
+            return flyControl.Items.OfType<Flyout>().Any(f => f.Tag is string flyoutTag && flyoutTag == tag);
         }
 
         public void ShowFlyout(string tag, object viewModel, string header, Action? onClosed = null)
         {
-            if (IsFlyoutOpen(tag)) return;
-
             var flyout = new Flyout
             {
                 Tag = tag,
@@ -184,7 +182,6 @@ namespace CodeSnip
                     flyout.Theme = FlyoutTheme.Adapt;
                     flyout.CloseButtonIsCancel = true;
                     break;
-
             }
             void ClosingFinishedHandler(object sender, RoutedEventArgs args)
             {
