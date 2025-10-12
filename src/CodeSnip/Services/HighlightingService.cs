@@ -12,11 +12,22 @@ using System.Xml;
 
 namespace CodeSnip.Services
 {
+    /// <summary>
+    /// Manages syntax highlighting for the AvalonEdit editor. It handles loading custom '.xshd'
+    /// definition files from disk or embedded resources, caching them, and applying them
+    /// based on the current application theme (Light/Dark).
+    /// </summary>
     public static class HighlightingService
     {
-        // cache: key = "<themeFolder>/<langCode>", value = IHighlightingDefinition
+        /// <summary>
+        /// Caches loaded highlighting definitions to improve performance.
+        /// The key is a composite string: "{themeFolder}/{langCode}".
+        /// </summary>
         private static readonly ConcurrentDictionary<string, IHighlightingDefinition> _highlightCache = new();
 
+        /// <summary>
+        /// Sets the colors for the folding markers in the editor margin based on the current theme.
+        /// </summary>
         private static void ApplyFoldingMarkerColors(TextEditor editor, string themeBase)
         {
             SolidColorBrush back, hover, fore;
@@ -40,6 +51,12 @@ namespace CodeSnip.Services
             FoldingMargin.SetSelectedFoldingMarkerBrush(editor, fore);
         }
 
+        /// <summary>
+        /// Applies the appropriate syntax highlighting and folding colors to the editor
+        /// based on the given language code and the current application theme.
+        /// </summary>
+        /// <param name="editor">The TextEditor instance to apply highlighting to.</param>
+        /// <param name="langCode">The language code (e.g., "cs", "py") used to find the definition file.</param>
         public static void ApplyHighlighting(TextEditor editor, string? langCode)
         {
             if (editor is null) return;
@@ -57,6 +74,9 @@ namespace CodeSnip.Services
             ApplyFoldingMarkerColors(editor, themeBase);
         }
 
+        /// <summary>
+        /// Loads and applies a specific highlighting definition from the cache or file system.
+        /// </summary>
         private static void ApplyHighlightingWithTheme(TextEditor editor, string? langCode, string themeFolder)
         {
             if (string.IsNullOrWhiteSpace(langCode))
@@ -104,6 +124,8 @@ namespace CodeSnip.Services
         /// <summary>
         /// Gets the raw XSHD XML content for a given language and theme, loading from disk first, then from resources.
         /// </summary>
+        /// <param name="langCode">The language code (e.g., "cs", "py").</param>
+        /// <param name="themeFolder">The theme folder name (e.g., "Dark", "Light").</param>
         /// <returns>The XML content as a string, or null if not found.</returns>
         public static string? GetXshdXml(string langCode, string themeFolder)
         {
@@ -129,6 +151,7 @@ namespace CodeSnip.Services
 
             return null;
         }
+
         /// <summary>
         /// Loads the XSHD definition first from disk, if not found, from resources.
         /// Returns null if not found.
@@ -162,6 +185,12 @@ namespace CodeSnip.Services
             }
         }
 
+        /// <summary>
+        /// Checks if a syntax definition file (.xshd) exists for a given language code,
+        /// looking first on disk and then in embedded resources for both themes.
+        /// </summary>
+        /// <param name="langCode">The language code to check for (e.g., "cs", "py").</param>
+        /// <returns><c>true</c> if a definition file is found; otherwise, <c>false</c>.</returns>
         public static bool SyntaxDefinitionExists(string langCode)
         {
             if (string.IsNullOrWhiteSpace(langCode))
@@ -196,6 +225,12 @@ namespace CodeSnip.Services
             return false;
         }
 
+        /// <summary>
+        /// Removes a specific highlighting definition from the cache. This is useful when a custom
+        /// definition file has been updated and needs to be reloaded.
+        /// </summary>
+        /// <param name="langCode">The language code of the definition to invalidate.</param>
+        /// <param name="themeFolder">The theme folder of the definition to invalidate.</param>
         public static void InvalidateCache(string langCode, string themeFolder)
         {
             if (string.IsNullOrWhiteSpace(langCode) || string.IsNullOrWhiteSpace(themeFolder))
