@@ -2,6 +2,7 @@
 using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
 using System.Diagnostics;
+using System.IO;
 using System.Net.Http;
 using System.Text.RegularExpressions;
 
@@ -10,7 +11,7 @@ namespace CodeSnip.Views.CodeRunnerView
     public partial class CodeRunnerViewModel : ObservableObject
     {
         private readonly CompilerSettingsService _compilersSettings = new();
-        
+
         private readonly HttpClient _httpClient = new();
 
         private readonly Func<string> _getLatestCode;
@@ -64,16 +65,27 @@ namespace CodeSnip.Views.CodeRunnerView
         [ObservableProperty]
         private bool _hasOut = true;
 
+        private static readonly Dictionary<string, (string exe, string args)> Interpreters = new()
+        {
+            ["py"] = ("python.exe", "-u -"),
+            ["lua"] = ("lua54.exe", "-"),
+            ["js"] = ("node.exe", "-"),
+            ["rb"] = ("ruby.exe", "-"),
+            ["pl"] = ("perl.exe", "-"),
+            ["php"] = ("php.exe", "")
+        };
+
+
         public CodeRunnerViewModel(string languageExtension, string code, Func<string> getLatestCode)
         {
-            Extension = languageExtension;// set before triggering OnSelectedCompilerChanged beacause it uses it
+            Extension = languageExtension;// // Must set before triggering OnSelectedCompilerChanged (it depends on Extension)
             Compilers = _compilersSettings.GetCompilersByExtension(languageExtension);
             var defaultCompilerId = _compilersSettings.GetDefaultCompilerIdByExtension(languageExtension);
             SelectedCompiler = Compilers.FirstOrDefault(c => c.Id == defaultCompilerId) ?? Compilers.FirstOrDefault();
             Code = code;
             _getLatestCode = getLatestCode;
             _godboltService = new GodboltService(_httpClient);
-                       
+
         }
 
         // This method maps the source language extension to the appropriate assembly highlighting definition name.
@@ -87,7 +99,7 @@ namespace CodeSnip.Views.CodeRunnerView
 
             return languageExtension.ToLowerInvariant() switch
             {
-               
+
                 "java" => "javaopc",
                 _ => "asm", // Default for C++, Rust, D, etc.
             };
@@ -164,7 +176,7 @@ namespace CodeSnip.Views.CodeRunnerView
             finally
             {
                 IsRunning = false;
-            }  
+            }
         }
 
         private async Task GetShortenerLinkAsync()
@@ -208,6 +220,111 @@ namespace CodeSnip.Views.CodeRunnerView
             }
         }
 
-        
+        [RelayCommand(CanExecute = nameof(CanRunLocal))]
+        private async Task RunLocal()
+        {
+            try
+            {
+                IsRunning = true;
+                StdOut = "";
+                ErrorText = "";
+
+                var (interpreterPath, arguments) = GetLocalInterpreter(Extension);
+
+                if (string.IsNullOrWhiteSpace(interpreterPath))
+                {
+                    ErrorText = $"No local interpreter configured for extension '{Extension}'.";
+                    return;
+                }
+                var (success, output, error) = await RunProcessAsync(interpreterPath, arguments, Code, 15000);
+
+                StdOut = output ?? "";
+                ErrorText = error ?? "";
+            }
+            catch (Exception ex)
+            {
+                ErrorText = $"Error running local interpreter:\n{ex.Message}";
+                StdOut = "";
+            }
+            finally
+            {
+                IsRunning = false;
+            }
+        }
+
+        private static (string? path, string? args) GetLocalInterpreter(string? compilerExtension)
+        {
+            if (string.IsNullOrWhiteSpace(compilerExtension))
+                return (null, null);
+
+            compilerExtension = compilerExtension.TrimStart('.').ToLowerInvariant();
+
+            if (!Interpreters.TryGetValue(compilerExtension, out var info))
+                return (null, null);
+
+            string toolsDir = Path.Combine(AppContext.BaseDirectory, "Tools");
+            string interpreterPath = Path.Combine(toolsDir, info.exe);
+
+            return File.Exists(interpreterPath)
+                ? (interpreterPath, info.args)
+                : (info.exe, info.args);
+        }
+
+        private bool CanRunLocal()
+        {
+            return !string.IsNullOrWhiteSpace(GetLocalInterpreter(Extension).path);
+        }
+
+        private static async Task<(bool Success, string? Output, string? Error)> RunProcessAsync(string fileName, string? arguments, string input, int timeoutMs)
+        {
+            var psi = new ProcessStartInfo
+            {
+                FileName = fileName,
+                Arguments = arguments ?? "",
+                RedirectStandardInput = true,
+                RedirectStandardOutput = true,
+                RedirectStandardError = true,
+                UseShellExecute = false,
+                CreateNoWindow = true,
+            };
+
+            using var process = new Process { StartInfo = psi };
+            if (!process.Start())
+            {
+                return (false, null, $"Failed to start process: {fileName}");
+            }
+
+            await process.StandardInput.WriteAsync(input);
+            process.StandardInput.Close();
+
+            var outputTask = process.StandardOutput.ReadToEndAsync();
+            var errorTask = process.StandardError.ReadToEndAsync();
+
+            using var cts = new CancellationTokenSource(timeoutMs);
+            try
+            {
+                await process.WaitForExitAsync(cts.Token);
+
+                string output = await outputTask;
+                string error = await errorTask;
+
+                return (process.ExitCode == 0,
+                        string.IsNullOrWhiteSpace(output) ? null : output,
+                        string.IsNullOrWhiteSpace(error) ? null : error);
+            }
+            catch (OperationCanceledException)
+            {
+                try
+                {
+                    var killInfo = new ProcessStartInfo("taskkill", $"/PID {process.Id} /T /F") { CreateNoWindow = true, UseShellExecute = false };
+                    using var killer = Process.Start(killInfo);
+                    killer?.WaitForExit(1000); // Give it a second to do its job
+                }
+                catch { /* Ignore errors during forceful termination */ }
+
+                return (false, null, $"Timeout: The process '{process.ProcessName}' (PID: {process.Id}) took too long to respond and was terminated.");
+            }
+        }
+
     }
 }
