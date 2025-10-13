@@ -1,0 +1,98 @@
+<?xml version="1.0"?>
+<SyntaxDefinition name="Lua" extensions=".lua" xmlns="http://icsharpcode.net/sharpdevelop/syntaxdefinition/2008">
+
+	<!-- syntax definition for Lua by mx7b7 -->
+	<!-- Visual Studio Light theme -->
+	<Color name="Comment" foreground="#008000" exampleText="-- this is a comment" />
+	<Color name="String" foreground="#A31515" exampleText="&quot;Hello, World!&quot;" />
+	<Color name="Number" foreground="#098658" exampleText="3.14" />
+	<Color name="Keywords" foreground="#0000FF" fontWeight="bold" />
+	<Color name="Builtins" foreground="#2B91AF" />
+	<Color name="Self" foreground="#0000FF" fontStyle="italic" />
+
+	<Property name="Extension" value="lua"/>
+
+	<RuleSet>
+		<Span color="Comment" begin="--\[\[" end="\]\]" multiline="true" />
+		<Span color="Comment" begin="--" />
+
+		<Span color="String" begin="&quot;" end="&quot;" multiline="true">
+			<RuleSet>
+				<Rule>\\[&quot;\\]</Rule>
+			</RuleSet>
+		</Span>
+		<Span color="String" begin="'" end="'" multiline="true">
+			<RuleSet>
+				<Rule>\\['\\]</Rule>
+			</RuleSet>
+		</Span>
+		<Span color="String" begin="\[\[" end="\]\]" multiline="true" />
+
+		<Rule color="Number">
+			\b0[xX][0-9a-fA-F]+|(\b\d+(\.\d*)?|\.\d+)([eE][+-]?\d+)?
+		</Rule>
+
+		<Keywords color="Keywords">
+			<Word>and</Word>
+			<Word>break</Word>
+			<Word>do</Word>
+			<Word>else</Word>
+			<Word>elseif</Word>
+			<Word>end</Word>
+			<Word>false</Word>
+			<Word>for</Word>
+			<Word>function</Word>
+			<Word>if</Word>
+			<Word>in</Word>
+			<Word>local</Word>
+			<Word>nil</Word>
+			<Word>not</Word>
+			<Word>or</Word>
+			<Word>repeat</Word>
+			<Word>return</Word>
+			<Word>then</Word>
+			<Word>true</Word>
+			<Word>until</Word>
+			<Word>while</Word>
+		</Keywords>
+
+		<Keywords color="Builtins">
+			<Word>_G</Word>
+			<Word>_VERSION</Word>
+			<Word>assert</Word>
+			<Word>collectgarbage</Word>
+			<Word>dofile</Word>
+			<Word>error</Word>
+			<Word>getmetatable</Word>
+			<Word>ipairs</Word>
+			<Word>load</Word>
+			<Word>loadfile</Word>
+			<Word>loadstring</Word>
+			<Word>next</Word>
+			<Word>pairs</Word>
+			<Word>pcall</Word>
+			<Word>print</Word>
+			<Word>rawequal</Word>
+			<Word>rawget</Word>
+			<Word>rawset</Word>
+			<Word>select</Word>
+			<Word>setmetatable</Word>
+			<Word>tonumber</Word>
+			<Word>tostring</Word>
+			<Word>type</Word>
+			<Word>xpcall</Word>
+			<Word>coroutine</Word>
+			<Word>debug</Word>
+			<Word>io</Word>
+			<Word>math</Word>
+			<Word>os</Word>
+			<Word>package</Word>
+			<Word>string</Word>
+			<Word>table</Word>
+		</Keywords>
+
+		<Keywords color="Self">
+			<Word>self</Word>
+		</Keywords>
+	</RuleSet>
+</SyntaxDefinition>
