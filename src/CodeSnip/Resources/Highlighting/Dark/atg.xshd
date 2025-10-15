@@ -29,10 +29,10 @@
 			<Word>PRODUCTIONS</Word>
 			<Word>SYNC</Word>
 			<Word>TO</Word>
-			<Word>TOKENS</Word>
 			<Word>TOKENNAMES</Word>
-			<Word>WEAK</Word>
+			<Word>TOKENS</Word>
 			<Word>using</Word>
+			<Word>WEAK</Word>
 		</Keywords>
 		<Span color="Comment">
 			<Begin>//</Begin>

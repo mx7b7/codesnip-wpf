@@ -18,317 +18,374 @@
 		
 		<Keywords color="Instruction">
 			<!-- Data Transfer Instructions -->
-			<Word>mov</Word>
-			<Word>movabs</Word>
-			<Word>movbe</Word>
-			<Word>movsx</Word>
-			<Word>movsxd</Word>
-			<Word>movzx</Word>
-			<Word>push</Word>
-			<Word>pusha</Word>
-			<Word>popa</Word>
-			<Word>pushad</Word>
-			<Word>popad</Word>
-			<Word>pushaw</Word>
-			<Word>popaw</Word>
-			<Word>pushf</Word>
-			<Word>popf</Word>
-			<Word>pushfd</Word>
-			<Word>popfd</Word>
-			<Word>pushfq</Word>
-			<Word>popfq</Word>
-			<Word>pushfw</Word>
-			<Word>popfw</Word>
+			<Word>bswap</Word>
 			<Word>cbw</Word>
-			<Word>cwde</Word>
 			<Word>cdq</Word>
+			<Word>cdqe</Word>
+			<Word>cmov</Word>
+			<Word>cmova</Word>
+			<Word>cmovae</Word>
+			<Word>cmovb</Word>
+			<Word>cmovbe</Word>
+			<Word>cmovc</Word>
+			<Word>cmove</Word>
+			<Word>cmovg</Word>
+			<Word>cmovge</Word>
+			<Word>cmovl</Word>
+			<Word>cmovle</Word>
+			<Word>cmovnc</Word>
+			<Word>cmovne</Word>
+			<Word>cmovno</Word>
+			<Word>cmovnp</Word>
+			<Word>cmovns</Word>
+			<Word>cmovo</Word>
+			<Word>cmovp</Word>
+			<Word>cmovpe</Word>
+			<Word>cmovpo</Word>
+			<Word>cmovs</Word>
+			<Word>cmpxchg</Word>
+			<Word>cmpxchg16b</Word>
+			<Word>cmpxchg8b</Word>
 			<Word>cqo</Word>
 			<Word>cwd</Word>
-			<Word>cdqe</Word>
+			<Word>cwde</Word>
+			<Word>lahf</Word>
 			<Word>lea</Word>
 			<Word>les</Word>
 			<Word>lfs</Word>
 			<Word>lgs</Word>
 			<Word>lss</Word>
-			<Word>xchg</Word>
-			<Word>bswap</Word>
-			<Word>xadd</Word>
-			<Word>cmpxchg</Word>
-			<Word>cmpxchg8b</Word>
-			<Word>cmpxchg16b</Word>
-			<Word>lahf</Word>
-			<Word>sahf</Word>
-			<Word>cmov</Word>
-			<Word>cmove</Word>
-			<Word>cmovne</Word>
-			<Word>cmova</Word>
-			<Word>cmovae</Word>
-			<Word>cmovb</Word>
-			<Word>cmovbe</Word>
-			<Word>cmovg</Word>
-			<Word>cmovge</Word>
-			<Word>cmovl</Word>
-			<Word>cmovle</Word>
-			<Word>cmovc</Word>
-			<Word>cmovnc</Word>
-			<Word>cmovo</Word>
-			<Word>cmovno</Word>
-			<Word>cmovs</Word>
-			<Word>cmovns</Word>
-			<Word>cmovp</Word>
-			<Word>cmovpe</Word>
-			<Word>cmovnp</Word>
-			<Word>cmovpo</Word>
+			<Word>mov</Word>
+			<Word>movabs</Word>
+			<Word>movbe</Word>
 			<Word>movnti</Word>
+			<Word>movsx</Word>
+			<Word>movsxd</Word>
+			<Word>movzx</Word>
+			<Word>popa</Word>
+			<Word>popad</Word>
+			<Word>popaw</Word>
+			<Word>popf</Word>
+			<Word>popfd</Word>
+			<Word>popfq</Word>
+			<Word>popfw</Word>
+			<Word>push</Word>
+			<Word>pusha</Word>
+			<Word>pushad</Word>
+			<Word>pushaw</Word>
+			<Word>pushf</Word>
+			<Word>pushfd</Word>
+			<Word>pushfq</Word>
+			<Word>pushfw</Word>
+			<Word>sahf</Word>
+			<Word>xadd</Word>
+			<Word>xchg</Word>
 
 			<!-- Arithmetic Instructions -->
-			<Word>add</Word>
+			<Word>aaa</Word>
+			<Word>aad</Word>
+			<Word>aam</Word>
+			<Word>aas</Word>
 			<Word>adc</Word>
-			<Word>sub</Word>
-			<Word>sbb</Word>
-			<Word>imul</Word>
-			<Word>mul</Word>
-			<Word>idiv</Word>
-			<Word>div</Word>
-			<Word>inc</Word>
-			<Word>dec</Word>
-			<Word>neg</Word>
+			<Word>add</Word>
 			<Word>daa</Word>
 			<Word>das</Word>
-			<Word>aaa</Word>
-			<Word>aas</Word>
-			<Word>aam</Word>
-			<Word>aad</Word>
+			<Word>dec</Word>
+			<Word>div</Word>
+			<Word>idiv</Word>
+			<Word>imul</Word>
+			<Word>inc</Word>
+			<Word>mul</Word>
+			<Word>neg</Word>
+			<Word>sbb</Word>
+			<Word>sub</Word>
 
 			<!-- Bitwise Instructions -->
 			<Word>and</Word>
-			<Word>or</Word>
-			<Word>xor</Word>
-			<Word>not</Word>
-			<Word>sar</Word>
-			<Word>shr</Word>
-			<Word>sal</Word>
-			<Word>shl</Word>
-			<Word>shrd</Word>
-			<Word>shld</Word>
-			<Word>ror</Word>
-			<Word>rol</Word>
-			<Word>rcr</Word>
-			<Word>rcl</Word>
-			<Word>bt</Word>
-			<Word>bts</Word>
-			<Word>btr</Word>
-			<Word>btc</Word>
 			<Word>bsf</Word>
 			<Word>bsr</Word>
+			<Word>bt</Word>
+			<Word>btc</Word>
+			<Word>btr</Word>
+			<Word>bts</Word>
+			<Word>not</Word>
+			<Word>or</Word>
+			<Word>rcl</Word>
+			<Word>rcr</Word>
+			<Word>rol</Word>
+			<Word>ror</Word>
+			<Word>sal</Word>
+			<Word>sar</Word>
+			<Word>shl</Word>
+			<Word>shld</Word>
+			<Word>shr</Word>
+			<Word>shrd</Word>
+			<Word>xor</Word>
 
 			<!-- Control Flow Instructions -->
-			<Word>jb</Word>
-			<Word>ja</Word>
-			<Word>je</Word>
-			<Word>jne</Word>
-			<Word>jmp</Word>
-			<Word>je</Word>
-			<Word>jne</Word>
-			<Word>jz</Word>
-			<Word>jnz</Word>
-			<Word>jg</Word>
-			<Word>jge</Word>
-			<Word>jl</Word>
-			<Word>jle</Word>
-			<Word>ja</Word>
-			<Word>jae</Word>
-			<Word>jbe</Word>
-			<Word>jc</Word>
-			<Word>jnc</Word>
-			<Word>jo</Word>
-			<Word>jno</Word>
-			<Word>js</Word>
-			<Word>jns</Word>
-			<Word>jp</Word>
-			<Word>jpe</Word>
-			<Word>jcxz</Word>
-			<Word>jecxz</Word>
-			<Word>jrcxz</Word>
-			<Word>loop</Word>
-			<Word>loope</Word>
-			<Word>loopz</Word>
-			<Word>loopne</Word>
-			<Word>loopnz</Word>
+			<Word>bound</Word>
 			<Word>call</Word>
-			<Word>ret</Word>
-			<Word>retn</Word>
-			<Word>retf</Word>
+			<Word>enter</Word>
+			<Word>esc</Word>
+			<Word>fwait</Word>
+			<Word>hlt</Word>
+			<Word>int</Word>
+			<Word>into</Word>
 			<Word>iret</Word>
 			<Word>iretd</Word>
 			<Word>iretq</Word>
 			<Word>iretw</Word>
-			<Word>int</Word>
-			<Word>into</Word>
-			<Word>enter</Word>
+			<Word>ja</Word>
+			<Word>ja</Word>
+			<Word>jae</Word>
+			<Word>jb</Word>
+			<Word>jbe</Word>
+			<Word>jc</Word>
+			<Word>jcxz</Word>
+			<Word>je</Word>
+			<Word>je</Word>
+			<Word>jecxz</Word>
+			<Word>jg</Word>
+			<Word>jge</Word>
+			<Word>jl</Word>
+			<Word>jle</Word>
+			<Word>jmp</Word>
+			<Word>jnc</Word>
+			<Word>jne</Word>
+			<Word>jne</Word>
+			<Word>jno</Word>
+			<Word>jns</Word>
+			<Word>jnz</Word>
+			<Word>jo</Word>
+			<Word>jp</Word>
+			<Word>jpe</Word>
+			<Word>jrcxz</Word>
+			<Word>js</Word>
+			<Word>jz</Word>
 			<Word>leave</Word>
-			<Word>bound</Word>
-			<Word>hlt</Word>
-			<Word>fwait</Word>
+			<Word>loop</Word>
+			<Word>loope</Word>
+			<Word>loopne</Word>
+			<Word>loopnz</Word>
+			<Word>loopz</Word>
 			<Word>nop</Word>
 			<Word>pause</Word>
-			<Word>esc</Word>
+			<Word>ret</Word>
+			<Word>retf</Word>
+			<Word>retn</Word>
 
 			<!-- Comparison Instructions -->
 			<Word>cmp</Word>
-			<Word>test</Word>
 			<Word>set</Word>
-			<Word>sete</Word>
-			<Word>setne</Word>
-			<Word>setz</Word>
-			<Word>setnz</Word>
-			<Word>setg</Word>
-			<Word>setge</Word>
-			<Word>setl</Word>
-			<Word>setle</Word>
 			<Word>seta</Word>
 			<Word>setae</Word>
 			<Word>setb</Word>
 			<Word>setbe</Word>
 			<Word>setc</Word>
+			<Word>sete</Word>
+			<Word>setg</Word>
+			<Word>setge</Word>
+			<Word>setl</Word>
+			<Word>setle</Word>
 			<Word>setnc</Word>
-			<Word>seto</Word>
+			<Word>setne</Word>
 			<Word>setno</Word>
-			<Word>sets</Word>
+			<Word>setnp</Word>
 			<Word>setns</Word>
+			<Word>setnz</Word>
+			<Word>seto</Word>
 			<Word>setp</Word>
 			<Word>setpe</Word>
-			<Word>setnp</Word>
 			<Word>setpo</Word>
+			<Word>sets</Word>
+			<Word>setz</Word>
+			<Word>test</Word>
 
 			<!-- String Instructions -->
-			<Word>movsb</Word>
-			<Word>movsw</Word>
-			<Word>movsd</Word>
 			<Word>cmpsb</Word>
-			<Word>cmpsw</Word>
 			<Word>cmpsd</Word>
 			<Word>cmpsq</Word>
-			<Word>scasb</Word>
-			<Word>scasw</Word>
-			<Word>scasd</Word>
+			<Word>cmpsw</Word>
+			<Word>insb</Word>
+			<Word>insd</Word>
+			<Word>insw</Word>
 			<Word>lodsb</Word>
-			<Word>lodsw</Word>
 			<Word>lodsd</Word>
 			<Word>lodsq</Word>
-			<Word>stosb</Word>
-			<Word>stosw</Word>
-			<Word>stosd</Word>
-			<Word>insb</Word>
-			<Word>insw</Word>
-			<Word>insd</Word>
+			<Word>lodsw</Word>
+			<Word>movsb</Word>
+			<Word>movsd</Word>
+			<Word>movsw</Word>
 			<Word>outsb</Word>
-			<Word>outsw</Word>
 			<Word>outsd</Word>
+			<Word>outsw</Word>
 			<Word>rep</Word>
 			<Word>repe</Word>
-			<Word>repz</Word>
 			<Word>repne</Word>
 			<Word>repnz</Word>
+			<Word>repz</Word>
+			<Word>scasb</Word>
+			<Word>scasd</Word>
+			<Word>scasw</Word>
+			<Word>stosb</Word>
+			<Word>stosd</Word>
+			<Word>stosw</Word>
 
 			<!-- Floating Point Instructions (x87) -->
+			<Word>f2xm1</Word>
+			<Word>fabs</Word>
 			<Word>fadd</Word>
 			<Word>faddp</Word>
-			<Word>fiadd</Word>
-			<Word>fsub</Word>
-			<Word>fsubp</Word>
-			<Word>fisub</Word>
-			<Word>fsubr</Word>
-			<Word>fsubrp</Word>
-			<Word>fisubr</Word>
-			<Word>fmul</Word>
-			<Word>fmulp</Word>
-			<Word>fimul</Word>
-			<Word>fdiv</Word>
-			<Word>fdivp</Word>
-			<Word>fidiv</Word>
-			<Word>fdivr</Word>
-			<Word>fdivrp</Word>
-			<Word>fidivr</Word>
-			<Word>fsqrt</Word>
-			<Word>fprem</Word>
-			<Word>fprem1</Word>
-			<Word>frndint</Word>
-			<Word>fabs</Word>
-			<Word>fchs</Word>
-			<Word>fxtract</Word>
-			<Word>fld</Word>
-			<Word>fild</Word>
 			<Word>fbld</Word>
-			<Word>fst</Word>
-			<Word>fstp</Word>
-			<Word>fist</Word>
-			<Word>fistp</Word>
 			<Word>fbstp</Word>
-			<Word>fxch</Word>
+			<Word>fchs</Word>
+			<Word>fclex</Word>
 			<Word>fcmovb</Word>
-			<Word>fcmove</Word>
 			<Word>fcmovbe</Word>
-			<Word>fcmovu</Word>
+			<Word>fcmove</Word>
 			<Word>fcmovnb</Word>
-			<Word>fcmovne</Word>
 			<Word>fcmovnbe</Word>
+			<Word>fcmovne</Word>
 			<Word>fcmovnu</Word>
+			<Word>fcmovu</Word>
 			<Word>fcom</Word>
-			<Word>fcomp</Word>
-			<Word>fcompp</Word>
-			<Word>ficom</Word>
-			<Word>ficomp</Word>
-			<Word>fucom</Word>
-			<Word>fucomp</Word>
-			<Word>fucompp</Word>
 			<Word>fcomi</Word>
 			<Word>fcomip</Word>
-			<Word>fucomi</Word>
-			<Word>fucomip</Word>
-			<Word>ftst</Word>
-			<Word>fxam</Word>
+			<Word>fcomp</Word>
+			<Word>fcompp</Word>
+			<Word>fcos</Word>
+			<Word>fdecstp</Word>
+			<Word>fdiv</Word>
+			<Word>fdivp</Word>
+			<Word>fdivr</Word>
+			<Word>fdivrp</Word>
+			<Word>ffree</Word>
+			<Word>fiadd</Word>
+			<Word>ficom</Word>
+			<Word>ficomp</Word>
+			<Word>fidiv</Word>
+			<Word>fidivr</Word>
+			<Word>fild</Word>
+			<Word>fimul</Word>
+			<Word>fincstp</Word>
+			<Word>finit</Word>
+			<Word>fist</Word>
+			<Word>fistp</Word>
+			<Word>fisub</Word>
+			<Word>fisubr</Word>
+			<Word>fld</Word>
 			<Word>fld1</Word>
-			<Word>fldz</Word>
-			<Word>fldpi</Word>
+			<Word>fldcw</Word>
+			<Word>fldenv</Word>
 			<Word>fldl2e</Word>
-			<Word>fldln2</Word>
 			<Word>fldl2t</Word>
 			<Word>fldlg2</Word>
-			<Word>fsin</Word>
-			<Word>fcos</Word>
-			<Word>fsincos</Word>
-			<Word>fptan</Word>
+			<Word>fldln2</Word>
+			<Word>fldpi</Word>
+			<Word>fldz</Word>
+			<Word>fmul</Word>
+			<Word>fmulp</Word>
+			<Word>fnclex</Word>
+			<Word>fninit</Word>
+			<Word>fnop</Word>
+			<Word>fnsave</Word>
+			<Word>fnstcw</Word>
+			<Word>fnstenv</Word>
+			<Word>fnstsw</Word>
 			<Word>fpatan</Word>
-			<Word>f2xm1</Word>
+			<Word>fprem</Word>
+			<Word>fprem1</Word>
+			<Word>fptan</Word>
+			<Word>frndint</Word>
+			<Word>frstor</Word>
+			<Word>fsave</Word>
+			<Word>fscale</Word>
+			<Word>fsin</Word>
+			<Word>fsincos</Word>
+			<Word>fsqrt</Word>
+			<Word>fst</Word>
+			<Word>fstcw</Word>
+			<Word>fstenv</Word>
+			<Word>fstp</Word>
+			<Word>fstsw</Word>
+			<Word>fsub</Word>
+			<Word>fsubp</Word>
+			<Word>fsubr</Word>
+			<Word>fsubrp</Word>
+			<Word>ftst</Word>
+			<Word>fucom</Word>
+			<Word>fucomi</Word>
+			<Word>fucomip</Word>
+			<Word>fucomp</Word>
+			<Word>fucompp</Word>
+			<Word>fxam</Word>
+			<Word>fxch</Word>
+			<Word>fxtract</Word>
 			<Word>fyl2x</Word>
 			<Word>fyl2xp1</Word>
-			<Word>fscale</Word>
-			<Word>finit</Word>
-			<Word>fninit</Word>
-			<Word>fldcw</Word>
-			<Word>fstcw</Word>
-			<Word>fnstcw</Word>
-			<Word>fstsw</Word>
-			<Word>fnstsw</Word>
-			<Word>fclex</Word>
-			<Word>fnclex</Word>
-			<Word>fstenv</Word>
-			<Word>fnstenv</Word>
-			<Word>fldenv</Word>
-			<Word>fsave</Word>
-			<Word>fnsave</Word>
-			<Word>frstor</Word>
-			<Word>fincstp</Word>
-			<Word>fdecstp</Word>
-			<Word>ffree</Word>
-			<Word>fnop</Word>
 
 			<!-- SIMD Instructions (MMX, SSE, AVX, etc.) -->
+			<Word>addpd</Word>
+			<Word>addps</Word>
+			<Word>addsd</Word>
+			<Word>addss</Word>
+			<Word>andnpd</Word>
+			<Word>andnps</Word>
+			<Word>andpd</Word>
+			<Word>andps</Word>
+			<Word>cmpps</Word>
+			<Word>cmpss</Word>
+			<Word>comiss</Word>
+			<Word>cvtpi2ps</Word>
+			<Word>cvtps2pi</Word>
+			<Word>cvtsi2ss</Word>
+			<Word>cvtss2si</Word>
+			<Word>cvttps2pi</Word>
+			<Word>cvttss2si</Word>
+			<Word>divpd</Word>
+			<Word>divps</Word>
+			<Word>divsd</Word>
+			<Word>divss</Word>
+			<Word>emms</Word>
+			<Word>jnp</Word>
+			<Word>jpo</Word>
+			<Word>maxpd</Word>
+			<Word>maxps</Word>
+			<Word>maxsd</Word>
+			<Word>maxss</Word>
+			<Word>minpd</Word>
+			<Word>minps</Word>
+			<Word>minsd</Word>
+			<Word>minss</Word>
+			<Word>movapd</Word>
+			<Word>movaps</Word>
 			<Word>movd</Word>
+			<Word>movdq2q</Word>
+			<Word>movdqa</Word>
+			<Word>movdqu</Word>
+			<Word>movhlps</Word>
+			<Word>movhpd</Word>
+			<Word>movhps</Word>
+			<Word>movlhps</Word>
+			<Word>movlpd</Word>
+			<Word>movlps</Word>
+			<Word>movmskpd</Word>
+			<Word>movmskps</Word>
+			<Word>movntdq</Word>
+			<Word>movntpd</Word>
+			<Word>movntps</Word>
 			<Word>movq</Word>
+			<Word>movq2dq</Word>
+			<Word>movss</Word>
+			<Word>movupd</Word>
+			<Word>movups</Word>
+			<Word>mulpd</Word>
+			<Word>mulps</Word>
+			<Word>mulsd</Word>
+			<Word>mulss</Word>
+			<Word>orpd</Word>
+			<Word>orps</Word>
 			<Word>packssdw</Word>
-			<Word>pop</Word>
 			<Word>packsswb</Word>
 			<Word>packuswb</Word>
 			<Word>paddb</Word>
@@ -352,13 +409,20 @@
 			<Word>pmaddwd</Word>
 			<Word>pmulhw</Word>
 			<Word>pmullw</Word>
+			<Word>pmuludq</Word>
+			<Word>pop</Word>
 			<Word>por</Word>
+			<Word>pshufd</Word>
+			<Word>pshufhw</Word>
+			<Word>pshuflw</Word>
 			<Word>pslld</Word>
+			<Word>pslldq</Word>
 			<Word>psllq</Word>
 			<Word>psllw</Word>
 			<Word>psrad</Word>
 			<Word>psraw</Word>
 			<Word>psrld</Word>
+			<Word>psrldq</Word>
 			<Word>psrlq</Word>
 			<Word>psrlw</Word>
 			<Word>psubb</Word>
@@ -371,152 +435,94 @@
 			<Word>psubw</Word>
 			<Word>punpckhbw</Word>
 			<Word>punpckhdq</Word>
+			<Word>punpckhqdq</Word>
 			<Word>punpckhwd</Word>
 			<Word>punpcklbw</Word>
 			<Word>punpckldq</Word>
-			<Word>jnp</Word>
+			<Word>punpcklqdq</Word>
 			<Word>punpcklwd</Word>
 			<Word>pxor</Word>
-			<Word>emms</Word>
-			<Word>addps</Word>
-			<Word>addss</Word>
-			<Word>subps</Word>
-			<Word>subss</Word>
-			<Word>mulps</Word>
-			<Word>mulss</Word>
-			<Word>divps</Word>
-			<Word>divss</Word>
 			<Word>rcpps</Word>
 			<Word>rcpss</Word>
-			<Word>sqrtps</Word>
-			<Word>sqrtss</Word>
 			<Word>rsqrtps</Word>
 			<Word>rsqrtss</Word>
-			<Word>maxps</Word>
-			<Word>maxss</Word>
-			<Word>minps</Word>
-			<Word>minss</Word>
-			<Word>andps</Word>
-			<Word>andnps</Word>
-			<Word>orps</Word>
-			<Word>xorps</Word>
-			<Word>movaps</Word>
-			<Word>movups</Word>
-			<Word>movhps</Word>
-			<Word>movlps</Word>
-			<Word>movhlps</Word>
-			<Word>movlhps</Word>
-			<Word>movntps</Word>
-			<Word>movss</Word>
-			<Word>movmskps</Word>
-			<Word>shufps</Word>
-			<Word>unpckhps</Word>
-			<Word>unpcklps</Word>
-			<Word>cmpps</Word>
-			<Word>cmpss</Word>
-			<Word>comiss</Word>
-			<Word>ucomiss</Word>
-			<Word>cvtsi2ss</Word>
-			<Word>cvtpi2ps</Word>
-			<Word>cvtss2si</Word>
-			<Word>cvtps2pi</Word>
-			<Word>cvttss2si</Word>
-			<Word>cvttps2pi</Word>
-			<Word>addpd</Word>
-			<Word>addsd</Word>
-			<Word>subpd</Word>
-			<Word>subsd</Word>
-			<Word>mulpd</Word>
-			<Word>mulsd</Word>
-			<Word>divpd</Word>
-			<Word>divsd</Word>
-			<Word>sqrtpd</Word>
-			<Word>sqrtsd</Word>
-			<Word>maxpd</Word>
-			<Word>maxsd</Word>
-			<Word>minpd</Word>
-			<Word>minsd</Word>
-			<Word>andpd</Word>
-			<Word>andnpd</Word>
-			<Word>orpd</Word>
-			<Word>xorpd</Word>
-			<Word>movapd</Word>
-			<Word>movupd</Word>
-			<Word>movhpd</Word>
-			<Word>movlpd</Word>
-			<Word>movntpd</Word>
-			<Word>movmskpd</Word>
 			<Word>shufpd</Word>
+			<Word>shufps</Word>
+			<Word>sqrtpd</Word>
+			<Word>sqrtps</Word>
+			<Word>sqrtsd</Word>
+			<Word>sqrtss</Word>
+			<Word>subpd</Word>
+			<Word>subps</Word>
+			<Word>subsd</Word>
+			<Word>subss</Word>
+			<Word>ucomiss</Word>
 			<Word>unpckhpd</Word>
+			<Word>unpckhps</Word>
 			<Word>unpcklpd</Word>
-			<Word>movdqa</Word>
-			<Word>movdqu</Word>
-			<Word>movntdq</Word>
-			<Word>movdq2q</Word>
-			<Word>movq2dq</Word>
-			<Word>pmuludq</Word>
-			<Word>pshufd</Word>
-			<Word>jpo</Word>
-			<Word>pshufhw</Word>
-			<Word>pshuflw</Word>
-			<Word>pslldq</Word>
-			<Word>psrldq</Word>
-			<Word>punpckhqdq</Word>
-			<Word>punpcklqdq</Word>
-			<Word>vaddps</Word>
+			<Word>unpcklps</Word>
 			<Word>vaddpd</Word>
-			<Word>vmulps</Word>
-			<Word>vmulpd</Word>
-			<Word>vsubps</Word>
-			<Word>vsubpd</Word>
-			<Word>vdivps</Word>
+			<Word>vaddps</Word>
+			<Word>vblendpd</Word>
+			<Word>vblendps</Word>
+			<Word>vblendvpd</Word>
+			<Word>vblendvps</Word>
 			<Word>vdivpd</Word>
-			<Word>vmovaps</Word>
+			<Word>vdivps</Word>
+			<Word>vdppd</Word>
+			<Word>vdpps</Word>
+			<Word>vmaskmovdqu</Word>
+			<Word>vmaxpd</Word>
+			<Word>vmaxps</Word>
 			<Word>vmovapd</Word>
+			<Word>vmovaps</Word>
+			<Word>vmovd</Word>
 			<Word>vmovdqa</Word>
-			<Word>vxorps</Word>
-			<Word>vxorpd</Word>
+			<Word>vmovntdq</Word>
+			<Word>vmovntpd</Word>
+			<Word>vmovntps</Word>
+			<Word>vmulpd</Word>
+			<Word>vmulps</Word>
+			<Word>vorpd</Word>
+			<Word>vorps</Word>
 			<Word>vpand</Word>
 			<Word>vpandn</Word>
-			<Word>vorps</Word>
-			<Word>vorpd</Word>
-			<Word>vpxor</Word>
-			<Word>vblendps</Word>
-			<Word>vblendpd</Word>
-			<Word>vblendvps</Word>
-			<Word>vblendvpd</Word>
-			<Word>vpblendw</Word>
 			<Word>vpblendvb</Word>
-			<Word>vdpps</Word>
-			<Word>vdppd</Word>
-			<Word>vmaxps</Word>
-			<Word>vmaxpd</Word>
-			<Word>vmaskmovdqu</Word>
-			<Word>vmovd</Word>
-			<Word>vmovntdq</Word>
-			<Word>vmovntps</Word>
-			<Word>vmovntpd</Word>
+			<Word>vpblendw</Word>
+			<Word>vpxor</Word>
 			<Word>vrcpps</Word>
+			<Word>vsubpd</Word>
+			<Word>vsubps</Word>
+			<Word>vxorpd</Word>
+			<Word>vxorps</Word>
+			<Word>xorpd</Word>
+			<Word>xorps</Word>
 
 			<!-- Other/System Instructions -->
 			<Word>arpl</Word>
 			<Word>clc</Word>
 			<Word>cld</Word>
+			<Word>clflush</Word>
 			<Word>clts</Word>
 			<Word>cmc</Word>
 			<Word>cpuid</Word>
+			<Word>crc32</Word>
+			<Word>ibts</Word>
 			<Word>icebp</Word>
-			<Word>invlpg</Word>
 			<Word>invd</Word>
+			<Word>invlpg</Word>
 			<Word>invpcid</Word>
 			<Word>lar</Word>
 			<Word>lgdt</Word>
 			<Word>lidt</Word>
 			<Word>lldt</Word>
 			<Word>lmsw</Word>
+			<Word>lock</Word>
 			<Word>lsl</Word>
 			<Word>ltr</Word>
+			<Word>mfence</Word>
 			<Word>monitor</Word>
+			<Word>popcnt</Word>
 			<Word>prefetch</Word>
 			<Word>prefetchw</Word>
 			<Word>rdmsr</Word>
@@ -524,14 +530,15 @@
 			<Word>rdtsc</Word>
 			<Word>rdtscp</Word>
 			<Word>rsm</Word>
+			<Word>salc</Word>
+			<Word>sfence</Word>
 			<Word>sgdt</Word>
 			<Word>sidt</Word>
 			<Word>sldt</Word>
 			<Word>smsw</Word>
-			<Word>str</Word>
-			<Word>lock</Word>
 			<Word>stc</Word>
 			<Word>sti</Word>
+			<Word>str</Word>
 			<Word>swapgs</Word>
 			<Word>sysenter</Word>
 			<Word>sysexit</Word>
@@ -542,101 +549,86 @@
 			<Word>verw</Word>
 			<Word>wbinvd</Word>
 			<Word>wrmsr</Word>
-			<Word>xgetbv</Word>
-			<Word>xsetbv</Word>
-			<Word>xsave</Word>
-			<Word>xrstor</Word>
-			<Word>mfence</Word>
-			<Word>sfence</Word>
-			<Word>clflush</Word>
-			<Word>crc32</Word>
-			<Word>popcnt</Word>
-			<Word>ibts</Word>
 			<Word>xbts</Word>
-			<Word>salc</Word>
+			<Word>xgetbv</Word>
+			<Word>xrstor</Word>
+			<Word>xsave</Word>
+			<Word>xsetbv</Word>
 
 		</Keywords>
 
 		<Keywords color="Register">
-			<Word>rax</Word>
-			<Word>eax</Word>
-			<Word>ax</Word>
-			<Word>al</Word>
 			<Word>ah</Word>
-			<Word>rbx</Word>
-			<Word>ebx</Word>
-			<Word>bx</Word>
-			<Word>bl</Word>
+			<Word>al</Word>
+			<Word>ax</Word>
 			<Word>bh</Word>
-			<Word>rcx</Word>
-			<Word>ecx</Word>
-			<Word>cx</Word>
-			<Word>cl</Word>
-			<Word>ch</Word>
-			<Word>rdx</Word>
-			<Word>edx</Word>
-			<Word>dx</Word>
-			<Word>dl</Word>
-			<Word>dh</Word>
-			<Word>rsi</Word>
-			<Word>esi</Word>
-			<Word>si</Word>
-			<Word>sil</Word>
-			<Word>rdi</Word>
-			<Word>edi</Word>
-			<Word>di</Word>
-			<Word>dil</Word>
-			<Word>rbp</Word>
-			<Word>ebp</Word>
+			<Word>bl</Word>
 			<Word>bp</Word>
 			<Word>bpl</Word>
-			<Word>rsp</Word>
+			<Word>bx</Word>
+			<Word>ch</Word>
+			<Word>cl</Word>
+			<Word>cx</Word>
+			<Word>dh</Word>
+			<Word>di</Word>
+			<Word>dil</Word>
+			<Word>dl</Word>
+			<Word>dx</Word>
+			<Word>eax</Word>
+			<Word>ebp</Word>
+			<Word>ebx</Word>
+			<Word>ecx</Word>
+			<Word>edi</Word>
+			<Word>edx</Word>
+			<Word>esi</Word>
 			<Word>esp</Word>
-			<Word>sp</Word>
-			<Word>spl</Word>
-			<Word>rip</Word>
-			<Word>r8</Word>
-			<Word>r8d</Word>
-			<Word>r8w</Word>
-			<Word>r8b</Word>
-			<Word>r9</Word>
-			<Word>r9d</Word>
-			<Word>r9w</Word>
-			<Word>r9b</Word>
 			<Word>r10</Word>
+			<Word>r10b</Word>
 			<Word>r10d</Word>
 			<Word>r10w</Word>
-			<Word>r10b</Word>
 			<Word>r11</Word>
+			<Word>r11b</Word>
 			<Word>r11d</Word>
 			<Word>r11w</Word>
-			<Word>r11b</Word>
 			<Word>r12</Word>
+			<Word>r12b</Word>
 			<Word>r12d</Word>
 			<Word>r12w</Word>
-			<Word>r12b</Word>
 			<Word>r13</Word>
+			<Word>r13b</Word>
 			<Word>r13d</Word>
 			<Word>r13w</Word>
-			<Word>r13b</Word>
 			<Word>r14</Word>
+			<Word>r14b</Word>
 			<Word>r14d</Word>
 			<Word>r14w</Word>
-			<Word>r14b</Word>
 			<Word>r15</Word>
+			<Word>r15b</Word>
 			<Word>r15d</Word>
 			<Word>r15w</Word>
-			<Word>r15b</Word>
+			<Word>r8</Word>
+			<Word>r8b</Word>
+			<Word>r8d</Word>
+			<Word>r8w</Word>
+			<Word>r9</Word>
+			<Word>r9b</Word>
+			<Word>r9d</Word>
+			<Word>r9w</Word>
+			<Word>rax</Word>
+			<Word>rbp</Word>
+			<Word>rbx</Word>
+			<Word>rcx</Word>
+			<Word>rdi</Word>
+			<Word>rdx</Word>
+			<Word>rip</Word>
+			<Word>rsi</Word>
+			<Word>rsp</Word>
+			<Word>si</Word>
+			<Word>sil</Word>
+			<Word>sp</Word>
+			<Word>spl</Word>
 			<Word>xmm0</Word>
 			<Word>xmm1</Word>
-			<Word>xmm2</Word>
-			<Word>xmm3</Word>
-			<Word>xmm4</Word>
-			<Word>xmm5</Word>
-			<Word>xmm6</Word>
-			<Word>xmm7</Word>
-			<Word>xmm8</Word>
-			<Word>xmm9</Word>
 			<Word>xmm10</Word>
 			<Word>xmm11</Word>
 			<Word>xmm12</Word>
@@ -647,6 +639,7 @@
 			<Word>xmm17</Word>
 			<Word>xmm18</Word>
 			<Word>xmm19</Word>
+			<Word>xmm2</Word>
 			<Word>xmm20</Word>
 			<Word>xmm21</Word>
 			<Word>xmm22</Word>
@@ -657,18 +650,17 @@
 			<Word>xmm27</Word>
 			<Word>xmm28</Word>
 			<Word>xmm29</Word>
+			<Word>xmm3</Word>
 			<Word>xmm30</Word>
 			<Word>xmm31</Word>
+			<Word>xmm4</Word>
+			<Word>xmm5</Word>
+			<Word>xmm6</Word>
+			<Word>xmm7</Word>
+			<Word>xmm8</Word>
+			<Word>xmm9</Word>
 			<Word>ymm0</Word>
 			<Word>ymm1</Word>
-			<Word>ymm2</Word>
-			<Word>ymm3</Word>
-			<Word>ymm4</Word>
-			<Word>ymm5</Word>
-			<Word>ymm6</Word>
-			<Word>ymm7</Word>
-			<Word>ymm8</Word>
-			<Word>ymm9</Word>
 			<Word>ymm10</Word>
 			<Word>ymm11</Word>
 			<Word>ymm12</Word>
@@ -679,6 +671,7 @@
 			<Word>ymm17</Word>
 			<Word>ymm18</Word>
 			<Word>ymm19</Word>
+			<Word>ymm2</Word>
 			<Word>ymm20</Word>
 			<Word>ymm21</Word>
 			<Word>ymm22</Word>
@@ -689,18 +682,17 @@
 			<Word>ymm27</Word>
 			<Word>ymm28</Word>
 			<Word>ymm29</Word>
+			<Word>ymm3</Word>
 			<Word>ymm30</Word>
 			<Word>ymm31</Word>
+			<Word>ymm4</Word>
+			<Word>ymm5</Word>
+			<Word>ymm6</Word>
+			<Word>ymm7</Word>
+			<Word>ymm8</Word>
+			<Word>ymm9</Word>
 			<Word>zmm0</Word>
 			<Word>zmm1</Word>
-			<Word>zmm2</Word>
-			<Word>zmm3</Word>
-			<Word>zmm4</Word>
-			<Word>zmm5</Word>
-			<Word>zmm6</Word>
-			<Word>zmm7</Word>
-			<Word>zmm8</Word>
-			<Word>zmm9</Word>
 			<Word>zmm10</Word>
 			<Word>zmm11</Word>
 			<Word>zmm12</Word>
@@ -711,6 +703,7 @@
 			<Word>zmm17</Word>
 			<Word>zmm18</Word>
 			<Word>zmm19</Word>
+			<Word>zmm2</Word>
 			<Word>zmm20</Word>
 			<Word>zmm21</Word>
 			<Word>zmm22</Word>
@@ -721,26 +714,33 @@
 			<Word>zmm27</Word>
 			<Word>zmm28</Word>
 			<Word>zmm29</Word>
+			<Word>zmm3</Word>
 			<Word>zmm30</Word>
 			<Word>zmm31</Word>
+			<Word>zmm4</Word>
+			<Word>zmm5</Word>
+			<Word>zmm6</Word>
+			<Word>zmm7</Word>
+			<Word>zmm8</Word>
+			<Word>zmm9</Word>
 		</Keywords>
 
 		<Keywords color="Keyword">
-			<Word>ptr</Word>
-			<Word>offset</Word>
-			<Word>flat</Word>
+			<Word>asciz</Word>
 			<Word>byte</Word>
-			<Word>word</Word>
 			<Word>dword</Word>
+			<Word>flat</Word>
+			<Word>long</Word>
+			<Word>offset</Word>
+			<Word>ptr</Word>
+			<Word>quad</Word>
 			<Word>qword</Word>
+			<Word>short</Word>
+			<Word>word</Word>
 			<Word>xmmword</Word>
 			<Word>ymmword</Word>
-			<Word>zmmword</Word>
-			<Word>short</Word>
-			<Word>long</Word>
-			<Word>quad</Word>
 			<Word>zero</Word>
-			<Word>asciz</Word>
+			<Word>zmmword</Word>
 		</Keywords>
 
 		<Rule color="Directive">

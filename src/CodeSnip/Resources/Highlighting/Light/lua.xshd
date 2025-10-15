@@ -39,35 +39,31 @@
 			<Word>else</Word>
 			<Word>elseif</Word>
 			<Word>end</Word>
-			<Word>false</Word>
 			<Word>for</Word>
-			<Word>function</Word>
+			<Word>goto</Word>
 			<Word>if</Word>
 			<Word>in</Word>
 			<Word>local</Word>
-			<Word>nil</Word>
 			<Word>not</Word>
 			<Word>or</Word>
 			<Word>repeat</Word>
 			<Word>return</Word>
 			<Word>then</Word>
-			<Word>true</Word>
 			<Word>until</Word>
 			<Word>while</Word>
 		</Keywords>
-
 		<Keywords color="Builtins">
-			<Word>_G</Word>
-			<Word>_VERSION</Word>
-			<Word>assert</Word>
+			<Word>arg</Word>
 			<Word>collectgarbage</Word>
 			<Word>dofile</Word>
 			<Word>error</Word>
+			<Word>getfenv</Word>
 			<Word>getmetatable</Word>
 			<Word>ipairs</Word>
 			<Word>load</Word>
 			<Word>loadfile</Word>
 			<Word>loadstring</Word>
+			<Word>module</Word>
 			<Word>next</Word>
 			<Word>pairs</Word>
 			<Word>pcall</Word>
@@ -75,20 +71,128 @@
 			<Word>rawequal</Word>
 			<Word>rawget</Word>
 			<Word>rawset</Word>
+			<Word>require</Word>
 			<Word>select</Word>
+			<Word>setfenv</Word>
 			<Word>setmetatable</Word>
 			<Word>tonumber</Word>
 			<Word>tostring</Word>
 			<Word>type</Word>
+			<Word>unpack</Word>
 			<Word>xpcall</Word>
+			<Word>abs</Word>
+			<Word>acos</Word>
+			<Word>asin</Word>
+			<Word>atan</Word>
+			<Word>atan2</Word>
+			<Word>byte</Word>
+			<Word>ceil</Word>
+			<Word>char</Word>
+			<Word>clock</Word>
+			<Word>close</Word>
+			<Word>concat</Word>
+			<Word>config</Word>
 			<Word>coroutine</Word>
+			<Word>cos</Word>
+			<Word>cosh</Word>
+			<Word>cpath</Word>
+			<Word>create</Word>
+			<Word>date</Word>
 			<Word>debug</Word>
+			<Word>deg</Word>
+			<Word>difftime</Word>
+			<Word>dump</Word>
+			<Word>execute</Word>
+			<Word>exit</Word>
+			<Word>exp</Word>
+			<Word>find</Word>
+			<Word>floor</Word>
+			<Word>flush</Word>
+			<Word>fmod</Word>
+			<Word>foreach</Word>
+			<Word>foreachi</Word>
+			<Word>format</Word>
+			<Word>frexp</Word>
+			<Word>getenv</Word>
+			<Word>getfenv</Word>
+			<Word>gethook</Word>
+			<Word>getinfo</Word>
+			<Word>getlocal</Word>
+			<Word>getmetatable</Word>
+			<Word>getn</Word>
+			<Word>getregistry</Word>
+			<Word>getupvalue</Word>
+			<Word>gfind</Word>
+			<Word>gmatch</Word>
+			<Word>gsub</Word>
+			<Word>huge</Word>
+			<Word>input</Word>
+			<Word>insert</Word>
 			<Word>io</Word>
+			<Word>ldexp</Word>
+			<Word>len</Word>
+			<Word>lines</Word>
+			<Word>loaded</Word>
+			<Word>loaders</Word>
+			<Word>loadlib</Word>
+			<Word>log</Word>
+			<Word>log10</Word>
+			<Word>lower</Word>
+			<Word>match</Word>
 			<Word>math</Word>
+			<Word>max</Word>
+			<Word>maxn</Word>
+			<Word>min</Word>
+			<Word>mod</Word>
+			<Word>modf</Word>
+			<Word>open</Word>
 			<Word>os</Word>
+			<Word>output</Word>
 			<Word>package</Word>
+			<Word>path</Word>
+			<Word>pi</Word>
+			<Word>popen</Word>
+			<Word>pow</Word>
+			<Word>preload</Word>
+			<Word>rad</Word>
+			<Word>random</Word>
+			<Word>randomseed</Word>
+			<Word>read</Word>
+			<Word>remove</Word>
+			<Word>rename</Word>
+			<Word>rep</Word>
+			<Word>resume</Word>
+			<Word>reverse</Word>
+			<Word>running</Word>
+			<Word>seeall</Word>
+			<Word>sethook</Word>
+			<Word>setlocal</Word>
+			<Word>setlocale</Word>
+			<Word>setmetatable</Word>
+			<Word>setn</Word>
+			<Word>setupvalue</Word>
+			<Word>sin</Word>
+			<Word>sinh</Word>
+			<Word>sort</Word>
+			<Word>sqrt</Word>
+			<Word>status</Word>
+			<Word>stderr</Word>
+			<Word>stdin</Word>
+			<Word>stdout</Word>
 			<Word>string</Word>
+			<Word>sub</Word>
 			<Word>table</Word>
+			<Word>tan</Word>
+			<Word>tanh</Word>
+			<Word>time</Word>
+			<Word>tmpfile</Word>
+			<Word>tmpname</Word>
+			<Word>traceback</Word>
+			<Word>type</Word>
+			<Word>upper</Word>
+			<Word>wrap</Word>
+			<Word>write</Word>
+			<Word>yield</Word>
 		</Keywords>
 
 		<Keywords color="Self">

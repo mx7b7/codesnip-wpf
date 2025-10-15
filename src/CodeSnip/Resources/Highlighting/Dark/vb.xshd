@@ -7,16 +7,16 @@
 <!-- Updated 2011 by Siegfried Oleg Pammer for VB 11 CTP -->
 <SyntaxDefinition name="VB" extensions=".vb" xmlns="http://icsharpcode.net/sharpdevelop/syntaxdefinition/2008">
 	<Color name="Comment"          foreground="#FF57a64a" exampleText="' comment" />
-    <Color name="String"           foreground="#FFD69D85" exampleText="text = &quot;Hello, World!&quot;"/>
+	<Color name="String"           foreground="#FFD69D85" exampleText="text = &quot;Hello, World!&quot;"/>
 
-    <Color name="DateLiteral"      foreground="#FFb5cea8" exampleText="endOfWorld = #2012-12-21#"/>
-    <Color name="Preprocessor"     foreground="#FF9B9B9B" exampleText="#Region &quot;Title&quot;"/>
-    <Color name="DataTypes"        foreground="#FF00A0FF" exampleText="Dim b As Boolean = True"/>
-    <Color name="Operators"        foreground="#FF00A0FF" exampleText="If a OrElse b Then"/>
-    <Color name="Constants"        foreground="#FF00A0FF" exampleText="b = False"/>
-    <Color name="Keywords"         foreground="#FF00A0FF" exampleText="If a OrElse b Then"/>
-    <Color name="FunctionKeywords" foreground="#FFdcdcaa" exampleText="CInt(a)"/>
-    <Color name="ContextKeywords"  foreground="#FFd8a0df" exampleText="Declare Unicode Sub SomeMethod"/>
+	<Color name="DateLiteral"      foreground="#FFb5cea8" exampleText="endOfWorld = #2012-12-21#"/>
+	<Color name="Preprocessor"     foreground="#FF9B9B9B" exampleText="#Region &quot;Title&quot;"/>
+	<Color name="DataTypes"        foreground="#FF00A0FF" exampleText="Dim b As Boolean = True"/>
+	<Color name="Operators"        foreground="#FF00A0FF" exampleText="If a OrElse b Then"/>
+	<Color name="Constants"        foreground="#FF00A0FF" exampleText="b = False"/>
+	<Color name="Keywords"         foreground="#FF00A0FF" exampleText="If a OrElse b Then"/>
+	<Color name="FunctionKeywords" foreground="#FFdcdcaa" exampleText="CInt(a)"/>
+	<Color name="ContextKeywords"  foreground="#FFd8a0df" exampleText="Declare Unicode Sub SomeMethod"/>
 
 	<Property name="DocCommentMarker" value="'''" />
 	<Property name="Extension" value="vb" />

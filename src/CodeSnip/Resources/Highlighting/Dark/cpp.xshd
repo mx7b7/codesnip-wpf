@@ -41,54 +41,54 @@
 	<!-- jarko crvena za try/catch -->
 	<Color name="ControlFlow"       foreground="#F92672" fontWeight="bold" />
 	<!-- jarko crvena za kontrolu toka -->
-	
+
 	<Property name="Extension" value="cpp" />
 
 	<RuleSet ignoreCase="false">
 		<Rule color="Punctuation">
-		[?,.;()\[\]{}+\-/%*&lt;&gt;^=~!&amp;]+
+			[?,.;()\[\]{}+\-/%*&lt;&gt;^=~!&amp;]+
 		</Rule>
 		<Keywords color="CompoundKeywords">
-			<Word>__abstract</Word>
-			<Word>__box</Word>
-			<Word>__delegate</Word>
-			<Word>__gc</Word>
-			<Word>__identifier</Word>
-			<Word>__nogc</Word>
-			<Word>__pin</Word>
-			<Word>__property</Word>
-			<Word>__sealed</Word>
-			<Word>__try_cast</Word>
-			<Word>__typeof</Word>
-			<Word>__value</Word>
-			<Word>__event</Word>
-			<Word>__hook</Word>
-			<Word>__raise</Word>
-			<Word>__unhook</Word>
-			<Word>__interface</Word>
-			<Word>ref class</Word>
-			<Word>ref struct</Word>
-			<Word>value class</Word>
-			<Word>value struct</Word>
-			<Word>interface class</Word>
-			<Word>interface struct</Word>
+			<Word>abstract</Word>
+			<Word>delegate</Word>
 			<Word>enum class</Word>
 			<Word>enum struct</Word>
-			<Word>delegate</Word>
 			<Word>event</Word>
-			<Word>property</Word>
-			<Word>abstract</Word>
-			<Word>override</Word>
-			<Word>sealed</Word>
-			<Word>generic</Word>
-			<Word>where</Word>
 			<Word>finally</Word>
 			<Word>for each</Word>
 			<Word>gcnew</Word>
+			<Word>generic</Word>
 			<Word>in</Word>
 			<Word>initonly</Word>
+			<Word>interface class</Word>
+			<Word>interface struct</Word>
 			<Word>literal</Word>
 			<Word>nullptr</Word>
+			<Word>override</Word>
+			<Word>property</Word>
+			<Word>ref class</Word>
+			<Word>ref struct</Word>
+			<Word>sealed</Word>
+			<Word>value class</Word>
+			<Word>value struct</Word>
+			<Word>where</Word>
+			<Word>__abstract</Word>
+			<Word>__box</Word>
+			<Word>__delegate</Word>
+			<Word>__event</Word>
+			<Word>__gc</Word>
+			<Word>__hook</Word>
+			<Word>__identifier</Word>
+			<Word>__interface</Word>
+			<Word>__nogc</Word>
+			<Word>__pin</Word>
+			<Word>__property</Word>
+			<Word>__raise</Word>
+			<Word>__sealed</Word>
+			<Word>__try_cast</Word>
+			<Word>__typeof</Word>
+			<Word>__unhook</Word>
+			<Word>__value</Word>
 		</Keywords>
 		<Keywords color="This">
 			<Word>this</Word>
@@ -114,27 +114,27 @@
 			<Word>friend</Word>
 		</Keywords>
 		<Keywords color="Modifiers">
+			<Word>const</Word>
 			<Word>private</Word>
 			<Word>protected</Word>
 			<Word>public</Word>
-			<Word>const</Word>
-			<Word>volatile</Word>
 			<Word>static</Word>
+			<Word>volatile</Word>
 		</Keywords>
 		<Keywords color="TypeKeywords">
 			<Word>bool</Word>
 			<Word>char</Word>
-			<Word>unsigned</Word>
-			<Word>union</Word>
-			<Word>virtual</Word>
+			<Word>class</Word>
 			<Word>double</Word>
+			<Word>enum</Word>
 			<Word>float</Word>
 			<Word>short</Word>
 			<Word>signed</Word>
-			<Word>void</Word>
-			<Word>class</Word>
-			<Word>enum</Word>
 			<Word>struct</Word>
+			<Word>union</Word>
+			<Word>unsigned</Word>
+			<Word>virtual</Word>
+			<Word>void</Word>
 		</Keywords>
 		<Keywords color="BooleanConstants">
 			<Word>false</Word>
@@ -158,16 +158,15 @@
 		</Keywords>
 		<Keywords color="ControlFlow">
 			<Word>case</Word>
+			<Word>default</Word>
 			<Word>else</Word>
 			<Word>if</Word>
 			<Word>switch</Word>
-			<Word>default</Word>
 		</Keywords>
 		<Keywords color="Keywords">
 			<Word>asm</Word>
 			<Word>auto</Word>
 			<Word>compl</Word>
-			<Word>mutable</Word>
 			<Word>const_cast</Word>
 			<Word>delete</Word>
 			<Word>dynamic_cast</Word>
@@ -177,6 +176,7 @@
 			<Word>inline</Word>
 			<Word>int</Word>
 			<Word>long</Word>
+			<Word>mutable</Word>
 			<Word>operator</Word>
 			<Word>register</Word>
 			<Word>reinterpret_cast</Word>

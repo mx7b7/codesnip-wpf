@@ -10,7 +10,7 @@
 	<Color name="Type"          foreground="#66D9EF" />
 	<Color name="MethodName"    foreground="#A6E22E" />
 	<Color name="Preprocessor"  foreground="#9B9B9B" />
-	
+
 	<Property name="Extension" value="d" />
 
 	<RuleSet ignoreCase="false">
@@ -41,7 +41,7 @@
 			</RuleSet>
 		</Span>
 
-<!-- 
+		<!-- 
 			Example matches:
 			- 0x1A3FUL       (hexadecimal with unsigned long suffix)
 			- 0b1010_1101u   (binary with unsigned suffix and underscores)
@@ -50,23 +50,23 @@
 			- 3.14159        (decimal floating-point number)
 		  -->
 		<Rule color="Number">
-\b(
-  0[xX][0-9a-fA-F_]+((u|U)?(l|L)?|(l|L)?(u|U)?)? |           # hex
-  0[bB][01_]+((u|U)?(l|L)?|(l|L)?(u|U)?)? |                  # binary
-  \d+(_\d+)*(\.\d+(_\d+)*)?([eE][+-]?\d+(_\d+)*)?            # decimal
-  (
-    (f|F)(i)?|L(i)?|i| (u|U)?(l|L)?|(l|L)?(u|U)?             # sufix
-  )?
-)\b
-</Rule>
-		
+			\b(
+			0[xX][0-9a-fA-F_]+((u|U)?(l|L)?|(l|L)?(u|U)?)? |           # hex
+			0[bB][01_]+((u|U)?(l|L)?|(l|L)?(u|U)?)? |                  # binary
+			\d+(_\d+)*(\.\d+(_\d+)*)?([eE][+-]?\d+(_\d+)*)?            # decimal
+			(
+			(f|F)(i)?|L(i)?|i| (u|U)?(l|L)?|(l|L)?(u|U)?             # sufix
+			)?
+			)\b
+		</Rule>
+
 		<Keywords color="Preprocessor">
-			<Word>version</Word>
 			<Word>debug</Word>
-			<Word>pragma</Word>
 			<Word>mixin</Word>
+			<Word>pragma</Word>
 			<Word>scope</Word>
 			<Word>unittest</Word>
+			<Word>version</Word>
 		</Keywords>
 		<Keywords color="Keywords">
 			<Word>abstract</Word>
@@ -137,15 +137,15 @@
 			<Word>volatile</Word>
 			<Word>while</Word>
 			<Word>with</Word>
-			<Word>__FILE__</Word>
-			<Word>__LINE__</Word>
-			<Word>__gshared</Word>
-			<Word>__thread</Word>
-			<Word>__traits</Word>
 			<Word>__DATE__</Word>
 			<Word>__EOF__</Word>
-			<Word>__TIME__</Word>
+			<Word>__FILE__</Word>
+			<Word>__gshared</Word>
+			<Word>__LINE__</Word>
+			<Word>__thread</Word>
 			<Word>__TIMESTAMP__</Word>
+			<Word>__TIME__</Word>
+			<Word>__traits</Word>
 			<Word>__VENDOR__</Word>
 			<Word>__VERSION__</Word>
 		</Keywords>
@@ -191,7 +191,7 @@
 		<Rule color="MethodName">[\d\w_]+(?=(\s*\())</Rule>
 		<!-- std.string -->
 		<Rule color="Type">(?&lt;!\bstd\.)\bstring\b</Rule>
-			
+
 	</RuleSet>
 </SyntaxDefinition>
 

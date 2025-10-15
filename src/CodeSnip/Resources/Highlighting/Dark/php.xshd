@@ -3,22 +3,22 @@
 <!-- converted to AvalonEdit format by Siegfried Pammer in 2010 -->
 <SyntaxDefinition name ="PHP" extensions = ".php" xmlns="http://icsharpcode.net/sharpdevelop/syntaxdefinition/2008">
 	<Color name="Comment"             foreground="#FF57A64A" exampleText="// comment"/>
-    <Color name="String"              foreground="#FFD69D85" exampleText="$text = &quot;Hello, World!&quot;"/>
-    <Color name="NumberLiteral"       foreground="#FFb5cea8" exampleText="3.1415"/>
-    <Color name="Punctuation"         foreground="White"     exampleText="a(b + c)" />
-    <Color name="FunctionCall"        foreground="#FFdcdcaa" fontWeight="bold" exampleText="abs(num);"/>
-    <Color name="AccessKeywords"      foreground="#FF559CD6" fontWeight="bold" exampleText="global $database;" />
-    <Color name="OperatorKeywords"    foreground="#FFD69D85" fontWeight="bold" exampleText="if (x === false and y === false) { }" />
-    <Color name="SelectionStatements" foreground="#FFd8a0df" fontWeight="bold" exampleText="if (true) { } else { }" />
-    <Color name="IterationStatements" foreground="#FFd8a0df" fontWeight="bold" exampleText="while (true) { }" />
-    <Color name="JumpStatements"      foreground="#FFd8a0df" fontWeight="bold" exampleText="if (x == 5) continue;" />
-    <Color name="ControlStatements"   foreground="#FF559CD6" fontWeight="bold" exampleText="include(&quot;test.php&quot;);" />
-    <Color name="ValueTypes"          foreground="#FF00A0FF" fontWeight="bold" exampleText="int test = 5;" />
-    <Color name="OtherTypes"          foreground="#FF00A0FF" exampleText="object test = null;" />
-    <Color name="AccessModifiers"     foreground="#FF00A0FF" fontWeight="bold" exampleText="public function test() {}" />
-	
+	<Color name="String"              foreground="#FFD69D85" exampleText="$text = &quot;Hello, World!&quot;"/>
+	<Color name="NumberLiteral"       foreground="#FFb5cea8" exampleText="3.1415"/>
+	<Color name="Punctuation"         foreground="White"     exampleText="a(b + c)" />
+	<Color name="FunctionCall"        foreground="#FFdcdcaa" fontWeight="bold" exampleText="abs(num);"/>
+	<Color name="AccessKeywords"      foreground="#FF559CD6" fontWeight="bold" exampleText="global $database;" />
+	<Color name="OperatorKeywords"    foreground="#FFD69D85" fontWeight="bold" exampleText="if (x === false and y === false) { }" />
+	<Color name="SelectionStatements" foreground="#FFd8a0df" fontWeight="bold" exampleText="if (true) { } else { }" />
+	<Color name="IterationStatements" foreground="#FFd8a0df" fontWeight="bold" exampleText="while (true) { }" />
+	<Color name="JumpStatements"      foreground="#FFd8a0df" fontWeight="bold" exampleText="if (x == 5) continue;" />
+	<Color name="ControlStatements"   foreground="#FF559CD6" fontWeight="bold" exampleText="include(&quot;test.php&quot;);" />
+	<Color name="ValueTypes"          foreground="#FF00A0FF" fontWeight="bold" exampleText="int test = 5;" />
+	<Color name="OtherTypes"          foreground="#FF00A0FF" exampleText="object test = null;" />
+	<Color name="AccessModifiers"     foreground="#FF00A0FF" fontWeight="bold" exampleText="public function test() {}" />
+
 	<Property name="Extension" value="php" />
-	
+
 	<RuleSet>
 		<Span color="Comment">
 			<Begin>\#</Begin>
@@ -36,9 +36,9 @@
 		<!-- Digits -->
 		<Rule color="NumberLiteral">
 			\b0[xX][0-9a-fA-F]+  # hex number
-		|
+			|
 			\b0[0-9]+ # octal number
-		|
+			|
 			(	\b\d+(\.[0-9]+)?   #number with optional floating point
 			|	\.[0-9]+           #or just starting with floating point
 			)
@@ -51,9 +51,9 @@
 
 		<!-- Mark previous rule-->
 		<Rule color="FunctionCall">
-		\b
-		[\d\w_]+  # an identifier
-		(?=\s*\() # followed by (
+			\b
+			[\d\w_]+  # an identifier
+			(?=\s*\() # followed by (
 		</Rule>
 
 		<Span color="String" multiline="true">
@@ -77,7 +77,7 @@
 		<!-- heredoc syntax -->
 		<Span color="String" multiline="true">
 			<Begin>&lt;&lt;&lt;\"?[\d\w_]+\"?$</Begin>
-		 	<End>^[\d\w_]+;</End>
+			<End>^[\d\w_]+;</End>
 		</Span>
 
 		<!-- nowdoc syntax -->
@@ -94,31 +94,31 @@
 
 		<Keywords color="OperatorKeywords">
 			<Word>and</Word>
-			<Word>or</Word>
-			<Word>new</Word>
 			<Word>clone</Word>
-			<Word>instanceof</Word>
-			<Word>xor</Word>
-			<Word>true</Word>
 			<Word>false</Word>
+			<Word>instanceof</Word>
+			<Word>new</Word>
+			<Word>or</Word>
+			<Word>true</Word>
+			<Word>xor</Word>
 		</Keywords>
 
 		<Keywords color="SelectionStatements">
-			<Word>else</Word>
-			<Word>else</Word>
-			<Word>switch</Word>
 			<Word>case</Word>
-			<Word>endif</Word>
+			<Word>else</Word>
+			<Word>else</Word>
 			<Word>elseif</Word>
+			<Word>endif</Word>
+			<Word>switch</Word>
 		</Keywords>
 
 		<Keywords color="IterationStatements">
 			<Word>do</Word>
+			<Word>endwhile</Word>
+			<Word>exit</Word>
 			<Word>for</Word>
 			<Word>foreach</Word>
 			<Word>while</Word>
-			<Word>endwhile</Word>
-			<Word>exit</Word>
 		</Keywords>
 
 		<Keywords color="JumpStatements">
@@ -130,22 +130,22 @@
 		</Keywords>
 
 		<Keywords color="ControlStatements">
-			<Word>require</Word>
-			<Word>include</Word>
-			<Word>require</Word>
-			<Word>include</Word>
 			<Word>function</Word>
+			<Word>include</Word>
+			<Word>include</Word>
+			<Word>require</Word>
+			<Word>require</Word>
 		</Keywords>
 
 		<Keywords color="ValueTypes">
-			<Word>int</Word>
-			<Word>integer</Word>
-			<Word>real</Word>
+			<Word>array</Word>
 			<Word>double</Word>
 			<Word>float</Word>
-			<Word>string</Word>
-			<Word>array</Word>
+			<Word>int</Word>
+			<Word>integer</Word>
 			<Word>object</Word>
+			<Word>real</Word>
+			<Word>string</Word>
 		</Keywords>
 
 		<Keywords color="OtherTypes">

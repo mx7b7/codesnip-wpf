@@ -60,6 +60,8 @@
 			<Word>and</Word>
 			<Word>as</Word>
 			<Word>assert</Word>
+			<Word>async</Word>
+			<Word>await</Word>
 			<Word>break</Word>
 			<Word>class</Word>
 			<Word>continue</Word>
@@ -92,8 +94,6 @@
 			<Word>while</Word>
 			<Word>with</Word>
 			<Word>yield</Word>
-			<Word>async</Word>
-			<Word>await</Word>
 		</Keywords>
 
 		<Rule color="MethodCall">
