@@ -72,7 +72,8 @@ namespace CodeSnip.Views.CodeRunnerView
             ["js"] = ("node.exe", "-"),
             ["rb"] = ("ruby.exe", "-"),
             ["pl"] = ("perl.exe", "-"),
-            ["php"] = ("php.exe", "")
+            ["php"] = ("php.exe", ""),
+            ["java"] = ("jshell.exe", "-s -")
         };
 
 
