@@ -181,7 +181,8 @@ namespace CodeSnip.Services
                 RedirectStandardOutput = true,
                 RedirectStandardError = true,
                 UseShellExecute = false,
-                CreateNoWindow = true
+                CreateNoWindow = true,
+                WorkingDirectory = Path.GetDirectoryName(toolPath) // Set the working directory to the formatter's folder to ensure it can locate its config files
             };
 
             try
