@@ -89,10 +89,10 @@
                 <RowDefinition Height="28"/>
             </Grid.RowDefinitions>
             <Button Content="Run" Command="{Binding RunCommand}" Grid.Column="0" Grid.Row="0" TabIndex="0"/>
-            <mah:Badged Badge="{Binding ReloadBadge}" Grid.Column="1" Grid.Row="0" Margin="10,0,0,0" >
-                <Button Content="Reload" TabIndex="1" Command="{Binding ReloadCommand}" />
+            <Button Content="Run Local" Grid.Column="1" Margin="10,0,0,0" Grid.Row="0" TabIndex="1" Command="{Binding RunLocalCommand}"/>
+            <mah:Badged Badge="{Binding ReloadBadge}" Grid.Column="2" Grid.Row="0" Margin="10,0,0,0" >
+                <Button Content="Reload" TabIndex="2" Command="{Binding ReloadCommand}" />
             </mah:Badged>
-            <Button Content="Run Local" Grid.Column="2" Margin="10,0,0,0" Grid.Row="0" TabIndex="2" Command="{Binding RunLocalCommand}"/>
             <mah:ToggleSwitch IsOn="{Binding ShowAsm, Mode=TwoWay}" Grid.Row="0" Grid.Column="3" Margin="20,0,0,0" Content="Show assembler output"
                               Style="{DynamicResource MahApps.Styles.ToggleSwitch.Metro}" VerticalAlignment="Center">
             </mah:ToggleSwitch>

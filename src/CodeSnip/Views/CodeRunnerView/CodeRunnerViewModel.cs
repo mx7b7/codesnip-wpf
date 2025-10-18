@@ -1,6 +1,8 @@
 ﻿using CodeSnip.Services;
 using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
+using Microsoft.CodeAnalysis.CSharp.Scripting;
+using Microsoft.CodeAnalysis.Scripting;
 using System.Diagnostics;
 using System.IO;
 using System.Net.Http;
@@ -237,6 +239,47 @@ namespace CodeSnip.Views.CodeRunnerView
                     ErrorText = $"No local interpreter configured for extension '{Extension}'.";
                     return;
                 }
+
+                // Special handling for C# scripting
+                if (Extension.Equals("cs", StringComparison.OrdinalIgnoreCase))
+                {
+                    try
+                    {
+                        // Basic references and using directives are added for convenience.
+                        // Additional references can be added directly in the script using #r "assembly_name",
+                        // and namespaces using `using namespace_name;`.
+                        var options = ScriptOptions.Default
+                            .AddReferences(
+                                typeof(System.Object).Assembly,
+                                typeof(System.Console).Assembly,
+                                typeof(System.Linq.Enumerable).Assembly,
+                                typeof(System.Collections.Generic.List<>).Assembly
+                            )
+                            .AddImports(
+                                "System",
+                                "System.IO",
+                                "System.Collections.Generic",
+                                "System.Linq",
+                                "System.Text",
+                                "System.Threading.Tasks"
+                            );
+
+                        var scriptOutput = new StringWriter();
+                        var result = await CSharpScript.RunAsync(Code, options: options, globals: new ScriptGlobals { Console = scriptOutput });
+
+                        StdOut = scriptOutput.ToString();
+                        if (result.ReturnValue != null)
+                        {
+                            StdOut += $"\n\nReturn Value: {result.ReturnValue}";
+                        }
+                    }
+                    catch (Exception ex)
+                    {
+                        ErrorText = ex.Message;
+                    }
+                    return;
+                }
+                // For other interpreters, run external process
                 var (success, output, error) = await RunProcessAsync(interpreterPath, arguments, Code, 15000);
 
                 StdOut = output ?? "";
@@ -259,6 +302,10 @@ namespace CodeSnip.Views.CodeRunnerView
                 return (null, null);
 
             compilerExtension = compilerExtension.TrimStart('.').ToLowerInvariant();
+
+            // Special case for C# scripting, which doesn't use an external file
+            if (compilerExtension == "cs")
+                return ("internal", null);
 
             if (!Interpreters.TryGetValue(compilerExtension, out var info))
                 return (null, null);
@@ -328,4 +375,13 @@ namespace CodeSnip.Views.CodeRunnerView
         }
 
     }
+
+    /// <summary>
+    /// Defines global variables accessible from within the C# script.
+    /// </summary>
+    public class ScriptGlobals
+    {
+        public required StringWriter Console { get; set; }
+    }
+
 }
