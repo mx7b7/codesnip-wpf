@@ -243,42 +243,10 @@ namespace CodeSnip.Views.CodeRunnerView
                 // Special handling for C# scripting
                 if (Extension.Equals("cs", StringComparison.OrdinalIgnoreCase))
                 {
-                    try
-                    {
-                        // Basic references and using directives are added for convenience.
-                        // Additional references can be added directly in the script using #r "assembly_name",
-                        // and namespaces using `using namespace_name;`.
-                        var options = ScriptOptions.Default
-                            .AddReferences(
-                                typeof(System.Object).Assembly,
-                                typeof(System.Console).Assembly,
-                                typeof(System.Linq.Enumerable).Assembly,
-                                typeof(System.Collections.Generic.List<>).Assembly
-                            )
-                            .AddImports(
-                                "System",
-                                "System.IO",
-                                "System.Collections.Generic",
-                                "System.Linq",
-                                "System.Text",
-                                "System.Threading.Tasks"
-                            );
-
-                        var scriptOutput = new StringWriter();
-                        var result = await CSharpScript.RunAsync(Code, options: options, globals: new ScriptGlobals { Console = scriptOutput });
-
-                        StdOut = scriptOutput.ToString();
-                        if (result.ReturnValue != null)
-                        {
-                            StdOut += $"\n\nReturn Value: {result.ReturnValue}";
-                        }
-                    }
-                    catch (Exception ex)
-                    {
-                        ErrorText = ex.Message;
-                    }
+                    await RunCSharpScriptAsync();
                     return;
                 }
+
                 // For other interpreters, run external process
                 var (success, output, error) = await RunProcessAsync(interpreterPath, arguments, Code, 15000);
 
@@ -294,6 +262,60 @@ namespace CodeSnip.Views.CodeRunnerView
             {
                 IsRunning = false;
             }
+        }
+
+        private async Task RunCSharpScriptAsync()
+        {
+            // Run the entire script execution on a background thread to prevent blocking the UI.
+            // CSharpScript.RunAsync can have a significant synchronous portion (compilation)
+            // that would otherwise freeze the UI before the progress bar can be shown.
+            await Task.Run(async () =>
+            {
+                try
+                {
+                    var options = ScriptOptions.Default
+                        .AddReferences(
+                            typeof(object).Assembly, // System
+                            typeof(Console).Assembly, // System.Console
+                            typeof(List<>).Assembly, // System.Collections.Generic
+                            typeof(System.Data.DataSet).Assembly, // System.Data
+                            typeof(System.Linq.Enumerable).Assembly, // System.Linq
+                            typeof(System.Linq.Expressions.Expression).Assembly, // System.Linq.Expressions
+                            typeof(System.Text.RegularExpressions.Regex).Assembly, // System.Text.RegularExpressions
+                            typeof(System.Threading.Thread).Assembly, // System.Threading
+                            typeof(System.Xml.XmlDocument).Assembly, // System.Xml
+                            typeof(System.Xml.Linq.XDocument).Assembly // System.Xml.Linq
+                        )
+                        .AddImports(
+                            "System",
+                            "System.Collections",
+                            "System.Collections.Generic",
+                            "System.Data",
+                            "System.IO",
+                            "System.Linq",
+                            "System.Linq.Expressions",
+                            "System.Text",
+                            "System.Text.RegularExpressions",
+                            "System.Threading",
+                            "System.Xml",
+                            "System.Xml.Linq"
+                        )
+                        .WithOptimizationLevel(Microsoft.CodeAnalysis.OptimizationLevel.Release);
+
+                    var scriptOutput = new StringWriter();
+                    var result = await CSharpScript.RunAsync(Code, options: options, globals: new ScriptGlobals { Console = scriptOutput });
+
+                    StdOut = scriptOutput.ToString();
+                    if (result.ReturnValue != null)
+                    {
+                        StdOut += $"\n\nReturn Value: {result.ReturnValue}";
+                    }
+                }
+                catch (Exception ex)
+                {
+                    ErrorText = ex.Message;
+                }
+            });
         }
 
         private static (string? path, string? args) GetLocalInterpreter(string? compilerExtension)
