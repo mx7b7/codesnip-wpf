@@ -17,7 +17,7 @@
     <Grid Margin="10">
         <Grid.RowDefinitions>
             <!-- Progress bar -->
-                <RowDefinition Height="10"/>
+            <RowDefinition Height="10"/>
             <!-- Compiler selection and flags -->
             <RowDefinition Height="Auto"/>
             <!-- Short link -->
@@ -101,26 +101,28 @@
         <mah:MetroTabControl Grid.Row="4" Margin="0,10,0,0"
                                 Style="{DynamicResource MahApps.Styles.TabControl.Animated}" mah:HeaderedControlHelper.HeaderFontSize="18">
             <mah:MetroTabItem Header="Output">
-                <Grid>
-                    <Grid.RowDefinitions>
-                        <RowDefinition Height="*" />
-                        <RowDefinition Height="Auto" />
-                    </Grid.RowDefinitions>
-                    <Expander Header="Stdout:" IsExpanded="{Binding HasOut}" Grid.Row="0" Padding="0">
-                        <Expander.Resources>
-                            <Style TargetType="{x:Type Expander}" BasedOn="{StaticResource SimpleExpander}" />
-                        </Expander.Resources>
-                        <TextBox Text="{Binding StdOut}" IsReadOnly="True" BorderThickness="0.5"
+                <ScrollViewer VerticalScrollBarVisibility="Auto">
+                    <Grid>
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="*" />
+                            <RowDefinition Height="Auto" />
+                        </Grid.RowDefinitions>
+                        <Expander Header="Stdout:" IsExpanded="{Binding HasOut}" Grid.Row="0" Padding="0">
+                            <Expander.Resources>
+                                <Style TargetType="{x:Type Expander}" BasedOn="{StaticResource SimpleExpander}" />
+                            </Expander.Resources>
+                            <TextBox Text="{Binding StdOut}" IsReadOnly="True" BorderThickness="0.5"
                      VerticalScrollBarVisibility="Auto" HorizontalScrollBarVisibility="Auto"/>
-                    </Expander>
-                    <Expander Header="Stderr:" IsExpanded="{Binding HasError}" Grid.Row="1" Padding="0">
-                        <Expander.Resources>
-                            <Style TargetType="{x:Type Expander}" BasedOn="{StaticResource SimpleExpander}" />
-                        </Expander.Resources>
-                        <TextBox Text="{Binding ErrorText}" IsReadOnly="True" Foreground="#FFF92672" Margin="0,0,0,2" 
+                        </Expander>
+                        <Expander Header="Stderr:" IsExpanded="{Binding HasError}" Grid.Row="1" Padding="0">
+                            <Expander.Resources>
+                                <Style TargetType="{x:Type Expander}" BasedOn="{StaticResource SimpleExpander}" />
+                            </Expander.Resources>
+                            <TextBox Text="{Binding ErrorText}" IsReadOnly="True" Foreground="#FFF92672" Margin="0,0,0,2" MaxHeight="300"
                                  VerticalScrollBarVisibility="Auto" HorizontalScrollBarVisibility="Auto" BorderThickness="0.5"/>
-                    </Expander>
-                </Grid>
+                        </Expander>
+                    </Grid>
+                </ScrollViewer>
             </mah:MetroTabItem>
 
             <mah:MetroTabItem Header="Assembler">
