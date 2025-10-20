@@ -9,7 +9,7 @@ AllowShortCaseLabelsOnASingleLine: true
 AllowShortFunctionsOnASingleLine: Inline
 AllowShortIfStatementsOnASingleLine: true
 AllowShortLoopsOnASingleLine: false
-BinPackParameters: fals
+BinPackParameters: false
 BinPackArguments: false
 #LineEnding: CRLF # LF, CRLF, DeriveLF, DeriveCRLF
 

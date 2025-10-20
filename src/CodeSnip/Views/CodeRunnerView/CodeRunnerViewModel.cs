@@ -1,8 +1,6 @@
 ﻿using CodeSnip.Services;
 using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
-using Microsoft.CodeAnalysis.CSharp.Scripting;
-using Microsoft.CodeAnalysis.Scripting;
 using System.Diagnostics;
 using System.IO;
 using System.Net.Http;
@@ -70,7 +68,7 @@ namespace CodeSnip.Views.CodeRunnerView
         private static readonly Dictionary<string, (string exe, string args)> Interpreters = new()
         {
             ["py"] = ("python.exe", "-u -"),
-            ["lua"] = ("lua54.exe", "-"),
+            ["lua"] = ("lua.exe", "-"),
             ["js"] = ("node.exe", "-"),
             ["rb"] = ("ruby.exe", "-"),
             ["pl"] = ("perl.exe", "-"),
@@ -240,15 +238,11 @@ namespace CodeSnip.Views.CodeRunnerView
                     return;
                 }
 
-                // Special handling for C# scripting
-                if (Extension.Equals("cs", StringComparison.OrdinalIgnoreCase))
-                {
-                    await RunCSharpScriptAsync();
-                    return;
-                }
+                // Timeout is 30 seconds for C# scripts, 15 for others.
+                int timeout = Extension.Equals("cs", StringComparison.OrdinalIgnoreCase) ? 30000 : 15000;
 
                 // For other interpreters, run external process
-                var (success, output, error) = await RunProcessAsync(interpreterPath, arguments, Code, 15000);
+                var (success, output, error) = await RunProcessAsync(interpreterPath, arguments, Code, timeout);
 
                 StdOut = output ?? "";
                 ErrorText = error ?? "";
@@ -264,59 +258,7 @@ namespace CodeSnip.Views.CodeRunnerView
             }
         }
 
-        private async Task RunCSharpScriptAsync()
-        {
-            // Run the entire script execution on a background thread to prevent blocking the UI.
-            // CSharpScript.RunAsync can have a significant synchronous portion (compilation)
-            // that would otherwise freeze the UI before the progress bar can be shown.
-            await Task.Run(async () =>
-            {
-                try
-                {
-                    var options = ScriptOptions.Default
-                        .AddReferences(
-                            typeof(object).Assembly, // System
-                            typeof(Console).Assembly, // System.Console
-                            typeof(List<>).Assembly, // System.Collections.Generic
-                            typeof(System.Data.DataSet).Assembly, // System.Data
-                            typeof(System.Linq.Enumerable).Assembly, // System.Linq
-                            typeof(System.Linq.Expressions.Expression).Assembly, // System.Linq.Expressions
-                            typeof(System.Text.RegularExpressions.Regex).Assembly, // System.Text.RegularExpressions
-                            typeof(System.Threading.Thread).Assembly, // System.Threading
-                            typeof(System.Xml.XmlDocument).Assembly, // System.Xml
-                            typeof(System.Xml.Linq.XDocument).Assembly // System.Xml.Linq
-                        )
-                        .AddImports(
-                            "System",
-                            "System.Collections",
-                            "System.Collections.Generic",
-                            "System.Data",
-                            "System.IO",
-                            "System.Linq",
-                            "System.Linq.Expressions",
-                            "System.Text",
-                            "System.Text.RegularExpressions",
-                            "System.Threading",
-                            "System.Xml",
-                            "System.Xml.Linq"
-                        )
-                        .WithOptimizationLevel(Microsoft.CodeAnalysis.OptimizationLevel.Release);
-
-                    var scriptOutput = new StringWriter();
-                    var result = await CSharpScript.RunAsync(Code, options: options, globals: new ScriptGlobals { Console = scriptOutput });
-
-                    StdOut = scriptOutput.ToString();
-                    if (result.ReturnValue != null)
-                    {
-                        StdOut += $"\n\nReturn Value: {result.ReturnValue}";
-                    }
-                }
-                catch (Exception ex)
-                {
-                    ErrorText = ex.Message;
-                }
-            });
-        }
+        
 
         private static (string? path, string? args) GetLocalInterpreter(string? compilerExtension)
         {
@@ -325,14 +267,18 @@ namespace CodeSnip.Views.CodeRunnerView
 
             compilerExtension = compilerExtension.TrimStart('.').ToLowerInvariant();
 
-            // Special case for C# scripting, which doesn't use an external file
+            string toolsDir = Path.Combine(AppContext.BaseDirectory, "Tools\\Interpreters");
+            // Special case for C# scripting
             if (compilerExtension == "cs")
-                return ("internal", null);
+            {
+                string csrunnerPath = Path.Combine(toolsDir, "csrunner.exe");
+                return File.Exists(csrunnerPath) ? (csrunnerPath, null) : (null, null);
+            }
 
             if (!Interpreters.TryGetValue(compilerExtension, out var info))
                 return (null, null);
 
-            string toolsDir = Path.Combine(AppContext.BaseDirectory, "Tools");
+            
             string interpreterPath = Path.Combine(toolsDir, info.exe);
 
             return File.Exists(interpreterPath)
@@ -356,6 +302,7 @@ namespace CodeSnip.Views.CodeRunnerView
                 RedirectStandardError = true,
                 UseShellExecute = false,
                 CreateNoWindow = true,
+                WorkingDirectory = Path.GetDirectoryName(fileName) ?? AppContext.BaseDirectory
             };
 
             using var process = new Process { StartInfo = psi };
@@ -386,9 +333,7 @@ namespace CodeSnip.Views.CodeRunnerView
             {
                 try
                 {
-                    var killInfo = new ProcessStartInfo("taskkill", $"/PID {process.Id} /T /F") { CreateNoWindow = true, UseShellExecute = false };
-                    using var killer = Process.Start(killInfo);
-                    killer?.WaitForExit(1000); // Give it a second to do its job
+                    process.Kill(entireProcessTree: true);
                 }
                 catch { /* Ignore errors during forceful termination */ }
 
@@ -396,14 +341,6 @@ namespace CodeSnip.Views.CodeRunnerView
             }
         }
 
-    }
-
-    /// <summary>
-    /// Defines global variables accessible from within the C# script.
-    /// </summary>
-    public class ScriptGlobals
-    {
-        public required StringWriter Console { get; set; }
     }
 
 }
