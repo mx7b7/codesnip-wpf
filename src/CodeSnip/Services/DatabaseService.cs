@@ -588,169 +588,172 @@ ORDER BY L.Name, C.Name, S.Title";
         }
 
         private const string ddl = @"
-            CREATE TABLE IF NOT EXISTS Languages (
-                ID INTEGER PRIMARY KEY AUTOINCREMENT,
-                Code TEXT NOT NULL UNIQUE,
-                Name TEXT
-            );
-
-            CREATE TABLE IF NOT EXISTS Categories (
-                ID INTEGER PRIMARY KEY AUTOINCREMENT,
-                LanguageId INTEGER NOT NULL,
-                Name TEXT NOT NULL,
-                FOREIGN KEY (LanguageId) REFERENCES Languages(ID) ON DELETE RESTRICT ON UPDATE CASCADE
-            );
-
-            CREATE TABLE IF NOT EXISTS Snippets (
-                ID INTEGER PRIMARY KEY AUTOINCREMENT,
-                CategoryId INTEGER NOT NULL,
-                Title TEXT NOT NULL,
-                Code TEXT,
-                Description TEXT,
-                Tag TEXT,
-                FOREIGN KEY (CategoryId) REFERENCES Categories(ID) ON DELETE RESTRICT ON UPDATE CASCADE
-            );
+CREATE TABLE IF NOT EXISTS Languages (
+    ID INTEGER PRIMARY KEY AUTOINCREMENT,
+    Code TEXT NOT NULL UNIQUE,
+    Name TEXT
+);
+CREATE TABLE IF NOT EXISTS Categories (
+    ID INTEGER PRIMARY KEY AUTOINCREMENT,
+    LanguageId INTEGER NOT NULL,
+    Name TEXT NOT NULL,
+    FOREIGN KEY (LanguageId) REFERENCES Languages(ID) ON DELETE RESTRICT ON UPDATE CASCADE
+);
+CREATE TABLE IF NOT EXISTS Snippets (
+    ID INTEGER PRIMARY KEY AUTOINCREMENT,
+    CategoryId INTEGER NOT NULL,
+    Title TEXT NOT NULL,
+    Code TEXT,
+    Description TEXT,
+    Tag TEXT,
+    FOREIGN KEY (CategoryId) REFERENCES Categories(ID) ON DELETE RESTRICT ON UPDATE CASCADE
+);
 						
-			INSERT INTO [Languages] ([ID],[Code],[Name]) VALUES (1,'as','ActionScript3');
-			INSERT INTO [Languages] ([ID],[Code],[Name]) VALUES (2,'aspx','ASP/XHTML');
-			INSERT INTO [Languages] ([ID],[Code],[Name]) VALUES (3,'atg','Coco');
-			INSERT INTO [Languages] ([ID],[Code],[Name]) VALUES (4,'bat','BAT');
-			INSERT INTO [Languages] ([ID],[Code],[Name]) VALUES (5,'boo','Boo');
-			INSERT INTO [Languages] ([ID],[Code],[Name]) VALUES (6,'cpp','C++');
-			INSERT INTO [Languages] ([ID],[Code],[Name]) VALUES (7,'cs','C#');
-			INSERT INTO [Languages] ([ID],[Code],[Name]) VALUES (8,'css','CSS');
-			INSERT INTO [Languages] ([ID],[Code],[Name]) VALUES (9,'d','D');
-			INSERT INTO [Languages] ([ID],[Code],[Name]) VALUES (10,'fs','F#');
-			INSERT INTO [Languages] ([ID],[Code],[Name]) VALUES (11,'fx','HLSL');
-			INSERT INTO [Languages] ([ID],[Code],[Name]) VALUES (12,'html','HTML');
-			INSERT INTO [Languages] ([ID],[Code],[Name]) VALUES (13,'ini','INI');
-			INSERT INTO [Languages] ([ID],[Code],[Name]) VALUES (14,'java','Java');
-			INSERT INTO [Languages] ([ID],[Code],[Name]) VALUES (15,'js','JavaScript');
-			INSERT INTO [Languages] ([ID],[Code],[Name]) VALUES (16,'json','Json');
-			INSERT INTO [Languages] ([ID],[Code],[Name]) VALUES (17,'md','MarkDown');
-			INSERT INTO [Languages] ([ID],[Code],[Name]) VALUES (18,'nut','Squirrel');
-			INSERT INTO [Languages] ([ID],[Code],[Name]) VALUES (19,'pas','Pascal');
-			INSERT INTO [Languages] ([ID],[Code],[Name]) VALUES (20,'php','PHP');
-			INSERT INTO [Languages] ([ID],[Code],[Name]) VALUES (21,'plsql','PLSQL');
-			INSERT INTO [Languages] ([ID],[Code],[Name]) VALUES (22,'ps1','PowerShell');
-			INSERT INTO [Languages] ([ID],[Code],[Name]) VALUES (23,'py','Python');
-			INSERT INTO [Languages] ([ID],[Code],[Name]) VALUES (24,'rb','Ruby');
-			INSERT INTO [Languages] ([ID],[Code],[Name]) VALUES (25,'rs','Rust');
-			INSERT INTO [Languages] ([ID],[Code],[Name]) VALUES (26,'sql','SQL');
-			INSERT INTO [Languages] ([ID],[Code],[Name]) VALUES (27,'tex','TeX');
-			INSERT INTO [Languages] ([ID],[Code],[Name]) VALUES (28,'vb','VB');
-			INSERT INTO [Languages] ([ID],[Code],[Name]) VALUES (29,'vtl','VTL');
-			INSERT INTO [Languages] ([ID],[Code],[Name]) VALUES (30,'xml','XML');
-         
-            INSERT INTO Categories (LanguageId, Name) VALUES (6, 'Basic Syntax');
-            INSERT INTO Categories (LanguageId, Name) VALUES (6, 'STL (Standard Template Library)');
-            INSERT INTO Categories (LanguageId, Name) VALUES (6, 'File I/O');
-            INSERT INTO Categories (LanguageId, Name) VALUES (6, 'Exception Handling');
-            INSERT INTO Categories (LanguageId, Name) VALUES (6, 'Pointers and Memory Management');
-            INSERT INTO Categories (LanguageId, Name) VALUES (6, 'Classes and Objects');
-            INSERT INTO Categories (LanguageId, Name) VALUES (6, 'Templates');
-            INSERT INTO Categories (LanguageId, Name) VALUES (6, 'Multithreading');
-            INSERT INTO Categories (LanguageId, Name) VALUES (6, 'Algorithms');
-            INSERT INTO Categories (LanguageId, Name) VALUES (6, 'Preprocessor Directives');
+INSERT INTO Languages (ID, Code, Name) VALUES
+(1, 'as', 'ActionScript3'),
+(2, 'aspx', 'ASP/XHTML'),
+(3, 'atg', 'Coco'),
+(4, 'bat', 'BAT'),
+(5, 'boo', 'Boo'),
+(6, 'cpp', 'C++'),
+(7, 'cs', 'C#'),
+(8, 'css', 'CSS'),
+(9, 'd', 'D'),
+(10, 'fs', 'F#'),
+(11, 'fx', 'HLSL'),
+(12, 'html', 'HTML'),
+(13, 'ini', 'INI'),
+(14, 'java', 'Java'),
+(15, 'js', 'JavaScript'),
+(16, 'json', 'Json'),
+(17, 'md', 'MarkDown'),
+(18, 'nut', 'Squirrel'),
+(19, 'pas', 'Pascal'),
+(20, 'php', 'PHP'),
+(21, 'plsql', 'PLSQL'),
+(22, 'ps1', 'PowerShell'),
+(23, 'py', 'Python'),
+(24, 'rb', 'Ruby'),
+(25, 'rs', 'Rust'),
+(26, 'sql', 'SQL'),
+(27, 'tex', 'TeX'),
+(28, 'vb', 'VB'),
+(29, 'vtl', 'VTL'),
+(30, 'xml', 'XML'),
+(31, 'lua', 'Lua'),
+(32, 'asm', 'Asm'),
+(33, 'il', 'IL');
 
-            INSERT INTO Categories (LanguageId, Name) VALUES (7, 'Basic Syntax');
-            INSERT INTO Categories (LanguageId, Name) VALUES (7, 'Collections');
-            INSERT INTO Categories (LanguageId, Name) VALUES (7, 'Database');
-            INSERT INTO Categories (LanguageId, Name) VALUES (7, 'LINQ Queries');
-            INSERT INTO Categories (LanguageId, Name) VALUES (7, 'File I/O');
-            INSERT INTO Categories (LanguageId, Name) VALUES (7, 'Exception Handling');
-            INSERT INTO Categories (LanguageId, Name) VALUES (7, 'OOP Concepts');
-            INSERT INTO Categories (LanguageId, Name) VALUES (7, 'Delegates and Events');
-            INSERT INTO Categories (LanguageId, Name) VALUES (7, 'Async Programming');
-            INSERT INTO Categories (LanguageId, Name) VALUES (7, 'Windows Forms/WPF');
-            INSERT INTO Categories (LanguageId, Name) VALUES (7, 'Networking');
-            
-            INSERT INTO Categories (LanguageId, Name) VALUES (9, 'Basic Syntax');
-            INSERT INTO Categories (LanguageId, Name) VALUES (9, 'Ranges and Algorithms');
-            INSERT INTO Categories (LanguageId, Name) VALUES (9, 'File I/O');
-            INSERT INTO Categories (LanguageId, Name) VALUES (9, 'Exception Handling');
-            INSERT INTO Categories (LanguageId, Name) VALUES (9, 'Memory Management');
-            INSERT INTO Categories (LanguageId, Name) VALUES (9, 'Classes and Structs');
-            INSERT INTO Categories (LanguageId, Name) VALUES (9, 'Templates and Mixins');
-            INSERT INTO Categories (LanguageId, Name) VALUES (9, 'Concurrency');
-            INSERT INTO Categories (LanguageId, Name) VALUES (9, 'Modules and Imports');
-            INSERT INTO Categories (LanguageId, Name) VALUES (9, 'Metaprogramming');
-			
-			INSERT INTO Categories (LanguageId, Name) VALUES (14, 'Basic Syntax');
-			INSERT INTO Categories (LanguageId, Name) VALUES (14, 'OOP Concepts');
-			INSERT INTO Categories (LanguageId, Name) VALUES (14, 'Collections Framework');
-			INSERT INTO Categories (LanguageId, Name) VALUES (14, 'Generics');
-			INSERT INTO Categories (LanguageId, Name) VALUES (14, 'Exceptions');
-			INSERT INTO Categories (LanguageId, Name) VALUES (14, 'File I/O');
-			INSERT INTO Categories (LanguageId, Name) VALUES (14, 'Multithreading and Concurrency');
-			INSERT INTO Categories (LanguageId, Name) VALUES (14, 'Java Streams and Lambdas');
-			INSERT INTO Categories (LanguageId, Name) VALUES (14, 'Networking');
-			INSERT INTO Categories (LanguageId, Name) VALUES (14, 'JVM Internals');
-			
-			INSERT INTO Categories (LanguageId, Name) VALUES (15, 'Basic Syntax');
-			INSERT INTO Categories (LanguageId, Name) VALUES (15, 'Functions and Closures');
-			INSERT INTO Categories (LanguageId, Name) VALUES (15, 'DOM Manipulation');
-			INSERT INTO Categories (LanguageId, Name) VALUES (15, 'Events');
-			INSERT INTO Categories (LanguageId, Name) VALUES (15, 'Promises and Async/Await');
-			INSERT INTO Categories (LanguageId, Name) VALUES (15, 'Modules');
-			INSERT INTO Categories (LanguageId, Name) VALUES (15, 'ES6+ Features');
-			INSERT INTO Categories (LanguageId, Name) VALUES (15, 'Error Handling');
-			INSERT INTO Categories (LanguageId, Name) VALUES (15, 'Testing');
-			INSERT INTO Categories (LanguageId, Name) VALUES (15, 'Node.js');
-			
-			INSERT INTO Categories (LanguageId, Name) VALUES (19, 'Basic Syntax');
-			INSERT INTO Categories (LanguageId, Name) VALUES (19, 'Procedures and Functions');
-			INSERT INTO Categories (LanguageId, Name) VALUES (19, 'Data Types and Variables');
-			INSERT INTO Categories (LanguageId, Name) VALUES (19, 'Control Structures');
-			INSERT INTO Categories (LanguageId, Name) VALUES (19, 'Records and Sets');
-			INSERT INTO Categories (LanguageId, Name) VALUES (19, 'File Handling');
-			INSERT INTO Categories (LanguageId, Name) VALUES (19, 'Object-Oriented Pascal');
-			INSERT INTO Categories (LanguageId, Name) VALUES (19, 'Exception Handling');
-			INSERT INTO Categories (LanguageId, Name) VALUES (19, 'Generics');
-			INSERT INTO Categories (LanguageId, Name) VALUES (19, 'Multithreading');
-			
-			INSERT INTO Categories (LanguageId, Name) VALUES (22, 'Basic Syntax');
-			INSERT INTO Categories (LanguageId, Name) VALUES (22, 'Cmdlets');
-			INSERT INTO Categories (LanguageId, Name) VALUES (22, 'Functions and Scripts');
-			INSERT INTO Categories (LanguageId, Name) VALUES (22, 'Modules');
-			INSERT INTO Categories (LanguageId, Name) VALUES (22, 'Error Handling');
-			INSERT INTO Categories (LanguageId, Name) VALUES (22, 'Remoting and Sessions');
-			INSERT INTO Categories (LanguageId, Name) VALUES (22, 'Pipeline and Objects');
-			INSERT INTO Categories (LanguageId, Name) VALUES (22, 'Security');
-			INSERT INTO Categories (LanguageId, Name) VALUES (22, 'Event Handling');
-			INSERT INTO Categories (LanguageId, Name) VALUES (22, 'Desired State Configuration (DSC)');
-
-            INSERT INTO Categories (LanguageId, Name) VALUES (23, 'Basic Syntax');
-            INSERT INTO Categories (LanguageId, Name) VALUES (23, 'Strings');
-            INSERT INTO Categories (LanguageId, Name) VALUES (23, 'Lists and Tuples');
-            INSERT INTO Categories (LanguageId, Name) VALUES (23, 'Dictionaries and Sets');
-            INSERT INTO Categories (LanguageId, Name) VALUES (23, 'File I/O');
-            INSERT INTO Categories (LanguageId, Name) VALUES (23, 'Exception Handling');
-            INSERT INTO Categories (LanguageId, Name) VALUES (23, 'Functions and Lambdas');
-            INSERT INTO Categories (LanguageId, Name) VALUES (23, 'Classes and OOP');
-            INSERT INTO Categories (LanguageId, Name) VALUES (23, 'Modules and Packages');
-            INSERT INTO Categories (LanguageId, Name) VALUES (23, 'Iterators and Generators');
-            INSERT INTO Categories (LanguageId, Name) VALUES (23, 'Comprehensions');
-            INSERT INTO Categories (LanguageId, Name) VALUES (23, 'Decorators');
-            INSERT INTO Categories (LanguageId, Name) VALUES (23, 'Context Managers');
-            INSERT INTO Categories (LanguageId, Name) VALUES (23, 'Regular Expressions');
-            INSERT INTO Categories (LanguageId, Name) VALUES (23, 'Data Serialization');
-            INSERT INTO Categories (LanguageId, Name) VALUES (23, 'Networking');
-            INSERT INTO Categories (LanguageId, Name) VALUES (23, 'Multithreading and Multiprocessing');
-            INSERT INTO Categories (LanguageId, Name) VALUES (23, 'Virtual Environments and Packaging');
-			
-			INSERT INTO Categories (LanguageId, Name) VALUES (25, 'Basic Syntax');
-			INSERT INTO Categories (LanguageId, Name) VALUES (25, 'Ownership and Borrowing');
-			INSERT INTO Categories (LanguageId, Name) VALUES (25, 'Traits and Generics');
-			INSERT INTO Categories (LanguageId, Name) VALUES (25, 'Error Handling');
-			INSERT INTO Categories (LanguageId, Name) VALUES (25, 'Concurrency');
-			INSERT INTO Categories (LanguageId, Name) VALUES (25, 'Modules and Crates');
-			INSERT INTO Categories (LanguageId, Name) VALUES (25, 'Macros');
-			INSERT INTO Categories (LanguageId, Name) VALUES (25, 'Patterns');
-			INSERT INTO Categories (LanguageId, Name) VALUES (25, 'Unsafe Rust');
-			INSERT INTO Categories (LanguageId, Name) VALUES (25, 'FFI (Foreign Function Interface)');
-
-        ";
+INSERT INTO Categories (LanguageId, Name) VALUES
+-- C++
+(6, 'Basic Syntax'),
+(6, 'STL (Standard Template Library)'),
+(6, 'File I/O'),
+(6, 'Exception Handling'),
+(6, 'Pointers and Memory Management'),
+(6, 'Classes and Objects'),
+(6, 'Templates'),
+(6, 'Multithreading'),
+(6, 'Algorithms'),
+(6, 'Preprocessor Directives'),
+-- C#
+(7, 'Basic Syntax'),
+(7, 'Collections'),
+(7, 'Database'),
+(7, 'LINQ Queries'),
+(7, 'File I/O'),
+(7, 'Exception Handling'),
+(7, 'OOP Concepts'),
+(7, 'Delegates and Events'),
+(7, 'Async Programming'),
+(7, 'Windows Forms/WPF'),
+(7, 'Networking'),
+-- D
+(9, 'Basic Syntax'),
+(9, 'Ranges and Algorithms'),
+(9, 'File I/O'),
+(9, 'Exception Handling'),
+(9, 'Memory Management'),
+(9, 'Classes and Structs'),
+(9, 'Templates and Mixins'),
+(9, 'Concurrency'),
+(9, 'Modules and Imports'),
+(9, 'Metaprogramming'),
+-- Java
+(14, 'Basic Syntax'),
+(14, 'OOP Concepts'),
+(14, 'Collections Framework'),
+(14, 'Generics'),
+(14, 'Exceptions'),
+(14, 'File I/O'),
+(14, 'Multithreading and Concurrency'),
+(14, 'Java Streams and Lambdas'),
+(14, 'Networking'),
+(14, 'JVM Internals'),
+-- JavaScript
+(15, 'Basic Syntax'),
+(15, 'Functions and Closures'),
+(15, 'DOM Manipulation'),
+(15, 'Events'),
+(15, 'Promises and Async/Await'),
+(15, 'Modules'),
+(15, 'ES6+ Features'),
+(15, 'Error Handling'),
+(15, 'Testing'),
+(15, 'Node.js'),
+-- Pascal
+(19, 'Basic Syntax'),
+(19, 'Procedures and Functions'),
+(19, 'Data Types and Variables'),
+(19, 'Control Structures'),
+(19, 'Records and Sets'),
+(19, 'File Handling'),
+(19, 'Object-Oriented Pascal'),
+(19, 'Exception Handling'),
+(19, 'Generics'),
+(19, 'Multithreading'),
+-- PowerShell
+(22, 'Basic Syntax'),
+(22, 'Cmdlets'),
+(22, 'Functions and Scripts'),
+(22, 'Modules'),
+(22, 'Error Handling'),
+(22, 'Remoting and Sessions'),
+(22, 'Pipeline and Objects'),
+(22, 'Security'),
+(22, 'Event Handling'),
+(22, 'Desired State Configuration (DSC)'),
+-- Python
+(23, 'Basic Syntax'),
+(23, 'Strings'),
+(23, 'Lists and Tuples'),
+(23, 'Dictionaries and Sets'),
+(23, 'File I/O'),
+(23, 'Exception Handling'),
+(23, 'Functions and Lambdas'),
+(23, 'Classes and OOP'),
+(23, 'Modules and Packages'),
+(23, 'Iterators and Generators'),
+(23, 'Comprehensions'),
+(23, 'Decorators'),
+(23, 'Context Managers'),
+(23, 'Regular Expressions'),
+(23, 'Data Serialization'),
+(23, 'Networking'),
+(23, 'Multithreading and Multiprocessing'),
+(23, 'Virtual Environments and Packaging'),
+-- Rust
+(25, 'Basic Syntax'),
+(25, 'Ownership and Borrowing'),
+(25, 'Traits and Generics'),
+(25, 'Error Handling'),
+(25, 'Concurrency'),
+(25, 'Modules and Crates'),
+(25, 'Macros'),
+(25, 'Patterns'),
+(25, 'Unsafe Rust'),
+(25, 'FFI (Foreign Function Interface)');
+";
 
     }
 }
