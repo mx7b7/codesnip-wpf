@@ -92,6 +92,11 @@ namespace CodeSnip.Services
                 return (false, null, "rustfmt is not installed or not in your PATH.");
             }
 
+            string baseDirectory = AppDomain.CurrentDomain.BaseDirectory;
+            string toolPath = Path.Combine(baseDirectory, "Tools");
+
+            toolPath = Directory.Exists(toolPath) ? toolPath : baseDirectory;
+
             var startInfo = new ProcessStartInfo
             {
                 FileName = "rustfmt",
@@ -100,7 +105,8 @@ namespace CodeSnip.Services
                 RedirectStandardOutput = true,
                 RedirectStandardError = true,
                 UseShellExecute = false,
-                CreateNoWindow = true
+                CreateNoWindow = true,
+                WorkingDirectory = toolPath // Set the working directory to the Tools folder to ensure it can locate its config file
             };
 
             try
