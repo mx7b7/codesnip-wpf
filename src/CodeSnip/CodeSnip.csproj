@@ -37,6 +37,7 @@
 		<Resource Include="Resources\Highlighting\Dark\d.xshd" />
 		<Resource Include="Resources\Highlighting\Dark\fs.xshd" />
 		<Resource Include="Resources\Highlighting\Dark\fx.xshd" />
+		<Resource Include="Resources\Highlighting\Dark\go.xshd" />
 		<Resource Include="Resources\Highlighting\Dark\html.xshd" />
 		<Resource Include="Resources\Highlighting\Dark\il.xshd" />
 		<Resource Include="Resources\Highlighting\Dark\ini.xshd" />
@@ -70,6 +71,7 @@
 		<Resource Include="Resources\Highlighting\Light\d.xshd" />
 		<Resource Include="Resources\Highlighting\Light\fs.xshd" />
 		<Resource Include="Resources\Highlighting\Light\fx.xshd" />
+		<Resource Include="Resources\Highlighting\Light\go.xshd" />
 		<Resource Include="Resources\Highlighting\Light\html.xshd" />
 		<Resource Include="Resources\Highlighting\Light\il.xshd" />
 		<Resource Include="Resources\Highlighting\Light\ini.xshd" />

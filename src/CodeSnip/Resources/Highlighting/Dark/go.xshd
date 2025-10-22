@@ -1,0 +1,122 @@
+<?xml version="1.0" encoding="utf-8"?>
+<SyntaxDefinition name="Go" extensions=".go" xmlns="http://icsharpcode.net/sharpdevelop/syntaxdefinition/2008">
+    <!-- syntax definition for Go by mx7b7 v0.1 -->
+    <!-- Monokai theme -->
+    <Color name="Comment"       foreground="#75715E" />
+    <Color name="String"        foreground="#E6DB74" />
+    <Color name="Character"     foreground="#FD971F" />
+    <Color name="Number"        foreground="#AE81FF" />
+    <Color name="Keywords"      foreground="#F92672" />
+    <Color name="Type"          foreground="#66D9EF" />
+    <Color name="MethodName"    foreground="#A6E22E" />
+	<Color name="Literals" 		foreground="#FFAE81FF" />
+	<Color name="Built_in" 		foreground="#FF66D9EF" />
+	<Color name="Punctuation"   foreground="#F92672" />
+
+    <Property name="Extension" value="go" />
+<RuleSet ignoreCase="false">
+    <Keywords color="Keywords">
+    <Word>break</Word>
+    <Word>case</Word>
+    <Word>chan</Word>
+    <Word>const</Word>
+    <Word>continue</Word>
+    <Word>default</Word>
+    <Word>defer</Word>
+    <Word>else</Word>
+    <Word>fallthrough</Word>
+    <Word>for</Word>
+    <Word>func</Word>
+    <Word>go</Word>
+    <Word>goto</Word>
+    <Word>if</Word>
+    <Word>import</Word>
+    <Word>interface</Word>
+    <Word>map</Word>
+    <Word>package</Word>
+    <Word>range</Word>
+    <Word>return</Word>
+    <Word>select</Word>
+    <Word>struct</Word>
+    <Word>switch</Word>
+    <Word>type</Word>
+    <Word>var</Word>
+  </Keywords>
+  
+  <Keywords color="Type">
+    <Word>bool</Word>
+    <Word>byte</Word>
+    <Word>complex64</Word>
+    <Word>complex128</Word>
+    <Word>error</Word>
+    <Word>float32</Word>
+    <Word>float64</Word>
+    <Word>int8</Word>
+    <Word>int16</Word>
+    <Word>int32</Word>
+    <Word>int64</Word>
+    <Word>string</Word>
+    <Word>uint8</Word>
+    <Word>uint16</Word>
+    <Word>uint32</Word>
+    <Word>uint64</Word>
+    <Word>int</Word>
+    <Word>uint</Word>
+    <Word>uintptr</Word>
+    <Word>rune</Word>
+  </Keywords>
+  
+  <Keywords color="Built_in">
+    <Word>append</Word>
+    <Word>cap</Word>
+    <Word>close</Word>
+    <Word>complex</Word>
+    <Word>copy</Word>
+    <Word>imag</Word>
+    <Word>len</Word>
+    <Word>make</Word>
+    <Word>new</Word>
+    <Word>panic</Word>
+    <Word>print</Word>
+    <Word>println</Word>
+    <Word>real</Word>
+    <Word>recover</Word>
+    <Word>delete</Word>
+  </Keywords>
+  
+  <Keywords color="Literals">
+    <Word>true</Word>
+    <Word>false</Word>
+    <Word>iota</Word>
+    <Word>nil</Word>
+  </Keywords>
+
+	<Span color="Comment">
+      <Begin>//</Begin>
+    </Span>
+    <Span color="Comment" multiline="true">
+      <Begin>/\*</Begin>
+      <End>\*/</End>
+    </Span>
+	
+	<Span color="String" multiline="true">
+      <Begin>"</Begin>
+      <End>"</End>
+      <RuleSet>
+        <Span begin="\\" end="." />
+      </RuleSet>
+    </Span>
+	<Span color="String" begin="`" end="`" multiline="true" />
+	<Span color="Character">
+      <Begin>'</Begin>
+      <End>'</End>
+      <RuleSet>
+        <Span begin="\\" end="." />
+      </RuleSet>
+    </Span>
+	<Rule color="MethodName">[\d\w_]+(?=(\s*\())</Rule>
+	<Rule color="Number">\b0[xX][0-9a-fA-F]+|(\b\d+(\.[0-9]+)?|\.[0-9]+)([eE][+-]?[0-9]+)?</Rule>
+	<Rule color="Punctuation">:=</Rule>
+	<Rule color="Punctuation">[=+\-*/%!&amp;|^~&lt;&gt;]+</Rule>
+ </RuleSet>
+</SyntaxDefinition>
