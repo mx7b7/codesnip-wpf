@@ -7,6 +7,7 @@
 	<Color name="String" foreground="#E6DB74" exampleText="&quot;Hello, World!&quot;" />
 	<Color name="Number" foreground="#AE81FF" exampleText="3.14" />
 	<Color name="Keywords" foreground="#F92672" fontWeight="bold" />
+	<Color name="MethodName"    foreground="#A6E22E" />
 	<Color name="Builtins" foreground="#66D9EF" />
 	<Color name="Self" foreground="#FD971F" fontStyle="italic" />
 	<Property name="Extension" value="lua"/>
@@ -35,6 +36,7 @@
 			<Word>elseif</Word>
 			<Word>end</Word>
 			<Word>for</Word>
+			<Word>function</Word>
 			<Word>goto</Word>
 			<Word>if</Word>
 			<Word>in</Word>
@@ -192,5 +194,7 @@
 		<Keywords color="Self">
 			<Word>self</Word>
 		</Keywords>
+
+		<Rule color="MethodName">[\d\w_]+(?=(\s*\())</Rule>
 	</RuleSet>
 </SyntaxDefinition>
