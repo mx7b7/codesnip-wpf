@@ -21,9 +21,11 @@ namespace CodeSnip.EditorHelpers
     { "d", "//" },       // D
     { "fs", "//" },      // F#
     { "fx", "//" },      // HLSL
+    { "go", "//" },      // Go
     { "ini", ";" },      // INI
     { "java", "//" },    // Java
     { "js", "//" },      // JavaScript
+    { "lua", "--" },     // Lua
     { "nut", "//" },     // Squirrel
     { "pas", "//" },     // Pascal
     { "php", "//" },     // PHP
@@ -66,7 +68,6 @@ namespace CodeSnip.EditorHelpers
     {"r", "#" },          // R
     {"v", "//" },         // Verilog
     {"sv", "//" },        // SystemVerilog
-    {"lua", "--" },       // Lua
     {"coffee", "#" },     // CoffeeScript
     {"clj", ";" },        // Clojure
     {"cljs", ";" },       // ClojureScript
@@ -96,9 +97,11 @@ namespace CodeSnip.EditorHelpers
     { "css", ("/*", "*/") },      // CSS
     { "d", ("/*", "*/") },        // D
     { "fs", ("(*", "*)") },       // F#
+    { "go", ("/*", "*/") },       // Go
     { "fx", ("/*", "*/") },       // HLSL
     { "java", ("/*", "*/") },     // Java
     { "js", ("/*", "*/") },       // JavaScript
+    { "lua", ("--[[", "]]") },    // Lua
     { "pas", ("{", "}") },        // Pascal
     { "php", ("/*", "*/") },      // PHP
     { "py", ("\"\"\"", "\"\"\"") }, // Python
@@ -122,7 +125,6 @@ namespace CodeSnip.EditorHelpers
     { "jl", ("#=", "=#") },           // Julia
     { "v", ("/*", "*/") },            // Verilog
     { "sv", ("/*", "*/") },           // SystemVerilog
-    { "lua", ("--[[", "]]") },        // Lua
     { "clj", ("#|", "|#") },          // Clojure
     { "cljs", ("#|", "|#") },         // ClojureScript
     { "scm", ("#|", "|#") },          // Scheme
