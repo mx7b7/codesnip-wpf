@@ -642,7 +642,8 @@ INSERT INTO Languages (ID, Code, Name) VALUES
 (30, 'xml', 'XML'),
 (31, 'lua', 'Lua'),
 (32, 'asm', 'Asm'),
-(33, 'il', 'IL');
+(33, 'il', 'IL'),
+(34, 'go', 'Go');
 
 INSERT INTO Categories (LanguageId, Name) VALUES
 -- C++
