@@ -112,14 +112,28 @@
                                 <Style TargetType="{x:Type Expander}" BasedOn="{StaticResource SimpleExpander}" />
                             </Expander.Resources>
                             <TextBox Text="{Binding StdOut}" IsReadOnly="True" BorderThickness="0.5"
-                     VerticalScrollBarVisibility="Auto" HorizontalScrollBarVisibility="Auto"/>
+                                     VerticalScrollBarVisibility="Auto" HorizontalScrollBarVisibility="Auto">
+                                <TextBox.ContextMenu>
+                                    <ContextMenu>
+                                        <MenuItem Header="Copy" Command="ApplicationCommands.Copy" />
+                                        <MenuItem Header="Select All" Command="ApplicationCommands.SelectAll" />
+                                    </ContextMenu>
+                                </TextBox.ContextMenu>
+                            </TextBox>
                         </Expander>
                         <Expander Header="Stderr:" IsExpanded="{Binding HasError}" Grid.Row="1" Padding="0">
                             <Expander.Resources>
                                 <Style TargetType="{x:Type Expander}" BasedOn="{StaticResource SimpleExpander}" />
                             </Expander.Resources>
                             <TextBox Text="{Binding ErrorText}" IsReadOnly="True" Foreground="#FFF92672" Margin="0,0,0,2" MaxHeight="300"
-                                 VerticalScrollBarVisibility="Auto" HorizontalScrollBarVisibility="Auto" BorderThickness="0.5"/>
+                                     VerticalScrollBarVisibility="Auto" HorizontalScrollBarVisibility="Auto" BorderThickness="0.5">
+                                <TextBox.ContextMenu>
+                                    <ContextMenu>
+                                        <MenuItem Header="Copy" Command="ApplicationCommands.Copy" />
+                                        <MenuItem Header="Select All" Command="ApplicationCommands.SelectAll" />
+                                    </ContextMenu>
+                                </TextBox.ContextMenu>
+                            </TextBox>
                         </Expander>
                     </Grid>
                 </ScrollViewer>
