@@ -438,6 +438,24 @@ namespace CodeSnip
             }
         }
 
+        private async void FormatGofmt_Click(object sender, RoutedEventArgs e)
+        {
+            string? code = mainViewModel.SelectedSnippet?.Category?.Language?.Code;
+            if (code is not null and "go")
+            {
+                string originalCode = textEditor.Text;
+                var (isSuccess, formatted, error) = await FormattingService.TryFormatCodeWithGofmtAsync(originalCode);
+                if (isSuccess)
+                {
+                    textEditor.Document.Text = formatted;
+                }
+                else
+                {
+                    MessageBox.Show(error);
+                }
+            }
+        }
+
         private async void FormatAll_Click(object sender, RoutedEventArgs e)
         {
             string? code = mainViewModel.SelectedSnippet?.Category?.Language?.Code;
@@ -447,6 +465,18 @@ namespace CodeSnip
 
                 switch (code.ToLowerInvariant())
                 {
+                    case "cs":
+                        var (isSuccess, formattedCs, errorCs) = await FormattingService.TryFormatCodeWithCSharpierAsync(originalCode);
+                        if (isSuccess)
+                        {
+                            textEditor.Document.Text = formattedCs;
+                        }
+                        else
+                        {
+                            MessageBox.Show($"Formatting (CSharpier) failed:\n{errorCs}");
+                        }
+                        break;
+
                     case "d":
                         var (successD, formattedDfmt, errorDfmt) = await FormattingService.TryFormatCodeWithDfmtAsync(originalCode);
                         if (successD)
@@ -459,15 +489,15 @@ namespace CodeSnip
                         }
                         break;
 
-                    case "cs":
-                        var (isSuccess, formattedCs, errorCs) = await FormattingService.TryFormatCodeWithCSharpierAsync(originalCode);
-                        if (isSuccess)
+                    case "go":
+                        var (successGo, formattedGofmt, errorGofmt) = await FormattingService.TryFormatCodeWithGofmtAsync(originalCode);
+                        if (successGo)
                         {
-                            textEditor.Document.Text = formattedCs;
+                            textEditor.Document.Text = formattedGofmt;
                         }
                         else
                         {
-                            MessageBox.Show($"Formatting (CSharpier) failed:\n{errorCs}");
+                            MessageBox.Show($"Formatting (gofmt) failed:\n{errorGofmt}");
                         }
                         break;
 

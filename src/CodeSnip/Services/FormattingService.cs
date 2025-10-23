@@ -158,6 +158,16 @@ namespace CodeSnip.Services
         }
 
         /// <summary>
+        /// Formats Go code using the 'gofmt.exe' tool from the 'Tools' directory.
+        /// </summary>
+        /// <param name="code">The go code to format</param>
+        /// <param name="timeoutMs">The timeout in milliseconds for the process.</param>
+        /// <returns>A tuple indicating success, the formatted code, and any error message.</returns>
+        public static async Task<(bool Success, string? FormattedCode, string? ErrorMessage)> TryFormatCodeWithGofmtAsync(string code, int timeoutMs = 5000) { 
+            return await TryFormatWithExternalProcessAsync("gofmt.exe", "", code, timeoutMs);
+        }
+
+        /// <summary>
         /// A generic helper method to run an external formatting tool from the 'Tools' directory.
         /// </summary>
         /// <param name="executableName">The name of the executable file (e.g., 'dfmt.exe').</param>
