@@ -41,6 +41,7 @@
         <helpers:EnumToBooleanConverter x:Key="EnumToBooleanConverter" />
         <helpers:BoolToVisibilityConverter x:Key="BoolToVisibilityConverter" />
         <helpers:StringToFontWeightConverter x:Key="StringToFontWeightConverter" />
+        <helpers:LanguageToVisibilityConverter x:Key="LanguageToVisibilityConverter" />
 
         <DataTemplate DataType="{x:Type settingsView:SettingsViewModel}">
             <settingsView:SettingsView />
@@ -506,46 +507,50 @@
                                         <Path Data="{StaticResource FormatText}" Fill="{DynamicResource MahApps.Brushes.AccentBase}"
                                           Width="16" Height="16" Stretch="Uniform" />
                                     </MenuItem.Icon>
-                                    <MenuItem Header="black" Click="FormatBlack_Click">
+                                    <MenuItem Header="black" Click="FormatBlack_Click"
+                                              Visibility="{Binding PlacementTarget.DataContext.SelectedSnippet.Category.Language.Code, RelativeSource={RelativeSource AncestorType=ContextMenu}, Converter={StaticResource LanguageToVisibilityConverter}, ConverterParameter='py'}">
                                         <MenuItem.Icon>
                                             <Path Data="{StaticResource Indent}" Fill="{DynamicResource MahApps.Brushes.AccentBase}"
                                               Width="16" Height="16" Stretch="Uniform" />
                                         </MenuItem.Icon>
                                     </MenuItem>
-                                    <MenuItem Header="clang-format" Click="FormatClang_Click">
+                                    <MenuItem Header="clang-format" Click="FormatClang_Click"
+                                              Visibility="{Binding PlacementTarget.DataContext.SelectedSnippet.Category.Language.Code, RelativeSource={RelativeSource AncestorType=ContextMenu}, Converter={StaticResource LanguageToVisibilityConverter}, ConverterParameter='c,cpp,cs,java,js,d,h,mjs,ts,json,m,mm,proto,protodevel,td,txtpb,textpb,textproto,asciipb,sv,svh,v,vh'}">
                                         <MenuItem.Icon>
                                             <Path Data="{StaticResource Indent}" Fill="{DynamicResource MahApps.Brushes.AccentBase}"
                                               Width="16" Height="16" Stretch="Uniform" />
                                         </MenuItem.Icon>
                                     </MenuItem>
-                                    <MenuItem Header="csharpier" Click="FormatCSharpier_Click">
+                                    <MenuItem Header="csharpier" Click="FormatCSharpier_Click"
+                                              Visibility="{Binding PlacementTarget.DataContext.SelectedSnippet.Category.Language.Code, RelativeSource={RelativeSource AncestorType=ContextMenu}, Converter={StaticResource LanguageToVisibilityConverter}, ConverterParameter='cs,xml'}">
                                         <MenuItem.Icon>
                                             <Path Data="{StaticResource Indent}" Fill="{DynamicResource MahApps.Brushes.AccentBase}"
                                               Width="16" Height="16" Stretch="Uniform" />
                                         </MenuItem.Icon>
                                     </MenuItem>
-                                    <MenuItem Header="dfmt" Click="FormatDfmt_Click">
+                                    <MenuItem Header="dfmt" Click="FormatDfmt_Click"
+                                              Visibility="{Binding PlacementTarget.DataContext.SelectedSnippet.Category.Language.Code, RelativeSource={RelativeSource AncestorType=ContextMenu}, Converter={StaticResource LanguageToVisibilityConverter}, ConverterParameter='d'}">
                                         <MenuItem.Icon>
                                             <Path Data="{StaticResource Indent}" Fill="{DynamicResource MahApps.Brushes.AccentBase}"
                                               Width="16" Height="16" Stretch="Uniform" />
                                         </MenuItem.Icon>
                                     </MenuItem>
-                                    <MenuItem Header="gofmt" Click="FormatGofmt_Click">
+                                    <MenuItem Header="gofmt" Click="FormatGofmt_Click"
+                                              Visibility="{Binding PlacementTarget.DataContext.SelectedSnippet.Category.Language.Code, RelativeSource={RelativeSource AncestorType=ContextMenu}, Converter={StaticResource LanguageToVisibilityConverter}, ConverterParameter='go'}">
                                         <MenuItem.Icon>
-                                            <Path Data="{StaticResource Indent}" Fill="{DynamicResource MahApps.Brushes.AccentBase}"
-                                                  Width="16" Height="16" Stretch="Uniform" />
+                                            <Path Data="{StaticResource Indent}" Fill="{DynamicResource MahApps.Brushes.AccentBase}" Width="16" Height="16" Stretch="Uniform" />
                                         </MenuItem.Icon>
                                     </MenuItem>
-                                    <MenuItem Header="ruff" Click="FormatRuff_Click">
+                                    <MenuItem Header="ruff" Click="FormatRuff_Click"
+                                              Visibility="{Binding PlacementTarget.DataContext.SelectedSnippet.Category.Language.Code, RelativeSource={RelativeSource AncestorType=ContextMenu}, Converter={StaticResource LanguageToVisibilityConverter}, ConverterParameter='py'}">
                                         <MenuItem.Icon>
-                                            <Path Data="{StaticResource Indent}" Fill="{DynamicResource MahApps.Brushes.AccentBase}"
-                                             Width="16" Height="16" Stretch="Uniform" />
+                                            <Path Data="{StaticResource Indent}" Fill="{DynamicResource MahApps.Brushes.AccentBase}" Width="16" Height="16" Stretch="Uniform" />
                                         </MenuItem.Icon>
                                     </MenuItem>
-                                    <MenuItem Header="rustfmt" Click="FormatRustfmt_Click">
+                                    <MenuItem Header="rustfmt" Click="FormatRustfmt_Click"
+                                              Visibility="{Binding PlacementTarget.DataContext.SelectedSnippet.Category.Language.Code, RelativeSource={RelativeSource AncestorType=ContextMenu}, Converter={StaticResource LanguageToVisibilityConverter}, ConverterParameter='rs'}">
                                         <MenuItem.Icon>
-                                            <Path Data="{StaticResource Indent}" Fill="{DynamicResource MahApps.Brushes.AccentBase}"
-                                              Width="16" Height="16" Stretch="Uniform" />
+                                            <Path Data="{StaticResource Indent}" Fill="{DynamicResource MahApps.Brushes.AccentBase}" Width="16" Height="16" Stretch="Uniform" />
                                         </MenuItem.Icon>
                                     </MenuItem>
                                 </MenuItem>
