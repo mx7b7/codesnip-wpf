@@ -456,6 +456,24 @@ namespace CodeSnip
             }
         }
 
+        private async void FormatStylua_Click(object sender, RoutedEventArgs e)
+        {
+            string? code = mainViewModel.SelectedSnippet?.Category?.Language?.Code;
+            if (code is not null and "lua")
+            {
+                string originalCode = textEditor.Text;
+                var (isSuccess, formatted, error) = await FormattingService.TryFormatCodeWithStyluaAsync(originalCode);
+                if (isSuccess)
+                {
+                    textEditor.Document.Text = formatted;
+                }
+                else
+                {
+                    MessageBox.Show(error);
+                }
+            }
+        }
+
         private async void FormatAll_Click(object sender, RoutedEventArgs e)
         {
             string? code = mainViewModel.SelectedSnippet?.Category?.Language?.Code;
@@ -498,6 +516,18 @@ namespace CodeSnip
                         else
                         {
                             MessageBox.Show($"Formatting (gofmt) failed:\n{errorGofmt}");
+                        }
+                        break;
+
+                    case "lua":
+                        var (successLua, formattedStylua, errorStylua) = await FormattingService.TryFormatCodeWithStyluaAsync(originalCode);
+                        if (successLua)
+                        {
+                            textEditor.Document.Text = formattedStylua;
+                        }
+                        else
+                        {
+                            MessageBox.Show($"Formatting (stylua) failed:\n{errorStylua}");
                         }
                         break;
 

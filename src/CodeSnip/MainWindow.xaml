@@ -553,6 +553,12 @@
                                             <Path Data="{StaticResource Indent}" Fill="{DynamicResource MahApps.Brushes.AccentBase}" Width="16" Height="16" Stretch="Uniform" />
                                         </MenuItem.Icon>
                                     </MenuItem>
+                                    <MenuItem Header="stylua" Click="FormatStylua_Click"
+                                              Visibility="{Binding PlacementTarget.DataContext.SelectedSnippet.Category.Language.Code, RelativeSource={RelativeSource AncestorType=ContextMenu}, Converter={StaticResource LanguageToVisibilityConverter}, ConverterParameter='lua'}">
+                                        <MenuItem.Icon>
+                                            <Path Data="{StaticResource Indent}" Fill="{DynamicResource MahApps.Brushes.AccentBase}" Width="16" Height="16" Stretch="Uniform" />
+                                        </MenuItem.Icon>
+                                    </MenuItem>
                                 </MenuItem>
                             </ContextMenu>
                         </avalonEdit:TextEditor.ContextMenu>

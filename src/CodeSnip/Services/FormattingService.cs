@@ -168,6 +168,17 @@ namespace CodeSnip.Services
         }
 
         /// <summary>
+        /// Formats Lua code using the 'stylua.exe' tool from the 'Tools' directory.
+        /// </summary>
+        /// <param name="code">The Lua code to format.</param>
+        /// <param name="timeoutMs">The timeout in milliseconds for the process.</param>
+        /// <returns>A tuple indicating success, the formatted code, and any error message.</returns>
+        public static async Task<(bool Success, string? FormattedCode, string? ErrorMessage)> TryFormatCodeWithStyluaAsync(string code, int timeoutMs = 5000)
+        {
+            return await TryFormatWithExternalProcessAsync("stylua.exe", "-", code, timeoutMs);
+        }
+
+        /// <summary>
         /// A generic helper method to run an external formatting tool from the 'Tools' directory.
         /// </summary>
         /// <param name="executableName">The name of the executable file (e.g., 'dfmt.exe').</param>
