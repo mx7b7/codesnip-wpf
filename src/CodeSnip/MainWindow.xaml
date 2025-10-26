@@ -514,6 +514,13 @@
                                               Width="16" Height="16" Stretch="Uniform" />
                                         </MenuItem.Icon>
                                     </MenuItem>
+                                    <MenuItem Header="autopep8" Click="FormatAutopep8_Click"
+                                              Visibility="{Binding PlacementTarget.DataContext.SelectedSnippet.Category.Language.Code, RelativeSource={RelativeSource AncestorType=ContextMenu}, Converter={StaticResource LanguageToVisibilityConverter}, ConverterParameter='py'}">
+                                        <MenuItem.Icon>
+                                            <Path Data="{StaticResource Indent}" Fill="{DynamicResource MahApps.Brushes.AccentBase}"
+                                              Width="16" Height="16" Stretch="Uniform" />
+                                        </MenuItem.Icon>
+                                    </MenuItem>
                                     <MenuItem Header="clang-format" Click="FormatClang_Click"
                                               Visibility="{Binding PlacementTarget.DataContext.SelectedSnippet.Category.Language.Code, RelativeSource={RelativeSource AncestorType=ContextMenu}, Converter={StaticResource LanguageToVisibilityConverter}, ConverterParameter='c,cpp,cs,java,js,d,h,mjs,ts,json,m,mm,proto,protodevel,td,txtpb,textpb,textproto,asciipb,sv,svh,v,vh'}">
                                         <MenuItem.Icon>

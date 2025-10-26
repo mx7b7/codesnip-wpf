@@ -11,8 +11,8 @@ namespace CodeSnip.Services
     public static class FormattingService
     {
         private static bool? _isPythonInstalled;
-        private static bool? _isBlackInstalled;
         private static bool? _isRustfmtInstalled;
+        private static readonly Dictionary<string, bool?> s_installedPythonModules = [];
 
         /// <summary>
 		/// Formats C# code using the built-in CSharpier library.
@@ -127,7 +127,7 @@ namespace CodeSnip.Services
                 }
                 catch (OperationCanceledException)
                 {
-                    try { process.Kill(); } catch { /* Ignore errors */ }
+                    try { process.Kill(entireProcessTree: true); } catch { /* Ignore errors */ }
                     return (false, null, "Timeout: rustfmt took too long to format the code.");
                 }
 
@@ -234,7 +234,7 @@ namespace CodeSnip.Services
                     }
                     catch (OperationCanceledException)
                     {
-                        try { process.Kill(); } catch { /* Ignore errors if the process is already gone */ }
+                        try { process.Kill(entireProcessTree: true); } catch { /* Ignore errors if the process is already gone */ }
                         return (false, null, $"Timeout: The '{executableName}' process took too long to respond.");
                     }
 
@@ -257,27 +257,34 @@ namespace CodeSnip.Services
         }
 
         /// <summary>
-		/// Formats Python code using the 'black' formatter via an installed Python environment.
-		/// </summary>
-		/// <param name="code">The Python code to format.</param>
-		/// <param name="timeoutMs">The timeout in milliseconds for the process.</param>
-		/// <returns>A tuple indicating success, the formatted code, and any error message.</returns>
-        public static async Task<(bool Success, string? FormattedCode, string? ErrorMessage)> TryFormatCodeWithBlackAsync(string code, int timeoutMs = 5000)
+        /// Formats Python code using a specified formatter module (e.g., 'black', 'autopep8').
+        /// </summary>
+        /// <param name="code">The Python code to format.</param>
+        /// <param name="timeoutMs">The timeout in milliseconds for the process.</param>
+        /// <returns>A tuple indicating success, the formatted code, and any error message.</returns>
+        public static async Task<(bool Success, string? FormattedCode, string? ErrorMessage)> TryFormatCodeWithPythonModuleAsync(string code, string formatterName, int timeoutMs = 5000)
         {
             if (!await IsPythonInstalledAsync())
             {
                 return (false, null, "Python is not installed.");
             }
 
-            if (!await IsBlackInstalledAsync())
+            if (!await IsPythonModuleInstalledAsync(formatterName))
             {
-                return (false, null, "Black formatter is not installed.");
+                return (false, null, $"Python formatter '{formatterName}' is not installed.");
             }
+
+            string arguments = formatterName switch
+            {
+                "black" => "-m black -",
+                "autopep8" => "-m autopep8 -", // autopep8 reads from stdin by default
+                _ => throw new ArgumentException($"Unsupported Python formatter: {formatterName}", nameof(formatterName))
+            };
 
             ProcessStartInfo startInfo = new()
             {
                 FileName = "python",
-                Arguments = "-m black -", // "-" means Black is reading from stdin
+                Arguments = arguments,
                 RedirectStandardInput = true,
                 RedirectStandardOutput = true,
                 RedirectStandardError = true,
@@ -306,7 +313,7 @@ namespace CodeSnip.Services
                 }
                 catch (OperationCanceledException)
                 {
-                    try { process.Kill(); } catch { /* Ignore errors */ }
+                    try { process.Kill(entireProcessTree: true); } catch { /* Ignore errors */ }
                     return (false, null, "Timeout when formatting code.");
                 }
 
@@ -315,14 +322,14 @@ namespace CodeSnip.Services
 
                 if (process.ExitCode != 0)
                 {
-                    return (false, null, $"Formatting error: {stdError.Trim()}");
+                    return (false, null, $"Formatting error with '{formatterName}': {stdError.Trim()}");
                 }
 
                 return (true, stdOutput.Trim(), null);
             }
             catch (Exception ex)
             {
-                return (false, null, $"Error: {ex.Message}");
+                return (false, null, $"An exception occurred while running '{formatterName}': {ex.Message}");
             }
         }
 
@@ -339,9 +346,9 @@ namespace CodeSnip.Services
                 return (false, null, "Python is not installed.");
             }
 
-            if (!await IsBlackInstalledAsync())
+            if (!await IsPythonModuleInstalledAsync("black"))
             {
-                return (false, null, "Black formatter is not installed.");
+                return (false, null, "'black' is not installed for the current Python environment.");
             }
 
             string tempFilePath = Path.GetTempFileName() + ".py";
@@ -373,7 +380,7 @@ namespace CodeSnip.Services
                     }
                     catch (OperationCanceledException)
                     {
-                        try { process.Kill(); } catch { /* Ignore errors */ }
+                        try { process.Kill(entireProcessTree: true); } catch { /* Ignore errors */ }
                         return (false, null, "Timeout when formatting code.");
                     }
 
@@ -436,16 +443,17 @@ namespace CodeSnip.Services
         }
 
 
-        static async Task<bool> IsBlackInstalledAsync()
+        static async Task<bool> IsPythonModuleInstalledAsync(string moduleName)
         {
-            if (_isBlackInstalled.HasValue)
-                return _isBlackInstalled.Value;
+            if (s_installedPythonModules.TryGetValue(moduleName, out bool? cachedResult) && cachedResult.HasValue)
+                return cachedResult.Value;
+
             try
             {
                 ProcessStartInfo startInfo = new()
                 {
                     FileName = "python",
-                    Arguments = "-m black --version",
+                    Arguments = $"-m {moduleName} --version",
                     RedirectStandardOutput = true,
                     RedirectStandardError = true,
                     UseShellExecute = false,
@@ -456,15 +464,16 @@ namespace CodeSnip.Services
                 {
                     process.Start();
                     string output = await process.StandardOutput.ReadToEndAsync();
+                    string error = await process.StandardError.ReadToEndAsync();
                     await process.WaitForExitAsync();
-                    var result = process.ExitCode == 0 && output.Contains("black", StringComparison.CurrentCultureIgnoreCase);
-                    _isBlackInstalled = result;
+                    var result = process.ExitCode == 0 && (output.Contains(moduleName, StringComparison.OrdinalIgnoreCase) || error.Contains(moduleName, StringComparison.OrdinalIgnoreCase));
+                    s_installedPythonModules[moduleName] = result;
                     return result;
                 }
             }
             catch
             {
-                _isBlackInstalled = false;
+                s_installedPythonModules[moduleName] = false;
                 return false;
             }
         }

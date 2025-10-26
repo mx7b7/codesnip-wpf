@@ -388,10 +388,29 @@ namespace CodeSnip
             if (code is not null and "py")
             {
                 string originalCode = textEditor.Text;
-                var (isSuccess, formatted, error) = await FormattingService.TryFormatCodeWithBlackAsync(originalCode);
+                var (isSuccess, formatted, error) = await FormattingService.TryFormatCodeWithPythonModuleAsync(originalCode, "black");
                 if (isSuccess)
                 {
                     textEditor.Document.Text = formatted;
+                }
+                else
+                {
+                    MessageBox.Show(error);
+                }
+
+            }
+        }
+
+        private async void FormatAutopep8_Click(object sender, RoutedEventArgs e)
+        {
+            string? code = mainViewModel.SelectedSnippet?.Category?.Language?.Code;
+            if (code is not null and "py")
+            {
+                string originalCode = textEditor.Text;
+                var (isSuccess, formatted, error) = await FormattingService.TryFormatCodeWithPythonModuleAsync(originalCode, "autopep8");
+                if (isSuccess)
+                {
+                    textEditor.Document.Text = formatted!;
                 }
                 else
                 {
@@ -532,7 +551,7 @@ namespace CodeSnip
                         break;
 
                     case "py":
-                        var (successPy, formattedBlack, errorBlack) = await FormattingService.TryFormatCodeWithBlackAsync(originalCode);
+                        var (successPy, formattedBlack, errorBlack) = await FormattingService.TryFormatCodeWithPythonModuleAsync(originalCode, "black");
                         if (successPy)
                         {
                             textEditor.Document.Text = formattedBlack;
