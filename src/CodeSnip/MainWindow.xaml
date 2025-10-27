@@ -354,11 +354,14 @@
 				FontSize="{Binding EditorFontSize}"
 				SyntaxHighlighting="C#"
                     ShowLineNumbers="True" 
-                    HorizontalScrollBarVisibility="Visible" 
-                    VerticalScrollBarVisibility="Visible" 
+                    HorizontalScrollBarVisibility="Auto" 
+                    VerticalScrollBarVisibility="Auto" 
                     Text="" 
                     BorderBrush="{DynamicResource AccentColorBrush}"
                     ContextMenuOpening="TextEditor_ContextMenuOpening" >
+                        <avalonEdit:TextEditor.Resources>
+                            <Style TargetType="{x:Type ScrollBar}" BasedOn="{StaticResource AutoHideScrollBar}" />
+                        </avalonEdit:TextEditor.Resources>
                         <behaviors:Interaction.Behaviors>
                             <helpers:AvalonEditTextBindingBehavior BoundText="{Binding EditorText, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" />
                         </behaviors:Interaction.Behaviors>
