@@ -234,6 +234,11 @@ begin
 end.
 ".Trim(),
 
+            ["ps1"] = @"
+$ProgressPreference = 'SilentlyContinue'
+Write-Output 'Hello, World!'
+".Trim(),
+
             ["rb"] = @"
 puts 'Hello, World!'
 ".Trim(),

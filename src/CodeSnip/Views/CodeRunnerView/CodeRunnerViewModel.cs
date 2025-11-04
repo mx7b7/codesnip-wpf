@@ -4,6 +4,7 @@ using CommunityToolkit.Mvvm.Input;
 using System.Diagnostics;
 using System.IO;
 using System.Net.Http;
+using System.Text;
 using System.Text.RegularExpressions;
 
 namespace CodeSnip.Views.CodeRunnerView
@@ -73,9 +74,10 @@ namespace CodeSnip.Views.CodeRunnerView
             ["rb"] = ("ruby.exe", "-"),
             ["pl"] = ("perl.exe", "-"),
             ["php"] = ("php.exe", ""),
-            ["java"] = ("jshell.exe", "-s -")
+            ["java"] = ("jshell.exe", "-s -"),
+            ["ps1"] = ("powershell.exe", "-NoProfile -ExecutionPolicy Bypass -EncodedCommand ")
+            //["ps1"] = ("powershell.exe", "-NoProfile -ExecutionPolicy Bypass -Command -")
         };
-
 
         public CodeRunnerViewModel(string languageExtension, string code, Func<string> getLatestCode)
         {
@@ -238,10 +240,23 @@ namespace CodeSnip.Views.CodeRunnerView
                     return;
                 }
 
-                // Timeout is 30 seconds for C# scripts, 15 for others.
-                int timeout = Extension.Equals("cs", StringComparison.OrdinalIgnoreCase) ? 30000 : 15000;
+                int timeout = 15000;
+                switch (Extension.ToLowerInvariant())
+                {
+                    case "ps1":
+                        {
+                            string base64Script = Convert.ToBase64String(Encoding.Unicode.GetBytes(Code));
+                            arguments += base64Script;
+                            Code = string.Empty; // Clear the original code as it's now part of the arguments
+                            break;
+                        }
+                    case "cs":
+                        timeout = 30000;
+                        break;
+                    default:
+                        break;
+                }
 
-                // For other interpreters, run external process
                 var (success, output, error) = await RunProcessAsync(interpreterPath, arguments, Code, timeout);
 
                 StdOut = output ?? "";
@@ -257,8 +272,6 @@ namespace CodeSnip.Views.CodeRunnerView
                 IsRunning = false;
             }
         }
-
-        
 
         private static (string? path, string? args) GetLocalInterpreter(string? compilerExtension)
         {
@@ -278,7 +291,7 @@ namespace CodeSnip.Views.CodeRunnerView
             if (!Interpreters.TryGetValue(compilerExtension, out var info))
                 return (null, null);
 
-            
+
             string interpreterPath = Path.Combine(toolsDir, info.exe);
 
             return File.Exists(interpreterPath)
