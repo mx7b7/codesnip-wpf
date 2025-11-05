@@ -10,6 +10,8 @@
 	<Color name="MethodName" foreground="#FF795E26" />
 	<Color name="Builtins" foreground="#2B91AF" />
 	<Color name="Self" foreground="#0000FF" fontStyle="italic" />
+	<Color name="Punctuation"   foreground="#0000FF" />
+	<Color name="Literals" foreground="#098658" exampleText="true false nil" />
 
 	<Property name="Extension" value="lua"/>
 
@@ -53,6 +55,11 @@
 			<Word>then</Word>
 			<Word>until</Word>
 			<Word>while</Word>
+		</Keywords>
+		<Keywords color="Literals">
+			<Word>false</Word>
+			<Word>nil</Word>
+			<Word>true</Word>
 		</Keywords>
 		<Keywords color="Builtins">
 			<Word>arg</Word>
@@ -202,5 +209,6 @@
 		</Keywords>
 
 		<Rule color="MethodName">[\d\w_]+(?=(\s*\())</Rule>
+		<Rule color="Punctuation">(\.\.|[#=+\-*/%!&amp;|^~&lt;&gt;])+</Rule>
 	</RuleSet>
 </SyntaxDefinition>
