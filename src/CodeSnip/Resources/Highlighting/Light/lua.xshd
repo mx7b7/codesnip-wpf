@@ -6,7 +6,7 @@
 	<Color name="Comment" foreground="#008000" exampleText="-- this is a comment" />
 	<Color name="String" foreground="#A31515" exampleText="&quot;Hello, World!&quot;" />
 	<Color name="Number" foreground="#098658" exampleText="3.14" />
-	<Color name="Keywords" foreground="#0000FF" fontWeight="bold" />
+	<Color name="Keywords" foreground="#0000FF" />
 	<Color name="MethodName" foreground="#FF795E26" />
 	<Color name="Builtins" foreground="#2B91AF" />
 	<Color name="Self" foreground="#0000FF" fontStyle="italic" />

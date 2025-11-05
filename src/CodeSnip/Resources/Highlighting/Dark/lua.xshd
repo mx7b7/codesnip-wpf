@@ -7,7 +7,7 @@
 	<Color name="String" foreground="#E6DB74" exampleText="&quot;Hello, World!&quot;" />
 	<Color name="Number" foreground="#AE81FF" exampleText="3.14" />
 	<Color name="Literals" foreground="#FFAE81FF" exampleText="true false nil" />
-	<Color name="Keywords" foreground="#F92672" fontWeight="bold" />
+	<Color name="Keywords" foreground="#F92672" />
 	<Color name="MethodName"    foreground="#A6E22E" />
 	<Color name="Builtins" foreground="#66D9EF" />
 	<Color name="Self" foreground="#FD971F" fontStyle="italic" />
