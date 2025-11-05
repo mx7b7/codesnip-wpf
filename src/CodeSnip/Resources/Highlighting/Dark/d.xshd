@@ -1,27 +1,24 @@
-﻿<?xml version="1.0" encoding="UTF-8"?>
+﻿<?xml version="1.0" encoding="utf-8"?>
 <SyntaxDefinition name="D" extensions=".d" xmlns="http://icsharpcode.net/sharpdevelop/syntaxdefinition/2008">
-
-	<Color name="Comment"       foreground="#75715E" />
-	<Color name="String"        foreground="#E6DB74" />
-	<Color name="Character"     foreground="#FD971F" />
-	<Color name="Number"        foreground="#AE81FF" />
-	<!--<Color name="Punctuation"   foreground="White" />-->
-	<Color name="Keywords"      foreground="#F92672" />
-	<Color name="Type"          foreground="#66D9EF" />
-	<Color name="MethodName"    foreground="#A6E22E" />
-	<Color name="Preprocessor"  foreground="#9B9B9B" />
+	<!-- syntax definition for D by mx7b7 -->
+	<!-- Monokai theme -->
+	<Color name="Comment" foreground="#FF75715E" />
+	<Color name="String" foreground="#FFE6DB74" />
+	<Color name="Character" foreground="#FFFD971F" />
+	<Color name="Number" foreground="#FFAE81FF" />
+	<Color name="Punctuation" foreground="#FFF92672" />
+	<Color name="Keywords" foreground="#FFF92672" />
+	<Color name="Type" foreground="#FF66D9EF" />
+	<Color name="MethodName" foreground="#FFA6E22E" />
+	<Color name="Preprocessor" foreground="#FF9B9B9B" />
 
 	<Property name="Extension" value="d" />
 
 	<RuleSet ignoreCase="false">
-
-		<!--<Rule color="Punctuation">[?,.;()\[\]{}+\-/%*&lt;&gt;^=~!&amp;]+</Rule>-->
-
 		<Span color="Comment" begin="//" end="$" />
 		<Span color="Comment" multiline="true" begin="/\*" end="\*/" />
 		<!-- nested comments -->
 		<Span color="Comment" multiline="true" begin="/\+" end="\+/" />
-
 		<Span color="String" begin="`" end="`" />
 		<Span color="String" begin="r&quot;" end="&quot;" />
 		<Span color="String" begin="q{" end="}" />
@@ -32,7 +29,6 @@
 				<Span begin="\\" end="." />
 			</RuleSet>
 		</Span>
-
 		<Span color="Character">
 			<Begin>'</Begin>
 			<End>'</End>
@@ -40,7 +36,6 @@
 				<Span begin="\\" end="." />
 			</RuleSet>
 		</Span>
-
 		<!-- 
 			Example matches:
 			- 0x1A3FUL       (hexadecimal with unsigned long suffix)
@@ -59,7 +54,6 @@
 			)?
 			)\b
 		</Rule>
-
 		<Keywords color="Preprocessor">
 			<Word>debug</Word>
 			<Word>mixin</Word>
@@ -188,10 +182,11 @@
 		</Keywords>
 		<!-- keywords that start with @ -> @property, @safe... -->
 		<Rule color="Keywords">@[\w_][\w\d_]*</Rule>
+		<!-- function names -->
 		<Rule color="MethodName">[\d\w_]+(?=(\s*\())</Rule>
+		<!-- .. => = + - * / % ! & | : ^ ~ < > -->
+		<Rule color="Punctuation">(\.\.|\=\>|[=+\-*/%!&amp;|:^~&lt;&gt;])+</Rule>
 		<!-- std.string -->
 		<Rule color="Type">(?&lt;!\bstd\.)\bstring\b</Rule>
-
 	</RuleSet>
 </SyntaxDefinition>
-

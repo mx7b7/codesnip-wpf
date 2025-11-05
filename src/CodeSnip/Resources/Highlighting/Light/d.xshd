@@ -1,21 +1,20 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
-<SyntaxDefinition name="D" extensions=".d"
-	xmlns="http://icsharpcode.net/sharpdevelop/syntaxdefinition/2008">
+<SyntaxDefinition name="D" extensions=".d" xmlns="http://icsharpcode.net/sharpdevelop/syntaxdefinition/2008">
+	<!-- syntax definition for D by mx7b7 -->
 	<!-- vscode Light Modern-->
 	<Color name="Comment" foreground="#FF008000" />
 	<Color name="String" foreground="#FFA31515" />
 	<Color name="Character" foreground="#FFA31515" />
 	<Color name="Number" foreground="#FF098658" />
-	<!-- <Color name="Punctuation"   foreground="DarkGreen" /> -->
+	<Color name="Punctuation" foreground="#FF006400" />
 	<Color name="Keywords" foreground="#FFAF00DB" />
 	<Color name="Type" foreground="#FF0000FF" />
 	<Color name="MethodName" foreground="#FF795E26" />
 	<Color name="Preprocessor" foreground="#FF0000FF" />
+
 	<Property name="Extension" value="d" />
+
 	<RuleSet ignoreCase="false">
-
-		<!-- <Rule color="Punctuation">[?,.;()\[\]{}+\-/%*&lt;&gt;^+~!|&amp;]+</Rule> -->
-
 		<Span color="Comment" begin="//" end="$" />
 		<Span color="Comment" multiline="true" begin="/\*" end="\*/" />
 		<!-- nested comments -->
@@ -37,7 +36,6 @@
 				<Span begin="\\" end="." />
 			</RuleSet>
 		</Span>
-
 		<!-- 
 			Example matches:
 			- 0x1A3FUL       (hexadecimal with unsigned long suffix)
@@ -56,7 +54,6 @@
 			)?
 			)\b
 		</Rule>
-
 		<Keywords color="Preprocessor">
 			<Word>version</Word>
 			<Word>debug</Word>
@@ -185,9 +182,11 @@
 		</Keywords>
 		<!-- keywords that start with @ -> @property, @safe... -->
 		<Rule color="Keywords">@[\w_][\w\d_]*</Rule>
+		<!-- function names -->
 		<Rule color="MethodName">[\d\w_]+(?=(\s*\())</Rule>
+		<!-- .. => = + - * / % ! & | : ^ ~ < > -->
+		<Rule color="Punctuation">(\.\.|\=\>|[=+\-*/%!&amp;|:^~&lt;&gt;])+</Rule>
 		<!-- std.string -->
 		<Rule color="Type">(?&lt;!\bstd\.)\bstring\b</Rule>
-
 	</RuleSet>
 </SyntaxDefinition>
