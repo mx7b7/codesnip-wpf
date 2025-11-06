@@ -1,53 +1,50 @@
-<?xml version="1.0"?>
+<?xml version="1.0" encoding="utf-8"?>
 <!-- syntaxdefinition for C/C++ 2001 by Andrea Paatz and Mike Krueger -->
 <!-- converted to AvalonEdit format by Siegfried Pammer in 2010 -->
+<!-- edited by mx7b7 2025 -->
 <SyntaxDefinition name="C++" extensions=".c;.h;.cc;.cpp;.hpp" xmlns="http://icsharpcode.net/sharpdevelop/syntaxdefinition/2008">
-	<Color name="Comment"           foreground="#75715E" />
-	<!-- sivo-zelena za komentare -->
-	<Color name="Character"         foreground="#E6DB74" />
-	<!-- narandžasta za char i string -->
-	<Color name="String"            foreground="#E6DB74" />
-	<Color name="Preprocessor"      foreground="#fc9cbf" />
-	<!-- jarko crvena za preprocesorske direktive -->
-	<Color name="Punctuation"       foreground="#F8F8F2" />
-	<!-- krem bela za interpunkciju -->
-	<Color name="MethodName"        foreground="#A6E22E" fontWeight="bold" />
-	<!-- svetlo zelena za imena funkcija -->
-	<Color name="Digits"            foreground="#AE81FF" />
-	<!-- ljubičasta za brojeve -->
-	<Color name="CompoundKeywords"  foreground="#F92672" fontWeight="bold" />
-	<!-- jarko crvena za složene ključne reči -->
-	<Color name="This"              foreground="#F8F8F2" fontWeight="bold" />
-	<!-- osnovna boja za this -->
-	<Color name="Operators"         foreground="#F8F8F2" fontWeight="bold" />
-	<!-- krem bela za operatore -->
-	<Color name="Namespace"         foreground="#66D9EF" fontWeight="bold" />
-	<!-- svetlo plava za namespace -->
-	<Color name="Friend"            foreground="#F92672" />
-	<!-- jarko crvena za friend -->
-	<Color name="Modifiers"         foreground="#66D9EF" fontWeight="bold" />
-	<!-- svetlo plava za modifikatore -->
-	<Color name="TypeKeywords"      foreground="#F92672" />
-	<!-- jarko crvena za tipove -->
-	<Color name="BooleanConstants"  foreground="#F92672" fontWeight="bold" />
-	<!-- jarko crvena za bool -->
-	<Color name="Keywords"          foreground="#F92672" fontWeight="bold" />
-	<!-- jarko crvena za ključne reči -->
-	<Color name="LoopKeywords"      foreground="#F92672" fontWeight="bold" />
-	<!-- jarko crvena za petlje -->
-	<Color name="JumpKeywords"      foreground="#F92672" />
-	<!-- jarko crvena za jump ključne reči -->
-	<Color name="ExceptionHandling" foreground="#F92672" fontWeight="bold" />
-	<!-- jarko crvena za try/catch -->
-	<Color name="ControlFlow"       foreground="#F92672" fontWeight="bold" />
-	<!-- jarko crvena za kontrolu toka -->
-
+	<Color name="Comment" foreground="#FF88846F" />
+	<!-- gray-green for comments -->
+	<Color name="Character" foreground="#FFE6DB74" />
+	<!-- orange for char and string -->
+	<Color name="String" foreground="#FFE6DB74" />
+	<Color name="Preprocessor" foreground="#FFF92672" />
+	<!-- bright red for preprocessor directives -->
+	<Color name="Punctuation" foreground="#FFF92672" />
+	<!-- bright red for punctuation -->
+	<Color name="MethodName" foreground="#FFA6E22E" />
+	<!-- light green for function names -->
+	<Color name="Digits" foreground="#FFAE81FF" />
+	<!-- purple for numbers -->
+	<Color name="CompoundKeywords" foreground="#FFF92672" />
+	<!-- bright red for compound keywords -->
+	<Color name="This" foreground="#FFFD971F" />
+	<!-- base color for this -->
+	<Color name="Operators" foreground="#FFF92672" />
+	<!-- cream white for operators -->
+	<Color name="Namespace" foreground="#FF66D9EF" />
+	<!-- light blue for namespace -->
+	<Color name="Friend" foreground="#FFF92672" />
+	<!-- bright red for friend -->
+	<Color name="Modifiers" foreground="#FF66D9EF" />
+	<!-- light blue for modifiers -->
+	<Color name="TypeKeywords" foreground="#FF66D9EF" />
+	<!-- light blue for types -->
+	<Color name="BooleanConstants" foreground="#FFAE81FF" />
+	<!-- bright red for bool -->
+	<Color name="Keywords" foreground="#FFF92672" />
+	<!-- bright red for keywords -->
+	<Color name="LoopKeywords" foreground="#FFF92672" />
+	<!-- bright red for loops -->
+	<Color name="JumpKeywords" foreground="#FFF92672" />
+	<!-- bright red for jump keywords -->
+	<Color name="ExceptionHandling" foreground="#FFF92672" />
+	<!-- bright red for try/catch -->
+	<Color name="ControlFlow" foreground="#FFF92672" />
+	<!-- bright red for control flow -->
 	<Property name="Extension" value="cpp" />
-
 	<RuleSet ignoreCase="false">
-		<Rule color="Punctuation">
-			[?,.;()\[\]{}+\-/%*&lt;&gt;^=~!&amp;]+
-		</Rule>
+		<Rule color="Punctuation">[?|+\-/%*&lt;&gt;^=~!&amp;]+</Rule>
 		<Keywords color="CompoundKeywords">
 			<Word>abstract</Word>
 			<Word>delegate</Word>
@@ -128,8 +125,11 @@
 			<Word>double</Word>
 			<Word>enum</Word>
 			<Word>float</Word>
+			<Word>int</Word>
+			<Word>long</Word>
 			<Word>short</Word>
 			<Word>signed</Word>
+			<Word>size_t</Word>
 			<Word>struct</Word>
 			<Word>union</Word>
 			<Word>unsigned</Word>
@@ -174,8 +174,6 @@
 			<Word>export</Word>
 			<Word>extern</Word>
 			<Word>inline</Word>
-			<Word>int</Word>
-			<Word>long</Word>
 			<Word>mutable</Word>
 			<Word>operator</Word>
 			<Word>register</Word>
@@ -189,6 +187,34 @@
 		</Keywords>
 		<Span color="Preprocessor">
 			<Begin>\#</Begin>
+			<RuleSet>
+				<Keywords color="Preprocessor">
+					<Word>define</Word>
+					<Word>ifdef</Word>
+					<Word>ifndef</Word>
+					<Word>undef</Word>
+					<Word>endif</Word>
+					<Word>else</Word>
+					<Word>elif</Word>
+					<Word>error</Word>
+					<Word>pragma</Word>
+					<Word>line</Word>
+					<Word>include</Word>
+				</Keywords>
+				<Span>
+					<Begin>include\b</Begin>
+					<RuleSet>
+						<Span color="String" begin="&lt;" end="&gt;" />
+						<Span color="String" begin="&quot;" end="&quot;" />
+						<Span color="Comment">
+							<Begin>//</Begin>
+						</Span>
+					</RuleSet>
+				</Span>
+				<Span color="Comment">
+					<Begin>//</Begin>
+				</Span>
+			</RuleSet>
 		</Span>
 		<Span color="Comment">
 			<Begin>//</Begin>

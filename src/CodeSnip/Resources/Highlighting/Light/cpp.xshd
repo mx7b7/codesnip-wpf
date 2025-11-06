@@ -1,16 +1,17 @@
-<?xml version="1.0"?>
+<?xml version="1.0" encoding="utf-8"?>
 <!-- syntaxdefinition for C/C++ 2001 by Andrea Paatz and Mike Krueger -->
 <!-- converted to AvalonEdit format by Siegfried Pammer in 2010 -->
+<!-- edited by mx7b7 2025 -->
 <SyntaxDefinition name="C++" extensions=".c;.h;.cc;.cpp;.hpp" xmlns="http://icsharpcode.net/sharpdevelop/syntaxdefinition/2008">
-	<Color name="Comment" foreground="Green" />
-	<Color name="Character" foreground="Fuchsia" />
-	<Color name="String" foreground="Fuchsia" />
-	<Color name="Preprocessor" foreground="Green" />
-	<Color name="Punctuation" foreground="DarkGreen" />
-	<Color name="MethodName" foreground="MidnightBlue" fontWeight="bold" />
-	<Color name="Digits" foreground="DarkBlue" />
-	<Color name="CompoundKeywords" foreground="Black" fontWeight="bold" />
-	<Color name="This" foreground="Black" fontWeight="bold" />
+	<Color name="Comment" foreground="#FF008000" />
+	<Color name="Character" foreground="#FFFF00FF" />
+	<Color name="String" foreground="#FFFF00FF" />
+	<Color name="Preprocessor" foreground="#FF008000" />
+	<Color name="Punctuation" foreground="#FF006400" />
+	<Color name="MethodName" foreground="#FF191970" fontWeight="bold" />
+	<Color name="Digits" foreground="#FF00008B" />
+	<Color name="CompoundKeywords" foreground="#FF000000" fontWeight="bold" />
+	<Color name="This" foreground="#FF000000" fontWeight="bold" />
 	<Color name="Operators" foreground="#FF008B8B" fontWeight="bold" />
 	<Color name="Namespace" foreground="#FF008000" fontWeight="bold" />
 	<Color name="Friend" foreground="#FFA52A2A" />
@@ -22,12 +23,10 @@
 	<Color name="JumpKeywords" foreground="#FF000080" />
 	<Color name="ExceptionHandling" foreground="#FF008080" fontWeight="bold" />
 	<Color name="ControlFlow" foreground="#FF0000FF" fontWeight="bold" />
-
 	<Property name="Extension" value="cpp" />
-	
 	<RuleSet ignoreCase="false">
 		<Rule color="Punctuation">
-		[?,.;()\[\]{}+\-/%*&lt;&gt;^=~!&amp;]+
+			[?,.;()\[\]{}+\-/%*&lt;&gt;^=~!&amp;]+
 		</Rule>
 		<Keywords color="CompoundKeywords">
 			<Word>__abstract</Word>
@@ -170,6 +169,19 @@
 		</Keywords>
 		<Span color="Preprocessor">
 			<Begin>\#</Begin>
+			<RuleSet name="PreprocessorSet">
+				<!--Preprocessor directives that allow comments-->
+				<Span>
+					<Begin>(include|define|ifdef|ifndef|undef|endif|else|elif|error|pragma|line)\b</Begin>
+					<RuleSet>
+						<Span color="Comment">
+							<Begin>//</Begin>
+						</Span>
+						<Span color="String" begin="&lt;" end="&gt;" />
+						<Span color="String" begin="&quot;" end="&quot;" />
+					</RuleSet>
+				</Span>
+			</RuleSet>
 		</Span>
 		<Span color="Comment">
 			<Begin>//</Begin>
