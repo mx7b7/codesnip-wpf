@@ -874,6 +874,14 @@ namespace CodeSnip
             aboutWindow.ShowDialog();
         }
 
+        private void ThemeSwitch_Click(object sender, RoutedEventArgs e)
+        {
+            mainViewModel.SwitchTheme();
+
+            HighlightingService.ApplyHighlighting(textEditor, mainViewModel.SelectedSnippet?.Category?.Language?.Code);
+            ReplaceCurrentLineRenderer(textEditor);
+        }
+
         private void SetupFolding(Snippet snippet)
         {
             textEditor.Document ??= new TextDocument();

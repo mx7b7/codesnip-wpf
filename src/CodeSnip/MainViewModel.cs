@@ -978,6 +978,18 @@ namespace CodeSnip
             WindowTitle = title;
         }
 
+        public void SwitchTheme()
+        {
+            var currentTheme = ThemeManager.Current.DetectTheme(Application.Current);
+            if (currentTheme is null) return;
+
+            bool isDark = currentTheme.BaseColorScheme.Equals("Dark", StringComparison.OrdinalIgnoreCase);
+            string newBaseTheme = isDark ? "Light" : "Dark";
+
+            ThemeManager.Current.ChangeThemeBaseColor(Application.Current, newBaseTheme);
+
+            settingsService.BaseColor = newBaseTheme;
+        }
 
     }
 
