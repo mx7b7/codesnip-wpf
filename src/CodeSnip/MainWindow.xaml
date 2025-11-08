@@ -97,7 +97,7 @@
     </mah:MetroWindow.LeftWindowCommands>
     <mah:MetroWindow.RightWindowCommands>
         <mah:WindowCommands>
-            <Button ToolTip="Theme switch" Margin="0,0,10,0" Click="ThemeSwitch_Click">
+            <Button ToolTip="Theme switch" Click="ThemeSwitch_Click">
                 <Path Data="{StaticResource ThemeLightDark}" Fill="{DynamicResource MahApps.Brushes.Accent}"
                       Width="20" Height="20" Stretch="Uniform" >
                 </Path>
