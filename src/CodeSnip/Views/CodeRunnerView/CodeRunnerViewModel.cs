@@ -66,6 +66,8 @@ namespace CodeSnip.Views.CodeRunnerView
         [ObservableProperty]
         private bool _hasOut = true;
 
+        public Process? RunningProcess { get; private set; }
+
         private static readonly Dictionary<string, (string exe, string args)> Interpreters = new()
         {
             ["py"] = ("python.exe", "-u -"),
@@ -240,7 +242,7 @@ namespace CodeSnip.Views.CodeRunnerView
                     return;
                 }
 
-                int timeout = 15000;
+                int timeout = 60000;
                 switch (Extension.ToLowerInvariant())
                 {
                     case "ps1":
@@ -250,9 +252,6 @@ namespace CodeSnip.Views.CodeRunnerView
                             Code = string.Empty; // Clear the original code as it's now part of the arguments
                             break;
                         }
-                    case "cs":
-                        timeout = 30000;
-                        break;
                     default:
                         break;
                 }
@@ -270,6 +269,7 @@ namespace CodeSnip.Views.CodeRunnerView
             finally
             {
                 IsRunning = false;
+                RunningProcess = null;
             }
         }
 
@@ -304,7 +304,7 @@ namespace CodeSnip.Views.CodeRunnerView
             return !string.IsNullOrWhiteSpace(GetLocalInterpreter(Extension).path);
         }
 
-        private static async Task<(bool Success, string? Output, string? Error)> RunProcessAsync(string fileName, string? arguments, string input, int timeoutMs)
+        private async Task<(bool Success, string? Output, string? Error)> RunProcessAsync(string fileName, string? arguments, string input, int timeoutMs)
         {
             var psi = new ProcessStartInfo
             {
@@ -319,6 +319,7 @@ namespace CodeSnip.Views.CodeRunnerView
             };
 
             using var process = new Process { StartInfo = psi };
+            RunningProcess = process;
             if (!process.Start())
             {
                 return (false, null, $"Failed to start process: {fileName}");

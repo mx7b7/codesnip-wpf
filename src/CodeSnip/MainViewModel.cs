@@ -437,7 +437,19 @@ namespace CodeSnip
             if (EditingSnippet != null && EditorText != string.Empty)
             {
                 var vm = new CodeRunnerViewModel(langCode, EditorText, () => EditorText);
-                _flyoutService.ShowFlyout("flyCodeRunner", vm, "Run code");
+                _flyoutService.ShowFlyout("flyCodeRunner", vm, "Run code", () =>
+                {
+                    // onClosed action: Check if a local process is still running and terminate it.
+                    if (vm.RunningProcess != null)
+                    {
+                        try
+                        {
+                            if (!vm.RunningProcess.HasExited)
+                                vm.RunningProcess.Kill(true);
+                        }
+                        catch { /* Ignore errors on process kill */ }
+                    }
+                });
             }
             else
             {
