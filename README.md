@@ -39,13 +39,16 @@
   - **View assembly output** with syntax highlighting for supported languages
     >**Note:** Some compilers may generate a very large amount of assembly code even from a small number of source lines.
   - Generate shareable shortlinks to [Compiler Explorer](https://godbolt.org/)
+ - **Local Code Execution**:
+   - Run scripts for languages like PowerShell, Python, PHP, Perl, Lua, Ruby, Node.js, and Java (via `JShell`) directly using local interpreters.
+     >**Note:** If an interpreter is not in system's PATH, you can place its portable version (e.g., `lua.exe`, `node.exe`) directly into the `Tools/Interpreters` directory within the application's installation folder.
 - **UI/UX**:
   - Modern Metro interface
   - Flyout panels for additional windows (settings, editors, actions, etc.)
   - Automatic loading of theme and syntax definitions
 - **Export & Sharing**:
-  - **"Copy As"**: Copy selected code as Markdown, HTML, BBCode, Base64 or a JSON string.
-  - **Export to File**: Save snippets as HTML or in their original language format.
+  - **Copy As**: Copy selected code as Markdown, HTML, BBCode, Base64, a JSON string, or as a **Bitmap Image**.
+  - **Export to File**: Save snippets as HTML, a **PNG Image**, or in their original language format.
 
 
 ---
