@@ -339,6 +339,10 @@
                                 <Path Data="{StaticResource FormatIndentDecrease}" Fill="{DynamicResource MahApps.Brushes.AccentBase}"
                                   Width="20" Height="20" Stretch="Uniform" />
                             </ToggleButton>
+                            <ToggleButton Margin="2,0,0,0" ToolTip="Word Wrap" IsChecked="{Binding WordWrap, Mode=TwoWay}">
+                                <Path Data="{StaticResource WrapText}" Fill="{DynamicResource MahApps.Brushes.AccentBase}"
+                                      Width="20" Height="20" Stretch="Uniform" />
+                            </ToggleButton>
                             <Separator />
                             <Button ToolTip="Highlighting Editor" Command="{Binding OpenHighlightingEditorCommand}">
                                 <Path Data="{StaticResource ColorPaletteiOS}" Fill="{DynamicResource MahApps.Brushes.AccentBase}"
@@ -352,18 +356,19 @@
                         </ToolBar>
                     </ToolBarTray>
                     <avalonEdit:TextEditor
-				x:Name="textEditor"
-                Grid.Row="1"
-                Margin="0,10,0,0"
-				FontFamily="{Binding EditorFontFamily}"
-				FontSize="{Binding EditorFontSize}"
-				SyntaxHighlighting="C#"
-                    ShowLineNumbers="True" 
-                    HorizontalScrollBarVisibility="Auto" 
-                    VerticalScrollBarVisibility="Auto" 
-                    Text="" 
-                    BorderBrush="{DynamicResource AccentColorBrush}"
-                    ContextMenuOpening="TextEditor_ContextMenuOpening" >
+				        x:Name="textEditor"
+                        Grid.Row="1"
+                        Margin="0,10,0,0"
+				        FontFamily="{Binding EditorFontFamily}"
+				        FontSize="{Binding EditorFontSize}"
+				        SyntaxHighlighting="C#"
+                        ShowLineNumbers="True" 
+                        HorizontalScrollBarVisibility="Auto" 
+                        VerticalScrollBarVisibility="Auto" 
+                        Text="" 
+                        WordWrap="{Binding WordWrap}"
+                        BorderBrush="{DynamicResource AccentColorBrush}"
+                        ContextMenuOpening="TextEditor_ContextMenuOpening" >
                         <avalonEdit:TextEditor.Resources>
                             <Style TargetType="{x:Type ScrollBar}" BasedOn="{StaticResource AutoHideScrollBar}" />
                         </avalonEdit:TextEditor.Resources>

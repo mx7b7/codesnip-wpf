@@ -154,6 +154,9 @@ namespace CodeSnip
         [ObservableProperty]
         private string _snippetFontWeight = "Light";
 
+        [ObservableProperty]
+        private bool _wordWrap = false;
+
         public enum SnippetFilterMode
         {
             Name,
