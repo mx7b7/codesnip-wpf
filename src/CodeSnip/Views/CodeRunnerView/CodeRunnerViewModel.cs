@@ -280,6 +280,18 @@ namespace CodeSnip.Views.CodeRunnerView
             }
         }
 
+        /// <summary>
+        /// Attempts to locate a local interpreter executable and its default arguments for the specified compiler file
+        /// extension.
+        /// </summary>
+        /// <remarks>The method searches for interpreter executables in the "Tools\Interpreters" directory
+        /// under the application's base directory. For C# scripts ("cs"), it looks for "csrunner.exe". If the
+        /// interpreter executable is not found locally, the method may return the executable name as a fallback, which
+        /// may require the interpreter to be available in the system PATH.</remarks>
+        /// <param name="compilerExtension">The file extension of the compiler or script language, with or without a leading period (e.g., ".cs" or
+        /// "cs"). Case-insensitive. If null or whitespace, no interpreter is returned.</param>
+        /// <returns>A tuple containing the full path to the interpreter executable and its default arguments, or (null, null) if
+        /// no suitable interpreter is found.</returns>
         private static (string? path, string? args) GetLocalInterpreter(string? compilerExtension)
         {
             if (string.IsNullOrWhiteSpace(compilerExtension))
@@ -311,6 +323,23 @@ namespace CodeSnip.Views.CodeRunnerView
             return !string.IsNullOrWhiteSpace(GetLocalInterpreter(Extension).path);
         }
 
+        /// <summary>
+        /// Runs an external process asynchronously with the specified input and captures its standard output and error
+        /// streams.
+        /// </summary>
+        /// <remarks>If the process does not exit within the specified timeout, it is forcefully
+        /// terminated and the Error field contains a timeout message. The method redirects standard input, output, and
+        /// error streams. The working directory is set to the directory containing the executable file, or the
+        /// application's base directory if not specified.</remarks>
+        /// <param name="fileName">The path to the executable file to run. Cannot be null or empty.</param>
+        /// <param name="arguments">The command-line arguments to pass to the process, or null to pass no arguments.</param>
+        /// <param name="input">The text to write to the standard input stream of the process. Can be an empty string if no input is
+        /// required.</param>
+        /// <param name="timeoutMs">The maximum time, in milliseconds, to wait for the process to complete before terminating it. Must be
+        /// greater than zero.</param>
+        /// <returns>A tuple containing a boolean indicating whether the process completed successfully, the captured standard
+        /// output (or null if none), and the captured standard error (or null if none). If the process fails to start
+        /// or times out, Success is false and Error contains a descriptive message.</returns>
         private async Task<(bool Success, string? Output, string? Error)> RunProcessAsync(string fileName, string? arguments, string input, int timeoutMs)
         {
             var psi = new ProcessStartInfo
@@ -362,6 +391,24 @@ namespace CodeSnip.Views.CodeRunnerView
             }
         }
 
+        /// <summary>
+        /// Runs an external process asynchronously with the specified input and captures its standard output and error
+        /// streams in real time.
+        /// </summary>
+        /// <remarks>If the process does not complete within the specified timeout, it is terminated and
+        /// an error message is sent to the error callback. Both output and error callbacks are invoked for each line of
+        /// output or error received from the process. This method does not throw exceptions for process errors;
+        /// instead, error information is provided via the error callback.</remarks>
+        /// <param name="fileName">The path to the executable file to run. Must not be null or empty.</param>
+        /// <param name="arguments">The command-line arguments to pass to the process, or null to run the process without arguments.</param>
+        /// <param name="input">The input string to write to the process's standard input. If empty, no input is sent.</param>
+        /// <param name="timeoutMs">The maximum time, in milliseconds, to wait for the process to complete before terminating it. Must be
+        /// greater than zero.</param>
+        /// <param name="onOutputReceived">A callback invoked each time a line of text is received from the process's standard output. Cannot be null.</param>
+        /// <param name="onErrorReceived">A callback invoked each time a line of text is received from the process's standard error, or when an error
+        /// or timeout occurs. Cannot be null.</param>
+        /// <returns>A task that represents the asynchronous operation. The task completes when the process exits and all output
+        /// has been read.</returns>
         private async Task RunProcessAsync_Dynamic_Reading(
                    string fileName, string? arguments, string input, int timeoutMs,
                    Action<string> onOutputReceived, Action<string> onErrorReceived)
