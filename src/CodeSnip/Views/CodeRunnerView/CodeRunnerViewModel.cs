@@ -6,6 +6,7 @@ using System.IO;
 using System.Net.Http;
 using System.Text;
 using System.Text.RegularExpressions;
+using System.Windows;
 
 namespace CodeSnip.Views.CodeRunnerView
 {
@@ -256,10 +257,16 @@ namespace CodeSnip.Views.CodeRunnerView
                         break;
                 }
 
-                var (success, output, error) = await RunProcessAsync(interpreterPath, arguments, Code, timeout);
+                // Old way of reading all output at once after process ends
+                //var (success, output, error) = await RunProcessAsync(interpreterPath, arguments, Code, timeout);
+                //StdOut = output ?? "";
+                //ErrorText = error ?? "";
 
-                StdOut = output ?? "";
-                ErrorText = error ?? "";
+                // New way of reading output dynamically
+                await RunProcessAsync_Dynamic_Reading(interpreterPath, arguments, Code, timeout,
+                                      outputLine => Application.Current.Dispatcher.Invoke(() => StdOut += outputLine + "\n"),
+                                      errorLine => Application.Current.Dispatcher.Invoke(() => ErrorText += errorLine + "\n")
+                                      );
             }
             catch (Exception ex)
             {
@@ -352,6 +359,102 @@ namespace CodeSnip.Views.CodeRunnerView
                 catch { /* Ignore errors during forceful termination */ }
 
                 return (false, null, $"Timeout: The process '{process.ProcessName}' (PID: {process.Id}) took too long to respond and was terminated.");
+            }
+        }
+
+        private async Task RunProcessAsync_Dynamic_Reading(
+                   string fileName, string? arguments, string input, int timeoutMs,
+                   Action<string> onOutputReceived, Action<string> onErrorReceived)
+        {
+            var psi = new ProcessStartInfo
+            {
+                FileName = fileName,
+                Arguments = arguments ?? "",
+                RedirectStandardInput = true,
+                RedirectStandardOutput = true,
+                RedirectStandardError = true,
+                UseShellExecute = false,
+                CreateNoWindow = true,
+                WorkingDirectory = Path.GetDirectoryName(fileName) ?? AppContext.BaseDirectory
+            };
+
+            var process = new Process { StartInfo = psi, EnableRaisingEvents = true };
+            RunningProcess = process;
+
+            var processCompletion = new TaskCompletionSource<bool>();
+            int streamReadersFinished = 0;
+
+            process.OutputDataReceived += (s, e) =>
+            {
+                if (e.Data is null)
+                {
+                    if (Interlocked.Increment(ref streamReadersFinished) == 2)
+                        processCompletion.TrySetResult(true);
+                }
+                else
+                {
+                    onOutputReceived?.Invoke(e.Data);
+                }
+            };
+
+            process.ErrorDataReceived += (s, e) =>
+            {
+                if (e.Data is null)
+                {
+                    if (Interlocked.Increment(ref streamReadersFinished) == 2)
+                        processCompletion.TrySetResult(true);
+                }
+                else
+                {
+                    onErrorReceived?.Invoke(e.Data);
+                }
+            };
+
+            using var cts = new CancellationTokenSource(timeoutMs);
+            try
+            {
+                if (!process.Start())
+                {
+                    onErrorReceived?.Invoke($"Failed to start process: {fileName}");
+                    return;
+                }
+
+                process.BeginOutputReadLine();
+                process.BeginErrorReadLine();
+
+                if (!string.IsNullOrEmpty(input))
+                {
+                    await process.StandardInput.WriteAsync(input);
+                }
+                process.StandardInput.Close();
+
+                var completedTask = await Task.WhenAny(processCompletion.Task, Task.Delay(timeoutMs, cts.Token));
+
+                if (completedTask != processCompletion.Task)
+                {
+                    try
+                    {
+                        process.Kill(entireProcessTree: true);
+                    }
+                    catch { /* Ignore exceptions during kill */ }
+
+                    onErrorReceived?.Invoke($"Timeout: The process '{psi.FileName}' took too long and was terminated.");
+                }
+            }
+            catch (OperationCanceledException)
+            {
+                if (!process.HasExited)
+                    try { process.Kill(entireProcessTree: true); } catch { }
+
+                onErrorReceived?.Invoke("Timeout: The process took too long and was terminated.");
+            }
+            catch (Exception ex)
+            {
+                onErrorReceived?.Invoke(ex.Message);
+            }
+            finally
+            {
+                process.Dispose();
             }
         }
 
