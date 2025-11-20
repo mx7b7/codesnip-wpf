@@ -1,78 +1,82 @@
-<?xml version="1.0"?>
-<!-- syntax definition for JavaScript 2.0 by Svante Lidman -->
-<!-- converted to AvalonEdit format by Siegfried Pammer in 2010 -->
+<?xml version="1.0" encoding="utf-8"?>
 <SyntaxDefinition name="JavaScript" extensions=".js" xmlns="http://icsharpcode.net/sharpdevelop/syntaxdefinition/2008">
-	<Color name="Digits"                    foreground="#FFb5cea8" fontStyle="normal" fontWeight="normal" exampleText="3.14"/>
-	<Color name="Comment"                   foreground="#FF57A64A" exampleText="// comment"/>
-	<Color name="String"                    foreground="#FFD69D85" exampleText="var text = &quot;Hello, World!&quot;;" />
-	<Color name="Character"                 foreground="#FFD69D85" exampleText="var char = 'a';"/>
-	<Color name="Regex"                     foreground="#FF3a6a9b" exampleText="/abc/m"/>
-	<Color name="JavaScriptKeyWords"        foreground="#FFd8a0df" exampleText="return myVariable;"/>
-	<Color name="JavaScriptIntrinsics"      foreground="#FFAFAF00" exampleText="Math.random()"/>
-	<Color name="JavaScriptLiterals"        foreground="#FFd8a0df" exampleText="return false;"/>
-	<Color name="JavaScriptGlobalFunctions" foreground="#FFdcdcaa" exampleText="escape(myString);"/>
-
+	<!-- syntax definition for JavaScript by mx7b7 -->
+	<!-- Monokai theme -->
+	<Color name="Digits" foreground="#FFAE81FF" exampleText="3.14" />
+	<Color name="Comment" foreground="#FF88846F" exampleText="// comment" />
+	<Color name="String" foreground="#FFE6DB74" />
+	<Color name="StringInterpolation" foreground="#FFFD971F" />
+	<Color name="Character" foreground="#FFE6DB74" exampleText="var char = 'a';" />
+	<Color name="Regex" foreground="#FFE6DB74" exampleText="/abc/m" />
+	<Color name="JavaScriptKeyWords" foreground="#FFF92672" exampleText="return myVariable;" />
+	<Color name="JavaScriptIntrinsics" foreground="#FF66D9EF" exampleText="Math.random()" />
+	<Color name="JavaScriptLiterals" foreground="#FFAE81FF" exampleText="return false;" />
+	<Color name="JavaScriptGlobalFunctions" foreground="#FF66D9EF" exampleText="escape(myString);" />
+	<Color name="JavaScriptFunctions" foreground="#FFA6E22E" exampleText="function wrapWords(keywordsArray);" />
 	<Property name="Extension" value="js" />
-
 	<RuleSet ignoreCase="false">
 		<Keywords color="JavaScriptKeyWords">
+			<Word>async</Word>
+			<Word>await</Word>
+			<Word>break</Word>
+			<Word>continue</Word>
+			<Word>delete</Word>
+			<Word>else</Word>
+			<Word>for</Word>
+			<Word>function</Word>
+			<Word>if</Word>
+			<Word>in</Word>
+			<Word>let</Word>
+			<Word>new</Word>
+			<Word>return</Word>
+			<Word>this</Word>
+			<Word>typeof</Word>
+			<Word>var</Word>
+			<Word>void</Word>
+			<Word>while</Word>
+			<Word>with</Word>
 			<Word>abstract</Word>
 			<Word>boolean</Word>
-			<Word>break</Word>
 			<Word>byte</Word>
 			<Word>case</Word>
 			<Word>catch</Word>
 			<Word>char</Word>
 			<Word>class</Word>
 			<Word>const</Word>
-			<Word>continue</Word>
 			<Word>debugger</Word>
 			<Word>default</Word>
-			<Word>delete</Word>
 			<Word>do</Word>
 			<Word>double</Word>
-			<Word>else</Word>
 			<Word>enum</Word>
 			<Word>export</Word>
 			<Word>extends</Word>
 			<Word>final</Word>
 			<Word>finally</Word>
 			<Word>float</Word>
-			<Word>for</Word>
-			<Word>function</Word>
 			<Word>goto</Word>
-			<Word>if</Word>
 			<Word>implements</Word>
 			<Word>import</Word>
-			<Word>in</Word>
 			<Word>instanceof</Word>
 			<Word>int</Word>
 			<Word>interface</Word>
-			<Word>let</Word>
 			<Word>long</Word>
 			<Word>native</Word>
-			<Word>new</Word>
+			<Word>of</Word>
 			<Word>package</Word>
 			<Word>private</Word>
 			<Word>protected</Word>
 			<Word>public</Word>
-			<Word>return</Word>
 			<Word>short</Word>
 			<Word>static</Word>
 			<Word>super</Word>
 			<Word>switch</Word>
 			<Word>synchronized</Word>
-			<Word>this</Word>
 			<Word>throw</Word>
 			<Word>throws</Word>
 			<Word>transient</Word>
 			<Word>try</Word>
-			<Word>typeof</Word>
-			<Word>var</Word>
-			<Word>void</Word>
 			<Word>volatile</Word>
-			<Word>while</Word>
-			<Word>with</Word>
+			<Word>yield</Word>
 		</Keywords>
 		<Keywords color="JavaScriptIntrinsics">
 			<Word>Array</Word>
@@ -88,19 +92,19 @@
 		</Keywords>
 		<Keywords color="JavaScriptLiterals">
 			<Word>false</Word>
-			<Word>Infinity</Word>
-			<Word>NaN</Word>
 			<Word>null</Word>
 			<Word>true</Word>
+			<Word>NaN</Word>
+			<Word>Infinity</Word>
 		</Keywords>
 		<Keywords color="JavaScriptGlobalFunctions">
-			<Word>escape</Word>
 			<Word>eval</Word>
-			<Word>isFinite</Word>
-			<Word>isNaN</Word>
-			<Word>parseFloat</Word>
 			<Word>parseInt</Word>
+			<Word>parseFloat</Word>
+			<Word>escape</Word>
 			<Word>unescape</Word>
+			<Word>isNaN</Word>
+			<Word>isFinite</Word>
 		</Keywords>
 		<Span color="Comment">
 			<Begin>//</Begin>
@@ -110,14 +114,22 @@
 			<End>\*/</End>
 		</Span>
 		<Span color="Regex">
-			<Begin>(?&lt;!([})\]\w]+\s*))/</Begin>
-			<End>/</End>
+			<!-- <Begin>(?&lt;!([})\]\w]+\s*))/</Begin> -->
+			<Begin>/</Begin>
+			<End>/[gimsuy]*</End>
 		</Span>
 		<Span color="String" multiline="true">
 			<Begin>"</Begin>
 			<End>"</End>
 			<RuleSet>
 				<Span begin="\\" end="." />
+			</RuleSet>
+		</Span>
+		<!-- `... ${Interpolation} ...` -->
+		<Span color="String" begin="`" end="`" multiline="true">
+			<RuleSet>
+				<Span color="StringInterpolation" begin="\$\{" end="\}">
+				</Span>
 			</RuleSet>
 		</Span>
 		<Span color="Character">
@@ -128,5 +140,6 @@
 			</RuleSet>
 		</Span>
 		<Rule color="Digits">\b0[xX][0-9a-fA-F]+|(\b\d+(\.[0-9]+)?|\.[0-9]+)([eE][+-]?[0-9]+)?</Rule>
+		<Rule color="JavaScriptFunctions">[\d\w_]+(?=(\s*\())</Rule>
 	</RuleSet>
 </SyntaxDefinition>

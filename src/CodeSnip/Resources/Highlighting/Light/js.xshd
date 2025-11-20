@@ -1,19 +1,19 @@
-<?xml version="1.0"?>
-<!-- syntax definition for JavaScript 2.0 by Svante Lidman -->
-<!-- converted to AvalonEdit format by Siegfried Pammer in 2010 -->
+<?xml version="1.0" encoding="utf-8"?>
 <SyntaxDefinition name="JavaScript" extensions=".js" xmlns="http://icsharpcode.net/sharpdevelop/syntaxdefinition/2008">
-	<Color name="Digits" foreground="DarkBlue" exampleText="3.14" />
-	<Color name="Comment" foreground="Green" exampleText="// comment" />
-	<Color name="String" foreground="Sienna" exampleText="var text = &quot;Hello, World!&quot;;" />
-	<Color name="Character" foreground="Sienna" exampleText="var char = 'a';" />
-	<Color name="Regex" foreground="Sienna" exampleText="/abc/m" />
-	<Color name="JavaScriptKeyWords" foreground="Blue" exampleText="return myVariable;" />
-	<Color name="JavaScriptIntrinsics" foreground="Blue" exampleText="Math.random()" />
-	<Color name="JavaScriptLiterals" foreground="Blue" exampleText="return false;" />
-	<Color name="JavaScriptGlobalFunctions" foreground="Blue" exampleText="escape(myString);" />
-
+	<!-- syntax definition for D by mx7b7 -->
+	<!-- vscode Light Modern-->
+	<Color name="Digits" foreground="#FF098658" exampleText="3.14" />
+	<Color name="Comment" foreground="#FF008000" exampleText="// comment" />
+	<Color name="String" foreground="#FFA31515" exampleText="var text = &quot;Hello, World!&quot;;" />
+	<Color name="StringInterpolation" foreground="#FF0070C1" />
+	<Color name="Character" foreground="#FFA31515" exampleText="var char = 'a';" />
+	<Color name="Regex" foreground="#FF811F3F" exampleText="/abc/m" />
+	<Color name="JavaScriptKeyWords" foreground="#FF0000FF" exampleText="return myVariable;" />
+	<Color name="JavaScriptIntrinsics" foreground="#FF0000FF" exampleText="Math.random()" />
+	<Color name="JavaScriptLiterals" foreground="#FF0000FF" exampleText="return false;" />
+	<Color name="JavaScriptGlobalFunctions" foreground="#FF0000FF" exampleText="escape(myString);" />
+	<Color name="JavaScriptFunctions" foreground="#FF795E26" exampleText="function wrapWords(keywordsArray);" />
 	<Property name="Extension" value="js" />
-	
 	<RuleSet ignoreCase="false">
 		<Keywords color="JavaScriptKeyWords">
 			<Word>break</Word>
@@ -110,7 +110,7 @@
 			<End>\*/</End>
 		</Span>
 		<Span color="Regex">
-			<Begin>(?&lt;!([})\]\w]+\s*))/</Begin>
+			<Begin>/</Begin>
 			<End>/</End>
 		</Span>
 		<Span color="String" multiline="true">
@@ -118,6 +118,13 @@
 			<End>"</End>
 			<RuleSet>
 				<Span begin="\\" end="." />
+			</RuleSet>
+		</Span>
+		<!-- `... ${Interpolation} ...` -->
+		<Span color="String" begin="`" end="`" multiline="true">
+			<RuleSet>
+				<Span color="StringInterpolation" begin="\$\{" end="\}">
+				</Span>
 			</RuleSet>
 		</Span>
 		<Span color="Character">
@@ -128,5 +135,6 @@
 			</RuleSet>
 		</Span>
 		<Rule color="Digits">\b0[xX][0-9a-fA-F]+|(\b\d+(\.[0-9]+)?|\.[0-9]+)([eE][+-]?[0-9]+)?</Rule>
+		<Rule color="JavaScriptFunctions">[\d\w_]+(?=(\s*\())</Rule>
 	</RuleSet>
 </SyntaxDefinition>
