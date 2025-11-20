@@ -162,9 +162,19 @@ namespace CodeSnip.Views.SnippetView
         }
 
 
-        // Predlošci osnovnih funkcija za različite jezike
+        // Default "Hello, World!" code templates for various programming languages
         private readonly Dictionary<string, string> _defaultCodeTemplates = new()
         {
+            ["cpp"] = @"
+#include <iostream>
+
+int main()
+{
+    std::cout << ""Hello, World!"" << std::endl;
+    return 0;
+}
+".Trim(),
+
             ["cs"] = @"
 using System;
 
@@ -177,16 +187,6 @@ class Program
 }
 ".Trim(),
 
-            ["cpp"] = @"
-#include <iostream>
-
-int main()
-{
-    std::cout << ""Hello, World!"" << std::endl;
-    return 0;
-}
-".Trim(),
-
             ["d"] = @"
 import std.stdio;
 
@@ -196,51 +196,9 @@ void main()
 }
 ".Trim(),
 
-            ["py"] = @"
-def main():
-    print(""Hello, World!"")
-
-if __name__ == '__main__':
-    main()
-".Trim(),
-
             ["fs"] = @"
 // Learn more about F# at http://fsharp.org
 printfn ""Hello, World!""
-".Trim(),
-
-            ["rs"] = @"
-fn main() {
-    println!(""Hello, World!"");
-}
-".Trim(),
-
-            ["js"] = @"
-console.log('Hello, World!');
-".Trim(),
-
-            ["java"] = @"
-class HelloWorld {
-    public static void main(String[] args) {
-        System.out.println(""Hello, World!"");
-    }
-}
-".Trim(),
-
-            ["pas"] = @"
-program HelloWorld;
-begin
-  writeln('Hello, World!');
-end.
-".Trim(),
-
-            ["ps1"] = @"
-$ProgressPreference = 'SilentlyContinue'
-Write-Output 'Hello, World!'
-".Trim(),
-
-            ["rb"] = @"
-puts 'Hello, World!'
 ".Trim(),
 
             ["html"] = @"
@@ -256,8 +214,55 @@ puts 'Hello, World!'
 
 </body>
 </html>
+".Trim(),
+
+            ["java"] = @"
+class HelloWorld {
+    public static void main(String[] args) {
+        System.out.println(""Hello, World!"");
+    }
+}
+".Trim(),
+
+            ["js"] = @"
+console.log('Hello, World!');
+".Trim(),
+
+            ["lua"] = @"
+print('Hello, World!')
+".Trim(),
+
+            ["pas"] = @"
+program HelloWorld;
+begin
+  writeln('Hello, World!');
+end.
+".Trim(),
+
+            ["ps1"] = @"
+$ProgressPreference = 'SilentlyContinue'
+Write-Output 'Hello, World!'
+".Trim(),
+
+            ["py"] = @"
+def main():
+    print(""Hello, World!"")
+
+if __name__ == '__main__':
+    main()
+".Trim(),
+
+            ["rb"] = @"
+puts 'Hello, World!'
+".Trim(),
+
+            ["rs"] = @"
+fn main() {
+    println!(""Hello, World!"");
+}
 ".Trim()
         };
+
 
     }
 }
