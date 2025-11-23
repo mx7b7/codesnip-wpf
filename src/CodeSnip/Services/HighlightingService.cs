@@ -116,7 +116,7 @@ namespace CodeSnip.Services
             }
             catch (Exception ex)
             {
-                Debug.WriteLine($"[HighlightingService] Error loading highlighting for '{langCode}' in {themeFolder}: {ex.Message}");
+                Trace.WriteLine($"[HighlightingService] Error loading highlighting for '{langCode}' in {themeFolder}: {ex.Message}");
                 editor.SyntaxHighlighting = null;
             }
         }
@@ -180,7 +180,7 @@ namespace CodeSnip.Services
             }
             catch (Exception ex)
             {
-                Debug.WriteLine($"[HighlightingService] Failed to load highlighting file '{relativeXshdPath}': {ex.Message}");
+                Trace.WriteLine($"[HighlightingService] Failed to load highlighting file '{relativeXshdPath}': {ex.Message}");
                 return null;
             }
         }
@@ -238,6 +238,93 @@ namespace CodeSnip.Services
 
             string key = $"{themeFolder}/{langCode.ToLower()}";
             _highlightCache.TryRemove(key, out _);
+        }
+
+        /// <summary>
+        /// Generates basic XSHD syntax definition files for a custom language, creating both dark and light theme
+        /// variants based on the specified language code and name.
+        /// </summary>
+        /// <remarks>The generated files are saved in the application's 'Highlighting/Dark' and
+        /// 'Highlighting/Light' directories. Existing files with the same name will be overwritten. This method does not
+        /// validate the contents of the generated syntax definition beyond basic templating.</remarks>
+        /// <param name="langCode">The file extension code representing the custom language. This value is used to name the generated XSHD files
+        /// and set the language extension in the syntax definition. Cannot be null or empty.</param>
+        /// <param name="langName">The display name of the custom language. This value is used as the name attribute in the syntax definition.
+        /// Cannot be null or empty.</param>
+        /// <returns>true if the XSHD files were successfully created for both themes; otherwise, false.</returns>
+        public static bool GenerateBasicXshdFile(string langCode, string langName)
+        {
+            try
+            {
+                var darkContent = $@"<?xml version=""1.0"" encoding=""utf-8""?>
+<SyntaxDefinition name=""{langName}"" extensions="".{langCode}"" xmlns=""http://icsharpcode.net/sharpdevelop/syntaxdefinition/2008"">
+    <!-- Monokai theme -->
+    <Color name=""Comment""       foreground=""#75715E"" />
+    <Color name=""String""        foreground=""#E6DB74"" />
+    <Color name=""Character""     foreground=""#FD971F"" />
+    <Color name=""Number""        foreground=""#AE81FF"" />
+    <Color name=""Keywords""      foreground=""#F92672"" />
+    <Color name=""Type""          foreground=""#66D9EF"" />
+    <Color name=""MethodName""    foreground=""#A6E22E"" />
+
+    <Property name=""Extension"" value=""{langCode}"" />
+
+<RuleSet ignoreCase=""false"">
+
+    <Keywords color=""Keywords"">
+        <!-- Add your keywords here, example  <Word>SomeKeyword</Word> -->
+    </Keywords>
+
+    <Keywords color=""Type"">
+    <!-- Add your types here, example  <Word>SomeType</Word> -->
+    </Keywords>       
+
+  <!-- Add your <RuleSet> and <Span> definitions below -->
+</RuleSet>
+</SyntaxDefinition>";
+                var lightContent = $@"<?xml version=""1.0"" encoding=""utf-8""?>
+<SyntaxDefinition name=""{langName}"" extensions="".{langCode}"" xmlns=""http://icsharpcode.net/sharpdevelop/syntaxdefinition/2008"">
+    <!-- vscode Light Modern-->
+    <Color name=""Comment"" foreground=""#FF008000"" />
+	<Color name=""String"" foreground=""#FFA31515"" />
+	<Color name=""Character"" foreground=""#FFA31515"" />
+	<Color name=""Number"" foreground=""#FF098658"" />
+	<Color name=""Keywords"" foreground=""#FFAF00DB"" />
+	<Color name=""Type"" foreground=""#FF0000FF"" />
+	<Color name=""MethodName"" foreground=""#FF795E26"" />
+
+    <Property name=""Extension"" value=""{{langCode}}"" />
+
+<RuleSet ignoreCase=""false"">
+
+    <Keywords color=""Keywords"">
+        <!-- Add your keywords here, example  <Word>SomeKeyword</Word> -->
+    </Keywords>
+
+    <Keywords color=""Type"">
+    <!-- Add your types here, example  <Word>SomeType</Word> -->
+    </Keywords>       
+
+  <!-- Add your <RuleSet> and <Span> definitions below -->
+</RuleSet>
+</SyntaxDefinition>";
+                string appBase = AppDomain.CurrentDomain.BaseDirectory;
+                string darkDir = Path.Combine(appBase, "Highlighting", "Dark");
+                string lightDir = Path.Combine(appBase, "Highlighting", "Light");
+                if (!Directory.Exists(darkDir))
+                    Directory.CreateDirectory(darkDir);
+                if (!Directory.Exists(lightDir))
+                    Directory.CreateDirectory(lightDir);
+                string darkFilePath = Path.Combine(darkDir, $"{langCode.ToLower()}.xshd");
+                string lightFilePath = Path.Combine(lightDir, $"{langCode.ToLower()}.xshd");
+                File.WriteAllText(darkFilePath, darkContent);
+                File.WriteAllText(lightFilePath, lightContent);
+                return true;
+            }
+            catch
+            {
+                return false;
+            }
         }
 
     }

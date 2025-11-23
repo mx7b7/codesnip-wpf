@@ -1,6 +1,7 @@
 ﻿using CodeSnip.Services;
 using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
+using MahApps.Metro.Controls.Dialogs;
 using System.Collections.ObjectModel;
 using System.ComponentModel;
 using System.Diagnostics;
@@ -260,21 +261,7 @@ namespace CodeSnip.Views.LanguageCategoryView
                 {
                     // Check for syntax highlighting file
                     if (!HighlightingService.SyntaxDefinitionExists(NewLanguageCode))
-                    {
-                        var confirm = await DialogService.Instance.ShowConfirmAsync(
-                            "Missing Syntax Highlighting",
-                            $"No syntax highlighting definition (.xshd file) was found for the extension '{NewLanguageCode}'.\n\n" +
-                            "The language will be added, but code will appear as plain text.\n\n" +
-                            "Do you want to add this language anyway?",
-                            "Yes, add it",
-                            "No, cancel");
-
-                        if (!confirm)
-                        {
-                            ToggleAddLanguage(); // Re-use the cancellation logic
-                            return; // User cancelled
-                        }
-                    }
+                        if (!await HandleMissingHighlightingAsync()) return;
 
                     // INSERT
                     var newLang = new Language
@@ -539,6 +526,52 @@ namespace CodeSnip.Views.LanguageCategoryView
             {
                 NewCategoryName = string.Empty;
             }
+        }
+
+        private async Task GenerateXSHD(string langCode, string langName)
+        {
+            try
+            {
+                bool success = HighlightingService.GenerateBasicXshdFile(langCode, langName);
+                if (!success)
+                {
+                    await DialogService.Instance.ShowMessageAsync("XSHD Creation Failed", $"Failed to create syntax highlighting definition for '{langCode}'.");
+                    return;
+                }
+                await DialogService.Instance.ShowMessageAsync("XSHD Created", $"A basic syntax highlighting definition for '{langName}' ({langCode}.xshd) has been created.\n\nYou can customize it later.");
+            }
+            catch (Exception ex)
+            {
+                await DialogService.Instance.ShowMessageAsync("Error Creating XSHD", $"Failed to create syntax highlighting definition for '{langName}'.\n\nDetails: {ex.Message}");
+            }
+        }
+
+        /// <summary>
+        /// Handles the workflow when a syntax highlighting file is missing for a new language.
+        /// It shows a dialog to the user and optionally generates a template file.
+        /// </summary>
+        /// <returns>A task that resolves to <c>true</c> if the process should continue, or <c>false</c> if it was cancelled.</returns>
+        private async Task<bool> HandleMissingHighlightingAsync()
+        {
+            var confirm = await DialogService.Instance.ShowYesNoCancelAsync("Missing Syntax Highlighting",
+                $"No syntax highlighting definition (.xshd file) was found for the extension '{NewLanguageCode}'.\n\n" +
+                "The language will be added, but code will appear as plain text.\n\n" +
+                "Do you want to add this language anyway?",
+                "Yes, add it",
+                "No, cancel",
+                "Yes, and add xshd templates");
+
+            if (confirm == MessageDialogResult.Negative)
+            {
+                ToggleAddLanguage(); // Re-use the cancellation logic
+                return false; // User cancelled
+            }
+
+            // Cancel replies with FirstAuxiliary to indicate they want to generate XSHD
+            if (confirm == MessageDialogResult.FirstAuxiliary)
+                await GenerateXSHD(NewLanguageCode, NewLanguageName);
+
+            return true;
         }
 
         [RelayCommand]
