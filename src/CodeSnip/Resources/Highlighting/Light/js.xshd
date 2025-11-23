@@ -16,6 +16,8 @@
 	<Property name="Extension" value="js" />
 	<RuleSet ignoreCase="false">
 		<Keywords color="JavaScriptKeyWords">
+			<Word>async</Word>
+			<Word>await</Word>
 			<Word>break</Word>
 			<Word>continue</Word>
 			<Word>delete</Word>
@@ -59,6 +61,7 @@
 			<Word>interface</Word>
 			<Word>long</Word>
 			<Word>native</Word>
+			<Word>of</Word>
 			<Word>package</Word>
 			<Word>private</Word>
 			<Word>protected</Word>
@@ -73,6 +76,7 @@
 			<Word>transient</Word>
 			<Word>try</Word>
 			<Word>volatile</Word>
+			<Word>yield</Word>
 		</Keywords>
 		<Keywords color="JavaScriptIntrinsics">
 			<Word>Array</Word>
@@ -110,8 +114,9 @@
 			<End>\*/</End>
 		</Span>
 		<Span color="Regex">
+			<!-- <Begin>(?&lt;!([})\]\w]+\s*))/</Begin> -->
 			<Begin>/</Begin>
-			<End>/</End>
+			<End>/[gimsuy]*</End>
 		</Span>
 		<Span color="String" multiline="true">
 			<Begin>"</Begin>
