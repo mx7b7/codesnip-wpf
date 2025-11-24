@@ -115,5 +115,8 @@
 			<CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
 		</Content>
 	</ItemGroup>
+	<ItemGroup>
+	  <Folder Include="Tools\Interpreters\" />
+	</ItemGroup>
 		
 </Project>
