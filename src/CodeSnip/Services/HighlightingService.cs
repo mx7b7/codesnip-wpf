@@ -293,7 +293,7 @@ namespace CodeSnip.Services
 	<Color name=""Type"" foreground=""#FF0000FF"" />
 	<Color name=""MethodName"" foreground=""#FF795E26"" />
 
-    <Property name=""Extension"" value=""{{langCode}}"" />
+    <Property name=""Extension"" value=""{langCode}"" />
 
 <RuleSet ignoreCase=""false"">
 
