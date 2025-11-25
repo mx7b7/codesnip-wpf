@@ -6,7 +6,7 @@ namespace CodeSnip
     {
         public bool LoadOnStartup { get; set; } = true;
         public bool EnableFiltering { get; set; } = true;
-        public string LastSnippet { get; set; } = "23:72:4";
+        public string LastSnippet { get; set; } = "9:22:3";
         public int X { get; set; } = 50;
         public int Y { get; set; } = 50;
         public int Height { get; set; } = 760;
@@ -17,7 +17,7 @@ namespace CodeSnip
         public bool IsSearchExpanded { get; set; } = false;
         public bool IsSnippetMetadataExpanded { get; set; } = false;
         public WindowState WindowState { get; set; } = WindowState.Normal;
-        public bool IsNotificationEnabled { get; set; } = true;
+        public bool IsNotificationEnabled { get; set; } = false;
     }
 
     public class EditorSettings
@@ -25,13 +25,13 @@ namespace CodeSnip
         public bool TabToSpaces { get; set; } = true;
         public bool EnableEmailLinks { get; set; } = false;
         public bool EnableHyperinks { get; set; } = false;
-        public bool HighlightLine { get; set; } = false;
+        public bool HighlightLine { get; set; } = true;
         public int IntendationSize { get; set; } = 4;
         public bool EnableBraceStyleFolding { get; set; } = false;
         public bool EnablePythonFolding { get; set; } = false;
         public bool EnableXmlFolding { get; set; } = false;
         public string EditorFontFamily { get; set; } = "Consolas";
-        public int EditorFontSize { get; set; } = 13;
+        public int EditorFontSize { get; set; } = 14;
 
     }
     public class ThemeSettings
@@ -42,11 +42,11 @@ namespace CodeSnip
 
     public class TreeViewFontSettings
     {
-        public int LanguageFontSize { get; set; } = 14;
+        public int LanguageFontSize { get; set; } = 15;
         public string LanguageFontWeight { get; set; } = "SemiBold";
-        public int CategoryFontSize { get; set; } = 13;
+        public int CategoryFontSize { get; set; } = 14;
         public string CategoryFontWeight { get; set; } = "Medium";
-        public int SnippetFontSize { get; set; } = 13;
+        public int SnippetFontSize { get; set; } = 14;
         public string SnippetFontWeight { get; set; } = "Light";
     }
 

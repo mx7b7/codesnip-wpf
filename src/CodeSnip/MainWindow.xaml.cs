@@ -152,6 +152,7 @@ namespace CodeSnip
                     flyout.IsPinned = true;
                     flyout.Theme = FlyoutTheme.Adapt;
                     flyout.CloseButtonIsCancel = true;
+                    flyout.AnimateOpacity = true;
                     HeaderedControlHelper.SetHeaderMargin(flyout, new Thickness(5, 5, 5, 5));
                     break;
                 case "flySnippet":
@@ -181,6 +182,8 @@ namespace CodeSnip
                     flyout.Position = Position.Right;
                     flyout.Theme = FlyoutTheme.Adapt;
                     flyout.CloseButtonIsCancel = true;
+                    flyout.IsPinned = true;
+                    flyout.AnimateOpacity = true;
                     break;
             }
             void ClosingFinishedHandler(object sender, RoutedEventArgs args)
