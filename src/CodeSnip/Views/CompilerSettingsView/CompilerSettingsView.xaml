@@ -24,9 +24,8 @@
              DisplayMemberPath="Name"
              Height="120"/>
             <TextBlock Text="Compiler Id:" FontWeight="Bold" Margin="0,10,0,0"/>
-            <!--<TextBox Text="{Binding CompilerId, Mode=TwoWay}" />-->
             <TextBox x:Name="InputBox"
-            Text="{Binding CompilerId, Mode=TwoWay}"  Margin="0,10,0,0"
+            Text="{Binding CompilerId, Mode=TwoWay}"
              mah:TextBoxHelper.ButtonContent="s"
              mah:TextBoxHelper.ButtonCommand="{Binding ShowHelpCommand}"
              Style="{DynamicResource MahApps.Styles.TextBox.Button}" />
