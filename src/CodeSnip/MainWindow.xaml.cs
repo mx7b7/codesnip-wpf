@@ -43,6 +43,8 @@ namespace CodeSnip
         public ICommand ToggleSingleLineCommentCommand { get; }
         public ICommand ToggleMultiLineCommentCommand { get; }
         public ICommand ToggleCommentSelectionCommand { get; }
+        public ICommand FormatAllCommand { get; }
+
 
         public ICommand OpenAboutCommand { get; }
 
@@ -71,6 +73,7 @@ namespace CodeSnip
             ToggleMultiLineCommentCommand = new RelayCommand(_ => ToggleMultiLineLineComment_Click(this, new RoutedEventArgs()));
             ToggleCommentSelectionCommand = new RelayCommand(_ => ToggleCommentSelection_Click(this, new RoutedEventArgs()));
             OpenAboutCommand = new RelayCommand(_ => About_Click(this, new RoutedEventArgs()));
+            FormatAllCommand = new RelayCommand(_ => FormatAll_Click(this, new RoutedEventArgs()));
 
             mainViewModel.PropertyChanged += MainViewModel_PropertyChanged;
 

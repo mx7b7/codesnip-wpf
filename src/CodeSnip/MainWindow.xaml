@@ -79,6 +79,9 @@
         <KeyBinding Key="P" Modifiers="Ctrl+Shift" Command="{Binding OpenSettingsCommand}"/>
         <!-- Ctrll+Shift + R : Open Code Runner window -->
         <KeyBinding Key="R" Modifiers="Ctrl+Shift" Command="{Binding OpenCodeRunnerViewCommand}"/>
+        <!-- Ctrll+Shift + H : Open Highlighting editor -->
+        <KeyBinding Key="H" Modifiers="Ctrl+Shift" Command="{Binding OpenHighlightingEditorCommand}"/>
+
         <!-- Ctrl + K : Toggle Single-Line Comment -->
         <KeyBinding Key="K" Modifiers="Ctrl"
                 Command="{Binding RelativeSource={RelativeSource AncestorType=Window}, Path=ToggleSingleLineCommentCommand}" />
@@ -87,10 +90,13 @@
         <KeyBinding Key="K" Modifiers="Ctrl+Shift"
                 Command="{Binding RelativeSource={RelativeSource AncestorType=Window}, Path=ToggleMultiLineCommentCommand}" />
 
-        <!-- Ctrl + Shift + I : Toggle Inline Block Comment (samo selekcija) -->
+        <!-- Ctrl + Shift + I : Toggle Inline Block Comment -->
         <KeyBinding Key="I" Modifiers="Ctrl+Shift"
                 Command="{Binding RelativeSource={RelativeSource AncestorType=Window}, Path=ToggleCommentSelectionCommand}" />
-        <!--<KeyBinding Key="F" Modifiers="Ctrl" Command="{Binding OpenSearchReplaceCommand}"/>-->
+
+        <!-- Ctrl + Shift + F : Format All  -->
+        <KeyBinding Key="F" Modifiers="Ctrl+Shift"
+                Command="{Binding RelativeSource={RelativeSource AncestorType=Window}, Path=FormatAllCommand}" />
     </mah:MetroWindow.InputBindings>
     <mah:MetroWindow.LeftWindowCommands>
         <mah:WindowCommands/>
@@ -331,7 +337,7 @@
                                 <Path Data="{StaticResource TextSearch}" Fill="{DynamicResource MahApps.Brushes.AccentBase}"
                                  Width="20" Height="20" Stretch="Uniform" />
                             </Button>
-                            <Button Margin="2,0,0,0" ToolTip="Format code" Click="FormatAll_Click">
+                            <Button Margin="2,0,0,0" ToolTip="Format code&#xA;Ctrl+Shift+F" Click="FormatAll_Click">
                                 <Path Data="{StaticResource FormatText}" Fill="{DynamicResource MahApps.Brushes.AccentBase}"
                                   Width="20" Height="20" Stretch="Uniform" />
                             </Button>
@@ -344,7 +350,7 @@
                                       Width="20" Height="20" Stretch="Uniform" />
                             </ToggleButton>
                             <Separator />
-                            <Button ToolTip="Highlighting Editor" Command="{Binding OpenHighlightingEditorCommand}">
+                            <Button ToolTip="Highlighting Editor&#xA;Ctrl+Shift+H" Command="{Binding OpenHighlightingEditorCommand}">
                                 <Path Data="{StaticResource ColorPaletteiOS}" Fill="{DynamicResource MahApps.Brushes.AccentBase}"
                                  Width="20" Height="20" Stretch="Uniform" />
                             </Button>
