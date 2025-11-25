@@ -626,6 +626,10 @@ namespace CodeSnip
         {
             LoadSnippets();
             IsLoadSnippetEnabled = false;
+            if (settingsService.LastSnippet != null)
+            {
+                RestoreSelectedSnippetState(settingsService.LastSnippet);
+            }
         }
 
         [RelayCommand]
