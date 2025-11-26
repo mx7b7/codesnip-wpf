@@ -243,30 +243,32 @@ namespace CodeSnip.Views.CodeRunnerView
                     return;
                 }
 
-                int timeout = 60000;
+                int timeout = Timeout.Infinite; // No timeout, rely on manual kill, beacuse some script may run long tasks
                 switch (Extension.ToLowerInvariant())
                 {
-                    case "ps1":
+                    case "ps1": // PowerShell case
                         {
                             string base64Script = Convert.ToBase64String(Encoding.Unicode.GetBytes(Code));
                             arguments += base64Script;
-                            Code = string.Empty; // Clear the original code as it's now part of the arguments
+
+                            // For PS, the code is in the arguments, so the 'input' parameter is empty.
+                            await RunProcessAsync_Dynamic_Reading(interpreterPath, arguments, "", timeout,
+                                                  outputLine => Application.Current.Dispatcher.Invoke(() => StdOut += outputLine + "\n"),
+                                                  errorLine => Application.Current.Dispatcher.Invoke(() => ErrorText += errorLine + "\n"));
+
                             break;
                         }
-                    default:
+                    default: // Default case for all other interpreters
+                        // New way of reading output dynamically
+                        await RunProcessAsync_Dynamic_Reading(interpreterPath, arguments, Code, timeout,
+                                              outputLine => Application.Current.Dispatcher.Invoke(() => StdOut += outputLine + "\n"),
+                                              errorLine => Application.Current.Dispatcher.Invoke(() => ErrorText += errorLine + "\n"));
+                        // Old way of reading all output at once after process ends
+                        //var (success, output, error) = await RunProcessAsync(interpreterPath, arguments, Code, timeout);
+                        //StdOut = output ?? "";
+                        //ErrorText = error ?? "";
                         break;
                 }
-
-                // Old way of reading all output at once after process ends
-                //var (success, output, error) = await RunProcessAsync(interpreterPath, arguments, Code, timeout);
-                //StdOut = output ?? "";
-                //ErrorText = error ?? "";
-
-                // New way of reading output dynamically
-                await RunProcessAsync_Dynamic_Reading(interpreterPath, arguments, Code, timeout,
-                                      outputLine => Application.Current.Dispatcher.Invoke(() => StdOut += outputLine + "\n"),
-                                      errorLine => Application.Current.Dispatcher.Invoke(() => ErrorText += errorLine + "\n")
-                                      );
             }
             catch (Exception ex)
             {
@@ -505,6 +507,23 @@ namespace CodeSnip.Views.CodeRunnerView
             }
         }
 
-    }
+        [RelayCommand]
+        private void KillRunningProcess()
+        {
+            try
+            {
+                if (RunningProcess != null && !RunningProcess.HasExited)
+                {
+                    RunningProcess.Kill(entireProcessTree: true);
+                    ErrorText += "\nProcess was terminated by the user.";
+                    RunningProcess = null;
+                }
+            }
+            catch (Exception ex)
+            {
+                ErrorText += $"\nError terminating process: {ex.Message}";
+            }
+        }
 
+    }
 }
