@@ -499,6 +499,24 @@ namespace CodeSnip
             }
         }
 
+        private async void FormatPasfmt_Click(object sender, RoutedEventArgs e)
+        {
+            string? code = mainViewModel.SelectedSnippet?.Category?.Language?.Code;
+            if (code is not null and "pas")
+            {
+                string originalCode = textEditor.Text;
+                var (isSuccess, formatted, error) = await FormattingService.TryFormatCodeWithPasFmtAsync(originalCode);
+                if (isSuccess)
+                {
+                    textEditor.Document.Text = formatted;
+                }
+                else
+                {
+                    MessageBox.Show(error);
+                }
+            }
+        }
+
         private async void FormatAll_Click(object sender, RoutedEventArgs e)
         {
             string? code = mainViewModel.SelectedSnippet?.Category?.Language?.Code;
@@ -553,6 +571,18 @@ namespace CodeSnip
                         else
                         {
                             MessageBox.Show($"Formatting (stylua) failed:\n{errorStylua}");
+                        }
+                        break;
+
+                    case "pas":
+                        var (successPas, formattedPasfmt, errorPasfmt) = await FormattingService.TryFormatCodeWithPasFmtAsync(originalCode);
+                        if (successPas)
+                        {
+                            textEditor.Document.Text = formattedPasfmt;
+                        }
+                        else
+                        {
+                            MessageBox.Show($"Formatting (pasfmt) failed:\n{errorPasfmt}");
                         }
                         break;
 

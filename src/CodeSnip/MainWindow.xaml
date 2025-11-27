@@ -567,6 +567,13 @@
                                             <Path Data="{StaticResource Indent}" Fill="{DynamicResource MahApps.Brushes.AccentBase}" Width="16" Height="16" Stretch="Uniform" />
                                         </MenuItem.Icon>
                                     </MenuItem>
+                                    <MenuItem Header="pasfmt" Click="FormatPasfmt_Click"
+                                              Visibility="{Binding PlacementTarget.DataContext.SelectedSnippet.Category.Language.Code, RelativeSource={RelativeSource AncestorType=ContextMenu}, Converter={StaticResource LanguageToVisibilityConverter}, ConverterParameter='pas'}">
+                                        <MenuItem.Icon>
+                                            <Path Data="{StaticResource Indent}" Fill="{DynamicResource MahApps.Brushes.AccentBase}" Width="16" Height="16" Stretch="Uniform" />
+                                        </MenuItem.Icon>
+                                    </MenuItem>
+
                                     <MenuItem Header="ruff" Click="FormatRuff_Click"
                                               Visibility="{Binding PlacementTarget.DataContext.SelectedSnippet.Category.Language.Code, RelativeSource={RelativeSource AncestorType=ContextMenu}, Converter={StaticResource LanguageToVisibilityConverter}, ConverterParameter='py'}">
                                         <MenuItem.Icon>

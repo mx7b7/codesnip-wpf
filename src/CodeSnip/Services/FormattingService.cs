@@ -179,6 +179,17 @@ namespace CodeSnip.Services
         }
 
         /// <summary>
+        ///Format Pascal source code using the external 'pasfmt.exe' formatter from the 'Tools' directory.
+        /// </summary>
+        /// <param name="code">The Pascal source code to format.</param>
+        /// <param name="timeoutMs">The maximum time, in milliseconds, to wait for the formatting process to complete.</param>
+        /// <returns>A tuple indicating success, the formatted code, and any error message.</returns>
+        public static async Task<(bool Success, string? FormattedCode, string? ErrorMessage)> TryFormatCodeWithPasFmtAsync(string code, int timeoutMs = 5000)
+        {
+            return await TryFormatWithExternalProcessAsync("pasfmt.exe", "", code, timeoutMs);
+        }
+
+        /// <summary>
         /// A generic helper method to run an external formatting tool from the 'Tools' directory.
         /// </summary>
         /// <param name="executableName">The name of the executable file (e.g., 'dfmt.exe').</param>
