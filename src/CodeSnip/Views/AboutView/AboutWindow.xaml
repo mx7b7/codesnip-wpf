@@ -12,166 +12,178 @@
         TitleCharacterCasing="Normal" TitleAlignment="Left"
         ShowInTaskbar="False" ResizeMode="NoResize"  WindowStartupLocation="CenterOwner" 
         Style="{DynamicResource MahApps.Styles.MetroWindow.Clean}">
-	<mah:MetroWindow.Resources>
-		<x:Array x:Key="Libraries" Type="{x:Type local:DependencyInfo}">
-			<local:DependencyInfo Name="AvalonEdit" Url="https://github.com/icsharpcode/AvalonEdit" LicenseName="MIT License" LicenseUrl="https://github.com/icsharpcode/AvalonEdit/blob/master/LICENSE" />
-			<local:DependencyInfo Name="CommunityToolkit.Mvvm" Url="https://github.com/CommunityToolkit/dotnet" LicenseName="MIT License" LicenseUrl="https://github.com/CommunityToolkit/dotnet/blob/main/License.md" />
-			<local:DependencyInfo Name="CSharpier.Core" Url="https://csharpier.com/" LicenseName="MIT License" LicenseUrl="https://github.com/belav/csharpier/blob/main/LICENSE" />
-			<local:DependencyInfo Name="Dapper" Url="https://github.com/DapperLib/Dapper" LicenseName="Apache 2.0 License" LicenseUrl="https://github.com/DapperLib/Dapper/blob/main/License.txt" />
-			<local:DependencyInfo Name="MahApps.Metro" Url="https://github.com/MahApps/MahApps.Metro" LicenseName="MIT License" LicenseUrl="https://github.com/MahApps/MahApps.Metro/blob/develop/LICENSE" />
+    <mah:MetroWindow.Resources>
+        <x:Array x:Key="Libraries" Type="{x:Type local:DependencyInfo}">
+            <local:DependencyInfo Name="AvalonEdit" Url="https://github.com/icsharpcode/AvalonEdit" LicenseName="MIT License" LicenseUrl="https://github.com/icsharpcode/AvalonEdit/blob/master/LICENSE" />
+            <local:DependencyInfo Name="CommunityToolkit.Mvvm" Url="https://github.com/CommunityToolkit/dotnet" LicenseName="MIT License" LicenseUrl="https://github.com/CommunityToolkit/dotnet/blob/main/License.md" />
+            <local:DependencyInfo Name="CSharpier.Core" Url="https://csharpier.com/" LicenseName="MIT License" LicenseUrl="https://github.com/belav/csharpier/blob/main/LICENSE" />
+            <local:DependencyInfo Name="Dapper" Url="https://github.com/DapperLib/Dapper" LicenseName="Apache 2.0 License" LicenseUrl="https://github.com/DapperLib/Dapper/blob/main/License.txt" />
+            <local:DependencyInfo Name="MahApps.Metro" Url="https://github.com/MahApps/MahApps.Metro" LicenseName="MIT License" LicenseUrl="https://github.com/MahApps/MahApps.Metro/blob/develop/LICENSE" />
             <local:DependencyInfo Name="Notifications.Wpf.Core" Url="https://github.com/mjuen/Notifications.Wpf.Core" LicenseName="MIT License" LicenseUrl="https://github.com/mjuen/Notifications.Wpf.Core/blob/master/LICENSE" />
-			<local:DependencyInfo Name="System.Data.SQLite.Core" Url="https://system.data.sqlite.org/" LicenseName="Public Domain" LicenseUrl="https://system.data.sqlite.org/home/doc/trunk/www/copyright.wiki" />
-		</x:Array>
+            <local:DependencyInfo Name="System.Data.SQLite.Core" Url="https://system.data.sqlite.org/" LicenseName="Public Domain" LicenseUrl="https://system.data.sqlite.org/home/doc/trunk/www/copyright.wiki" />
+        </x:Array>
 
-		<x:Array x:Key="Services" Type="{x:Type local:DependencyInfo}">
-			<local:DependencyInfo Name="Compiler Explorer" Url="https://godbolt.org/" LicenseName="BSD 2-Clause" LicenseUrl="https://github.com/compiler-explorer/compiler-explorer/blob/main/LICENSE" />
-		</x:Array>
+        <x:Array x:Key="Services" Type="{x:Type local:DependencyInfo}">
+            <local:DependencyInfo Name="Compiler Explorer" Url="https://godbolt.org/" />
+        </x:Array>
 
-		<x:Array x:Key="Tools" Type="{x:Type local:DependencyInfo}">
-			<local:DependencyInfo Name="black" Url="https://black.readthedocs.io/en/stable/" LicenseName="MIT License" LicenseUrl="https://github.com/psf/black/blob/main/LICENSE" />
-			<local:DependencyInfo Name="clang-format" Url="https://clang.llvm.org/docs/ClangFormat.html" LicenseName="NCSA Open Source License" LicenseUrl="https://llvm.org/docs/DeveloperPolicy.html#license" />
-			<local:DependencyInfo Name="dfmt" Url="https://github.com/dlang-community/dfmt" LicenseName="Boost Software License" LicenseUrl="https://github.com/dlang-community/dfmt/blob/master/LICENSE.txt" />
-			<local:DependencyInfo Name="rustfmt" Url="https://github.com/rust-lang/rustfmt" LicenseName="MIT/Apache-2.0 License" LicenseUrl="https://github.com/rust-lang/rustfmt/blob/master/LICENSE-MIT" />
-			<local:DependencyInfo Name="ruff" Url="https://docs.astral.sh/ruff/" LicenseName="MIT License" LicenseUrl="https://github.com/astral-sh/ruff/blob/main/LICENSE" />
-		</x:Array>
-	</mah:MetroWindow.Resources>
-	<Grid>
-		<mah:MetroTabControl TabStripPlacement="Left" Style="{StaticResource MahApps.Styles.TabControl.Animated}" mah:HeaderedControlHelper.HeaderFontSize="18">
+        <x:Array x:Key="Tools1" Type="{x:Type local:DependencyInfo}">
+            <local:DependencyInfo Name="autopep8" Url="https://pypi.org/project/autopep8" />
+            <local:DependencyInfo Name="black" Url="https://black.readthedocs.io/en/stable/" />
+            <local:DependencyInfo Name="clang-format" Url="https://clang.llvm.org/docs/ClangFormat.html" />
+            <local:DependencyInfo Name="dfmt" Url="https://github.com/dlang-community/dfmt" />
+            <local:DependencyInfo Name="gofmt" Url="https://pkg.go.dev/cmd/gofmt" />
+        </x:Array>
 
-			<mah:MetroTabItem Header="About">
-				<StackPanel Margin="20" HorizontalAlignment="Center">
+        <x:Array x:Key="Tools2" Type="{x:Type local:DependencyInfo}">
+            <local:DependencyInfo Name="pasfmt" Url="https://github.com/integrated-application-development/pasfmt" />
+            <local:DependencyInfo Name="rustfmt" Url="https://github.com/rust-lang/rustfmt" />
+            <local:DependencyInfo Name="ruff" Url="https://docs.astral.sh/ruff/" />
+            <local:DependencyInfo Name="stylua" Url="https://github.com/JohnnyMorganz/StyLua" />
+        </x:Array>
+    </mah:MetroWindow.Resources>
+    <Grid>
+        <mah:MetroTabControl TabStripPlacement="Left" Style="{StaticResource MahApps.Styles.TabControl.Animated}" mah:HeaderedControlHelper.HeaderFontSize="18">
 
-					<TextBlock Text="{Binding Title}"
+            <mah:MetroTabItem Header="About">
+                <StackPanel Margin="20" HorizontalAlignment="Center">
+
+                    <TextBlock Text="{Binding Title}"
                    FontWeight="Bold"
                    FontSize="22"
                    Foreground="{DynamicResource MahApps.Brushes.Accent}"
                    HorizontalAlignment="Center" />
 
-					<TextBlock Text="Version:" FontWeight="SemiBold" Margin="0,20,0,0" />
-					<TextBlock Text="{Binding Version}" FontSize="14" />
+                    <TextBlock Text="Version:" FontWeight="SemiBold" Margin="0,20,0,0" />
+                    <TextBlock Text="{Binding Version}" FontSize="14" />
 
-					<TextBlock Text="Description:" FontWeight="SemiBold" Margin="0,15,0,0" />
-					<TextBlock Text="{Binding Description}"
+                    <TextBlock Text="Description:" FontWeight="SemiBold" Margin="0,15,0,0" />
+                    <TextBlock Text="{Binding Description}"
                    TextWrapping="Wrap"
                    FontSize="13"
                    Foreground="{DynamicResource MahApps.Brushes.Gray}" />
 
-					<TextBlock Text="Author:" FontWeight="SemiBold" Margin="0,15,0,0" />
-					<TextBlock Text="{Binding Company}" FontSize="14" />
-					<TextBlock Text="{Binding Copyright}" FontSize="14" Margin="0,15,0,0" />
+                    <TextBlock Text="Author:" FontWeight="SemiBold" Margin="0,15,0,0" />
+                    <TextBlock Text="{Binding Company}" FontSize="14" />
+                    <TextBlock Text="{Binding Copyright}" FontSize="14" Margin="0,15,0,0" />
 
-					<TextBlock Margin="15,30,0,0" HorizontalAlignment="Center" FontSize="14" ToolTip="https://github.com/mx7b7/codesnip-wpf/">
+                    <TextBlock Margin="15,30,0,0" HorizontalAlignment="Center" FontSize="14" ToolTip="https://github.com/mx7b7/codesnip-wpf/">
 						<Run Text="Repository: " />
 						<Hyperlink NavigateUri="https://github.com/mx7b7/codesnip-wpf/"
 								   RequestNavigate="Hyperlink_RequestNavigate">
 							<Run Text="GitHub" />
 						</Hyperlink>
-					</TextBlock>
-				</StackPanel>
-			</mah:MetroTabItem>
+                    </TextBlock>
+                </StackPanel>
+            </mah:MetroTabItem>
 
-			<mah:MetroTabItem Header="Dependencies &amp; Tools">
-				<ScrollViewer Margin="10" VerticalScrollBarVisibility="Auto" HorizontalScrollBarVisibility="Auto">
-					<StackPanel>
+            <mah:MetroTabItem Header="Dependencies &amp; Tools">
+                <ScrollViewer Margin="10" VerticalScrollBarVisibility="Auto" HorizontalScrollBarVisibility="Auto">
+                    <StackPanel>
 
-						<mah:MetroHeader Content="Libraries"
+                        <mah:MetroHeader Content="Libraries"
                              FontWeight="Bold"
                              FontSize="16"
                              Foreground="{DynamicResource MahApps.Brushes.Accent}"
                              Margin="0,0,0,10"/>
 
-						<ItemsControl ItemsSource="{StaticResource Libraries}">
-							<ItemsControl.ItemTemplate>
-								<DataTemplate>
-									<Grid Margin="0,5" VerticalAlignment="Center">
-										<Grid.ColumnDefinitions>
-											<ColumnDefinition Width="10"/>
-											<ColumnDefinition Width="*"/>
-											<ColumnDefinition Width="200"/>
-										</Grid.ColumnDefinitions>
-										<TextBlock Grid.Column="0" Text="•" FontSize="16" VerticalAlignment="Center" />
-										<TextBlock Grid.Column="1" ToolTip="{Binding Url}" VerticalAlignment="Center">
+                        <ItemsControl ItemsSource="{StaticResource Libraries}">
+                            <ItemsControl.ItemTemplate>
+                                <DataTemplate>
+                                    <Grid Margin="0,5" VerticalAlignment="Center">
+                                        <Grid.ColumnDefinitions>
+                                            <ColumnDefinition Width="10"/>
+                                            <ColumnDefinition Width="*"/>
+                                            <ColumnDefinition Width="200"/>
+                                        </Grid.ColumnDefinitions>
+                                        <TextBlock Grid.Column="0" Text="•" FontSize="16" VerticalAlignment="Center" />
+                                        <TextBlock Grid.Column="1" ToolTip="{Binding Url}" VerticalAlignment="Center">
 											<Hyperlink NavigateUri="{Binding Url}" RequestNavigate="Hyperlink_RequestNavigate">
 												<Run Text="{Binding Name}" />
 											</Hyperlink>
-										</TextBlock>
-										<TextBlock Grid.Column="2" ToolTip="{Binding LicenseUrl}" VerticalAlignment="Center">
+                                        </TextBlock>
+                                        <TextBlock Grid.Column="2" ToolTip="{Binding LicenseUrl}" VerticalAlignment="Center">
 											<Hyperlink NavigateUri="{Binding LicenseUrl}" RequestNavigate="Hyperlink_RequestNavigate" >
 												<Run Text="{Binding LicenseName}" />
 											</Hyperlink>
-										</TextBlock>
-									</Grid>
-								</DataTemplate>
-							</ItemsControl.ItemTemplate>
-						</ItemsControl>
+                                        </TextBlock>
+                                    </Grid>
+                                </DataTemplate>
+                            </ItemsControl.ItemTemplate>
+                        </ItemsControl>
 
-						<mah:MetroHeader Content="External Services"
+                        <mah:MetroHeader Content="External Services"
                              FontWeight="Bold"
                              FontSize="16"
                              Foreground="{DynamicResource MahApps.Brushes.Accent}"
                              Margin="0,20,0,10"/>
 
-						<ItemsControl ItemsSource="{StaticResource Services}">
-							<ItemsControl.ItemTemplate>
-								<DataTemplate>
-									<Grid Margin="0,5" VerticalAlignment="Center">
-										<Grid.ColumnDefinitions>
-											<ColumnDefinition Width="10"/>
-											<ColumnDefinition Width="*"/>
-											<ColumnDefinition Width="200"/>
-										</Grid.ColumnDefinitions>
-										<TextBlock Grid.Column="0" Text="•" FontSize="16" VerticalAlignment="Center" />
-										<TextBlock Grid.Column="1" ToolTip="{Binding Url}" VerticalAlignment="Center">
+                        <ItemsControl ItemsSource="{StaticResource Services}">
+                            <ItemsControl.ItemTemplate>
+                                <DataTemplate>
+                                    <Grid Margin="0,5" VerticalAlignment="Center">
+                                        <Grid.ColumnDefinitions>
+                                            <ColumnDefinition Width="10"/>
+                                            <ColumnDefinition Width="*"/>
+                                            <ColumnDefinition Width="200"/>
+                                        </Grid.ColumnDefinitions>
+                                        <TextBlock Grid.Column="0" Text="•" FontSize="16" VerticalAlignment="Center" />
+                                        <TextBlock Grid.Column="1" ToolTip="{Binding Url}" VerticalAlignment="Center">
 											<Hyperlink NavigateUri="{Binding Url}" RequestNavigate="Hyperlink_RequestNavigate">
 												<Run Text="{Binding Name}" />
 											</Hyperlink>
-										</TextBlock>
-										<TextBlock Grid.Column="2" ToolTip="{Binding LicenseUrl}" VerticalAlignment="Center">
-											<Hyperlink NavigateUri="{Binding LicenseUrl}" RequestNavigate="Hyperlink_RequestNavigate" >
-												<Run Text="{Binding LicenseName}" />
-											</Hyperlink>
-										</TextBlock>
-									</Grid>
-								</DataTemplate>
-							</ItemsControl.ItemTemplate>
-						</ItemsControl>
+                                        </TextBlock>
+                                    </Grid>
+                                </DataTemplate>
+                            </ItemsControl.ItemTemplate>
+                        </ItemsControl>
 
-						<mah:MetroHeader Content="External Tools"
+                        <mah:MetroHeader Content="External Tools"
                              FontWeight="Bold"
                              FontSize="16"
                              Foreground="{DynamicResource MahApps.Brushes.Accent}"
                              Margin="0,20,0,10"/>
-						<ItemsControl ItemsSource="{StaticResource Tools}">
-							<ItemsControl.ItemTemplate>
-								<DataTemplate>
-									<Grid Margin="0,5" VerticalAlignment="Center">
-										<Grid.ColumnDefinitions>
-											<ColumnDefinition Width="10"/>
-											<ColumnDefinition Width="*"/>
-											<ColumnDefinition Width="200"/>
-										</Grid.ColumnDefinitions>
-										<TextBlock Grid.Column="0" Text="•" FontSize="16" VerticalAlignment="Center" />
-										<TextBlock Grid.Column="1" ToolTip="{Binding Url}" VerticalAlignment="Center">
-											<Hyperlink NavigateUri="{Binding Url}" RequestNavigate="Hyperlink_RequestNavigate">
-												<Run Text="{Binding Name}" />
-											</Hyperlink>
-										</TextBlock>
-										<TextBlock Grid.Column="2" ToolTip="{Binding LicenseUrl}" VerticalAlignment="Center">
-											<Hyperlink NavigateUri="{Binding LicenseUrl}" RequestNavigate="Hyperlink_RequestNavigate" >
-												<Run Text="{Binding LicenseName}" />
-											</Hyperlink>
-										</TextBlock>
-									</Grid>
-								</DataTemplate>
-							</ItemsControl.ItemTemplate>
-						</ItemsControl>
-					</StackPanel>
-				</ScrollViewer>
-			</mah:MetroTabItem>
+                        <Grid>
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="*" />
+                                <ColumnDefinition Width="*" />
+                            </Grid.ColumnDefinitions>
 
-			<mah:MetroTabItem Header="Notes" Visibility="Collapsed">
-				<!-- Usage tips -->
-			</mah:MetroTabItem>
-		</mah:MetroTabControl>
-	</Grid>
+                            <!-- First Column -->
+                            <ItemsControl Grid.Column="0" ItemsSource="{StaticResource Tools1}">
+                                <ItemsControl.ItemTemplate>
+                                    <DataTemplate>
+                                        <TextBlock Margin="0,5,10,5" VerticalAlignment="Center" TextWrapping="NoWrap" TextTrimming="CharacterEllipsis">
+                                            <Run Text="• "/>
+                                            <Hyperlink NavigateUri="{Binding Url}" RequestNavigate="Hyperlink_RequestNavigate" ToolTip="{Binding Url}">
+                                                <Run Text="{Binding Name}" />
+                                            </Hyperlink>
+                                        </TextBlock>
+                                    </DataTemplate>
+                                </ItemsControl.ItemTemplate>
+                            </ItemsControl>
+
+                            <!-- Second Column -->
+                            <ItemsControl Grid.Column="1" ItemsSource="{StaticResource Tools2}">
+                                <ItemsControl.ItemTemplate>
+                                    <DataTemplate>
+                                        <TextBlock Margin="0,5,10,5" VerticalAlignment="Center" TextWrapping="NoWrap" TextTrimming="CharacterEllipsis">
+                                            <Run Text="• "/>
+                                            <Hyperlink NavigateUri="{Binding Url}" RequestNavigate="Hyperlink_RequestNavigate" ToolTip="{Binding Url}">
+                                                <Run Text="{Binding Name}" />
+                                            </Hyperlink>
+                                        </TextBlock>
+                                    </DataTemplate>
+                                </ItemsControl.ItemTemplate>
+                            </ItemsControl>
+                        </Grid>
+                    </StackPanel>
+                </ScrollViewer>
+            </mah:MetroTabItem>
+
+            <mah:MetroTabItem Header="Notes" Visibility="Collapsed">
+                <!-- Usage tips -->
+            </mah:MetroTabItem>
+        </mah:MetroTabControl>
+    </Grid>
 </mah:MetroWindow>
