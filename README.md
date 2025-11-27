@@ -41,6 +41,7 @@
  - **Local Code Execution**:
    - Run scripts for languages like PowerShell, Python, PHP, Perl, Lua, Ruby, Node.js, and Java (via `JShell`) directly using local interpreters.
      >**Note:** If an interpreter is not in system's PATH, you can place its portable version (e.g., `lua.exe`, `node.exe`) directly into the `Tools/Interpreters` directory within the application's installation folder.
+   - **C# Scripting**: CodeSnip can also execute C# code locally using a custom wrapper named `csrunner.exe`. This tool is not included with the application. To enable this feature, create a .NET console project using the example code from this [Gist](https://gist.github.com/mx7b7/90013b77c1d0bcfb6b9e77399f62e409), build it, and place the compiled `csrunner.exe` with its dependencies into the `Tools/Interpreters` folder.
 - **UI/UX**:
   - Modern Metro interface
   - Flyout panels for additional windows (settings, editors, actions, etc.)
