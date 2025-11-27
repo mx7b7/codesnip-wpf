@@ -2,7 +2,7 @@
 
 **CodeSnip** — a snippet manager & local code runner with multi-language interpreter support and Compiler Explorer integration.  
 
-![.NET 8](https://img.shields.io/badge/.NET-8.0-blue)
+![.NET](https://img.shields.io/badge/.NET-8.0%2B-blue)
 ![Platform](https://img.shields.io/badge/Platform-Windows-lightgrey)
 ![License: MIT](https://img.shields.io/badge/License-MIT-green)
 ![Status](https://img.shields.io/badge/Status-Active-success)
@@ -64,17 +64,27 @@
 
 ## 🧹 Code Formatters
 
-CodeSnip uses the following code formatters:
+CodeSnip integrates various code formatters, which are executed in different ways. Use the legend below to understand how each formatter is run.
 
-- [black](https://black.readthedocs.io/en/stable/) – Python code formatting
-- [clang-format](https://clang.llvm.org/docs/ClangFormat.html) – Format C, C++, C#, Java, and more 
-- [csharpier](https://csharpier.com/) – C# code formatting
-- [dfmt](https://github.com/dlang-community/dfmt) – D code formatting
-- [rustfmt](https://github.com/rust-lang/rustfmt) – Rust code formatting
-- [ruff](https://github.com/astral-sh/ruff) – Python code formatting
-> **Note:**  
-> Ensure both Python and black are installed to use black.  
-> To use ruff, manually download the ruff executable and place it in the `Tools` directory.
+### 🏷️ Legend
+*   ![Local](https://img.shields.io/badge/Local-green) — The executable must be placed in the `Tools` directory.
+*   ![System](https://img.shields.io/badge/System-blue) — The tool must be accessible via the system's PATH.
+*   ![Built-in](https://img.shields.io/badge/Built--in-yellow) — The formatter is a built-in library and requires no external setup.
+
+
+### Supported Formatters
+
+- [autopep8](https://pypi.org/project/autopep8) – Python code formatting. ![System](https://img.shields.io/badge/System-blue)
+- [black](https://black.readthedocs.io/en/stable) – Python code formatting. ![System](https://img.shields.io/badge/System-blue)
+- [clang-format](https://clang.llvm.org/docs/ClangFormat.html) – Formats C, C++, C#, Java, and more. ![System](https://img.shields.io/badge/System-blue) ![Local](https://img.shields.io/badge/Local-green)
+- [csharpier](https://csharpier.com/) – C#, XML code formatting. ![Built-in](https://img.shields.io/badge/Built--in-yellow)
+- [dfmt](https://github.com/dlang-community/dfmt) – D code formatting. ![Local](https://img.shields.io/badge/Local-green)
+- [gofmt](https://pkg.go.dev/cmd/gofmt) – Go code formatting. ![System](https://img.shields.io/badge/System-blue) ![Local](https://img.shields.io/badge/Local-green)
+- [pasfmt](https://github.com/integrated-application-development/pasfmt) – Pascal/Delphi code formatting. ![Local](https://img.shields.io/badge/Local-green)
+- [rustfmt](https://github.com/rust-lang/rustfmt) – Rust code formatting. ![System](https://img.shields.io/badge/System-blue) ![Local](https://img.shields.io/badge/Local-green)
+- [ruff](https://github.com/astral-sh/ruff) – Python code formatting. ![Local](https://img.shields.io/badge/Local-green)
+-  [stylua](https://github.com/JohnnyMorganz/StyLua) – Lua code formatting. ![Local](https://img.shields.io/badge/Local-green)
+
 ---
 
 ## ⚙️ Build
