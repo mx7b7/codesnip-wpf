@@ -4,6 +4,7 @@ using CodeSnip.Services.Exporters;
 using CodeSnip.Views.HighlightingEditorView;
 using CodeSnip.Views.LanguageCategoryView;
 using CodeSnip.Views.SnippetView;
+using ControlzEx.Standard;
 using ControlzEx.Theming;
 using ICSharpCode.AvalonEdit;
 using ICSharpCode.AvalonEdit.Document;
@@ -15,6 +16,7 @@ using System.ComponentModel;
 using System.Diagnostics;
 using System.IO;
 using System.Net;
+using System.Security.Cryptography;
 using System.Text.Json;
 using System.Text.RegularExpressions;
 using System.Windows;
@@ -517,6 +519,32 @@ namespace CodeSnip
             }
         }
 
+        private async void FormatPrettier_Click(object sender, RoutedEventArgs e)
+        {
+            string? code = mainViewModel.SelectedSnippet?.Category?.Language?.Code;
+            if (code is not null)
+            {
+                var supported = new[]
+                        {
+                        "js","jsx","ts","tsx","css","scss","html","json","md","mdx","vue","yaml","yml"
+                     };
+                if (supported.Contains(code, StringComparer.OrdinalIgnoreCase))
+                {
+                    string filename = $"example.{code}";
+                    string originalCode = textEditor.Text;
+                    var (isSuccess, formatted, error) = await FormattingService.TryFormatCodeWithPrettierAsync(originalCode, assumeFilename: filename);
+                    if (isSuccess)
+                    {
+                        textEditor.Document.Text = formatted;
+                    }
+                    else
+                    {
+                        MessageBox.Show(error);
+                    }
+                }
+            }
+        }
+
         private async void FormatAll_Click(object sender, RoutedEventArgs e)
         {
             string? code = mainViewModel.SelectedSnippet?.Category?.Language?.Code;
@@ -620,7 +648,20 @@ namespace CodeSnip
                         {
                             MessageBox.Show($"Formatting (CSharpier XML) failed:\n{errorXml}");
                         }
+                        break;
 
+                    case "html":
+                    case "css":
+                    case "md":
+                        var (successPrettier, formattedPrettier, errorPrettier) = await FormattingService.TryFormatCodeWithPrettierAsync(originalCode, assumeFilename: $"example.{code}");
+                        if (successPrettier)
+                        {
+                            textEditor.Document.Text = formattedPrettier;
+                        }
+                        else
+                        {
+                            MessageBox.Show($"Formatting (Prettier) failed:\n{errorPrettier}");
+                        }
                         break;
 
                     default:

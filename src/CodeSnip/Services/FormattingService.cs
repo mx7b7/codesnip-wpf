@@ -11,7 +11,6 @@ namespace CodeSnip.Services
     public static class FormattingService
     {
         private static bool? _isPythonInstalled;
-        private static bool? _isRustfmtInstalled;
         private static readonly Dictionary<string, bool?> s_installedPythonModules = [];
 
         /// <summary>
@@ -51,7 +50,7 @@ namespace CodeSnip.Services
         }
 
         /// <summary>
-		/// Formats code using the 'clang-format.exe' tool located in the 'Tools' directory.
+		/// Formats code using the 'clang-format.exe' tool from the 'Tools' directory or system's PATH.
 		/// </summary>
 		/// <param name="code">The source code to format.</param>
 		/// <param name="timeoutMs">The timeout in milliseconds for the process.</param>
@@ -69,7 +68,7 @@ namespace CodeSnip.Services
         }
 
         /// <summary>
-		/// Formats D code using the 'dfmt.exe' tool from the 'Tools' directory.
+		/// Formats D code using the 'dfmt.exe' tool from the 'Tools' directory or system's PATH.
 		/// </summary>
 		/// <param name="code">The D code to format.</param>
 		/// <param name="timeoutMs">The timeout in milliseconds for the process.</param>
@@ -80,73 +79,18 @@ namespace CodeSnip.Services
         }
 
         /// <summary>
-        /// Formats Rust code using the `rustfmt` command-line tool, if available in the system's PATH.
+        /// Formats Rust code using the `rustfmt` command-line tool from the 'Tools' directory or system's PATH.
         /// </summary>
         /// <param name="code">The Rust code to format.</param>
         /// <param name="timeoutMs">The timeout in milliseconds for the process.</param>
         /// <returns>A tuple indicating success, the formatted code, and any error message.</returns>
         public static async Task<(bool Success, string? FormattedCode, string? ErrorMessage)> TryFormatCodeWithRustFmtAsync(string code, int timeoutMs = 5000)
         {
-            if (!await IsRustfmtInstalledAsync())
-            {
-                return (false, null, "rustfmt is not installed or not in your PATH.");
-            }
-
-            string baseDirectory = AppDomain.CurrentDomain.BaseDirectory;
-            string toolPath = Path.Combine(baseDirectory, "Tools");
-
-            toolPath = Directory.Exists(toolPath) ? toolPath : baseDirectory;
-
-            var startInfo = new ProcessStartInfo
-            {
-                FileName = "rustfmt",
-                Arguments = "", // rustfmt reads from stdin by default
-                RedirectStandardInput = true,
-                RedirectStandardOutput = true,
-                RedirectStandardError = true,
-                UseShellExecute = false,
-                CreateNoWindow = true,
-                WorkingDirectory = toolPath // Set the working directory to the Tools folder to ensure it can locate its config file
-            };
-
-            try
-            {
-                using var process = new Process { StartInfo = startInfo };
-                process.Start();
-
-                await process.StandardInput.WriteAsync(code);
-                process.StandardInput.Close();
-
-                var outputTask = process.StandardOutput.ReadToEndAsync();
-                var errorTask = process.StandardError.ReadToEndAsync();
-
-                using var cts = new CancellationTokenSource(timeoutMs);
-                try
-                {
-                    await process.WaitForExitAsync(cts.Token);
-                }
-                catch (OperationCanceledException)
-                {
-                    try { process.Kill(entireProcessTree: true); } catch { /* Ignore errors */ }
-                    return (false, null, "Timeout: rustfmt took too long to format the code.");
-                }
-
-                string stdError = await errorTask;
-                if (process.ExitCode != 0)
-                {
-                    return (false, null, $"rustfmt formatting error: {stdError.Trim()}");
-                }
-
-                return (true, await outputTask, null);
-            }
-            catch (Exception ex)
-            {
-                return (false, null, $"An exception occurred while running rustfmt: {ex.Message}");
-            }
+            return await TryFormatWithExternalProcessAsync("rustfmt.exe", "", code, timeoutMs);
         }
 
         /// <summary>
-		/// Formats Python code using the 'ruff.exe' tool from the 'Tools' directory.
+		/// Formats Python code using the 'ruff.exe' tool from the 'Tools' directory or system's PATH.
 		/// </summary>
 		/// <param name="code">The Python code to format.</param>
 		/// <param name="timeoutMs">The timeout in milliseconds for the process.</param>
@@ -158,17 +102,18 @@ namespace CodeSnip.Services
         }
 
         /// <summary>
-        /// Formats Go code using the 'gofmt.exe' tool from the 'Tools' directory.
+        /// Formats Go code using the 'gofmt.exe' tool from the 'Tools' directory or system's PATH.
         /// </summary>
         /// <param name="code">The go code to format</param>
         /// <param name="timeoutMs">The timeout in milliseconds for the process.</param>
         /// <returns>A tuple indicating success, the formatted code, and any error message.</returns>
-        public static async Task<(bool Success, string? FormattedCode, string? ErrorMessage)> TryFormatCodeWithGofmtAsync(string code, int timeoutMs = 5000) { 
+        public static async Task<(bool Success, string? FormattedCode, string? ErrorMessage)> TryFormatCodeWithGofmtAsync(string code, int timeoutMs = 5000)
+        {
             return await TryFormatWithExternalProcessAsync("gofmt.exe", "", code, timeoutMs);
         }
 
         /// <summary>
-        /// Formats Lua code using the 'stylua.exe' tool from the 'Tools' directory.
+        /// Formats Lua code using the 'stylua.exe' tool from the 'Tools' directory or system's PATH.
         /// </summary>
         /// <param name="code">The Lua code to format.</param>
         /// <param name="timeoutMs">The timeout in milliseconds for the process.</param>
@@ -179,7 +124,7 @@ namespace CodeSnip.Services
         }
 
         /// <summary>
-        ///Format Pascal source code using the external 'pasfmt.exe' formatter from the 'Tools' directory.
+        ///Format Pascal source code using the external 'pasfmt.exe' formatter from the 'Tools' directory or system's PATH.
         /// </summary>
         /// <param name="code">The Pascal source code to format.</param>
         /// <param name="timeoutMs">The maximum time, in milliseconds, to wait for the formatting process to complete.</param>
@@ -187,6 +132,24 @@ namespace CodeSnip.Services
         public static async Task<(bool Success, string? FormattedCode, string? ErrorMessage)> TryFormatCodeWithPasFmtAsync(string code, int timeoutMs = 5000)
         {
             return await TryFormatWithExternalProcessAsync("pasfmt.exe", "", code, timeoutMs);
+        }
+
+        /// <summary>
+        /// Formats code using the 'prettier' tool from the 'Tools' directory or system's PATH.
+        /// </summary>
+        /// <param name="code">The JavaScript source code to format. Cannot be null.</param>
+        /// <param name="timeoutMs">The maximum time, in milliseconds, to wait for the Prettier process to complete. Must be greater than zero.
+        /// The default timeout is 10000 milliseconds.</param>
+        /// <returns>A tuple containing a success flag, the formatted code if successful, and an error message if formatting fails.
+        public static async Task<(bool Success, string? FormattedCode, string? ErrorMessage)> TryFormatCodeWithPrettierAsync(string code, int timeoutMs = 10000, string? assumeFilename = null)
+        {
+            string arguments = "";
+            if (!string.IsNullOrEmpty(assumeFilename))
+            {
+                arguments = $"--stdin-filepath {assumeFilename} --stdin ";
+            }
+            // return await TryFormatWithExternalProcessAsync("prettier.cmd", arguments, code, timeoutMs); // portable version with node.exe included, see prettier.cmd for paths
+            return await TryFormatWithExternalProcessAsync("npx.cmd", $"prettier {arguments}", code, timeoutMs); // using npx to run prettier from system's node installation ??
         }
 
         /// <summary>
@@ -203,24 +166,27 @@ namespace CodeSnip.Services
             string code,
             int timeoutMs = 5000)
         {
-            string baseDirectory = AppDomain.CurrentDomain.BaseDirectory;
-            string toolPath = Path.Combine(baseDirectory, "Tools", executableName);
+            string baseDirectory = AppContext.BaseDirectory;
+            string toolsDirectory = Path.Combine(baseDirectory, "Tools");
+            string localToolPath = Path.Combine(toolsDirectory, executableName);
 
-            if (!File.Exists(toolPath))
+            string executableToRun = localToolPath;
+
+            if (!File.Exists(localToolPath))
             {
-                return (false, null, $"Formatter executable not found at: {toolPath}");
+                executableToRun = executableName; // Fallback to system PATH
             }
 
             var startInfo = new ProcessStartInfo
             {
-                FileName = toolPath,
+                FileName = executableToRun,
                 Arguments = arguments,
                 RedirectStandardInput = true,
                 RedirectStandardOutput = true,
                 RedirectStandardError = true,
                 UseShellExecute = false,
                 CreateNoWindow = true,
-                WorkingDirectory = Path.GetDirectoryName(toolPath) // Set the working directory to the formatter's folder to ensure it can locate its config files
+                WorkingDirectory = toolsDirectory // Set the working directory to the formatter's folder to ensure it can locate its config files
             };
 
             try
@@ -489,38 +455,6 @@ namespace CodeSnip.Services
             }
         }
 
-        static async Task<bool> IsRustfmtInstalledAsync()
-        {
-            if (_isRustfmtInstalled.HasValue)
-                return _isRustfmtInstalled.Value;
-
-            try
-            {
-                var startInfo = new ProcessStartInfo
-                {
-                    FileName = "rustfmt",
-                    Arguments = "--version",
-                    RedirectStandardOutput = true,
-                    RedirectStandardError = true,
-                    UseShellExecute = false,
-                    CreateNoWindow = true
-                };
-
-                using var process = new Process { StartInfo = startInfo };
-                process.Start();
-                string output = await process.StandardOutput.ReadToEndAsync();
-                await process.WaitForExitAsync();
-
-                var result = process.ExitCode == 0 && output.Contains("rustfmt", StringComparison.CurrentCultureIgnoreCase);
-                _isRustfmtInstalled = result;
-                return result;
-            }
-            catch
-            {
-                _isRustfmtInstalled = false;
-                return false;
-            }
-        }
 
     }
 
