@@ -37,7 +37,6 @@
 
         <x:Array x:Key="Tools2" Type="{x:Type local:DependencyInfo}">
             <local:DependencyInfo Name="pasfmt" Url="https://github.com/integrated-application-development/pasfmt" />
-            <local:DependencyInfo Name="prettier" Url="https://prettier.io/" />
             <local:DependencyInfo Name="rustfmt" Url="https://github.com/rust-lang/rustfmt" />
             <local:DependencyInfo Name="ruff" Url="https://docs.astral.sh/ruff/" />
             <local:DependencyInfo Name="stylua" Url="https://github.com/JohnnyMorganz/StyLua" />
