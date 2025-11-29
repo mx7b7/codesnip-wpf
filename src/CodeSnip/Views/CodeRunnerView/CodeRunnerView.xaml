@@ -13,6 +13,34 @@
              d:DesignHeight="450" d:DesignWidth="400" >
     <UserControl.Resources>
         <helpers:BoolToVisibilityConverter x:Key="BoolToVisibilityConverter"/>
+        <Style x:Key="CustomChromelessButton" TargetType="Button" BasedOn="{StaticResource MahApps.Styles.Button.Chromeless}">
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="Button">
+                        <Grid Background="{TemplateBinding Background}">
+                            <ContentPresenter Name="PART_ContentPresenter"
+                                      Margin="{TemplateBinding Padding}"
+                                      HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}"
+                                      VerticalAlignment="{TemplateBinding VerticalContentAlignment}"
+                                      Opacity=".75"
+                                      RecognizesAccessKey="{TemplateBinding mah:ControlsHelper.RecognizesAccessKey}"
+                                      SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}" />
+                        </Grid>
+                        <ControlTemplate.Triggers>
+                            <Trigger Property="IsMouseOver" Value="True">
+                                <Setter TargetName="PART_ContentPresenter" Property="Opacity" Value=".5" />
+                            </Trigger>
+                            <Trigger Property="IsMouseOver" Value="False">
+                                <Setter TargetName="PART_ContentPresenter" Property="Opacity" Value="1" />
+                            </Trigger>
+                            <Trigger Property="IsEnabled" Value="False">
+                                <Setter Property="Foreground" Value="#ADADAD" />
+                            </Trigger>
+                        </ControlTemplate.Triggers>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+        </Style>
     </UserControl.Resources>
     <Grid Margin="10">
         <Grid.RowDefinitions>
@@ -97,7 +125,7 @@
                     ToolTipService.ShowDuration="3000"
                     ToolTipService.BetweenShowDelay="100"
                     Command="{Binding KillRunningProcessCommand}"
-                    Style="{StaticResource MahApps.Styles.Button.Chromeless}">
+                    Style="{StaticResource CustomChromelessButton}">
                 <Path Data="{StaticResource TerminalX}" Fill="{DynamicResource MahApps.Brushes.Accent}" Stretch="Uniform" />
             </Button>
             <mah:Badged Badge="{Binding ReloadBadge}" Grid.Column="3" Grid.Row="0" Margin="10,0,0,0" >
@@ -106,7 +134,7 @@
                         ToolTipService.InitialShowDelay="300"
                         ToolTipService.ShowDuration="3000"
                         ToolTipService.BetweenShowDelay="100"
-                        Style="{StaticResource MahApps.Styles.Button.Chromeless}">
+                        Style="{StaticResource CustomChromelessButton}">
                     <Path Data="{StaticResource Reload}" Fill="{DynamicResource MahApps.Brushes.Accent}" Stretch="Uniform" />
                 </Button>
             </mah:Badged>
