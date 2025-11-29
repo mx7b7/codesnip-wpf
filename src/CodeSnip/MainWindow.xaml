@@ -98,17 +98,28 @@
         <KeyBinding Key="F" Modifiers="Ctrl+Shift"
                 Command="{Binding RelativeSource={RelativeSource AncestorType=Window}, Path=FormatAllCommand}" />
     </mah:MetroWindow.InputBindings>
-    <mah:MetroWindow.LeftWindowCommands>
-        <mah:WindowCommands/>
-    </mah:MetroWindow.LeftWindowCommands>
+
     <mah:MetroWindow.RightWindowCommands>
         <mah:WindowCommands>
-            <Button ToolTip="Theme switch" Click="ThemeSwitch_Click">
+            <mah:WindowCommands.Resources>
+                <!-- Custom button style for WindowCommands suitable for Clean theme (light/dark titlebar), for accent titlebar use default style. -->
+                <Style x:Key="CustomTitlebarButtonStyle" TargetType="Button" BasedOn="{StaticResource MahApps.Styles.Button.MetroWindow.Base}">
+                    <Setter Property="Opacity" Value="1" />
+                    <Setter Property="Margin" Value="8,0,8,0" />
+                    <Style.Triggers>
+                        <Trigger Property="IsMouseOver" Value="True">
+                            <Setter Property="Opacity" Value="0.5" />
+                            <Setter Property="Background" Value="Transparent"/>
+                        </Trigger>
+                    </Style.Triggers>
+                </Style>
+            </mah:WindowCommands.Resources>
+            <Button Style="{StaticResource CustomTitlebarButtonStyle}" ToolTip="Theme switch" Click="ThemeSwitch_Click">
                 <Path Data="{StaticResource ThemeLightDark}" Fill="{DynamicResource MahApps.Brushes.Accent}"
                       Width="20" Height="20" Stretch="Uniform" >
                 </Path>
             </Button>
-            <Button Click="About_Click" ToolTip="About" Margin="0,0,10,0">
+            <Button Style="{StaticResource CustomTitlebarButtonStyle}" Click="About_Click" ToolTip="About">
                 <Path Data="{StaticResource InfoCircle}" Fill="{DynamicResource MahApps.Brushes.Accent}"
                       Width="20" Height="20" Stretch="Uniform">
                 </Path>
