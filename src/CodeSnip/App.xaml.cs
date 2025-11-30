@@ -42,6 +42,54 @@ namespace CodeSnip
             }
 
         }
+
+        // AvalonEdit throws exceptions from while loop ( HighlightingEngine.HighlightLineInternal() )
+        private static int _errorCount = 0;
+        /*
+         cpp.xshd example:
+        <Span color="String" multiline="true">
+        <Begin>"</Begin>
+        <End>"</End>
+        <RuleSet>
+        <Span begin="\\" end="." />
+        <Span begin="^" end="$" />
+        </RuleSet>
+        </Span>
+
+         std::string my_string = R"(
+         Hello
+
+         World
+         )";
+         */
+        private void Application_DispatcherUnhandledException(
+            object sender,
+            System.Windows.Threading.DispatcherUnhandledExceptionEventArgs e)
+        {
+            if (_errorCount >= 1)
+            {
+                e.Handled = true;
+                return;
+            }
+
+            e.Handled = true;
+            _errorCount++;
+
+            if (e.Exception is InvalidOperationException ex && ex.Message.Contains("matched 0 characters"))
+            {
+                if (Current.MainWindow is MainWindow mainWindow)
+                {
+                    mainWindow.DisableHighlightingAndShowError(ex.Message);
+                }
+            }
+            else if (e.Exception != null)
+            {
+                string errorMessage = e.Exception.Message;
+                MessageBox.Show($"A text matching error occurred:\n\n{errorMessage}\n\nApplication will now close.", "Error", MessageBoxButton.OK, MessageBoxImage.Error);
+            }
+
+        }
+
     }
 
 }

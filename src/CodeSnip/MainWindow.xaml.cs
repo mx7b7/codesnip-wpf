@@ -1158,6 +1158,30 @@ namespace CodeSnip
             };
         }
 
+        public void DisableHighlightingAndShowError(string errorMessage)
+        {
+            // Dispatch to the UI thread.
+            Dispatcher.Invoke(() =>
+            {
+                // Disable syntax highlighting to stop the error loop.
+                textEditor.SyntaxHighlighting = null;
+
+                MessageBox.Show(this,
+                    "A critical error occurred in the syntax highlighting definition (.xshd file).\n" +
+                    "Highlighting has been disabled to prevent the application from crashing.\n\n" +
+                    "Please check the .xshd file for rules that might match zero-length text (e.g., regex like '^' or '$' inside a <Span> tag).\n\n" +
+                    $"Original error: {errorMessage}",
+                    "Syntax Highlighting Error",
+                    MessageBoxButton.OK,
+                    MessageBoxImage.Warning);
+
+                if (DataContext is MainViewModel vm)
+                {
+                    vm.StatusMessage = "Syntax highlighting error.";
+                }
+            });
+        }
+
 
     }
 
