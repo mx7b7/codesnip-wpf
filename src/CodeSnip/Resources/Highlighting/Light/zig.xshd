@@ -1,0 +1,163 @@
+<?xml version="1.0" encoding="utf-8"?>
+<SyntaxDefinition name="Zig" extensions=".zig" xmlns="http://icsharpcode.net/sharpdevelop/syntaxdefinition/2008">
+	<!-- syntax definition for Zig by mx7b7 -->
+    <!-- vscode Light Modern-->
+    <Color name="Comment" foreground="#FF008000" />
+	<Color name="String" foreground="#FFA31515" />
+	<Color name="Character" foreground="#FFA31515" />
+	<Color name="Number" foreground="#FF098658" />
+	<Color name="Punctuation" foreground="#0000FF" />
+	<Color name="Keywords" foreground="#FFAF00DB" />
+	<Color name="Type" foreground="#FF0000FF" />
+	<Color name="MethodName" foreground="#FF795E26" />
+    <Color name="Preprocessor" foreground="#FF795E26" />
+
+    <Property name="Extension" value="zig" />
+
+	<RuleSet ignoreCase="false">
+		<Span color="Comment" begin="//" end="$" />
+		<Span color="Comment" multiline="true" begin="/\*" end="\*/" />
+		<Span color="String" multiline="true">
+			<Begin>"""</Begin>
+			<End>"""</End>
+		</Span>
+		<Span color="String">
+			<Begin>"</Begin>
+			<End>"</End>
+			<RuleSet>
+				<Span begin="\\" end="." />
+			</RuleSet>
+		</Span>
+		<Span color="Character">
+			<Begin>'</Begin>
+			<End>'</End>
+			<RuleSet>
+				<Span begin="\\" end="." />
+			</RuleSet>
+		</Span>
+		<Rule color="Number">\b0x[0-9a-fA-F_]+(\.[0-9a-fA-F_]+)?([pP][+-]?[0-9_]+)?\b</Rule>
+		<Rule color="Number">\b[0-9_]+(\.[0-9_]+)?([eE][+-]?[0-9_]+)?\b</Rule>
+		<Rule color="Number">\b0o[0-7_]+\b</Rule>
+		<Rule color="Number">\b0b[01_]+\b</Rule>
+		<Keywords color="Keywords">
+			<Word>align</Word>
+			<Word>allowzero</Word>
+			<Word>and</Word>
+			<Word>asm</Word>
+			<Word>async</Word>
+			<Word>await</Word>
+			<Word>break</Word>
+			<Word>callconv</Word>
+			<Word>cancel</Word>
+			<Word>catch</Word>
+			<Word>comptime</Word>
+			<Word>const</Word>
+			<Word>continue</Word>
+			<Word>defer</Word>
+			<Word>else</Word>
+			<Word>enum</Word>
+			<Word>enum</Word>
+			<Word>errdefer</Word>
+			<Word>export</Word>
+			<Word>exstern</Word>
+			<Word>extern</Word>
+			<Word>false</Word>
+			<Word>fn</Word>
+			<Word>for</Word>
+			<Word>if</Word>
+			<Word>inline</Word>
+			<Word>linksection</Word>
+			<Word>nakedcc</Word>
+			<Word>noalias</Word>
+			<Word>noasync</Word>
+			<Word>noinline</Word>
+			<Word>nosuspend</Word>
+			<Word>null</Word>
+			<Word>opaque</Word>
+			<Word>or</Word>
+			<Word>orelse</Word>
+			<Word>packed</Word>
+			<Word>promise</Word>
+			<Word>pub</Word>
+			<Word>resume</Word>
+			<Word>return</Word>
+			<Word>stdcallcc</Word>
+			<Word>struct</Word>
+			<Word>struct</Word>
+			<Word>suspend</Word>
+			<Word>switch</Word>
+			<Word>test</Word>
+			<Word>this</Word>
+			<Word>threadlocal</Word>
+			<Word>true</Word>
+			<Word>try</Word>
+			<Word>undefined</Word>
+			<Word>unreachable</Word>
+			<Word>usingnamespace</Word>
+			<Word>var</Word>
+			<Word>volatile</Word>
+			<Word>while</Word>
+		</Keywords>
+		<Keywords color="Type">
+			<Word>anyerror</Word>
+			<Word>anyframe</Word>
+			<Word>anyopaque</Word>
+			<Word>anytype</Word>
+			<Word>bool</Word>
+			<Word>comptime_float</Word>
+			<Word>comptime_int</Word>
+			<Word>c_char</Word>
+			<Word>c_int</Word>
+			<Word>c_long</Word>
+			<Word>c_longdouble</Word>
+			<Word>c_longlong</Word>
+			<Word>c_short</Word>
+			<Word>c_uint</Word>
+			<Word>c_ulong</Word>
+			<Word>c_ulonglong</Word>
+			<Word>c_ushort</Word>
+			<Word>c_void</Word>
+			<Word>error</Word>
+			<Word>f128</Word>
+			<Word>f32</Word>
+			<Word>f64</Word>
+			<Word>i128</Word>
+			<Word>i16</Word>
+			<Word>i2</Word>
+			<Word>i3</Word>
+			<Word>i32</Word>
+			<Word>i4</Word>
+			<Word>i5</Word>
+			<Word>i6</Word>
+			<Word>i64</Word>
+			<Word>i7</Word>
+			<Word>i8</Word>
+			<Word>isize</Word>
+			<Word>noreturn</Word>
+			<Word>opaque</Word>
+			<Word>type</Word>
+			<Word>u128</Word>
+			<Word>u16</Word>
+			<Word>u2</Word>
+			<Word>u2</Word>
+			<Word>u3</Word>
+			<Word>u32</Word>
+			<Word>u4</Word>
+			<Word>u5</Word>
+			<Word>u6</Word>
+			<Word>u64</Word>
+			<Word>u7</Word>
+			<Word>u8</Word>
+			<Word>union</Word>
+			<Word>usize</Word>
+			<Word>void</Word>
+		</Keywords>
+		
+		<!--  @import ... -->
+		<Rule color="Preprocessor">@[\w_][\w\d_]*</Rule>
+		<!-- function names -->
+		<Rule color="MethodName">[\d\w_]+(?=(\s*\())</Rule>
+		
+		<Rule color="Punctuation">(\.\.|\=\>|[=+\-*/%!&amp;|:^~&lt;&gt;])+</Rule>
+	</RuleSet>
+</SyntaxDefinition>

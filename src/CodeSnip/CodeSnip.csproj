@@ -59,6 +59,7 @@
 		<Resource Include="Resources\Highlighting\Dark\vb.xshd" />
 		<Resource Include="Resources\Highlighting\Dark\vtl.xshd" />
 		<Resource Include="Resources\Highlighting\Dark\xml.xshd" />
+		<Resource Include="Resources\Highlighting\Dark\zig.xshd" />
 		<Resource Include="Resources\Highlighting\Light\as.xshd" />
 		<Resource Include="Resources\Highlighting\Light\asm.xshd" />
 		<Resource Include="Resources\Highlighting\Light\aspx.xshd" />
@@ -94,6 +95,7 @@
 		<Resource Include="Resources\Highlighting\Light\vb.xshd" />
 		<Resource Include="Resources\Highlighting\Light\vtl.xshd" />
 		<Resource Include="Resources\Highlighting\Light\xml.xshd" />
+		<Resource Include="Resources\Highlighting\Light\zig.xshd" />
 		<Resource Include="Resources\Icons.xaml" />
 		<Resource Include="Resources\splash.png" />
 	</ItemGroup>
@@ -115,6 +117,6 @@
 			<CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
 		</Content>
 	</ItemGroup>
-	
+		
 		
 </Project>
