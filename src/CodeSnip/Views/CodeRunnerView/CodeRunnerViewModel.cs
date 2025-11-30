@@ -515,13 +515,16 @@ namespace CodeSnip.Views.CodeRunnerView
                 if (RunningProcess != null && !RunningProcess.HasExited)
                 {
                     RunningProcess.Kill(entireProcessTree: true);
-                    ErrorText += "\nProcess was terminated by the user.";
-                    RunningProcess = null;
+                    ErrorText += $"Process '{RunningProcess?.ProcessName}' (ID: {RunningProcess?.Id}) was terminated by the user.\n";
                 }
             }
             catch (Exception ex)
             {
-                ErrorText += $"\nError terminating process: {ex.Message}";
+                ErrorText += $"\nError terminating process: {RunningProcess?.ProcessName} (ID: {RunningProcess?.Id})\n{ex.Message}";
+            }
+            finally
+            {
+                RunningProcess = null;
             }
         }
 
