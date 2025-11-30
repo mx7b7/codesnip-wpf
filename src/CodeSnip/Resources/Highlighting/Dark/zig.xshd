@@ -11,16 +11,26 @@
 	<Color name="Type" foreground="#FF66D9EF" />
 	<Color name="MethodName" foreground="#FFA6E22E" />
 	<Color name="Preprocessor" foreground="#FFFF6347" />
-	
+
 	<Property name="Extension" value="zig" />
-	
+
 	<RuleSet ignoreCase="false">
 		<Span color="Comment" begin="//" end="$" />
 		<Span color="Comment" multiline="true" begin="/\*" end="\*/" />
+
 		<Span color="String" multiline="true">
-			<Begin>"""</Begin>
-			<End>"""</End>
+			<Begin>\\</Begin>
+			<End>;</End>
 		</Span>
+
+		<Span color="String" multiline="true">
+			<Begin>c\\</Begin>
+			<End>;</End>
+			<RuleSet>
+				<Span begin="c\\$" end="c\\$" />
+			</RuleSet>
+		</Span>
+
 		<Span color="String">
 			<Begin>"</Begin>
 			<End>"</End>
@@ -28,6 +38,7 @@
 				<Span begin="\\" end="." />
 			</RuleSet>
 		</Span>
+
 		<Span color="Character">
 			<Begin>'</Begin>
 			<End>'</End>
@@ -152,13 +163,13 @@
 			<Word>usize</Word>
 			<Word>void</Word>
 		</Keywords>
-		
+
 		<!--  @import ... -->
 		<Rule color="Preprocessor">@[\w_][\w\d_]*</Rule>
 		<!-- function names -->
 		<Rule color="MethodName">[\d\w_]+(?=(\s*\())</Rule>
 
-		<Rule color="Punctuation">(\.\.|\=\>|[=+\-*/%!&amp;|:^~&lt;&gt;])+</Rule>
+		<Rule color="Punctuation">(\.\.|\=\>|[?=+\-*/%!&amp;|:^~&lt;&gt;])+</Rule>
 
 	</RuleSet>
 </SyntaxDefinition>
