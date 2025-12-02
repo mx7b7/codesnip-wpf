@@ -78,7 +78,9 @@ namespace CodeSnip.Views.CodeRunnerView
             ["pl"] = ("perl.exe", "-"),
             ["php"] = ("php.exe", ""),
             ["java"] = ("jshell.exe", "-s -"),
-            ["ps1"] = ("powershell.exe", "-NoProfile -ExecutionPolicy Bypass -EncodedCommand ")
+            ["ps1"] = ("powershell.exe", "-NoProfile -ExecutionPolicy Bypass -EncodedCommand "),
+            ["fs"] = ("fsrunner.exe", ""),
+            ["cs"] = ("csrunner.exe", "")
             //["ps1"] = ("powershell.exe", "-NoProfile -ExecutionPolicy Bypass -Command -")
         };
 
@@ -302,13 +304,7 @@ namespace CodeSnip.Views.CodeRunnerView
             compilerExtension = compilerExtension.TrimStart('.').ToLowerInvariant();
 
             string toolsDir = Path.Combine(AppContext.BaseDirectory, "Tools\\Interpreters");
-            // Special case for C# scripting
-            if (compilerExtension == "cs")
-            {
-                string csrunnerPath = Path.Combine(toolsDir, "csrunner.exe");
-                return File.Exists(csrunnerPath) ? (csrunnerPath, null) : (null, null);
-            }
-
+            
             if (!Interpreters.TryGetValue(compilerExtension, out var info))
                 return (null, null);
 
