@@ -39,7 +39,7 @@
     >**Note:** Some compilers may generate a very large amount of assembly code even from a small number of source lines.
   - Generate shareable shortlinks to [Compiler Explorer](https://godbolt.org/)
  - **Local Code Execution**:
-   - Run scripts for languages like PowerShell, Python, PHP, Perl, Lua, Ruby, Node.js, and Java (via `JShell`) directly using local interpreters.
+   - Run scripts for languages like F#, PowerShell, Python, PHP, Perl, Lua, Ruby, Node.js, and Java (via `JShell`) directly using local interpreters.
      >**Note:** If an interpreter is not in system's PATH, you can place its portable version (e.g., `lua.exe`, `node.exe`) directly into the `Tools/Interpreters` directory within the application's installation folder.
    - **C# Scripting**: CodeSnip can also execute C# code locally using a custom wrapper named `csrunner.exe`. This tool is not included with the application. To enable this feature, create a .NET console project using the example code from this [Gist](https://gist.github.com/mx7b7/90013b77c1d0bcfb6b9e77399f62e409), build it, and place the compiled `csrunner.exe` with its dependencies into the `Tools/Interpreters` folder.
 - **UI/UX**:
@@ -81,6 +81,7 @@ CodeSnip integrates various code formatters, which are executed in different way
 - [csharpier](https://csharpier.com/) – C#, XML code formatting. ![Built-in](https://img.shields.io/badge/Built--in-yellow)
 - [dfmt](https://github.com/dlang-community/dfmt) – D code formatting. ![Local](https://img.shields.io/badge/Local-green) ![System](https://img.shields.io/badge/System-blue)
 - [gofmt](https://pkg.go.dev/cmd/gofmt) – Go code formatting. ![Local](https://img.shields.io/badge/Local-green) ![System](https://img.shields.io/badge/System-blue)
+- [fantomas](https://github.com/fsprojects/fantomas) – F# code formatting. ![System](https://img.shields.io/badge/System-blue)
 - [pasfmt](https://github.com/integrated-application-development/pasfmt) – Pascal/Delphi code formatting. ![System](https://img.shields.io/badge/System-blue)
 - [prettier](https://prettier.io/) - Formats JavaScript, TypeScript, JSX, HTML, CSS, JSON, Markdown, and more. ![Local](https://img.shields.io/badge/Local-green) ![System](https://img.shields.io/badge/System-blue)
 - [rustfmt](https://github.com/rust-lang/rustfmt) – Rust code formatting. ![Local](https://img.shields.io/badge/Local-green) ![System](https://img.shields.io/badge/System-blue)
