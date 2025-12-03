@@ -99,8 +99,9 @@ namespace CodeSnip.Views.CodeRunnerView
         // This method maps the source language extension to the appropriate assembly highlighting definition name.
         private static string MapLanguageExtensionToAsmHighlighting(string languageExtension, CompilerInfo? compiler)
         {
-            if (languageExtension.Equals("cs", StringComparison.OrdinalIgnoreCase) &&
-                compiler?.Id?.Contains("ildasm", StringComparison.OrdinalIgnoreCase) == true)
+            if (compiler?.Id?.Contains("ildasm", StringComparison.OrdinalIgnoreCase) == true &&
+                (languageExtension.Equals("cs", StringComparison.OrdinalIgnoreCase) ||
+                 languageExtension.Equals("fs", StringComparison.OrdinalIgnoreCase)))
             {
                 return "il";
             }
