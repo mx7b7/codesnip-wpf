@@ -2,7 +2,6 @@
 using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
 using System.Collections.ObjectModel;
-using System.Diagnostics;
 using System.Windows;
 
 namespace CodeSnip.Views.CompilerSettingsView
@@ -95,8 +94,6 @@ namespace CodeSnip.Views.CompilerSettingsView
                 CompilersLink = $"https://godbolt.org/api/compilers/{value.LanguageId}";
                 LinkText = $"Get more compilers for {value.LanguageName}";
                 HelpText = $"Enter a CompilerId that matches a 'Compiler Name' from the list of Compiler Explorer compilers for {value.LanguageName}";
-                Debug.WriteLine(LinkText);
-                Debug.WriteLine(CompilersLink);
             }
             else
             {
