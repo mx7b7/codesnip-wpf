@@ -572,6 +572,13 @@
                                               Width="16" Height="16" Stretch="Uniform" />
                                         </MenuItem.Icon>
                                     </MenuItem>
+                                    <MenuItem Header="fantomas" Click="FormatFantomas_Click"
+                                            Visibility="{Binding PlacementTarget.DataContext.SelectedSnippet.Category.Language.Code, RelativeSource={RelativeSource AncestorType=ContextMenu}, Converter={StaticResource LanguageToVisibilityConverter}, ConverterParameter='fs,fsx'}">
+                                        <MenuItem.Icon>
+                                            <Path Data="{StaticResource Indent}" Fill="{DynamicResource MahApps.Brushes.AccentBase}"
+                                            Width="16" Height="16" Stretch="Uniform" />
+                                        </MenuItem.Icon>
+                                    </MenuItem>
                                     <MenuItem Header="gofmt" Click="FormatGofmt_Click"
                                               Visibility="{Binding PlacementTarget.DataContext.SelectedSnippet.Category.Language.Code, RelativeSource={RelativeSource AncestorType=ContextMenu}, Converter={StaticResource LanguageToVisibilityConverter}, ConverterParameter='go'}">
                                         <MenuItem.Icon>

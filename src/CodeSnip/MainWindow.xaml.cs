@@ -545,147 +545,87 @@ namespace CodeSnip
             }
         }
 
+        private async void FormatFantomas_Click(object sender, RoutedEventArgs e)
+        {
+            string? code = mainViewModel.SelectedSnippet?.Category?.Language?.Code;
+            if (code is not null and "fs")
+            {
+                string originalCode = textEditor.Text;
+                var (isSuccess, formatted, error) = await FormattingService.TryFormatCodeWithFantomasAsync(originalCode);
+                if (isSuccess)
+                {
+                    textEditor.Document.Text = formatted;
+                }
+                else if (error != null && error.Contains("Could not execute", StringComparison.OrdinalIgnoreCase))
+                {
+                    error += "\n\nMake sure Fantomas is installed. You can install it via the .NET CLI:\n\n" +
+                             "Globally:\n" +
+                             "  dotnet tool install -g fantomas-tool\n\n" +
+                             "Local:\n" +
+                             "Open command prompt in Tools directory" +
+                             "  dotnet new tool-manifest\n" +
+                             "  dotnet tool install fantomas";
+                    MessageBox.Show(error);
+                }
+                else
+                {
+                    MessageBox.Show(error);
+                }
+            }
+        }
+
         private async void FormatAll_Click(object sender, RoutedEventArgs e)
         {
             string? code = mainViewModel.SelectedSnippet?.Category?.Language?.Code;
             if (code is not null)
             {
-                string originalCode = textEditor.Text;
-
                 switch (code.ToLowerInvariant())
                 {
                     case "cs":
-                        var (isSuccess, formattedCs, errorCs) = await FormattingService.TryFormatCodeWithCSharpierAsync(originalCode);
-                        if (isSuccess)
-                        {
-                            textEditor.Document.Text = formattedCs;
-                        }
-                        else
-                        {
-                            MessageBox.Show($"Formatting (CSharpier) failed:\n{errorCs}");
-                        }
+                        FormatCSharpier_Click(sender, e);
                         break;
 
                     case "d":
-                        var (successD, formattedDfmt, errorDfmt) = await FormattingService.TryFormatCodeWithDfmtAsync(originalCode);
-                        if (successD)
-                        {
-                            textEditor.Document.Text = formattedDfmt;
-                        }
-                        else
-                        {
-                            MessageBox.Show($"Formatting (dfmt) failed:\n {errorDfmt}");
-                        }
+                        FormatDfmt_Click(sender, e);
+                        break;
+
+                    case "fs":
+                        FormatFantomas_Click(sender, e);
                         break;
 
                     case "go":
-                        var (successGo, formattedGofmt, errorGofmt) = await FormattingService.TryFormatCodeWithGofmtAsync(originalCode);
-                        if (successGo)
-                        {
-                            textEditor.Document.Text = formattedGofmt;
-                        }
-                        else
-                        {
-                            MessageBox.Show($"Formatting (gofmt) failed:\n{errorGofmt}");
-                        }
+                        FormatGofmt_Click(sender, e);
                         break;
 
                     case "lua":
-                        var (successLua, formattedStylua, errorStylua) = await FormattingService.TryFormatCodeWithStyluaAsync(originalCode);
-                        if (successLua)
-                        {
-                            textEditor.Document.Text = formattedStylua;
-                        }
-                        else
-                        {
-                            MessageBox.Show($"Formatting (stylua) failed:\n{errorStylua}");
-                        }
+                        FormatStylua_Click(sender, e);
                         break;
 
                     case "pas":
-                        var (successPas, formattedPasfmt, errorPasfmt) = await FormattingService.TryFormatCodeWithPasFmtAsync(originalCode);
-                        if (successPas)
-                        {
-                            textEditor.Document.Text = formattedPasfmt;
-                        }
-                        else
-                        {
-                            MessageBox.Show($"Formatting (pasfmt) failed:\n{errorPasfmt}");
-                        }
+                        FormatPasfmt_Click(sender, e);
                         break;
 
                     case "py":
-                        var (successPy, formattedBlack, errorBlack) = await FormattingService.TryFormatCodeWithPythonModuleAsync(originalCode, "black");
-                        if (successPy)
-                        {
-                            textEditor.Document.Text = formattedBlack;
-                        }
-                        else
-                        {
-                            MessageBox.Show($"Formatting (Black) failed:\n{errorBlack}");
-                        }
+                        FormatBlack_Click(sender, e);
                         break;
 
                     case "rs":
-                        var (successRs, formattedRust, errorRust) = await FormattingService.TryFormatCodeWithRustFmtAsync(originalCode);
-                        if (successRs)
-                        {
-                            textEditor.Document.Text = formattedRust;
-                        }
-                        else
-                        {
-                            MessageBox.Show($"Formatting (rustfmt) failed:\n{errorRust}");
-                        }
+                        FormatRustfmt_Click(sender, e);
                         break;
 
                     case "xml":
-                        var (successXml, formattedXml, errorXml) = await FormattingService.TryFormatXmlWithCSharpierAsync(originalCode);
-                        if (successXml)
-                        {
-                            textEditor.Document.Text = formattedXml;
-                        }
-                        else
-                        {
-                            MessageBox.Show($"Formatting (CSharpier XML) failed:\n{errorXml}");
-                        }
+                        FormatCSharpier_Click(sender, e);
                         break;
 
                     case "html":
                     case "css":
                     case "md":
-                        var (successPrettier, formattedPrettier, errorPrettier) = await FormattingService.TryFormatCodeWithPrettierAsync(originalCode, assumeFilename: $"example.{code}");
-                        if (successPrettier)
-                        {
-                            textEditor.Document.Text = formattedPrettier;
-                        }
-                        else
-                        {
-                            MessageBox.Show($"Formatting (Prettier) failed:\n{errorPrettier}");
-                        }
+                        FormatPrettier_Click(sender, e);
                         break;
 
                     default:
                         // DEFAULT: Use clang-format for other supported languages
-                        var supported = new[]
-                        {
-                        "c", "cpp", "h", "cs", "d", "js", "java", "mjs", "ts",
-                        "json", "m", "mm", "proto", "protodevel", "td", "txtpb",
-                        "textpb", "textproto", "asciipb", "sv", "svh", "v", "vh"
-                     };
-
-                        if (supported.Contains(code, StringComparer.OrdinalIgnoreCase))
-                        {
-                            string filename = $"example.{code}";
-                            var (successClang, formattedClang, errorClang) = await FormattingService.TryFormatCodeWithClangAsync(originalCode, assumeFilename: filename);
-                            if (successClang)
-                            {
-                                textEditor.Document.Text = formattedClang;
-                            }
-                            else
-                            {
-                                MessageBox.Show($"Formatting (clang-format) failed:\n{errorClang}");
-                            }
-                        }
+                        FormatClang_Click(sender, e);
                         break;
                 }
             }

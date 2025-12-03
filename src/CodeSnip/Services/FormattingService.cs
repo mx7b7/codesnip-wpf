@@ -153,6 +153,51 @@ namespace CodeSnip.Services
         }
 
         /// <summary>
+        /// Formats F# source code using the Fantomas formatter via an external process.
+        /// </summary>
+        /// <remarks>
+        /// Writes the code to a temporary file in the 'Tools' directory, formats it with Fantomas, and returns the result.
+        /// The temporary file is deleted after formatting.
+        /// </remarks>
+        /// <param name="code">The F# source code to format. Cannot be null.</param>
+        /// <param name="timeoutMs">The maximum time, in milliseconds, to wait for the Fantomas formatting process to complete. Defaults to 15,000 milliseconds.</param>
+        /// <returns>A tuple containing a success flag, the formatted code if successful, and an error message if formatting fails.
+        public static async Task<(bool Success, string? FormattedCode, string? ErrorMessage)> TryFormatCodeWithFantomasAsync(string code, int timeoutMs = 15000)
+        {
+            string toolsDirectory = Path.Combine(AppContext.BaseDirectory, "Tools");
+            string tempFilePath = Path.Combine(toolsDirectory, "temp.fs");
+
+            try
+            {
+                // Save the code to a temporary file
+                await File.WriteAllTextAsync(tempFilePath, code);
+
+                // Call fantomas to format the file
+                var result = await TryFormatWithExternalProcessAsync(
+                    "dotnet",
+                    $"fantomas \"{tempFilePath}\"",
+                    "",
+                    timeoutMs
+                );
+
+                if (!result.Success)
+                {
+                    return result;
+                }
+
+                // Read the formatted code back from the temporary file
+                string formattedCode = await File.ReadAllTextAsync(tempFilePath);
+                return (true, formattedCode, null);
+            }
+            catch (Exception ex)
+            {
+                return (false, null, $"Fantomas formatting exception: {ex.Message}");
+            }
+            // Don't delete temporary file beacause WriteAllTextAsync alows overwriting it next time
+
+        }
+
+        /// <summary>
         /// A generic helper method to run an external formatting tool from the 'Tools' directory.
         /// </summary>
         /// <param name="executableName">The name of the executable file (e.g., 'dfmt.exe').</param>
