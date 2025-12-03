@@ -85,7 +85,7 @@ namespace CodeSnip.Views.CompilerSettingsView
                 );
                 if (Compilers.Count > 0)
                 {
-                    SelectedCompiler = _manager.GetDefaultCompiler(value);//Compilers.First();
+                    SelectedCompiler = _manager.GetDefaultCompiler(value); // Compilers.First();
                     CanSaveCompiler = (Compilers.Count > 0 && SelectedCompiler != null);
                 }
                 else
@@ -184,11 +184,15 @@ namespace CodeSnip.Views.CompilerSettingsView
 
             _ = _manager.UpsertCompiler(SelectedLanguage.LanguageId!, compiler);
 
-            
+
             if (IsAddingLanguage)
             {
                 if (!Compilers.Any(c => c.Id == compiler.Id))
                     Compilers.Add(compiler);
+
+                if (Compilers.Count == 1)
+                    _manager.SetDefaultCompiler(SelectedLanguage, compiler.Id);
+
                 SelectedCompiler = compiler;
                 IsAddingLanguage = false;
             }
