@@ -157,6 +157,12 @@ namespace CodeSnip
         [ObservableProperty]
         private bool _wordWrap = false;
 
+        [ObservableProperty]
+        private bool _isColorPickerOpen = false;
+
+        [ObservableProperty]
+        Color _selectedAccentColor;
+
         public enum SnippetFilterMode
         {
             Name,
@@ -997,6 +1003,7 @@ namespace CodeSnip
             WindowTitle = title;
         }
 
+        // MetroWindow.RightWindowCommands
         public void SwitchTheme()
         {
             var currentTheme = ThemeManager.Current.DetectTheme(Application.Current);
@@ -1010,8 +1017,35 @@ namespace CodeSnip
             settingsService.BaseColor = newBaseTheme;
         }
 
-    }
+        [RelayCommand]
+        private void PickColor()
+        {
+            IsColorPickerOpen = !IsColorPickerOpen;
+        }
 
+        partial void OnSelectedAccentColorChanging(Color oldValue, Color newValue)
+        {
+            var darkTheme = RuntimeThemeGenerator.Current.GenerateRuntimeTheme("Dark", newValue);
+            var lightTheme = RuntimeThemeGenerator.Current.GenerateRuntimeTheme("Light", newValue);
+
+            // disabled to avoid accumulating themes
+            // ThemeManager.Current.AddTheme(darkTheme);
+            // ThemeManager.Current.AddTheme(lightTheme);
+
+            var currentTheme = ThemeManager.Current.DetectTheme(Application.Current);
+            if (currentTheme is null) return;
+
+            bool isDark = currentTheme.BaseColorScheme.Equals("Dark", StringComparison.OrdinalIgnoreCase);
+            var themeToApply = isDark ? darkTheme : lightTheme;
+
+            if (themeToApply != null)
+            {
+                ThemeManager.Current.ChangeTheme(Application.Current, themeToApply);
+            }
+        }
+
+
+    }
 
 }
 

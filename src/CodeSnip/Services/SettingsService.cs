@@ -64,7 +64,7 @@ namespace CodeSnip.Services
             get => _settings.MainWindow.IsSearchExpanded;
             set => _settings.MainWindow.IsSearchExpanded = value;
         }
-        
+
         public bool IsSnippetMetadataExpanded
         {
             get => _settings.MainWindow.IsSnippetMetadataExpanded;
@@ -94,7 +94,7 @@ namespace CodeSnip.Services
             get => _settings.Editor.EnableEmailLinks;
             set => _settings.Editor.EnableEmailLinks = value;
         }
-        
+
         public bool EnableHyperinks
         {
             get => _settings.Editor.EnableHyperinks;
@@ -105,7 +105,7 @@ namespace CodeSnip.Services
             get => _settings.Editor.HighlightLine;
             set => _settings.Editor.HighlightLine = value;
         }
-        
+
         public int IntendationSize
         {
             get => _settings.Editor.IntendationSize;
@@ -256,7 +256,30 @@ namespace CodeSnip.Services
         public void ApplyTheme()
         {
             ThemeManager.Current.ChangeThemeBaseColor(Application.Current, BaseColor);
-            ThemeManager.Current.ChangeThemeColorScheme(Application.Current, AccentColor);
+
+            if (AccentColor.StartsWith('#') && AccentColor.Length == 9)
+            {
+                try
+                {
+                    var color = (Color)ColorConverter.ConvertFromString(AccentColor);
+                    var theme = RuntimeThemeGenerator.Current.GenerateRuntimeTheme(BaseColor, color);
+                    if (theme != null)
+                    {
+                        ThemeManager.Current.ChangeTheme(Application.Current, theme);
+                        ThemeManager.Current.AddTheme(theme);
+                    }
+                }
+                catch (FormatException)
+                {
+                    // use predefined accent if custom color parsing fails
+                    ThemeManager.Current.ChangeThemeColorScheme(Application.Current, AccentColor);
+                }
+            }
+            else
+            {
+                //  If not a custom hex color, use predefined accent (Sienna is default)
+                ThemeManager.Current.ChangeThemeColorScheme(Application.Current, AccentColor);
+            }
         }
 
         private void ValidateAndCorrectSettings()
@@ -282,11 +305,12 @@ namespace CodeSnip.Services
             _settings.TreeViewFont.SnippetFontWeight = ValidateFontWeight(_settings.TreeViewFont.SnippetFontWeight, defaultSettings.TreeViewFont.SnippetFontWeight);
 
             // 4. Validate ThemeSettings
-            var accentExists = ThemeManager.Current.Themes.Any(t => t.ColorScheme.Equals(_settings.Theme.Accent, StringComparison.OrdinalIgnoreCase));
-            if (!accentExists)
-            {
-                _settings.Theme.Accent = defaultSettings.Theme.Accent; // Reset to 'Sienna'
-            }
+            // disabled accent validation to allow custom hex colors
+            //var accentExists = ThemeManager.Current.Themes.Any(t => t.ColorScheme.Equals(_settings.Theme.Accent, StringComparison.OrdinalIgnoreCase));
+            //if (!accentExists)
+            //{
+            //    _settings.Theme.Accent = defaultSettings.Theme.Accent; // Reset to 'Sienna'
+            //}
 
             if (!_settings.Theme.BaseColor.Equals("Light", StringComparison.OrdinalIgnoreCase) &&
                 !_settings.Theme.BaseColor.Equals("Dark", StringComparison.OrdinalIgnoreCase))

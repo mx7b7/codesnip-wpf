@@ -124,6 +124,18 @@
                       Width="20" Height="20" Stretch="Uniform">
                 </Path>
             </Button>
+            <Button Style="{StaticResource CustomTitlebarButtonStyle}" 
+                    Command="{Binding PickColorCommand}"
+                    ToolTip="Pick accent color">
+                <Path Data="{StaticResource ColorPaletteiOS}" Fill="{DynamicResource MahApps.Brushes.AccentBase}"
+                      Width="20" Height="20" Stretch="Uniform" />
+            </Button>
+            <StackPanel Visibility="{Binding IsColorPickerOpen, Mode=TwoWay}" >
+                <mah:ColorPicker SelectedColor="{Binding SelectedAccentColor, Mode=TwoWay}" 
+                     IsDropDownOpen="{Binding IsColorPickerOpen, Mode=TwoWay}" 
+                     Width="5" Visibility="Hidden" >
+                </mah:ColorPicker>
+            </StackPanel>
         </mah:WindowCommands>
     </mah:MetroWindow.RightWindowCommands>
 
