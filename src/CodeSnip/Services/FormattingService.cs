@@ -148,8 +148,10 @@ namespace CodeSnip.Services
             {
                 arguments = $"--stdin-filepath {assumeFilename} --stdin ";
             }
-            // return await TryFormatWithExternalProcessAsync("prettier.cmd", arguments, code, timeoutMs); // portable version with node.exe included, see prettier.cmd for paths
-            return await TryFormatWithExternalProcessAsync("npx.cmd", $"prettier {arguments}", code, timeoutMs); // using npx to run prettier from system's node installation ??
+            // run prettier from system's node installation, prettier must be installed globally
+            return await TryFormatWithExternalProcessAsync("prettier.cmd", arguments, code, timeoutMs);
+            // same as above
+            //return await TryFormatWithExternalProcessAsync("npx.cmd", $"prettier {arguments}", code, timeoutMs);
         }
 
         /// <summary>
