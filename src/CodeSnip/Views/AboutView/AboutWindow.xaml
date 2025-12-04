@@ -33,6 +33,7 @@
             <local:DependencyInfo Name="clang-format" Url="https://clang.llvm.org/docs/ClangFormat.html" />
             <local:DependencyInfo Name="dfmt" Url="https://github.com/dlang-community/dfmt" />
             <local:DependencyInfo Name="gofmt" Url="https://pkg.go.dev/cmd/gofmt" />
+            <local:DependencyInfo Name="fantomas" Url="https://github.com/fsprojects/fantomas" />
         </x:Array>
 
         <x:Array x:Key="Tools2" Type="{x:Type local:DependencyInfo}">

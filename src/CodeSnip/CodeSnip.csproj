@@ -15,7 +15,7 @@
 		<Authors>mx7b7</Authors>
 		<Company>mx7b7</Company>
 		<Product>CodeSnip</Product>
-		<Description>A personal snippet manager built with .NET / C# / WPF.</Description>
+		<Description>A personal snippet manager &amp; code runner built with .NET / C# / WPF.</Description>
 		<Copyright>Copyright © mx7b7 $([System.DateTime]::Now.Year)</Copyright>
 	</PropertyGroup>
 
