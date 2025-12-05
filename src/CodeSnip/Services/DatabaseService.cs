@@ -637,13 +637,14 @@ INSERT INTO Languages (ID, Code, Name) VALUES
 (25, 'rs', 'Rust'),
 (26, 'sql', 'SQL'),
 (27, 'tex', 'TeX'),
-(28, 'vb', 'VB'),
+(28, 'vb', 'VB.NET'),
 (29, 'vtl', 'VTL'),
 (30, 'xml', 'XML'),
 (31, 'lua', 'Lua'),
 (32, 'asm', 'Asm'),
 (33, 'il', 'IL'),
-(34, 'go', 'Go');
+(34, 'go', 'Go'),
+(35, 'zig', 'Zig');
 
 INSERT INTO Categories (LanguageId, Name) VALUES
 -- C++
@@ -680,6 +681,17 @@ INSERT INTO Categories (LanguageId, Name) VALUES
 (9, 'Concurrency'),
 (9, 'Modules and Imports'),
 (9, 'Metaprogramming'),
+-- F#
+(10, 'Basic Syntax'),
+(10, 'Functions and Lambdas'),
+(10, 'Pattern Matching'),
+(10, 'Collections'),
+(10, 'Async and Parallel Programming'),
+(10, 'Type Providers'),
+(10, 'Modules and Namespaces'),
+(10, 'Error Handling'),
+(10, 'Units of Measure'),
+(10, 'Computation Expressions'),
 -- Java
 (14, 'Basic Syntax'),
 (14, 'OOP Concepts'),
