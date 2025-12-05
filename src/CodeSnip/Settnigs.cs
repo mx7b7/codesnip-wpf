@@ -32,6 +32,7 @@ namespace CodeSnip
         public bool EnableXmlFolding { get; set; } = false;
         public string EditorFontFamily { get; set; } = "Consolas";
         public int EditorFontSize { get; set; } = 14;
+        public bool ShowLineNumbers { get; set; } = true;
 
     }
     public class ThemeSettings

@@ -128,6 +128,8 @@
                               IsChecked="{Binding HyperLinks, Mode=TwoWay}" />
                             <CheckBox Content="Highlight current line" Margin="0,8,0,0"
                               IsChecked="{Binding HighlightLine, Mode=TwoWay}" />
+                            <CheckBox Content="Show line numbers" Margin="0,8,0,0"
+                              IsChecked="{Binding ShowLineNumbers, Mode=TwoWay}" />
                             <TextBlock Text="Indentation size:" Margin="0,8,0,0"/>
                             <mah:NumericUpDown Maximum="10" Minimum="1" NumericInputMode="Numbers"
                                      ParsingNumberStyle="Integer" TextAlignment="Center"

@@ -163,6 +163,9 @@ namespace CodeSnip
         [ObservableProperty]
         Color _selectedAccentColor;
 
+        [ObservableProperty]
+        private bool _showLineNumbers = true;
+
         public enum SnippetFilterMode
         {
             Name,
@@ -202,6 +205,7 @@ namespace CodeSnip
             opt.ConvertTabsToSpaces = settingsService.TabToSpaces;
             opt.HighlightCurrentLine = settingsService.HighlightLine;
             opt.IndentationSize = settingsService.IntendationSize;
+            ShowLineNumbers = settingsService.ShowLineNumbers;
 
             IsFilteringEnabled = settingsService.EnableFiltering;
             IsNotificationEnabled = settingsService.IsNotificationEnabled;
@@ -500,6 +504,7 @@ namespace CodeSnip
                 settingsService.EnableHyperinks = vm.HyperLinks;
                 settingsService.TabToSpaces = vm.TabToSpaces;
                 settingsService.IntendationSize = vm.IntendationSize;
+                settingsService.ShowLineNumbers = vm.ShowLineNumbers;
                 settingsService.EnableFiltering = vm.EnableFiltering;
                 settingsService.EnablePythonFolding = vm.EnablePythonFolding;
                 settingsService.EnableBraceStyleFolding = vm.EnableBraceStyleFolding;
@@ -522,6 +527,7 @@ namespace CodeSnip
                 opt.ConvertTabsToSpaces = vm.TabToSpaces;
                 opt.IndentationSize = vm.IntendationSize;
                 opt.EnableHyperlinks = vm.HyperLinks;
+                ShowLineNumbers = vm.ShowLineNumbers;
                 IsFilteringEnabled = vm.EnableFiltering;
                 EnableBraceStyleFolding = vm.EnableBraceStyleFolding;
                 EnablePythonFolding = vm.EnablePythonFolding;

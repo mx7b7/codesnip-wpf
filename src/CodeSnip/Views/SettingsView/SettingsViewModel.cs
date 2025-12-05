@@ -68,6 +68,9 @@ namespace CodeSnip.Views.SettingsView
         [ObservableProperty]
         private bool _showEmptyCategories;
 
+        [ObservableProperty]
+        private bool _showLineNumbers;
+
         // Database
         [ObservableProperty]
         private string _integrityCheckBadge = "";
@@ -116,14 +119,15 @@ namespace CodeSnip.Views.SettingsView
             _onDatabaseActionCompleted = onDatabaseActionCompleted;
             LoadAccents();
             InitializeFromCurrentTheme();
-            LoadOnStartup = settingsService.LoadOnStartup;
-            EnableFiltering = settingsService.EnableFiltering;
-            IsNotificationEnabled = settingsService.IsNotificationEnabled;
+            LoadOnStartup = _settingsService.LoadOnStartup;
+            EnableFiltering = _settingsService.EnableFiltering;
+            IsNotificationEnabled = _settingsService.IsNotificationEnabled;
             TabToSpaces = _settingsService.TabToSpaces;
             EmailLinks = _settingsService.EnableEmailLinks;
             HyperLinks = _settingsService.EnableHyperinks;
             HighlightLine = _settingsService.HighlightLine;
             IntendationSize = _settingsService.IntendationSize;
+            ShowLineNumbers = _settingsService.ShowLineNumbers;
             EnableBraceStyleFolding = _settingsService.EnableBraceStyleFolding;
             EnablePythonFolding = _settingsService.EnablePythonFolding;
             EnableXmlFolding = _settingsService.EnableXmlFolding;
@@ -137,8 +141,8 @@ namespace CodeSnip.Views.SettingsView
             SnippetFontWeight = _settingsService.SnippetFontWeight;
             ShowEmptyLanguages = _settingsService.ShowEmptyLanguages;
             ShowEmptyCategories = _settingsService.ShowEmptyCategories;
-            _databaseService = databaseService;
         }
+
         partial void OnLoadOnStartupChanged(bool value)
         {
             _settingsService.LoadOnStartup = value;
@@ -222,6 +226,10 @@ namespace CodeSnip.Views.SettingsView
         partial void OnEditorFontSizeChanged(int value)
         {
             _settingsService.EditorFontSize = value;
+        }
+        partial void OnShowLineNumbersChanged(bool value)
+        {
+            _settingsService.ShowLineNumbers = value;
         }
 
         partial void OnLanguageFontSizeChanged(int value)

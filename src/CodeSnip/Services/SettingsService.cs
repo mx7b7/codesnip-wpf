@@ -140,6 +140,12 @@ namespace CodeSnip.Services
             set => _settings.Editor.EditorFontSize = value;
         }
 
+        public bool ShowLineNumbers
+        {
+            get => _settings.Editor.ShowLineNumbers;
+            set => _settings.Editor.ShowLineNumbers = value;
+        }   
+
         public bool ShowEmptyLanguages
         {
             get => _settings.MainWindow.ShowEmptyLanguages;
