@@ -114,20 +114,20 @@
                     </Style.Triggers>
                 </Style>
             </mah:WindowCommands.Resources>
-            <Button Style="{StaticResource CustomTitlebarButtonStyle}" ToolTip="Theme switch" Click="ThemeSwitch_Click">
-                <Path Data="{StaticResource ThemeLightDark}" Fill="{DynamicResource MahApps.Brushes.Accent}"
-                      Width="20" Height="20" Stretch="Uniform" >
-                </Path>
-            </Button>
             <Button Style="{StaticResource CustomTitlebarButtonStyle}" Click="About_Click" ToolTip="About">
                 <Path Data="{StaticResource InfoCircle}" Fill="{DynamicResource MahApps.Brushes.Accent}"
                       Width="20" Height="20" Stretch="Uniform">
                 </Path>
             </Button>
+            <Button Style="{StaticResource CustomTitlebarButtonStyle}" ToolTip="Theme switch" Click="ThemeSwitch_Click">
+                <Path Data="{StaticResource ThemeLightDark}" Fill="{DynamicResource MahApps.Brushes.Accent}"
+                      Width="20" Height="20" Stretch="Uniform" >
+                </Path>
+            </Button>
             <Button Style="{StaticResource CustomTitlebarButtonStyle}" 
                     Command="{Binding PickColorCommand}"
                     ToolTip="Pick accent color">
-                <Path Data="{StaticResource ColorPaletteiOS}" Fill="{DynamicResource MahApps.Brushes.AccentBase}"
+                <Path Data="{StaticResource ColorPaletteiOS}" Fill="{DynamicResource MahApps.Brushes.Accent}"
                       Width="20" Height="20" Stretch="Uniform" />
             </Button>
             <StackPanel Visibility="{Binding IsColorPickerOpen, Mode=TwoWay}" >
