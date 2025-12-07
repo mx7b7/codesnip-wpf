@@ -264,20 +264,22 @@ namespace CodeSnip.Services
     <Color name=""Character""     foreground=""#FD971F"" />
     <Color name=""Number""        foreground=""#AE81FF"" />
     <Color name=""Keywords""      foreground=""#F92672"" />
-    <Color name=""Type""          foreground=""#66D9EF"" />
+    <Color name=""Types""          foreground=""#66D9EF"" />
     <Color name=""MethodName""    foreground=""#A6E22E"" />
 
     <Property name=""Extension"" value=""{langCode}"" />
 
 <RuleSet ignoreCase=""false"">
 
-    <Keywords color=""Keywords"">
-        <!-- Add your keywords here, example  <Word>SomeKeyword</Word> -->
+     <Keywords color=""Keywords"">
+        <!-- Add your keywords here -->
+        <Word>SomeKeyword</Word>
     </Keywords>
 
-    <Keywords color=""Type"">
-    <!-- Add your types here, example  <Word>SomeType</Word> -->
-    </Keywords>       
+    <Keywords color=""Types"">
+    <!-- Add your types here -->
+        <Word>SomeType</Word>
+    </Keywords>
 
   <!-- Add your <RuleSet> and <Span> definitions below -->
 </RuleSet>
@@ -290,7 +292,7 @@ namespace CodeSnip.Services
 	<Color name=""Character"" foreground=""#FFA31515"" />
 	<Color name=""Number"" foreground=""#FF098658"" />
 	<Color name=""Keywords"" foreground=""#FFAF00DB"" />
-	<Color name=""Type"" foreground=""#FF0000FF"" />
+	<Color name=""Types"" foreground=""#FF0000FF"" />
 	<Color name=""MethodName"" foreground=""#FF795E26"" />
 
     <Property name=""Extension"" value=""{langCode}"" />
@@ -298,12 +300,14 @@ namespace CodeSnip.Services
 <RuleSet ignoreCase=""false"">
 
     <Keywords color=""Keywords"">
-        <!-- Add your keywords here, example  <Word>SomeKeyword</Word> -->
+        <!-- Add your keywords here -->
+        <Word>SomeKeyword</Word>
     </Keywords>
 
-    <Keywords color=""Type"">
-    <!-- Add your types here, example  <Word>SomeType</Word> -->
-    </Keywords>       
+    <Keywords color=""Types"">
+    <!-- Add your types here -->
+        <Word>SomeType</Word>
+    </Keywords>
 
   <!-- Add your <RuleSet> and <Span> definitions below -->
 </RuleSet>
