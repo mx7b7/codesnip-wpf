@@ -184,6 +184,7 @@ namespace CodeSnip
                     flyout.CloseButtonIsCancel = true;
                     break;
                 case "flyHighlightingEditor":
+                    flyout.Width = 550;
                     flyout.Position = Position.Right;
                     flyout.Theme = FlyoutTheme.Adapt;
                     flyout.CloseButtonIsCancel = true;
@@ -208,7 +209,10 @@ namespace CodeSnip
         {
             if (IsFlyoutOpen("flyHighlightingEditor")) return;
 
-            var vm = new HighlightingEditorViewModel(textEditor.SyntaxHighlighting, textEditor);
+            string? langCode = mainViewModel.SelectedSnippet?.Category?.Language?.Code;
+            if (langCode == null) return;
+
+            var vm = new HighlightingEditorViewModel(textEditor.SyntaxHighlighting, textEditor, langCode);
 
             ShowFlyout("flyHighlightingEditor", vm, "Syntax Highlighting Editor");
         }

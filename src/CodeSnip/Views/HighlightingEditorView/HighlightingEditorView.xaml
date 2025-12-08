@@ -8,9 +8,7 @@
              xmlns:behaviors="clr-namespace:Microsoft.Xaml.Behaviors;assembly=Microsoft.Xaml.Behaviors"
              xmlns:helpers="clr-namespace:CodeSnip.Helpers"
              d:DataContext="{d:DesignInstance Type={x:Type local:HighlightingEditorViewModel}}"
-             x:Name="flyHighlightingEditor"
-             MinWidth="500"
-             MaxWidth="600"     
+             x:Name="flyHighlightingEditor"   
              mc:Ignorable="d" 
              d:DesignHeight="400"
              d:DesignWidth="300">

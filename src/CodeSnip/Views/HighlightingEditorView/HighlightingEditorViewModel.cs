@@ -102,7 +102,7 @@ namespace CodeSnip.Views.HighlightingEditorView
         /// </summary>
         /// <param name="definition">The active highlighting definition to be edited.</param>
         /// <param name="editor">The TextEditor instance where live previews will be applied.</param>
-        public HighlightingEditorViewModel(IHighlightingDefinition definition, ICSharpCode.AvalonEdit.TextEditor editor)
+        public HighlightingEditorViewModel(IHighlightingDefinition definition, ICSharpCode.AvalonEdit.TextEditor editor, string langCode)
         {
             _originalDefinition = definition;
             _editor = editor;
@@ -122,25 +122,12 @@ namespace CodeSnip.Views.HighlightingEditorView
             var theme = ThemeManager.Current.DetectTheme(Application.Current);
             _themeName = theme?.BaseColorScheme ?? "Dark";
 
-            _languageCode = GetLanguageCodeFromDefinition(definition);
+            _languageCode = langCode;
 
             string appBase = AppDomain.CurrentDomain.BaseDirectory;
             _customXshdPath = Path.Combine(appBase, "Highlighting", _themeName, $"{_languageCode}.xshd");
 
             UpdateCustomDefinitionExists();
-        }
-
-        private string GetLanguageCodeFromDefinition(IHighlightingDefinition definition)
-        {
-            if (definition.Properties.TryGetValue("Extension", out string? ext) && !string.IsNullOrWhiteSpace(ext))
-            {
-                return ext.TrimStart('.').ToLowerInvariant();
-            }
-            if (!string.IsNullOrWhiteSpace(definition.Name))
-            {
-                return definition.Name.ToLowerInvariant();
-            }
-            return "custom";
         }
 
         private void UpdateCustomDefinitionExists()
