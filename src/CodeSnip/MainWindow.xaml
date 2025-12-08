@@ -130,10 +130,10 @@
                 <Path Data="{StaticResource ColorPaletteiOS}" Fill="{DynamicResource MahApps.Brushes.Accent}"
                       Width="20" Height="20" Stretch="Uniform" />
             </Button>
-            <StackPanel Visibility="{Binding IsColorPickerOpen, Mode=TwoWay}" >
+            <StackPanel>
                 <mah:ColorPicker SelectedColor="{Binding SelectedAccentColor, Mode=TwoWay}" 
-                     IsDropDownOpen="{Binding IsColorPickerOpen, Mode=TwoWay}" 
-                     Width="5" Visibility="Hidden" >
+                                 IsDropDownOpen="{Binding IsColorPickerOpen, Mode=TwoWay}"
+                                 Width="1" Visibility="Hidden" >
                 </mah:ColorPicker>
             </StackPanel>
         </mah:WindowCommands>
