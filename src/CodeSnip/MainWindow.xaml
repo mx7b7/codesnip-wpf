@@ -356,7 +356,7 @@
                                 <Path Data="{StaticResource ZoomOutMap}" Fill="{DynamicResource MahApps.Brushes.AccentBase}"
                                   Width="20" Height="20" Stretch="Uniform" />
                             </Button>
-                            <Button Margin="2,0,0,0" ToolTip="Search / Replace&#xA;Ctrl+F"  Command="{Binding OpenSearchReplaceCommand}" >
+                            <Button Margin="2,0,0,0" ToolTip="Search / Replace&#xA;Ctrl+F, Ctrl+H"  Command="{Binding OpenSearchReplaceCommand}" >
                                 <Path Data="{StaticResource TextSearch}" Fill="{DynamicResource MahApps.Brushes.AccentBase}"
                                  Width="20" Height="20" Stretch="Uniform" />
                             </Button>
@@ -367,10 +367,6 @@
                             <ToggleButton Margin="2,0,0,0" ToolTip="Disable intendation" IsChecked="{Binding DisableIntendation, Mode=TwoWay}">
                                 <Path Data="{StaticResource FormatIndentDecrease}" Fill="{DynamicResource MahApps.Brushes.AccentBase}"
                                   Width="20" Height="20" Stretch="Uniform" />
-                            </ToggleButton>
-                            <ToggleButton Margin="2,0,0,0" ToolTip="Word Wrap" IsChecked="{Binding WordWrap, Mode=TwoWay}">
-                                <Path Data="{StaticResource WrapText}" Fill="{DynamicResource MahApps.Brushes.AccentBase}"
-                                      Width="20" Height="20" Stretch="Uniform" />
                             </ToggleButton>
                             <Separator />
                             <Button ToolTip="Highlighting Editor&#xA;Ctrl+Shift+H" Command="{Binding OpenHighlightingEditorCommand}">
@@ -491,6 +487,14 @@
                                     <MenuItem.Icon>
                                         <Path Data="{StaticResource SelectAll}" Fill="{DynamicResource MahApps.Brushes.AccentBase}"
                                           Width="16" Height="16" Stretch="Uniform" />
+                                    </MenuItem.Icon>
+                                </MenuItem>
+                                <MenuItem Header="Word Wrap"
+                                          IsCheckable="True"         
+                                          IsChecked="{Binding PlacementTarget.WordWrap, RelativeSource={RelativeSource AncestorType=ContextMenu}, Mode=TwoWay}">
+                                    <MenuItem.Icon>
+                                        <Path Data="{StaticResource WrapText}" Fill="{DynamicResource MahApps.Brushes.AccentBase}"
+                                              Width="16" Height="16" Stretch="Uniform" />
                                     </MenuItem.Icon>
                                 </MenuItem>
                                 <Separator />
