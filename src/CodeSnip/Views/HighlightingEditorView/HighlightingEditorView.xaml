@@ -4,92 +4,158 @@
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
              xmlns:mah="http://metro.mahapps.com/winfx/xaml/controls"
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:avalonEdit="http://icsharpcode.net/sharpdevelop/avalonedit"
              xmlns:local="clr-namespace:CodeSnip.Views.HighlightingEditorView"
              xmlns:behaviors="clr-namespace:Microsoft.Xaml.Behaviors;assembly=Microsoft.Xaml.Behaviors"
              xmlns:helpers="clr-namespace:CodeSnip.Helpers"
              d:DataContext="{d:DesignInstance Type={x:Type local:HighlightingEditorViewModel}}"
-             x:Name="flyHighlightingEditor"   
+             x:Name="flyHighlightingEditor"               
              mc:Ignorable="d" 
              d:DesignHeight="400"
-             d:DesignWidth="300">
+             d:DesignWidth="300" Loaded="FlyHighlightingEditor_Loaded">
     <Grid Margin="10">
         <Grid.RowDefinitions>
-            <RowDefinition Height="Auto" />
-            <RowDefinition Height="*" />
-            <RowDefinition Height="Auto" />
-            <RowDefinition Height="Auto" />
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="*"/>
+            <RowDefinition Height="Auto"/>
         </Grid.RowDefinitions>
+
         <TextBlock Grid.Row="0" Text="{Binding Message}" FontWeight="Bold" Margin="0,0,0,10" />
-        <ListBox Grid.Row="1"
-         ItemsSource="{Binding HighlightingColors}"
-         SelectedItem="{Binding SelectedColor, Mode=TwoWay}"
-         ScrollViewer.HorizontalScrollBarVisibility="Disabled" >
-            <ListBox.ItemTemplate>
-                <DataTemplate>
-                    <Border BorderBrush="{DynamicResource MahApps.Brushes.Gray3}" BorderThickness="0,0,0,1" Padding="2">
-                        <Grid VerticalAlignment="Center">
-                            <Grid.ColumnDefinitions>
-                                <ColumnDefinition Width="2*" />
-                                <!-- Name -->
-                                <ColumnDefinition Width="Auto" />
-                                <!-- Rectangle -->
-                                <ColumnDefinition Width="Auto" />
-                                <!-- Weight label and combobox -->
-                                <ColumnDefinition Width="Auto" />
-                                <!-- Style label and combobox -->
-                            </Grid.ColumnDefinitions>
 
-                            <TextBlock Text="{Binding Name}" Grid.Column="0" VerticalAlignment="Center" 
-                               TextTrimming="CharacterEllipsis" ToolTip="{Binding Name}" />
+        <mah:MetroTabControl Grid.Row="1"
+                             Style="{DynamicResource MahApps.Styles.TabControl.Animated}" 
+                             mah:HeaderedControlHelper.HeaderFontSize="18" >
+            <mah:MetroTabItem Name="tabVisual" Header="Visual Editor">
+                <Grid>
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="*"/>
+                        <RowDefinition Height="Auto"/>
+                    </Grid.RowDefinitions>
+                    <ListBox Grid.Row="0"
+                             ItemsSource="{Binding HighlightingColors}"
+                             SelectedItem="{Binding SelectedColor, Mode=TwoWay}"
+                             ScrollViewer.HorizontalScrollBarVisibility="Disabled">
+                        <ListBox.ItemTemplate>
+                            <DataTemplate>
+                                <Border BorderBrush="{DynamicResource MahApps.Brushes.Gray3}" BorderThickness="0,0,0,1" Padding="2">
+                                    <Grid VerticalAlignment="Center">
+                                        <Grid.ColumnDefinitions>
+                                            <ColumnDefinition Width="2*" />
+                                            <!-- Name -->
+                                            <ColumnDefinition Width="Auto" />
+                                            <!-- Rectangle -->
+                                            <ColumnDefinition Width="Auto" />
+                                            <!-- Weight label and combobox -->
+                                            <ColumnDefinition Width="Auto" />
+                                            <!-- Style label and combobox -->
+                                        </Grid.ColumnDefinitions>
 
-                            <Rectangle Width="16" Height="16" Margin="5,0,0,0" VerticalAlignment="Center" Grid.Column="1">
-                                <Rectangle.Fill>
-                                    <SolidColorBrush Color="{Binding Foreground}" />
-                                </Rectangle.Fill>
-                            </Rectangle>
+                                        <TextBlock Text="{Binding Name}" Grid.Column="0" VerticalAlignment="Center" 
+                                                   TextTrimming="CharacterEllipsis" ToolTip="{Binding Name}" />
 
-                            <StackPanel Orientation="Horizontal" VerticalAlignment="Center" Margin="20,0,0,0" Grid.Column="2">
-                                <TextBlock Text="Weight:" VerticalAlignment="Center" Margin="0,0,5,0" />
-                                <ComboBox Width="80"
-                                  SelectedItem="{Binding FontWeight, Mode=TwoWay}"
-                                  ItemsSource="{Binding AvailableFontWeights}"
-                                  IsEditable="False"
-                                  VerticalAlignment="Center">
-                                    <ComboBox.ItemTemplate>
-                                        <DataTemplate>
-                                            <TextBlock Text="{Binding}" />
-                                        </DataTemplate>
-                                    </ComboBox.ItemTemplate>
-                                </ComboBox>
-                            </StackPanel>
+                                        <Rectangle Width="16" Height="16" Margin="5,0,0,0" VerticalAlignment="Center" Grid.Column="1">
+                                            <Rectangle.Fill>
+                                                <SolidColorBrush Color="{Binding Foreground, FallbackValue=Transparent}" />
+                                            </Rectangle.Fill>
+                                        </Rectangle>
 
-                            <StackPanel Orientation="Horizontal" VerticalAlignment="Center" Margin="20,0,0,0" Grid.Column="3">
-                                <TextBlock Text="Style:" VerticalAlignment="Center" Margin="0,0,5,0" />
-                                <ComboBox Width="80"
-                                  SelectedItem="{Binding FontStyle, Mode=TwoWay}"
-                                  ItemsSource="{Binding AvailableFontStyles}"
-                                  IsEditable="False"
-                                  VerticalAlignment="Center">
-                                    <ComboBox.ItemTemplate>
-                                        <DataTemplate>
-                                            <TextBlock Text="{Binding}" />
-                                        </DataTemplate>
-                                    </ComboBox.ItemTemplate>
-                                </ComboBox>
-                            </StackPanel>
-                        </Grid>
-                    </Border>
-                </DataTemplate>
-            </ListBox.ItemTemplate>
-        </ListBox>
-        <StackPanel Grid.Row="2" Margin="0,10,0,10" Orientation="Horizontal">
-            <TextBlock Text="Foreground Color:" FontWeight="Bold" Margin="0,0,10,0"/>
-            <mah:ColorPicker SelectedColor="{Binding SelectedColor.Foreground, Mode=TwoWay}" Width="200" />
-        </StackPanel>
-        <StackPanel Grid.Row="3" Orientation="Horizontal" HorizontalAlignment="Left" Margin="0,10,0,0">
+                                        <StackPanel Orientation="Horizontal" VerticalAlignment="Center" Margin="20,0,0,0" Grid.Column="2">
+                                            <TextBlock Text="Weight:" VerticalAlignment="Center" Margin="0,0,5,0" />
+                                            <ComboBox Width="80"
+                                                      SelectedItem="{Binding FontWeight, Mode=TwoWay}"
+                                                      ItemsSource="{Binding AvailableFontWeights}"
+                                                      IsEditable="False"
+                                                      VerticalAlignment="Center">
+                                                <ComboBox.ItemTemplate>
+                                                    <DataTemplate>
+                                                        <TextBlock Text="{Binding}" />
+                                                    </DataTemplate>
+                                                </ComboBox.ItemTemplate>
+                                            </ComboBox>
+                                        </StackPanel>
+
+                                        <StackPanel Orientation="Horizontal" VerticalAlignment="Center" Margin="20,0,0,0" Grid.Column="3">
+                                            <TextBlock Text="Style:" VerticalAlignment="Center" Margin="0,0,5,0" />
+                                            <ComboBox Width="80"
+                                                      SelectedItem="{Binding FontStyle, Mode=TwoWay}"
+                                                      ItemsSource="{Binding AvailableFontStyles}"
+                                                      IsEditable="False"
+                                                      VerticalAlignment="Center">
+                                                <ComboBox.ItemTemplate>
+                                                    <DataTemplate>
+                                                        <TextBlock Text="{Binding}" />
+                                                    </DataTemplate>
+                                                </ComboBox.ItemTemplate>
+                                            </ComboBox>
+                                        </StackPanel>
+                                    </Grid>
+                                </Border>
+                            </DataTemplate>
+                        </ListBox.ItemTemplate>
+                    </ListBox>
+                    <StackPanel Grid.Row="1" Margin="0,10,0,0" Orientation="Horizontal">
+                        <TextBlock Text="Foreground Color:" FontWeight="Bold" Margin="0,0,10,0"/>
+                        <mah:ColorPicker SelectedColor="{Binding SelectedColor.Foreground, Mode=TwoWay}" Width="200" />
+                    </StackPanel>
+                </Grid>
+            </mah:MetroTabItem>
+            <mah:MetroTabItem Name="tabXSHD" Header="XSHD Source">
+                <DockPanel>
+                    <TextBlock DockPanel.Dock="Top"
+                               Text="Warning: Incorrectly editing the XSHD code can cause syntax highlighting errors and affect application functionality."
+                               Foreground="Tomato"
+                               TextWrapping="Wrap"
+                               Margin="0,0,0,10" />
+                    <avalonEdit:TextEditor
+                        x:Name="XshdEditor"
+                        SyntaxHighlighting="{Binding XmlHighlighting}"
+                        Foreground="{Binding XshdEditorForeground}"
+                        FontFamily="Consolas"
+                        FontSize="12"
+                        ShowLineNumbers="True"
+                        VerticalScrollBarVisibility="Auto"
+                        HorizontalScrollBarVisibility="Auto"
+                        WordWrap="False">
+                        <avalonEdit:TextEditor.Options>
+                            <avalonEdit:TextEditorOptions EnableEmailHyperlinks="False"
+                                                          EnableHyperlinks="False"
+                                                          HighlightCurrentLine="True"
+                                                          ConvertTabsToSpaces="True"
+                                                          IndentationSize="4"/>
+                        </avalonEdit:TextEditor.Options>
+                        <avalonEdit:TextEditor.ContextMenu>
+                            <ContextMenu FontSize="12">
+                                <MenuItem Header="Cut" Command="ApplicationCommands.Cut" />
+                                <MenuItem Header="Copy" Command="ApplicationCommands.Copy" />
+                                <MenuItem Header="Paste" Command="ApplicationCommands.Paste" />
+                                <Separator />
+                                <MenuItem Header="Undo" Command="ApplicationCommands.Undo" />
+                                <MenuItem Header="Redo" Command="ApplicationCommands.Redo" />
+                                <Separator />
+                                <MenuItem Header="SelectAll" Command="ApplicationCommands.SelectAll" />
+                                <Separator />
+                                <MenuItem Header="Word Wrap"
+                                          IsCheckable="True"         
+                                          IsChecked="{Binding PlacementTarget.WordWrap, RelativeSource={RelativeSource AncestorType=ContextMenu}, Mode=TwoWay}" />
+                                <Separator />
+                                <MenuItem Header="Format XSHD" Command="{Binding FormatXshdCommand}" />
+                            </ContextMenu>
+                        </avalonEdit:TextEditor.ContextMenu>
+                        <behaviors:Interaction.Behaviors>
+                            <helpers:AvalonEditTextBindingBehavior BoundText="{Binding XshdText, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" />
+                        </behaviors:Interaction.Behaviors>
+                    </avalonEdit:TextEditor>
+                </DockPanel>
+            </mah:MetroTabItem>
+        </mah:MetroTabControl>
+
+        <StackPanel Grid.Row="2" Orientation="Horizontal" HorizontalAlignment="Left" Margin="0,20,0,0">
             <Button Content="Apply Preview" Margin="0,0,10,0" Command="{Binding ApplyLivePreviewCommand}" />
+            <mah:Badged Badge="{Binding SyncBadge}" BadgePlacementMode="TopRight"  Margin="0,0,10,0"  BadgeBackground="{Binding SyncBadgeBackground}">
+                <Button Content="Sync xshd -&gt; visual" Command="{Binding SyncFromRawCommand}" ToolTip="Sync Colors from xshd source"/>
+            </mah:Badged>
             <Button Content="Reset to Default" Margin="0,0,10,0" Command="{Binding ResetDefinitionCommand}" />
-			<Button Content="Save" Width="80" Margin="0,0,10,0" Command="{Binding SaveCommand}" />
+            <Button Content="Save" Width="80" Margin="0,0,10,0" Command="{Binding SaveCommand}" />
         </StackPanel>
     </Grid>
 </UserControl>

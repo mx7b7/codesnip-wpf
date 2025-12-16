@@ -79,7 +79,11 @@ namespace CodeSnip.Services
 
         private static bool IsFatalPattern(string pattern)
         {
-            if (string.IsNullOrWhiteSpace(pattern))
+            if (string.IsNullOrWhiteSpace(pattern)) 
+                return false;
+
+            // Allow negative lookaheads, which are valid zero-width assertions often used for multiline span endings.
+            if (pattern.Contains("?!"))
                 return false;
 
             try

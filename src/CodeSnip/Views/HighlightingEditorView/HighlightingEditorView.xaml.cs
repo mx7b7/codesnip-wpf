@@ -1,4 +1,5 @@
-﻿using System.Windows.Controls;
+﻿using System.Windows;
+using System.Windows.Controls;
 
 namespace CodeSnip.Views.HighlightingEditorView
 {
@@ -9,5 +10,10 @@ namespace CodeSnip.Views.HighlightingEditorView
             InitializeComponent();
         }
 
+        private void FlyHighlightingEditor_Loaded(object sender, RoutedEventArgs e)
+        {
+            if (DataContext is HighlightingEditorViewModel vm)
+                vm.XshdEditor = XshdEditor;
+        }
     }
 }

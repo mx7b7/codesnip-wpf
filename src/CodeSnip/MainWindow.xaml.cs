@@ -193,7 +193,7 @@ namespace CodeSnip
                     flyout.BorderThickness = new Thickness(.5, 0, 0, 0);
                     break;
                 case "flyHighlightingEditor":
-                    flyout.Width = 550;
+                    flyout.Width = 600;
                     flyout.Position = Position.Right;
                     flyout.Theme = FlyoutTheme.Adapt;
                     flyout.CloseButtonIsCancel = true;
