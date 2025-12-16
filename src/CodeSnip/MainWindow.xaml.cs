@@ -142,6 +142,7 @@ namespace CodeSnip
 
         public void ShowFlyout(string tag, object viewModel, string header, Action? onClosed = null)
         {
+            var accentColor = TryFindResource("MahApps.Brushes.AccentBase") as SolidColorBrush;
             var flyout = new Flyout
             {
                 Tag = tag,
@@ -159,6 +160,8 @@ namespace CodeSnip
                     flyout.CloseButtonIsCancel = true;
                     flyout.AnimateOpacity = true;
                     HeaderedControlHelper.SetHeaderMargin(flyout, new Thickness(5, 5, 5, 5));
+                    flyout.BorderBrush = accentColor ?? Brushes.Gray;
+                    flyout.BorderThickness = new Thickness(.5, 0, 0, 0);
                     break;
                 case "flySnippet":
                 case "flyEditLangCat":
@@ -169,12 +172,16 @@ namespace CodeSnip
                     flyout.CloseButtonIsCancel = true;
                     flyout.AnimateOpacity = true;
                     HeaderedControlHelper.SetHeaderMargin(flyout, new Thickness(5, 5, 5, 5));
+                    flyout.BorderBrush = accentColor ?? Brushes.Gray;
+                    flyout.BorderThickness = new Thickness(0, 0, .5, 0);
                     break;
                 case "flySettings":
                     flyout.Position = Position.Right;
                     flyout.IsPinned = false;
                     flyout.Theme = FlyoutTheme.Adapt;
                     flyout.CloseButtonIsCancel = true;
+                    flyout.BorderBrush = accentColor ?? Brushes.Gray;
+                    flyout.BorderThickness = new Thickness(.5, 0, 0, 0);
                     break;
                 case "flyCompilerSettings":
                     flyout.Position = Position.Right;
@@ -182,6 +189,8 @@ namespace CodeSnip
                     flyout.MinWidth = 250;
                     flyout.Theme = FlyoutTheme.Adapt;
                     flyout.CloseButtonIsCancel = true;
+                    flyout.BorderBrush = accentColor ?? Brushes.Gray;
+                    flyout.BorderThickness = new Thickness(.5, 0, 0, 0);
                     break;
                 case "flyHighlightingEditor":
                     flyout.Width = 550;
@@ -190,6 +199,9 @@ namespace CodeSnip
                     flyout.CloseButtonIsCancel = true;
                     flyout.IsPinned = true;
                     flyout.AnimateOpacity = true;
+                    HeaderedControlHelper.SetHeaderMargin(flyout, new Thickness(5, 5, 5, 5));
+                    flyout.BorderBrush = accentColor ?? Brushes.Gray;
+                    flyout.BorderThickness = new Thickness(.5, 0, 0, 0);
                     break;
             }
             void ClosingFinishedHandler(object sender, RoutedEventArgs args)
