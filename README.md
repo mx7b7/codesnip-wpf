@@ -2,7 +2,7 @@
 
 **CodeSnip** — a snippet manager & local code runner with multi-language interpreter support and Compiler Explorer integration.  
 
-![.NET](https://img.shields.io/badge/.NET-8.0%2B-blue)
+![.NET](https://img.shields.io/badge/.NET-10.0-blue)
 ![Platform](https://img.shields.io/badge/Platform-Windows-lightgrey)
 ![License: MIT](https://img.shields.io/badge/License-MIT-green)
 ![Status](https://img.shields.io/badge/Status-Active-success)
@@ -27,8 +27,12 @@
 - **AvalonEdit integration**:
   - Syntax highlighting (light/dark mode)
   - Code folding
-  - Live editing of `.xshd` syntax definition files inside the app (colors and font styles)
   - Toggle single-line and multi-line comments
+- **Highlighting Editor**:
+  - **Dual-Mode Editing**: A tabbed interface allows for both simple visual tweaks (colors, font styles) and advanced source code editing.
+  - **Direct XSHD Source Editing**: Directly edit the raw `.xshd` XML for full control over rules, spans, and keywords.
+  - **Preview on Demand**: Apply changes from the XSHD source to the main editor to see how they look before saving.
+  - **Validation**: An integrated validation engine checks for XML errors and XSHD schema compliance.
 - **Compiler Explorer (Godbolt) integration**:
   - Compile snippets without installing compilers locally
   - Support for 30+ languages
