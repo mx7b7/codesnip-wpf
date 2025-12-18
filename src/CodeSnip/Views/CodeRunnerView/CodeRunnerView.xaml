@@ -126,7 +126,7 @@
                     ToolTipService.BetweenShowDelay="100"
                     Command="{Binding KillRunningProcessCommand}"
                     Style="{StaticResource CustomChromelessButton}">
-                <Path Data="{StaticResource TerminalX}" Fill="{DynamicResource MahApps.Brushes.Accent}" Stretch="Uniform" />
+                <Path Data="{StaticResource TerminalX}" Fill="{DynamicResource MahApps.Brushes.AccentBase}" Stretch="Uniform" />
             </Button>
             <mah:Badged Badge="{Binding ReloadBadge}" Grid.Column="3" Grid.Row="0" Margin="10,0,0,0" >
                 <Button TabIndex="2" Command="{Binding ReloadCommand}"
@@ -135,7 +135,7 @@
                         ToolTipService.ShowDuration="3000"
                         ToolTipService.BetweenShowDelay="100"
                         Style="{StaticResource CustomChromelessButton}">
-                    <Path Data="{StaticResource Reload}" Fill="{DynamicResource MahApps.Brushes.Accent}" Stretch="Uniform" />
+                    <Path Data="{StaticResource Reload}" Fill="{DynamicResource MahApps.Brushes.AccentBase}" Stretch="Uniform" />
                 </Button>
             </mah:Badged>
             <mah:ToggleSwitch IsOn="{Binding ShowAsm, Mode=TwoWay}" Grid.Row="0" Grid.Column="4" Margin="10,0,0,0" Content="Show ASM output"

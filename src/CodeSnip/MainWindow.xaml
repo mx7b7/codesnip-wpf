@@ -231,7 +231,7 @@
                                         <HierarchicalDataTemplate.ItemTemplate>
                                             <HierarchicalDataTemplate ItemsSource="{Binding Snippets}">
                                                 <StackPanel Orientation="Horizontal" Margin="2">
-                                                    <Path Data="{StaticResource CategoryIcon}" Fill="{DynamicResource MahApps.Brushes.Accent}" Width="14" Height="14" Margin="0,0,5,0"/>
+                                                    <Path Data="{StaticResource CategoryIcon}" Fill="{DynamicResource MahApps.Brushes.AccentBase}" Width="14" Height="14" Margin="0,0,5,0"/>
                                                     <TextBlock Text="{Binding Name}" 
                                                                FontSize="{Binding DataContext.CategoryFontSize, RelativeSource={RelativeSource AncestorType=TreeView}}"
                                                                FontWeight="{Binding DataContext.CategoryFontWeight, RelativeSource={RelativeSource AncestorType=TreeView}, Converter={StaticResource StringToFontWeightConverter}}"/>
