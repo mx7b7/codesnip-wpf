@@ -212,7 +212,7 @@
                                     <Style TargetType="{x:Type ScrollBar}" BasedOn="{StaticResource TreeViewScrollBar}" />
                                 </TreeView.Resources>
                                 <TreeView.ItemContainerStyle>
-                                    <Style TargetType="{x:Type TreeViewItem}">
+                                    <Style TargetType="{x:Type TreeViewItem}" BasedOn="{StaticResource {x:Type TreeViewItem}}">
                                         <Setter Property="IsExpanded" Value="{Binding IsExpanded, Mode=TwoWay}" />
                                         <Setter Property="IsSelected" Value="{Binding IsSelected, Mode=TwoWay}" />
                                         <Setter Property="Visibility" Value="{Binding IsVisible, Converter={StaticResource BoolToVisibilityConverter}}" />
@@ -240,11 +240,16 @@
                                                 <HierarchicalDataTemplate.ItemTemplate>
                                                     <DataTemplate>
                                                         <StackPanel Orientation="Horizontal" Margin="2">
-                                                            <Path Data="{StaticResource SnippetIcon}" Fill="#FF33D246" Width="12" Height="12" Margin="0,0,5,0"/>
+                                                            <Path x:Name="SnippetIconPath" Data="{StaticResource SnippetIcon}" Fill="{DynamicResource MahApps.Brushes.AccentBase}" Width="12" Height="12" Margin="0,0,5,0"/>
                                                             <TextBlock Text="{Binding Title}" 
                                                                        FontSize="{Binding DataContext.SnippetFontSize, RelativeSource={RelativeSource AncestorType=TreeView}}"
                                                                        FontWeight="{Binding DataContext.SnippetFontWeight, RelativeSource={RelativeSource AncestorType=TreeView}, Converter={StaticResource StringToFontWeightConverter}}"/>
                                                         </StackPanel>
+                                                        <DataTemplate.Triggers>
+                                                            <DataTrigger Binding="{Binding IsSelected, RelativeSource={RelativeSource AncestorType=TreeViewItem}}" Value="True">
+                                                                <Setter TargetName="SnippetIconPath" Property="Fill" Value="{DynamicResource MahApps.Brushes.Text}"/>
+                                                            </DataTrigger>
+                                                        </DataTemplate.Triggers>
                                                     </DataTemplate>
                                                 </HierarchicalDataTemplate.ItemTemplate>
                                             </HierarchicalDataTemplate>
