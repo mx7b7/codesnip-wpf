@@ -4,7 +4,6 @@ using CodeSnip.Services.Exporters;
 using CodeSnip.Views.HighlightingEditorView;
 using CodeSnip.Views.LanguageCategoryView;
 using CodeSnip.Views.SnippetView;
-using ControlzEx.Standard;
 using ControlzEx.Theming;
 using ICSharpCode.AvalonEdit;
 using ICSharpCode.AvalonEdit.Document;
@@ -16,7 +15,6 @@ using System.ComponentModel;
 using System.Diagnostics;
 using System.IO;
 using System.Net;
-using System.Security.Cryptography;
 using System.Text.Json;
 using System.Text.RegularExpressions;
 using System.Windows;
@@ -312,9 +310,17 @@ namespace CodeSnip
                     // method is called from ViewModel with new selected snippet, if old snippet has been modified asks to save
                     await mainViewModel.ChangeSelectedSnippetAsync(snippet);
 
-                    HighlightingService.ApplyHighlighting(textEditor, snippet.Category?.Language?.Code);
+                    var langCode = snippet.Category?.Language?.Code ?? string.Empty;
+                    HighlightingService.ApplyHighlighting(textEditor, langCode);
 
-                    SetupFolding(snippet);
+                    if (IsFoldingEnabledForCurrentSnippet(langCode))
+                    {
+                        SetupFolding(snippet);
+                    }
+                    else
+                    {
+                        SetupIndentationStrategy(langCode);
+                    }
 
                     textEditor.Document.UndoStack.ClearAll();
                     break;
@@ -915,28 +921,65 @@ namespace CodeSnip
             ReplaceCurrentLineRenderer(textEditor);
         }
 
-        private void SetupFolding(Snippet snippet)
+        private bool IsFoldingEnabledForCurrentSnippet(string langCode)
         {
-            textEditor.Document ??= new TextDocument();
-            textEditor.Document.Text = snippet.Code ?? string.Empty;
+            if (braceStyleLanguages.Contains(langCode))
+            {
+                return mainViewModel.EnableBraceStyleFolding;
+            }
+            else if (langCode == "xml")
+            {
+                return mainViewModel.EnableXmlFolding;
+            }
+            else if (langCode == "py")
+            {
+                return mainViewModel.EnablePythonFolding;
+            }
+            else
+            {
+                return false;
+            }
+        }
 
+        private void SetupIndentationStrategy(string langCode)
+        {
+            if (mainViewModel.DisableIntendation)
+            {
+                textEditor.TextArea.IndentationStrategy = null;
+            }
+            else
+            {
+                textEditor.TextArea.IndentationStrategy = braceStyleLanguages.Contains(langCode)
+                    ? csharpIndentationStrategy
+                    : defaultIndentationStrategy;
+            }
+            if (foldingManager != null)
+            {
+                FoldingManager.Uninstall(foldingManager);
+                foldingManager = null;
+            }
+            textEditor.Options.AllowScrollBelowDocument = false;
+        }
+
+        private void SetupFolding(Snippet snippet)
+        {            
             string langCode = snippet.Category?.Language?.Code?.ToLower() ?? string.Empty;
 
             if (braceStyleLanguages.Contains(langCode))
             {
                 textEditor.TextArea.IndentationStrategy = mainViewModel.DisableIntendation ? null : csharpIndentationStrategy;
-                foldingStrategy = mainViewModel.EnableBraceStyleFolding ? braceFoldingStrategy : null;
+                foldingStrategy = braceFoldingStrategy;
             }
             else
             {
                 textEditor.TextArea.IndentationStrategy = mainViewModel.DisableIntendation ? null : defaultIndentationStrategy;
                 if (langCode == "xml")
                 {
-                    foldingStrategy = mainViewModel.EnableXmlFolding ? xmlFoldingStrategy : null;
+                    foldingStrategy = xmlFoldingStrategy;
                 }
                 else if (langCode == "py")
                 {
-                    foldingStrategy = mainViewModel.EnablePythonFolding ? pythonFoldingStrategy : null;
+                    foldingStrategy = pythonFoldingStrategy;
                 }
                 else
                 {
@@ -967,11 +1010,6 @@ namespace CodeSnip
                 {
                     Debug.WriteLine($"Error updating foldings: {ex.Message}");
                 }
-            }
-            else if (foldingManager != null)
-            {
-                FoldingManager.Uninstall(foldingManager);
-                foldingManager = null;
             }
 
             textEditor.Options.AllowScrollBelowDocument = foldingStrategy != null;
