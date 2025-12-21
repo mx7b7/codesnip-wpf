@@ -13,6 +13,10 @@
              mc:Ignorable="d" 
              d:DesignHeight="400"
              d:DesignWidth="300" Loaded="FlyHighlightingEditor_Loaded">
+    <UserControl.InputBindings>
+        <KeyBinding Key="K" Modifiers="Control" Command="{Binding ToggleCommentCommand}" />
+        <KeyBinding Key="F" Modifiers="Control" Command="{Binding FormatXshdCommand}" />
+    </UserControl.InputBindings>
     <Grid Margin="10">
         <Grid.RowDefinitions>
             <RowDefinition Height="Auto"/>
@@ -124,21 +128,66 @@
                                                           IndentationSize="4"/>
                         </avalonEdit:TextEditor.Options>
                         <avalonEdit:TextEditor.ContextMenu>
-                            <ContextMenu FontSize="12">
-                                <MenuItem Header="Cut" Command="ApplicationCommands.Cut" />
-                                <MenuItem Header="Copy" Command="ApplicationCommands.Copy" />
-                                <MenuItem Header="Paste" Command="ApplicationCommands.Paste" />
+                            <ContextMenu FontSize="11">
+                                <MenuItem Header="Cut" Command="ApplicationCommands.Cut">
+                                    <MenuItem.Icon>
+                                        <Path Data="{StaticResource CutMD}" Fill="{DynamicResource MahApps.Brushes.AccentBase}"
+                                              Width="16" Height="16" Stretch="Uniform" />
+                                    </MenuItem.Icon>
+                                </MenuItem>
+                                <MenuItem Header="Copy" Command="ApplicationCommands.Copy">
+                                    <MenuItem.Icon>
+                                        <Path Data="{StaticResource CopyMD}" Fill="{DynamicResource MahApps.Brushes.AccentBase}"
+                                              Width="16" Height="16" Stretch="Uniform" />
+                                    </MenuItem.Icon>
+                                </MenuItem>
+                                <MenuItem Header="Paste" Command="ApplicationCommands.Paste">
+                                    <MenuItem.Icon>
+                                        <Path Data="{StaticResource Paste}" Fill="{DynamicResource MahApps.Brushes.AccentBase}"
+                                              Width="16" Height="16" Stretch="Uniform" />
+                                    </MenuItem.Icon>
+                                </MenuItem>
                                 <Separator />
-                                <MenuItem Header="Undo" Command="ApplicationCommands.Undo" />
-                                <MenuItem Header="Redo" Command="ApplicationCommands.Redo" />
+                                <MenuItem Header="Undo" Command="ApplicationCommands.Undo">
+                                    <MenuItem.Icon>
+                                        <Path Data="{StaticResource UndoMD}" Fill="{DynamicResource MahApps.Brushes.AccentBase}"
+                                              Width="16" Height="16" Stretch="Uniform" />
+                                    </MenuItem.Icon>
+                                </MenuItem>
+                                <MenuItem Header="Redo" Command="ApplicationCommands.Redo">
+                                    <MenuItem.Icon>
+                                        <Path Data="{StaticResource RedoMD}" Fill="{DynamicResource MahApps.Brushes.AccentBase}"
+                                              Width="16" Height="16" Stretch="Uniform" />
+                                    </MenuItem.Icon>
+                                </MenuItem>
                                 <Separator />
-                                <MenuItem Header="SelectAll" Command="ApplicationCommands.SelectAll" />
+                                <MenuItem Header="SelectAll" Command="ApplicationCommands.SelectAll">
+                                    <MenuItem.Icon>
+                                        <Path Data="{StaticResource SelectAll}" Fill="{DynamicResource MahApps.Brushes.AccentBase}"
+                                              Width="16" Height="16" Stretch="Uniform" />
+                                    </MenuItem.Icon>
+                                </MenuItem>
                                 <Separator />
+                                <MenuItem Header="Comment" Command="{Binding ToggleCommentCommand}" InputGestureText="Ctrl+K">
+                                    <MenuItem.Icon>
+                                        <Path Data="{StaticResource CommentTextMultipleThin}" Fill="{DynamicResource MahApps.Brushes.AccentBase}"
+                                              Width="16" Height="16" Stretch="Uniform" />
+                                    </MenuItem.Icon>
+                                </MenuItem>
+                                <MenuItem Header="Format" Command="{Binding FormatXshdCommand}" InputGestureText="Ctrl+F">
+                                    <MenuItem.Icon>
+                                        <Path Data="{StaticResource FormatText}" Fill="{DynamicResource MahApps.Brushes.AccentBase}"
+                                              Width="16" Height="16" Stretch="Uniform" />
+                                    </MenuItem.Icon>
+                                </MenuItem>
                                 <MenuItem Header="Word Wrap"
                                           IsCheckable="True"         
-                                          IsChecked="{Binding PlacementTarget.WordWrap, RelativeSource={RelativeSource AncestorType=ContextMenu}, Mode=TwoWay}" />
-                                <Separator />
-                                <MenuItem Header="Format XSHD" Command="{Binding FormatXshdCommand}" />
+                                          IsChecked="{Binding PlacementTarget.WordWrap, RelativeSource={RelativeSource AncestorType=ContextMenu}, Mode=TwoWay}">
+                                    <MenuItem.Icon>
+                                        <Path Data="{StaticResource WrapText}" Fill="{DynamicResource MahApps.Brushes.AccentBase}"
+                                              Width="16" Height="16" Stretch="Uniform" />
+                                    </MenuItem.Icon>
+                                </MenuItem>
                             </ContextMenu>
                         </avalonEdit:TextEditor.ContextMenu>
                         <behaviors:Interaction.Behaviors>

@@ -1,7 +1,9 @@
-﻿using CodeSnip.Services;
+﻿using CodeSnip.EditorHelpers;
+using CodeSnip.Services;
 using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
 using ControlzEx.Theming;
+using ICSharpCode.AvalonEdit;
 using ICSharpCode.AvalonEdit.Highlighting;
 using ICSharpCode.AvalonEdit.Highlighting.Xshd;
 using System.Collections.ObjectModel;
@@ -19,7 +21,7 @@ namespace CodeSnip.Views.HighlightingEditorView
         private XshdValidationService validationService = new();
         #region Fields
         private readonly IHighlightingDefinition? _originalDefinition;
-        private readonly ICSharpCode.AvalonEdit.TextEditor _editor = null!;
+        private readonly TextEditor _mainEditor = null!;
         private readonly string _themeName = null!;
         private readonly string _languageCode = null!;
         private readonly string _customXshdPath = null!;
@@ -46,18 +48,18 @@ namespace CodeSnip.Views.HighlightingEditorView
 
         [ObservableProperty] private Brush? syncBadgeBackground = Brushes.Transparent;
 
-        public ICSharpCode.AvalonEdit.TextEditor? XshdEditor { get; set; }
+        public TextEditor? XshdEditor { get; set; }
 
         #endregion
 
         #region Constructor
-        public HighlightingEditorViewModel(IHighlightingDefinition? definition, ICSharpCode.AvalonEdit.TextEditor editor, string langCode)
+        public HighlightingEditorViewModel(IHighlightingDefinition? definition, TextEditor editor, string langCode)
         {
             ArgumentNullException.ThrowIfNull(editor);
             ArgumentNullException.ThrowIfNull(langCode);
 
             _originalDefinition = definition;
-            _editor = editor;
+            _mainEditor = editor;
 
             if (definition == null)
             {
@@ -96,7 +98,7 @@ namespace CodeSnip.Views.HighlightingEditorView
                     File.Delete(_customXshdPath);
 
                 HighlightingService.InvalidateCache(_languageCode, _themeName);
-                HighlightingService.ApplyHighlighting(_editor, _languageCode);
+                HighlightingService.ApplyHighlighting(_mainEditor, _languageCode);
 
                 if (TryGetOriginalXshd(out string? xshdXml))
                     XshdText = xshdXml;
@@ -117,7 +119,7 @@ namespace CodeSnip.Views.HighlightingEditorView
             var (isValid, definition) = await ValidateAndLoadDefinitionAsync(XshdText);
             if (isValid && definition != null)
             {
-                _editor.SyntaxHighlighting = definition;
+                _mainEditor.SyntaxHighlighting = definition;
             }
         }
 
@@ -153,7 +155,7 @@ namespace CodeSnip.Views.HighlightingEditorView
 
                 HighlightingService.InvalidateCache(_languageCode, _themeName);
                 UpdateCustomDefinitionExists();
-                HighlightingService.ApplyHighlighting(_editor, _languageCode);
+                HighlightingService.ApplyHighlighting(_mainEditor, _languageCode);
                 await DialogService.Instance.ShowMessageAsync("Success", $"Saved to:\n{_customXshdPath}");
             }
             catch (Exception ex)
@@ -208,6 +210,18 @@ namespace CodeSnip.Views.HighlightingEditorView
             {
                 _ = DialogService.Instance.ShowMessageAsync("Format Error", $"Invalid XML: {ex.Message}");
             }
+        }
+
+        [RelayCommand]
+        private async Task ToggleComment()
+        {
+            try
+            {
+                if (XshdEditor == null) return;
+
+                CommentHelper.ToggleCommentByExtension(XshdEditor, "xml", useMultiLine: true);
+            }
+            catch { }
         }
 
         #endregion
