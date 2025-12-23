@@ -85,12 +85,12 @@ namespace CodeSnip.Services
                 }
                 var json = await response.Content.ReadAsStringAsync();
                 if (string.IsNullOrWhiteSpace(json))
-                    return ("", "", null, "Godbolt API vratio je prazan odgovor.");
+                    return ("", "", null, "Godbolt API returned an empty response.");
 
                 var options = new JsonSerializerOptions { PropertyNameCaseInsensitive = true };
                 var resp = JsonSerializer.Deserialize<GodboltResponse>(json, options);
                 if (resp == null)
-                    return ("", "", null, "Neočekivan format odgovora (nije moguće parsirati JSON).");
+                    return ("", "", null, "Unexpected response format (unable to parse JSON).");
 
                 var (stdout, stderr, asmList) = ParseOutputs(resp);
                 string? asm = asmList != null
