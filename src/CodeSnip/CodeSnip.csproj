@@ -3,6 +3,7 @@
 	<PropertyGroup>
 		<OutputType>WinExe</OutputType>
 		<TargetFramework>net10.0-windows</TargetFramework>
+		<RuntimeIdentifier>win-x64</RuntimeIdentifier>
 		<Nullable>enable</Nullable>
 		<ImplicitUsings>enable</ImplicitUsings>
 		<UseWPF>true</UseWPF>
@@ -110,7 +111,8 @@
 		<PackageReference Include="Microsoft.Xaml.Behaviors.Wpf" Version="1.1.135" />
 		<PackageReference Include="CSharpier.Core" Version="1.2.1" />
 		<PackageReference Include="Notifications.Wpf.Core" Version="2.0.1" />
-		<PackageReference Include="System.Data.SQLite.Core" Version="1.0.119" />
+		<PackageReference Include="System.Data.SQLite" Version="2.0.2" />
+		<PackageReference Include="SourceGear.sqlite3" Version="3.50.4.5" />
 	</ItemGroup>
 	<ItemGroup>
 		<Content Include="Tools\**\*.*">
