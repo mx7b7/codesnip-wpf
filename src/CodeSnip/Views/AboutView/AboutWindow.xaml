@@ -20,7 +20,7 @@
             <local:DependencyInfo Name="Dapper" Url="https://github.com/DapperLib/Dapper" LicenseName="Apache 2.0 License" LicenseUrl="https://github.com/DapperLib/Dapper/blob/main/License.txt" />
             <local:DependencyInfo Name="MahApps.Metro" Url="https://github.com/MahApps/MahApps.Metro" LicenseName="MIT License" LicenseUrl="https://github.com/MahApps/MahApps.Metro/blob/develop/LICENSE" />
             <local:DependencyInfo Name="Notifications.Wpf.Core" Url="https://github.com/mjuen/Notifications.Wpf.Core" LicenseName="MIT License" LicenseUrl="https://github.com/mjuen/Notifications.Wpf.Core/blob/master/LICENSE" />
-            <local:DependencyInfo Name="System.Data.SQLite.Core" Url="https://system.data.sqlite.org/" LicenseName="Public Domain" LicenseUrl="https://system.data.sqlite.org/home/doc/trunk/www/copyright.wiki" />
+            <local:DependencyInfo Name="System.Data.SQLite" Url="https://system.data.sqlite.org/" LicenseName="Public Domain" LicenseUrl="https://system.data.sqlite.org/home/doc/trunk/www/copyright.wiki" />
         </x:Array>
 
         <x:Array x:Key="Services" Type="{x:Type local:DependencyInfo}">
