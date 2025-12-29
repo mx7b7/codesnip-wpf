@@ -4,32 +4,52 @@
       "LanguageName": "Ada",
       "LanguageId": "ada",
       "Extension": "adb",
-      "DefaultCompilerId": "",
-      "Compilers": []
+      "DefaultCompilerId": "gnatsnapshot",
+      "Compilers": [
+        {
+          "LocalId": "7cf1bc59-6d72-45e8-aa0d-f0c68c77acdf",
+          "Id": "gnatsnapshot",
+          "Name": "x86-64 gnat (trunk)",
+          "Flags": ""
+        }
+      ]
     },
     {
       "LanguageName": "Assembly",
       "LanguageId": "assembly",
       "Extension": "asm",
-      "DefaultCompilerId": "",
-      "Compilers": []
+      "DefaultCompilerId": "llvmas_trunk",
+      "Compilers": [
+        {
+          "LocalId": "eeea112b-a146-465b-acc7-fe0527e7df91",
+          "Id": "llvmas_trunk",
+          "Name": "x86-64 clang (trunk)",
+          "Flags": ""
+        },
+        {
+          "LocalId": "50af07cc-6111-4f23-86d6-82f81cbfbb38",
+          "Id": "nasm21601",
+          "Name": "NASM 2.16.01",
+          "Flags": ""
+        }
+      ]
     },
     {
       "LanguageName": "C++",
       "LanguageId": "c++",
       "Extension": "cpp",
-      "DefaultCompilerId": "clang2010",
+      "DefaultCompilerId": "clang2110",
       "Compilers": [
         {
           "LocalId": "e93bb952-7bef-40ab-be95-049096fd5dfd",
-          "Id": "clang2010",
-          "Name": "Clang 20.1",
+          "Id": "clang2110",
+          "Name": "clang 21.1",
           "Flags": "-O3 -Wall -std=c++20"
         },
         {
           "LocalId": "7547ac4e-965b-4bfe-9a70-eef25e706ed4",
           "Id": "g151",
-          "Name": "GCC 15.1",
+          "Name": "gcc 15.1",
           "Flags": "-O3 -Wall -std=c++23"
         }
       ]
@@ -38,15 +58,29 @@
       "LanguageName": "Cobol",
       "LanguageId": "cobol",
       "Extension": "cob",
-      "DefaultCompilerId": "",
-      "Compilers": []
+      "DefaultCompilerId": "gcccoboltrunk",
+      "Compilers": [
+        {
+          "LocalId": "c5ce12d9-8a8e-4fca-b5b3-67c9467c3a35",
+          "Id": "gcccoboltrunk",
+          "Name": "GCC (GCC master)",
+          "Flags": ""
+        }
+      ]
     },
     {
       "LanguageName": "Crystal",
       "LanguageId": "crystal",
       "Extension": "cr",
-      "DefaultCompilerId": "",
-      "Compilers": []
+      "DefaultCompilerId": "crystal118",
+      "Compilers": [
+        {
+          "LocalId": "7dcad5d1-de32-453a-bfcf-1b5ae5c10fac",
+          "Id": "crystal118",
+          "Name": "Crystal 1.18.1",
+          "Flags": ""
+        }
+      ]
     },
     {
       "LanguageName": "C#",
@@ -57,7 +91,13 @@
         {
           "LocalId": "5e59bab8-a92a-4170-907d-8fac2a207c1e",
           "Id": "dotnettrunkcsharp",
-          "Name": "NET9",
+          "Name": "C# main",
+          "Flags": ""
+        },
+        {
+          "LocalId": "879ddf75-089e-429c-b6b4-c78f4995f48d",
+          "Id": "dotnettrunkcsharpildasm",
+          "Name": "ILDasm",
           "Flags": ""
         }
       ]
@@ -86,99 +126,209 @@
       "LanguageName": "Dart",
       "LanguageId": "dart",
       "Extension": "erl",
-      "DefaultCompilerId": "",
-      "Compilers": []
+      "DefaultCompilerId": "dartdev",
+      "Compilers": [
+        {
+          "LocalId": "6ae44d73-c54f-4c6d-a7ac-ec338561f082",
+          "Id": "dartdev",
+          "Name": "Dart dev",
+          "Flags": ""
+        }
+      ]
     },
     {
       "LanguageName": "Erlang",
       "LanguageId": "erlang",
       "Extension": "",
-      "DefaultCompilerId": "",
-      "Compilers": []
+      "DefaultCompilerId": "erl2811",
+      "Compilers": [
+        {
+          "LocalId": "3674c31e-9f7c-4443-9188-4ecc1524a0b6",
+          "Id": "erl2811",
+          "Name": "Erlang 28.1.1",
+          "Flags": ""
+        }
+      ]
     },
     {
       "LanguageName": "Fortran",
       "LanguageId": "fortran",
       "Extension": "f90",
-      "DefaultCompilerId": "",
-      "Compilers": []
+      "DefaultCompilerId": "gfortransnapshot",
+      "Compilers": [
+        {
+          "LocalId": "b0ae796e-db42-40fb-8d82-963e8662bfe9",
+          "Id": "gfortransnapshot",
+          "Name": " x86-64 gfortran (trunk)",
+          "Flags": ""
+        }
+      ]
     },
     {
       "LanguageName": "F#",
       "LanguageId": "fsharp",
       "Extension": "fs",
-      "DefaultCompilerId": "",
-      "Compilers": []
+      "DefaultCompilerId": "dotnettrunkfsharp",
+      "Compilers": [
+        {
+          "LocalId": "94dacc38-9230-48af-9da5-119dd42b681c",
+          "Id": "dotnettrunkfsharp",
+          "Name": "F# main",
+          "Flags": ""
+        },
+        {
+          "LocalId": "c504b4dc-afb3-4e42-a813-7e8de3986796",
+          "Id": "dotnettrunkfsharpildasm",
+          "Name": "F# ILDasm",
+          "Flags": ""
+        }
+      ]
     },
     {
       "LanguageName": "Go",
       "LanguageId": "go",
       "Extension": "go",
-      "DefaultCompilerId": "",
-      "Compilers": []
+      "DefaultCompilerId": "gl1242",
+      "Compilers": [
+        {
+          "LocalId": "116bd86a-7420-4b82-bd72-0d48b32b1f48",
+          "Id": "gl1242",
+          "Name": "x86-64 gc 1.24.2",
+          "Flags": ""
+        }
+      ]
     },
     {
       "LanguageName": "Haskell",
       "LanguageId": "haskell",
       "Extension": "hs",
-      "DefaultCompilerId": "",
-      "Compilers": []
+      "DefaultCompilerId": "ghc9122",
+      "Compilers": [
+        {
+          "LocalId": "10e9e5d5-d551-4eaf-8056-2865dfba7457",
+          "Id": "ghc9122",
+          "Name": "x86-64 ghc 9.12.2",
+          "Flags": ""
+        }
+      ]
     },
     {
       "LanguageName": "IL",
       "LanguageId": "il",
       "Extension": "il",
-      "DefaultCompilerId": "",
-      "Compilers": []
+      "DefaultCompilerId": "dotnettrunkilcoreclr",
+      "Compilers": [
+        {
+          "LocalId": "a1b88640-2072-4ec6-9650-3def2b627dee",
+          "Id": "dotnettrunkilcoreclr",
+          "Name": ".NET (main) CoreCLR",
+          "Flags": ""
+        }
+      ]
     },
     {
       "LanguageName": "Java",
       "LanguageId": "java",
       "Extension": "java",
-      "DefaultCompilerId": "",
-      "Compilers": []
+      "DefaultCompilerId": "java2400",
+      "Compilers": [
+        {
+          "LocalId": "c0762552-2394-4bb3-a624-d7c182887bee",
+          "Id": "java2400",
+          "Name": "jdk 24.0.0",
+          "Flags": ""
+        },
+        {
+          "LocalId": "fcad5910-24df-4eba-bce0-831798a922de",
+          "Id": "java8u402b06",
+          "Name": "jdk 8.402.6",
+          "Flags": ""
+        }
+      ]
     },
     {
       "LanguageName": "Javascript",
       "LanguageId": "javascript",
       "Extension": "js",
-      "DefaultCompilerId": "",
-      "Compilers": []
+      "DefaultCompilerId": "v8trunk",
+      "Compilers": [
+        {
+          "LocalId": "70c6b2c2-549f-4908-a903-8880ec66be04",
+          "Id": "v8trunk",
+          "Name": "V8",
+          "Flags": ""
+        }
+      ]
     },
     {
       "LanguageName": "Julia",
       "LanguageId": "julia",
       "Extension": "jl",
-      "DefaultCompilerId": "",
-      "Compilers": []
+      "DefaultCompilerId": "julia_nightly",
+      "Compilers": [
+        {
+          "LocalId": "fde448ea-0bcf-475d-8d45-95c06aa77182",
+          "Id": "julia_nightly",
+          "Name": "Julia nightly",
+          "Flags": ""
+        }
+      ]
     },
     {
       "LanguageName": "Kotlin",
       "LanguageId": "kotlin",
       "Extension": "kt",
-      "DefaultCompilerId": "",
-      "Compilers": []
+      "DefaultCompilerId": "kotlinc2220",
+      "Compilers": [
+        {
+          "LocalId": "2dd5ba8f-5455-4e6f-9efa-fe597a951fdd",
+          "Id": "kotlinc2220",
+          "Name": "kotlinc 2.2.20",
+          "Flags": ""
+        }
+      ]
     },
     {
       "LanguageName": "Nim",
       "LanguageId": "nim",
       "Extension": "nim",
-      "DefaultCompilerId": "",
-      "Compilers": []
+      "DefaultCompilerId": "nim200",
+      "Compilers": [
+        {
+          "LocalId": "8a757adc-d454-4e70-9f92-f49ba2665235",
+          "Id": "nim200",
+          "Name": "nim 2.0.0",
+          "Flags": ""
+        }
+      ]
     },
     {
       "LanguageName": "Objective-C++",
       "LanguageId": "objc++",
       "Extension": "mm",
-      "DefaultCompilerId": "",
-      "Compilers": []
+      "DefaultCompilerId": "objcppgsnapshot",
+      "Compilers": [
+        {
+          "LocalId": "73bc03d6-a12e-4e1f-a808-df45f0699f35",
+          "Id": "objcppgsnapshot",
+          "Name": "x86-64 gcc (trunk)",
+          "Flags": ""
+        }
+      ]
     },
     {
       "LanguageName": "Pascal",
       "LanguageId": "pascal",
       "Extension": "pas",
-      "DefaultCompilerId": "",
-      "Compilers": []
+      "DefaultCompilerId": "fpc322",
+      "Compilers": [
+        {
+          "LocalId": "3d91ce27-5e3a-454b-befb-280952fc1bce",
+          "Id": "fpc322",
+          "Name": "x86-64 fpc 3.2.2",
+          "Flags": ""
+        }
+      ]
     },
     {
       "LanguageName": "Python",
@@ -204,19 +354,32 @@
       "LanguageName": "Ruby",
       "LanguageId": "ruby",
       "Extension": "rb",
-      "DefaultCompilerId": "",
-      "Compilers": []
+      "DefaultCompilerId": "ruby347",
+      "Compilers": [
+        {
+          "LocalId": "a6836bf9-a5fc-441b-a482-b2b4cbdec917",
+          "Id": "ruby347",
+          "Name": "Ruby 3.4.7",
+          "Flags": ""
+        }
+      ]
     },
     {
       "LanguageName": "Rust",
       "LanguageId": "rust",
       "Extension": "rs",
-      "DefaultCompilerId": "r190",
+      "DefaultCompilerId": "r1900",
       "Compilers": [
         {
-          "LocalId": "e8854e4e-c87b-4995-a4fb-b33f65803a6c",
-          "Id": "r190",
-          "Name": "rustc 1.9.0",
+          "LocalId": "76cca259-81e9-4c38-a14c-1687edf718d3",
+          "Id": "r1900",
+          "Name": "rustc 1.90.0",
+          "Flags": "-C opt-level=3"
+        },
+        {
+          "LocalId": "1bc69ad1-877d-4792-bd28-4c25bbd07daf",
+          "Id": "nightly",
+          "Name": "rustc nightly",
           "Flags": ""
         }
       ]
@@ -225,57 +388,113 @@
       "LanguageName": "Scala",
       "LanguageId": "scala",
       "Extension": "scala",
-      "DefaultCompilerId": "",
-      "Compilers": []
+      "DefaultCompilerId": "scalac371",
+      "Compilers": [
+        {
+          "LocalId": "b577ddde-8304-45f5-a720-82437e808202",
+          "Id": "scalac371",
+          "Name": "scalac 3.7.1",
+          "Flags": ""
+        }
+      ]
     },
     {
       "LanguageName": "Swift",
       "LanguageId": "swift",
       "Extension": "swift",
-      "DefaultCompilerId": "",
-      "Compilers": []
+      "DefaultCompilerId": "swiftnightly",
+      "Compilers": [
+        {
+          "LocalId": "cab1660a-212c-4b33-b67b-3d0883572117",
+          "Id": "swiftnightly",
+          "Name": "x86-64 swiftc nightly",
+          "Flags": ""
+        }
+      ]
     },
     {
       "LanguageName": "TypeScript native",
       "LanguageId": "typescript",
       "Extension": "ts",
-      "DefaultCompilerId": "",
-      "Compilers": []
+      "DefaultCompilerId": "tsc_0_0_35_gc",
+      "Compilers": [
+        {
+          "LocalId": "15b5a45d-4564-437b-af45-0dc0e4ef5b3d",
+          "Id": "tsc_0_0_35_gc",
+          "Name": "TypeScript Native Compiler",
+          "Flags": ""
+        }
+      ]
     },
     {
       "LanguageName": "V",
       "LanguageId": "v",
       "Extension": "v",
-      "DefaultCompilerId": "",
-      "Compilers": []
+      "DefaultCompilerId": "v04",
+      "Compilers": [
+        {
+          "LocalId": "3ce793ce-301b-47b5-9a13-7d64ddc1b1af",
+          "Id": "v04",
+          "Name": "V 0.4",
+          "Flags": ""
+        }
+      ]
     },
     {
       "LanguageName": "Vala",
       "LanguageId": "vala",
       "Extension": "vala",
-      "DefaultCompilerId": "",
-      "Compilers": []
+      "DefaultCompilerId": "valac05606",
+      "Compilers": [
+        {
+          "LocalId": "9239bb2a-81d8-49a0-8587-8b6b40faefd0",
+          "Id": "valac05606",
+          "Name": "Vala 0.56.6",
+          "Flags": ""
+        }
+      ]
     },
     {
       "LanguageName": "Visual Basic",
       "LanguageId": "vb",
       "Extension": "vb",
-      "DefaultCompilerId": "",
-      "Compilers": []
+      "DefaultCompilerId": "dotnettrunkvb",
+      "Compilers": [
+        {
+          "LocalId": "0cb6a9d7-b1a0-40f4-99bc-d593c3657de1",
+          "Id": "dotnettrunkvb",
+          "Name": ".NET (main)",
+          "Flags": ""
+        }
+      ]
     },
     {
       "LanguageName": "WASM",
       "LanguageId": "wasm",
       "Extension": "wasm",
-      "DefaultCompilerId": "",
-      "Compilers": []
+      "DefaultCompilerId": "wasmtime2200",
+      "Compilers": [
+        {
+          "LocalId": "fc655cda-3557-4c18-ba67-f0ae629e542c",
+          "Id": "wasmtime2200",
+          "Name": "Wasmtime 22.0.0",
+          "Flags": ""
+        }
+      ]
     },
     {
       "LanguageName": "Zig",
       "LanguageId": "zig",
       "Extension": "zig",
-      "DefaultCompilerId": "",
-      "Compilers": []
+      "DefaultCompilerId": "ztrunk",
+      "Compilers": [
+        {
+          "LocalId": "f4080b75-cc86-4660-b389-88eead1e6a9e",
+          "Id": "ztrunk",
+          "Name": "zig trunk",
+          "Flags": "-O ReleaseSmall"
+        }
+      ]
     }
   ]
 }
