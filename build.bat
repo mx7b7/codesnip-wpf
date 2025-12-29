@@ -8,7 +8,7 @@ echo This script will build the project from the 'src' directory
 echo and create a self-contained, single-file executable
 echo for Windows (x64) in the 'release' directory at the project root.
 echo.
-echo Make sure you have the .NET 8 SDK installed.
+echo Make sure you have the .NET 10 SDK installed.
 echo.
 
 REM Define source and output directories
