@@ -150,9 +150,10 @@ namespace CodeSnip
             };
             switch (tag)
             {
+                case "flyHighlightingEditor":
                 case "flyCodeRunner":
                     flyout.Position = Position.Right;
-                    flyout.Width = 550;
+                    flyout.Width = 600;
                     flyout.IsPinned = true;
                     flyout.Theme = FlyoutTheme.Adapt;
                     flyout.CloseButtonIsCancel = true;
@@ -187,17 +188,6 @@ namespace CodeSnip
                     flyout.MinWidth = 250;
                     flyout.Theme = FlyoutTheme.Adapt;
                     flyout.CloseButtonIsCancel = true;
-                    flyout.BorderBrush = accentColor ?? Brushes.Gray;
-                    flyout.BorderThickness = new Thickness(.5, 0, 0, 0);
-                    break;
-                case "flyHighlightingEditor":
-                    flyout.Width = 600;
-                    flyout.Position = Position.Right;
-                    flyout.Theme = FlyoutTheme.Adapt;
-                    flyout.CloseButtonIsCancel = true;
-                    flyout.IsPinned = true;
-                    flyout.AnimateOpacity = true;
-                    HeaderedControlHelper.SetHeaderMargin(flyout, new Thickness(5, 5, 5, 5));
                     flyout.BorderBrush = accentColor ?? Brushes.Gray;
                     flyout.BorderThickness = new Thickness(.5, 0, 0, 0);
                     break;
