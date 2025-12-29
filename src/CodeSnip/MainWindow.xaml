@@ -361,7 +361,7 @@
                                 <Path Data="{StaticResource ZoomOutMap}" Fill="{DynamicResource MahApps.Brushes.AccentBase}"
                                   Width="20" Height="20" Stretch="Uniform" />
                             </Button>
-                            <Button Margin="2,0,0,0" ToolTip="Search / Replace&#xA;Ctrl+F, Ctrl+H"  Command="{Binding OpenSearchReplaceCommand}" >
+                            <Button Margin="2,0,0,0" ToolTip="Search Ctrl+F&#xA;Replace Ctrl+H"  Command="{Binding OpenSearchReplaceCommand}" >
                                 <Path Data="{StaticResource TextSearch}" Fill="{DynamicResource MahApps.Brushes.AccentBase}"
                                  Width="20" Height="20" Stretch="Uniform" />
                             </Button>
