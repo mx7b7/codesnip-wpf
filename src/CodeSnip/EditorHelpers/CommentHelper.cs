@@ -249,44 +249,65 @@ namespace CodeSnip.EditorHelpers
             var startLine = document.GetLineByOffset(selectionStart);
             var endLine = document.GetLineByOffset(selectionEnd);
 
-            // If selection ends exactly at the beginning of a new line, and it's not a zero-length selection,
-            // do not include that line in the operation.
+            // If selection ends exactly at the beginning of a new line, exclude that line
             if (selectionLength > 0 && endLine.Offset == selectionEnd && endLine.LineNumber > startLine.LineNumber)
             {
                 endLine = endLine.PreviousLine;
             }
 
             int blockStartOffset = startLine.Offset;
-            int blockEndOffset = endLine.Offset + endLine.Length; // End of content on the last line
+            int blockEndOffset = endLine.Offset + endLine.Length;
 
-            // Check if the block is already commented
-            bool isCommented = false;
-            if (document.TextLength >= blockEndOffset && blockEndOffset - blockStartOffset >= startComment.Length + endComment.Length)
-            {
-                string startText = document.GetText(blockStartOffset, startComment.Length);
-                string endText = document.GetText(blockEndOffset - endComment.Length, endComment.Length);
-                if (startText == startComment && endText == endComment)
-                {
-                    isCommented = true;
-                }
-            }
+            // finds comments regardless of leading/trailing whitespace
+            var commentPositions = FindCommentPositions(document, blockStartOffset, blockEndOffset, startComment, endComment);
+
             using (document.RunUpdate())
             {
-                if (isCommented)
+                if (commentPositions.HasValue)
                 {
-                    // --- UNCOMMENT ---
-                    // Remove from the end first to preserve offsets
-                    document.Remove(blockEndOffset - endComment.Length, endComment.Length);
-                    document.Remove(blockStartOffset, startComment.Length);
+                    // UNCOMMENT: remove comment delimiters at detected positions
+                    var (startPos, endPos) = commentPositions.Value;
+
+                    // Remove end delimiter first to preserve offsets
+                    document.Remove(endPos, endComment.Length);
+                    // Remove start delimiter
+                    document.Remove(startPos, startComment.Length);
                 }
                 else
                 {
-                    // --- COMMENT ---
-                    // Insert at the end first to preserve offsets
+                    // COMMENT: wrap selection with comment delimiters
+                    // Insert end first to preserve start offset
                     document.Insert(blockEndOffset, endComment);
                     document.Insert(blockStartOffset, startComment);
                 }
             }
+        }
+
+        /// <summary>
+        /// Finds multi-line comment positions within the block, tolerant to indentation/whitespace.
+        /// Handles cases where formatters add spaces/tabs before/after comment markers.
+        /// </summary>
+        /// <returns>Tuple of (start position, end position) if found, null otherwise</returns>
+        private static (int startPos, int endPos)? FindCommentPositions(TextDocument document,
+            int blockStart, int blockEnd, string startComment, string endComment)
+        {
+            // Search for startComment in first line/block start (up to 100 chars)
+            int maxStartSearch = Math.Min(blockStart + 100, blockEnd - endComment.Length);
+            string startSearch = document.GetText(blockStart, maxStartSearch - blockStart);
+            int startRelPos = startSearch.IndexOf(startComment);
+            if (startRelPos == -1) return null;
+
+            int startPos = blockStart + startRelPos;
+
+            // Search for endComment in last line/block end (last 100 chars, backwards)
+            int endSearchStart = Math.Max(blockEnd - 100, startPos + startComment.Length);
+            string endSearch = document.GetText(endSearchStart, blockEnd - endSearchStart);
+            int endRelPos = endSearch.LastIndexOf(endComment);
+            if (endRelPos == -1) return null;
+
+            int endPos = endSearchStart + endRelPos;
+
+            return (startPos, endPos);
         }
 
         /// <summary>
