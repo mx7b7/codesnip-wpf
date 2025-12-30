@@ -494,7 +494,7 @@
                                           Width="16" Height="16" Stretch="Uniform" />
                                     </MenuItem.Icon>
                                 </MenuItem>
-                                <MenuItem Header="Word Wrap"
+                                <MenuItem Header="Wrap Lines"
                                           IsCheckable="True"         
                                           IsChecked="{Binding PlacementTarget.WordWrap, RelativeSource={RelativeSource AncestorType=ContextMenu}, Mode=TwoWay}">
                                     <MenuItem.Icon>
