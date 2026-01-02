@@ -63,7 +63,7 @@
 - [CommunityToolkit.Mvvm](https://github.com/CommunityToolkit/dotnet)
 - [Dapper](https://github.com/DapperLib/Dapper)
 - [MahApps.Metro](https://github.com/MahApps/MahApps.Metro)
-- [System.Data.SQLite.Core](https://system.data.sqlite.org/)
+- [System.Data.SQLite](https://system.data.sqlite.org/)
 
 ---
 
@@ -86,7 +86,7 @@ CodeSnip integrates various code formatters, which are executed in different way
 - [dfmt](https://github.com/dlang-community/dfmt) – D code formatting. ![Local](https://img.shields.io/badge/Local-green) ![System](https://img.shields.io/badge/System-blue)
 - [gofmt](https://pkg.go.dev/cmd/gofmt) – Go code formatting. ![Local](https://img.shields.io/badge/Local-green) ![System](https://img.shields.io/badge/System-blue)
 - [fantomas](https://github.com/fsprojects/fantomas) – F# code formatting. ![System](https://img.shields.io/badge/System-blue)
-- [pasfmt](https://github.com/integrated-application-development/pasfmt) – Pascal/Delphi code formatting. ![System](https://img.shields.io/badge/System-blue)
+- [pasfmt](https://github.com/integrated-application-development/pasfmt) – Pascal/Delphi code formatting. ![Local](https://img.shields.io/badge/Local-green) ![System](https://img.shields.io/badge/System-blue)
 - [prettier](https://prettier.io/) - Formats JavaScript, TypeScript, JSX, HTML, CSS, JSON, Markdown, and more. ![Local](https://img.shields.io/badge/Local-green) ![System](https://img.shields.io/badge/System-blue)
 - [rustfmt](https://github.com/rust-lang/rustfmt) – Rust code formatting. ![Local](https://img.shields.io/badge/Local-green) ![System](https://img.shields.io/badge/System-blue)
 - [ruff](https://github.com/astral-sh/ruff) – Python code formatting. ![Local](https://img.shields.io/badge/Local-green) ![System](https://img.shields.io/badge/System-blue)
