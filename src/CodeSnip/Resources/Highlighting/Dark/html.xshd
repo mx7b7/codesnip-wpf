@@ -1,26 +1,34 @@
-<?xml version="1.0"?>
-<!-- syntaxdefinition for HTML 2000 by Mike Krueger -->
-<!-- converted to AvalonEdit format by Siegfried Pammer in 2010 -->
+<?xml version="1.0" encoding="utf-8"?>
+<!-- syntaxdefinition for HTML 2026 by mx7b7 -->
 <SyntaxDefinition name="HTML" extensions=".htm;.html" xmlns="http://icsharpcode.net/sharpdevelop/syntaxdefinition/2008">
-	<Color name="Comment"          foreground="#FF57A64A" background="#22AAAAAA" fontStyle="italic" exampleText="&lt;!-- comment --&gt;"/>
-    <Color name="Digits"           foreground="#FFb5cea8" exampleText="&lt;digits&gt;0123456789&lt;/digits&gt;"/>
-    <Color name="ScriptTag"        foreground="#FF00A0FF" exampleText="&lt;script&gt;alert('Hello World!');&lt;/script&gt;"/>
-    <Color name="JavaScriptTag"    foreground="#FF00A0FF" exampleText="&lt;script lang=&quot;JavaScript&quot;&gt;alert('Hello World!');&lt;/script&gt;"/>
-    <Color name="JScriptTag"       foreground="#FF00A0FF" exampleText="&lt;script lang=&quot;JScript&quot;&gt;Response.Write(&quot;Hello World!&quot;);&lt;/script&gt;"/>
-    <Color name="VBScriptTag"      foreground="#FF00A0FF" exampleText="&lt;script lang=&quot;VBScript&quot;&gt;Response.Write(&quot;Hello World!&quot;)&lt;/script&gt;"/>
-    <Color name="UnknownScriptTag" foreground="White"     exampleText="&lt;script la&gt;alert('Hello World!');&lt;/script&gt;"/>
-    <Color name="HtmlTag"          foreground="#FF00A0FF" exampleText="&lt;html&gt;Hello World!/html&gt;"/>
-    <Color name="Tags"             foreground="#FF00A0FF" exampleText="&lt;html&gt;Hello World! &lt;test /&gt;&lt;/html&gt;"/>
-    <Color name="Attributes"       foreground="#FF92caf4" exampleText="&lt;html background='green'&gt;Hello World! &lt;test /&gt;&lt;/html&gt;"/>
-    <Color name="Slash"            foreground="White"     exampleText="&lt;html background='green'&gt;Hello World! &lt;test /&gt;&lt;/html&gt;"/>
-    <Color name="Assignment"       foreground="White"     exampleText="&lt;html background='green'&gt;Hello World! &lt;test /&gt;&lt;/html&gt;"/>
-    <Color name="String"           foreground="#FFD69D85" exampleText="&lt;html background='green'&gt;Hello World! &lt;test /&gt;&lt;/html&gt;"/>
-    <Color name="EntityReference"  foreground="#FF92caf4" fontStyle="italic" exampleText="&lt;html background='green'&gt;Hello&amp;nbsp;World! &lt;test /&gt;&lt;/html&gt;"/>
-    <Color name="Entities"         foreground="#FF92caf4" fontStyle="italic" exampleText="&lt;html foo='bar' background='green'&gt;Hello&amp;nbsp;World! &lt;test /&gt;&lt;/html&gt;"/>
-    <Color name="UnknownAttribute" foreground="#FF92caf4" />
-	
+	<Color name="Comment" foreground="#FF57A64A" background="#22AAAAAA" fontStyle="italic" exampleText="&lt;!-- comment --&gt;" />
+	<Color name="Digits" foreground="#FFB5CEA8" exampleText="&lt;digits&gt;0123456789&lt;/digits&gt;" />
+	<Color name="ScriptTag" foreground="#FF00A0FF" exampleText="&lt;script&gt;alert('Hello World!');&lt;/script&gt;" />
+	<Color name="JavaScriptTag" foreground="#FF00A0FF" exampleText="&lt;script lang=&quot;JavaScript&quot;&gt;alert('Hello World!');&lt;/script&gt;" />
+	<Color name="JScriptTag" foreground="#FF00A0FF" exampleText="&lt;script lang=&quot;JScript&quot;&gt;Response.Write(&quot;Hello World!&quot;);&lt;/script&gt;" />
+	<Color name="VBScriptTag" foreground="#FF00A0FF" exampleText="&lt;script lang=&quot;VBScript&quot;&gt;Response.Write(&quot;Hello World!&quot;)&lt;/script&gt;" />
+	<Color name="UnknownScriptTag" foreground="#FFFFFFFF" exampleText="&lt;script la&gt;alert('Hello World!');&lt;/script&gt;" />
+	<Color name="HtmlTag" foreground="#FF00A0FF" exampleText="&lt;html&gt;Hello World!/html&gt;" />
+	<Color name="Tags" foreground="#FF00A0FF" exampleText="&lt;html&gt;Hello World! &lt;test /&gt;&lt;/html&gt;" />
+	<Color name="Attributes" foreground="#FF92CAF4" exampleText="&lt;html background='green'&gt;Hello World! &lt;test /&gt;&lt;/html&gt;" />
+	<Color name="Slash" foreground="#FFFFFFFF" exampleText="&lt;html background='green'&gt;Hello World! &lt;test /&gt;&lt;/html&gt;" />
+	<Color name="Assignment" foreground="#FFFFFFFF" exampleText="&lt;html background='green'&gt;Hello World! &lt;test /&gt;&lt;/html&gt;" />
+	<Color name="String" foreground="#FFD69D85" exampleText="&lt;html background='green'&gt;Hello World! &lt;test /&gt;&lt;/html&gt;" />
+	<Color name="EntityReference" foreground="#FF92CAF4" fontStyle="italic" exampleText="&lt;html background='green'&gt;Hello&amp;nbsp;World! &lt;test /&gt;&lt;/html&gt;" />
+	<Color name="Entities" foreground="#FF92CAF4" fontStyle="italic" exampleText="&lt;html foo='bar' background='green'&gt;Hello&amp;nbsp;World! &lt;test /&gt;&lt;/html&gt;" />
+	<Color name="UnknownAttribute" foreground="#FF92CAF4" />
+	<Color name="JavaScriptDigits" foreground="#FFB5CEA8" exampleText="3.14" />
+	<Color name="JavaScriptComment" foreground="#FF57A64A" exampleText="// comment" />
+	<Color name="JavaScriptString" foreground="#FFD69D85" />
+	<Color name="JavaScriptStringInterpolation" foreground="#FFFD971F" />
+	<Color name="JavaScriptCharacter" foreground="#FFD69D85" exampleText="var char = 'a';" />
+	<Color name="JavaScriptRegex" foreground="#FFE6DB74" exampleText="/abc/m" />
+	<Color name="JavaScriptKeyWords" foreground="#FF00A0FF" fontWeight="bold" />
+	<Color name="JavaScriptIntrinsics" foreground="#FF92CAF4" />
+	<Color name="JavaScriptLiterals" foreground="#FFB5CEA8" />
+	<Color name="JavaScriptGlobalFunctions" foreground="#FF66D9EF" exampleText="escape(myString);" />
+	<Color name="JavaScriptFunctions" foreground="#FF569CD6" />
 	<Property name="Extension" value="html" />
-	
 	<RuleSet ignoreCase="true">
 		<Span color="Comment" multiline="true">
 			<Begin>&lt;!--</Begin>
@@ -61,8 +69,131 @@
 		<Rule color="Digits">\b0[xX][0-9a-fA-F]+|(\b\d+(\.[0-9]+)?|\.[0-9]+)([eE][+-]?[0-9]+)?</Rule>
 	</RuleSet>
 	<RuleSet name="JavaScriptSet">
-		<Import ruleSet="JavaScript/" />
-		<Rule color="Digits">\b0[xX][0-9a-fA-F]+|(\b\d+(\.[0-9]+)?|\.[0-9]+)([eE][+-]?[0-9]+)?</Rule>
+		<Keywords color="JavaScriptKeyWords">
+			<Word>async</Word>
+			<Word>await</Word>
+			<Word>break</Word>
+			<Word>continue</Word>
+			<Word>delete</Word>
+			<Word>else</Word>
+			<Word>for</Word>
+			<Word>function</Word>
+			<Word>if</Word>
+			<Word>in</Word>
+			<Word>let</Word>
+			<Word>new</Word>
+			<Word>return</Word>
+			<Word>this</Word>
+			<Word>typeof</Word>
+			<Word>var</Word>
+			<Word>void</Word>
+			<Word>while</Word>
+			<Word>with</Word>
+			<Word>abstract</Word>
+			<Word>boolean</Word>
+			<Word>byte</Word>
+			<Word>case</Word>
+			<Word>catch</Word>
+			<Word>char</Word>
+			<Word>class</Word>
+			<Word>const</Word>
+			<Word>debugger</Word>
+			<Word>default</Word>
+			<Word>do</Word>
+			<Word>double</Word>
+			<Word>enum</Word>
+			<Word>export</Word>
+			<Word>extends</Word>
+			<Word>final</Word>
+			<Word>finally</Word>
+			<Word>float</Word>
+			<Word>goto</Word>
+			<Word>implements</Word>
+			<Word>import</Word>
+			<Word>instanceof</Word>
+			<Word>int</Word>
+			<Word>interface</Word>
+			<Word>long</Word>
+			<Word>native</Word>
+			<Word>of</Word>
+			<Word>package</Word>
+			<Word>private</Word>
+			<Word>protected</Word>
+			<Word>public</Word>
+			<Word>short</Word>
+			<Word>static</Word>
+			<Word>super</Word>
+			<Word>switch</Word>
+			<Word>synchronized</Word>
+			<Word>throw</Word>
+			<Word>throws</Word>
+			<Word>transient</Word>
+			<Word>try</Word>
+			<Word>volatile</Word>
+			<Word>yield</Word>
+		</Keywords>
+		<Keywords color="JavaScriptIntrinsics">
+			<Word>Array</Word>
+			<Word>Boolean</Word>
+			<Word>Date</Word>
+			<Word>Function</Word>
+			<Word>Global</Word>
+			<Word>Math</Word>
+			<Word>Number</Word>
+			<Word>Object</Word>
+			<Word>RegExp</Word>
+			<Word>String</Word>
+		</Keywords>
+		<Keywords color="JavaScriptLiterals">
+			<Word>false</Word>
+			<Word>null</Word>
+			<Word>true</Word>
+			<Word>NaN</Word>
+			<Word>Infinity</Word>
+		</Keywords>
+		<Keywords color="JavaScriptGlobalFunctions">
+			<Word>eval</Word>
+			<Word>parseInt</Word>
+			<Word>parseFloat</Word>
+			<Word>escape</Word>
+			<Word>unescape</Word>
+			<Word>isNaN</Word>
+			<Word>isFinite</Word>
+		</Keywords>
+		<Span color="JavaScriptComment">
+			<Begin>//</Begin>
+		</Span>
+		<Span color="JavaScriptComment" multiline="true">
+			<Begin>/\*</Begin>
+			<End>\*/</End>
+		</Span>
+		<Span color="JavaScriptRegex">
+			<!-- <Begin>(?&lt;!([})\]\w]+\s*))/</Begin> -->
+			<Begin>/</Begin>
+			<End>/[gimsuy]*</End>
+		</Span>
+		<Span color="JavaScriptString" multiline="true">
+			<Begin>"</Begin>
+			<End>"</End>
+			<RuleSet>
+				<Span begin="\\" end="." />
+			</RuleSet>
+		</Span>
+		<!-- `... ${Interpolation} ...` -->
+		<Span color="JavaScriptString" begin="`" end="`" multiline="true">
+			<RuleSet>
+				<Span color="JavaScriptStringInterpolation" begin="\$\{" end="\}"></Span>
+			</RuleSet>
+		</Span>
+		<Span color="JavaScriptCharacter">
+			<Begin>'</Begin>
+			<End>'</End>
+			<RuleSet>
+				<Span begin="\\" end="." />
+			</RuleSet>
+		</Span>
+		<Rule color="JavaScriptDigits">\b0[xX][0-9a-fA-F]+|(\b\d+(\.[0-9]+)?|\.[0-9]+)([eE][+-]?[0-9]+)?</Rule>
+		<Rule color="JavaScriptFunctions">[\d\w_]+(?=(\s*\())</Rule>
 	</RuleSet>
 	<RuleSet name="EntityReferenceSet" ignoreCase="false">
 		<Keywords color="Entities">
