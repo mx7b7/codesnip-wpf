@@ -448,6 +448,10 @@ namespace CodeSnip.Views.HighlightingEditorView
                     var name = colorElem.Attribute("name")?.Value;
                     if (name != null && overridesDict.TryGetValue(name, out var colorOverride))
                     {
+                        // Preserve and re-apply 'exampleText' to ensure it's last.
+                        var exampleTextAttr = colorElem.Attribute("exampleText");
+                        string? exampleTextValue = exampleTextAttr?.Value;
+                        exampleTextAttr?.Remove();
                         // Helper to set or remove attribute
                         void SetOrRemove(string attrName, string? value)
                         {
@@ -461,9 +465,13 @@ namespace CodeSnip.Views.HighlightingEditorView
                         SetOrRemove("background", colorOverride.Background?.ToString());
                         SetOrRemove("fontWeight", colorOverride.FontWeight == FontWeights.Normal ? null : colorOverride.FontWeight.ToString().ToLowerInvariant());
                         SetOrRemove("fontStyle", colorOverride.FontStyle == FontStyles.Normal ? null : colorOverride.FontStyle.ToString().ToLowerInvariant());
+                        SetOrRemove("fontSize", colorOverride.FontSize?.ToString());
                         SetOrRemove("underline", colorOverride.Underline ? "true" : null);
                         SetOrRemove("strikethrough", colorOverride.Strikethrough ? "true" : null);
-                        SetOrRemove("fontSize", colorOverride.FontSize?.ToString());
+                        if (exampleTextValue != null)
+                        {
+                            colorElem.SetAttributeValue("exampleText", exampleTextValue);// Re-add 'exampleText' at the end if it existed
+                        }
                     }
                 }
             }
