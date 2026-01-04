@@ -41,7 +41,7 @@ namespace CodeSnip.Services
         /// <param name="skipAsm">If true, skips assembly generation and only executes the code.</param>
         /// <returns>A tuple containing stdout, stderr, the generated assembly (if requested), and any error message.</returns>
         public async Task<(string Stdout, string Stderr, string? Asm, string? ErrorMessage)> CompileAndRunAsync(
-    string sourceCode, string compilerId, string lang, string userArgs = "", bool skipAsm = true)
+                           string sourceCode, string compilerId, string lang, string userArgs = "", bool skipAsm = true)
         {
             try
             {
@@ -169,8 +169,14 @@ namespace CodeSnip.Services
         /// <param name="compilerId">The ID of the compiler to use.</param>
         /// <param name="compilerOptions">Command-line arguments for the compiler.</param>
         /// <returns>A tuple containing the generated short URL and any error message.</returns>
+        /// <remarks>
+        /// <b>Note:</b> This method uses the Godbolt shortener API.<br/>
+        /// Only supports compiler flags.<br/>
+        /// API does not support execution or filters.<br/>
+        /// See <see cref="CompileAndRunAsync"/> for advanced features.
+        /// </remarks>
         public async Task<(string link, string? errorMessage)> GetShortLinkAsync(
-    string language, string sourceCode, string compilerId, string compilerOptions)
+                           string language, string sourceCode, string compilerId, string compilerOptions)
         {
             if (string.IsNullOrWhiteSpace(language))
                 return ("", "Parameter 'language' cannot be empty.");
@@ -181,19 +187,19 @@ namespace CodeSnip.Services
 
             var root = new Root
             {
-                Sessions = new List<Session>
-                {
+                Sessions =
+                [
                     new Session
                     {
                         Id = 1,
                         Language = language,
                         Source = sourceCode,
-                        Compilers = new List<Compiler>
-                        {
+                        Compilers =
+                        [
                             new Compiler { Id = compilerId, Options = compilerOptions ?? string.Empty }
-                        }
+                        ]
                     }
-                }
+                ]
             };
 
             var url = "https://godbolt.org/api/shortener";

@@ -188,7 +188,8 @@
                                      Grid.Column="3"
                                      BorderThickness=".5"
                                      IsEnabled="{Binding IsFilteringEnabled, Mode=TwoWay}"
-                                     Text="{Binding FilterText, UpdateSourceTrigger=PropertyChanged}" />
+                                     Text="{Binding FilterText, UpdateSourceTrigger=PropertyChanged}"
+                                     ToolTip="Filter by multiple words: word1 word2... (partial matches work)"/>
                         </Grid>
                     </Expander>
                     <Expander Header="Snippets" Grid.Row="1" IsExpanded="{Binding IsSnippetsExpanded, Mode=TwoWay}" 
