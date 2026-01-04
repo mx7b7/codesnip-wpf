@@ -304,8 +304,8 @@ namespace CodeSnip.Views.CodeRunnerView
 
             compilerExtension = compilerExtension.TrimStart('.').ToLowerInvariant();
 
-            string toolsDir = Path.Combine(AppContext.BaseDirectory, "Tools\\Interpreters");
-            
+            string toolsDir = Path.Combine(AppContext.BaseDirectory, "Tools", "Interpreters");
+
             if (!Interpreters.TryGetValue(compilerExtension, out var info))
                 return (null, null);
 
