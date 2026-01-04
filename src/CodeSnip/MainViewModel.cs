@@ -997,6 +997,7 @@ namespace CodeSnip
             _isInternalTextUpdate = false;
 
             UpdateWindowTitle();
+            StatusMessage = "Ready";
         }
 
         private void UpdateWindowTitle()
