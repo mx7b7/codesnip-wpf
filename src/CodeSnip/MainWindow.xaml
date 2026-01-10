@@ -36,13 +36,12 @@
         Closing="MetroWindow_Closing" >
     <!--WindowButtonCommandsOverlayBehavior="Never"-->
     <mah:MetroWindow.Resources>
-
         <helpers:InverseBooleanConverter x:Key="InverseBooleanConverter" />
         <helpers:EnumToBooleanConverter x:Key="EnumToBooleanConverter" />
         <helpers:BoolToVisibilityConverter x:Key="BoolToVisibilityConverter" />
         <helpers:StringToFontWeightConverter x:Key="StringToFontWeightConverter" />
         <helpers:LanguageToVisibilityConverter x:Key="LanguageToVisibilityConverter" />
-
+        <!-- ........................................................................... -->
         <DataTemplate DataType="{x:Type settingsView:SettingsViewModel}">
             <settingsView:SettingsView />
         </DataTemplate>
@@ -61,7 +60,48 @@
         <DataTemplate DataType="{x:Type highlightingEditorView:HighlightingEditorViewModel}">
             <highlightingEditorView:HighlightingEditorView />
         </DataTemplate>
+        <!-- Custom button style with opacity changes on hover -->
+        <Style x:Key="CustomChromelessButton" TargetType="Button" BasedOn="{StaticResource MahApps.Styles.Button.Chromeless}">
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="Button">
+                        <Grid Background="{TemplateBinding Background}">
+                            <ContentPresenter Name="PART_ContentPresenter"
+                              Margin="10,0,10,0"
+                              HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}"
+                              VerticalAlignment="{TemplateBinding VerticalContentAlignment}"
+                              Opacity=".75"
+                              RecognizesAccessKey="{TemplateBinding mah:ControlsHelper.RecognizesAccessKey}"
+                              SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}" />
+                        </Grid>
+                        <ControlTemplate.Triggers>
+                            <Trigger Property="IsMouseOver" Value="True">
+                                <Setter TargetName="PART_ContentPresenter" Property="Opacity" Value=".5" />
+                            </Trigger>
+                            <Trigger Property="IsMouseOver" Value="False">
+                                <Setter TargetName="PART_ContentPresenter" Property="Opacity" Value="1" />
+                            </Trigger>
+                            <Trigger Property="IsEnabled" Value="False">
+                                <Setter Property="Foreground" Value="#ADADAD" />
+                            </Trigger>
+                        </ControlTemplate.Triggers>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+        </Style>
+        <!-- Custom button style for WindowCommands suitable for Clean theme (light/dark titlebar), for accent titlebar use default style. -->
+        <Style x:Key="CustomTitlebarButtonStyle" TargetType="Button" BasedOn="{StaticResource MahApps.Styles.Button.MetroWindow.Base}">
+            <Setter Property="Opacity" Value="1" />
+            <Setter Property="Margin" Value="8,0,8,0" />
+            <Style.Triggers>
+                <Trigger Property="IsMouseOver" Value="True">
+                    <Setter Property="Opacity" Value="0.5" />
+                    <Setter Property="Background" Value="Transparent"/>
+                </Trigger>
+            </Style.Triggers>
+        </Style>
     </mah:MetroWindow.Resources>
+
     <mah:MetroWindow.InputBindings>
         <!-- F1 : Open About dialog -->
         <KeyBinding Key="F1" Command="{Binding RelativeSource={RelativeSource AncestorType=Window}, Path=OpenAboutCommand}" />
@@ -102,21 +142,11 @@
     <mah:MetroWindow.RightWindowCommands>
         <mah:WindowCommands>
             <mah:WindowCommands.Resources>
-                <!-- Custom button style for WindowCommands suitable for Clean theme (light/dark titlebar), for accent titlebar use default style. -->
-                <Style x:Key="CustomTitlebarButtonStyle" TargetType="Button" BasedOn="{StaticResource MahApps.Styles.Button.MetroWindow.Base}">
-                    <Setter Property="Opacity" Value="1" />
-                    <Setter Property="Margin" Value="8,0,8,0" />
-                    <Style.Triggers>
-                        <Trigger Property="IsMouseOver" Value="True">
-                            <Setter Property="Opacity" Value="0.5" />
-                            <Setter Property="Background" Value="Transparent"/>
-                        </Trigger>
-                    </Style.Triggers>
-                </Style>
+
             </mah:WindowCommands.Resources>
             <Button Style="{StaticResource CustomTitlebarButtonStyle}" Click="About_Click" ToolTip="About">
                 <Path Data="{StaticResource InfoCircle}" Fill="{DynamicResource MahApps.Brushes.Accent}"
-                      Width="20" Height="20" Stretch="Uniform">
+                      Width="22" Height="22" Stretch="Uniform">
                     <Path.LayoutTransform>
                         <ScaleTransform ScaleY="-1"/>
                     </Path.LayoutTransform>
@@ -124,14 +154,14 @@
             </Button>
             <Button Style="{StaticResource CustomTitlebarButtonStyle}" ToolTip="Theme switch" Click="ThemeSwitch_Click">
                 <Path Data="{StaticResource ThemeLightDark}" Fill="{DynamicResource MahApps.Brushes.Accent}"
-                      Width="20" Height="20" Stretch="Uniform" >
+                      Width="22" Height="22" Stretch="Uniform" >
                 </Path>
             </Button>
             <Button Style="{StaticResource CustomTitlebarButtonStyle}" 
                     Command="{Binding PickColorCommand}"
                     ToolTip="Pick accent color">
                 <Path Data="{StaticResource ColorPaletteiOS}" Fill="{DynamicResource MahApps.Brushes.Accent}"
-                      Width="20" Height="20" Stretch="Uniform" />
+                      Width="22" Height="22" Stretch="Uniform" />
             </Button>
             <StackPanel>
                 <mah:ColorPicker SelectedColor="{Binding SelectedAccentColor, Mode=TwoWay}" 
@@ -161,7 +191,7 @@
                         <!-- Snippets expander -->
                     </Grid.RowDefinitions>
                     <Expander Header="Search" Grid.Row="0" IsExpanded="{Binding IsSearchExpanded, Mode=TwoWay}"
-                               mah:HeaderedControlHelper.HeaderFontWeight="Bold" BorderThickness="1,2,2,1" >
+                               mah:HeaderedControlHelper.HeaderFontWeight="Bold" mah:HeaderedControlHelper.HeaderFontSize="14" BorderThickness="1,2,2,1" >
                         <Expander.Resources>
                             <Style TargetType="{x:Type Expander}" BasedOn="{StaticResource SimpleExpander}">
                                 <Setter Property="mah:HeaderedControlHelper.HeaderForeground" Value="{DynamicResource MahApps.Brushes.AccentBase}" />
@@ -196,7 +226,8 @@
                         </Grid>
                     </Expander>
                     <Expander Header="Snippets" Grid.Row="1" IsExpanded="{Binding IsSnippetsExpanded, Mode=TwoWay}" 
-                              mah:HeaderedControlHelper.HeaderFontWeight="Bold" BorderThickness="1,1,2,2" Padding="0">
+                              mah:HeaderedControlHelper.HeaderFontWeight="Bold" mah:HeaderedControlHelper.HeaderFontSize="14"
+                              BorderThickness="1,1,2,2" Padding="0">
                         <Expander.Resources>
                             <Style TargetType="{x:Type Expander}" BasedOn="{StaticResource SimpleExpander}">
                                 <Setter Property="mah:HeaderedControlHelper.HeaderForeground" Value="{DynamicResource MahApps.Brushes.AccentBase}" />
@@ -313,89 +344,105 @@
                     </Grid.RowDefinitions>
                     <ToolBarTray Grid.Row="0">
                         <ToolBar x:Name="toolbarMain" Height="40">
-                            <Button Command="{Binding TogglePanelCommand}" ToolTip="Collapse/Expand">
+                            <Button Command="{Binding TogglePanelCommand}" ToolTip="Collapse/Expand"
+                                    Style="{StaticResource CustomChromelessButton}">
                                 <Path Data="{Binding OpenCloseIcon}" Fill="{DynamicResource MahApps.Brushes.AccentBase}"
-                                 Width="20" Height="20" Stretch="Uniform" />
+                                      Width="22" Height="22" Stretch="Uniform" />
                             </Button>
-                            <Button  Command="{Binding SaveCodeCommand}" Margin="10,0,0,0" ToolTip="Save snippet&#xA;Ctrl+S">
+                            <Button  Command="{Binding SaveCodeCommand}" ToolTip="Save snippet&#xA;Ctrl+S"
+                                     Style="{StaticResource CustomChromelessButton}">
                                 <Path Data="{StaticResource Save}" Fill="{DynamicResource MahApps.Brushes.AccentBase}"
-                             Width="20" Height="20" Stretch="Uniform" />
+                                      Width="22" Height="22" Stretch="Uniform" />
                             </Button>
-                            <Button  Command="{Binding AddSnippetCommand}" Margin="2,0,0,0" ToolTip="Add snippet&#xA;Ctrl+Shift+A">
+                            <Button  Command="{Binding AddSnippetCommand}" ToolTip="Add snippet&#xA;Ctrl+Shift+A"
+                                     Style="{StaticResource CustomChromelessButton}">
                                 <Path Data="{StaticResource FileAdd}" Fill="{DynamicResource MahApps.Brushes.AccentBase}"
-                                  Width="20" Height="20" Stretch="Uniform" />
+                                      Width="22" Height="22" Stretch="Uniform" />
                             </Button>
-                            <Button  Command="{Binding EditSnippetCommand}" Margin="2,0,0,0" ToolTip="Edit snippet&#xA;Ctrl+Shift+E">
+                            <Button  Command="{Binding EditSnippetCommand}" ToolTip="Edit snippet&#xA;Ctrl+Shift+E"
+                                     Style="{StaticResource CustomChromelessButton}">
                                 <Path Data="{StaticResource FileEdit}" Fill="{DynamicResource MahApps.Brushes.AccentBase}"
-                                 Width="20" Height="20" Stretch="Uniform" />
+                                      Width="22" Height="22" Stretch="Uniform" />
                             </Button>
-                            <Button  Command="{Binding DeleteSnippetCommand}" Margin="2,0,0,0" ToolTip="Delete snippet&#xA;Ctrl+Shift+D">
+                            <Button  Command="{Binding DeleteSnippetCommand}" ToolTip="Delete snippet&#xA;Ctrl+Shift+D"
+                                     Style="{StaticResource CustomChromelessButton}">
                                 <Path Data="{StaticResource Trash}" Fill="{DynamicResource MahApps.Brushes.AccentBase}"
-                                 Width="20" Height="20" Stretch="Uniform" />
+                                      Width="22" Height="22" Stretch="Uniform" />
                             </Button>
-                            <Button x:Name="btnLangCat"  Margin="2,0,0,0" Command="{Binding OpenLanguageCategoryCommand}"
-                                  ToolTip="Language/Category edit&#xA;Ctrl+Shift+L"
-                                  IsEnabled="{Binding IsLoadSnippetEnabled, Converter={StaticResource InverseBooleanConverter}}">
+                            <Button x:Name="btnLangCat" Command="{Binding OpenLanguageCategoryCommand}"
+                                    Style="{StaticResource CustomChromelessButton}"
+                                    ToolTip="Language/Category edit&#xA;Ctrl+Shift+L"
+                                    IsEnabled="{Binding IsLoadSnippetEnabled, Converter={StaticResource InverseBooleanConverter}}">
                                 <Path Data="{StaticResource CategoryEdit}" Fill="{DynamicResource MahApps.Brushes.AccentBase}"
-                                  Width="20" Height="20" Stretch="Uniform">
+                                      Width="22" Height="22" Stretch="Uniform">
                                     <Path.LayoutTransform>
                                         <ScaleTransform ScaleY="-1"/>
                                     </Path.LayoutTransform>
                                 </Path>
                             </Button>
-                            <Button Margin="2,0,0,0" ToolTip="Load snippets" IsEnabled="{Binding IsLoadSnippetEnabled}"
+                            <Button ToolTip="Load snippets" IsEnabled="{Binding IsLoadSnippetEnabled}"
+                                    Style="{StaticResource CustomChromelessButton}"
                                 Command="{Binding LoadSnippetsDatabaseCommand}">
                                 <Path Data="{StaticResource DatabaseRefresh}" Fill="{DynamicResource MahApps.Brushes.AccentBase}"
-                                  Width="20" Height="20" Stretch="Uniform" />
+                                      Width="22" Height="22" Stretch="Uniform" />
                             </Button>
                             <Separator />
                             <Button ToolTip="Run&#xA;Ctrl+Shift+R"
-                                Command="{Binding OpenCodeRunnerViewCommand}" >
+                                    Style="{StaticResource CustomChromelessButton}"
+                                    Command="{Binding OpenCodeRunnerViewCommand}" >
                                 <Path Data="{StaticResource DebugStart}" Fill="{DynamicResource MahApps.Brushes.AccentBase}"
-                                  Width="20" Height="20" Stretch="Uniform" />
+                                      Width="22" Height="22" Stretch="Uniform" />
                             </Button>
-                            <Button Margin="2,0,0,0" ToolTip="Compiler explorer settings" 
+                            <Button ToolTip="Compiler explorer settings" 
+                                    Style="{StaticResource CustomChromelessButton}"
                                 Command="{Binding OpenCompilerSettingsCommand}">
                                 <Path Data="{StaticResource CompilerExplorer}" Fill="{DynamicResource MahApps.Brushes.AccentBase}"
-                                  Width="20" Height="20" Stretch="Uniform" />
+                                      Width="22" Height="22" Stretch="Uniform" />
                             </Button>
                             <Separator />
-                            <Button Command="{Binding IncreaseFontSizeCommand}" ToolTip="Zoom +">
+                            <Button Command="{Binding IncreaseFontSizeCommand}" ToolTip="Zoom +"
+                                    Style="{StaticResource CustomChromelessButton}">
                                 <Path Data="{StaticResource ZoomIn}" Fill="{DynamicResource MahApps.Brushes.AccentBase}"
                                   Width="20" Height="20" Stretch="Uniform" />
                             </Button>
-                            <Button  Margin="2,0,0,0" Command="{Binding DecreaseFontSizeCommand}" ToolTip="Zoom -">
+                            <Button Command="{Binding DecreaseFontSizeCommand}" ToolTip="Zoom -"
+                                    Style="{StaticResource CustomChromelessButton}">
                                 <Path Data="{StaticResource ZoomOut}" Fill="{DynamicResource MahApps.Brushes.AccentBase}"
-                                  Width="20" Height="20" Stretch="Uniform" />
+                                      Width="22" Height="22" Stretch="Uniform" />
                             </Button>
-                            <Button  Margin="2,0,0,0" Command="{Binding ResetFontSizeCommand}" ToolTip="Reset Zoom">
+                            <Button Command="{Binding ResetFontSizeCommand}" ToolTip="Reset Zoom"
+                                    Style="{StaticResource CustomChromelessButton}">
                                 <Path Data="{StaticResource ZoomOutMap}" Fill="{DynamicResource MahApps.Brushes.AccentBase}"
-                                  Width="20" Height="20" Stretch="Uniform">
+                                      Width="22" Height="22" Stretch="Uniform">
                                     <Path.LayoutTransform>
                                         <ScaleTransform ScaleY="-1"/>
                                     </Path.LayoutTransform>
                                 </Path>
                             </Button>
-                            <Button Margin="2,0,0,0" ToolTip="Search Ctrl+F&#xA;Replace Ctrl+H"  Command="{Binding OpenSearchReplaceCommand}" >
+                            <Button ToolTip="Search Ctrl+F&#xA;Replace Ctrl+H"  Command="{Binding OpenSearchReplaceCommand}"
+                                    Style="{StaticResource CustomChromelessButton}">
                                 <Path Data="{StaticResource TextSearch}" Fill="{DynamicResource MahApps.Brushes.AccentBase}"
-                                 Width="20" Height="20" Stretch="Uniform" />
+                                      Width="22" Height="22" Stretch="Uniform" />
                             </Button>
-                            <Button Margin="2,0,0,0" ToolTip="Format code&#xA;Ctrl+Shift+F" Click="FormatAll_Click">
+                            <Button ToolTip="Format code&#xA;Ctrl+Shift+F" Click="FormatAll_Click"
+                                    Style="{StaticResource CustomChromelessButton}">
                                 <Path Data="{StaticResource FormatText}" Fill="{DynamicResource MahApps.Brushes.AccentBase}"
-                                  Width="20" Height="20" Stretch="Uniform" />
+                                      Width="22" Height="22" Stretch="Uniform" />
                             </Button>
-                            <ToggleButton Margin="2,0,0,0" ToolTip="Disable intendation" IsChecked="{Binding DisableIntendation, Mode=TwoWay}">
+                            <ToggleButton ToolTip="Disable intendation" IsChecked="{Binding DisableIntendation, Mode=TwoWay}">
                                 <Path Data="{StaticResource FormatIndentDecrease}" Fill="{DynamicResource MahApps.Brushes.AccentBase}"
-                                  Width="20" Height="20" Stretch="Uniform" />
+                                      Width="22" Height="22" Stretch="Uniform" />
                             </ToggleButton>
                             <Separator />
-                            <Button ToolTip="Highlighting Editor&#xA;Ctrl+Shift+H" Command="{Binding OpenHighlightingEditorCommand}">
+                            <Button ToolTip="Highlighting Editor&#xA;Ctrl+Shift+H" Command="{Binding OpenHighlightingEditorCommand}"
+                                    Style="{StaticResource CustomChromelessButton}">
                                 <Path Data="{StaticResource ColorPaletteiOS}" Fill="{DynamicResource MahApps.Brushes.AccentBase}"
-                                 Width="20" Height="20" Stretch="Uniform" />
+                                      Width="22" Height="22" Stretch="Uniform" />
                             </Button>
-                            <Button Margin="2,0,0,0" ToolTip="Settings&#xA;Ctrl+Shift+P" Command="{Binding OpenSettingsCommand}">
+                            <Button ToolTip="Settings&#xA;Ctrl+Shift+P" Command="{Binding OpenSettingsCommand}"
+                                    Style="{StaticResource CustomChromelessButton}">
                                 <Path Data="{StaticResource GearBold}" Fill="{DynamicResource MahApps.Brushes.AccentBase}"
-                                  Width="20" Height="20" Stretch="Uniform" />
+                                      Width="22" Height="22" Stretch="Uniform" />
                             </Button>
                         </ToolBar>
                     </ToolBarTray>
