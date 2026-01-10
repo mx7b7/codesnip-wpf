@@ -210,7 +210,7 @@
                                  ItemsSource="{Binding Languages}"
                                  SelectedItemChanged="TreeView_SelectedItemChanged">
                                 <TreeView.Resources>
-                                    <Geometry x:Key="LanguageIcon">M9,15h6m-3,3V12M14,2v6h6M14,2H6A2,2 0 0 0 4,4v16a2,2 0 0 0 2,2h12a2,2 0 0 0 2,-2V8Z</Geometry>
+                                    <PathGeometry x:Key="LanguageIcon">M15.25,13H17.25L16.75,15H14.75L15.25,13M22,8V18A2,2 0 0,1 20,20H4A2,2 0 0,1 2,18V6C2,4.89 2.89,4 4,4H10L12,6H20A2,2 0 0,1 22,8M20,12H18.5L19,10H18L17.5,12H15.5L16,10H15L14.5,12H13V13H14.25L13.75,15H12V16H13.5L13,18H14L14.5,16H16.5L16,18H17L17.5,16H19V15H17.75L18.25,13H20V12Z</PathGeometry>
                                     <Geometry x:Key="CategoryIcon">M3,6h18v2H3V6zm0,5h18v2H3v-2zm0,5h18v2H3v-2z</Geometry>
                                     <Geometry x:Key="SnippetIcon">M5,4h14a2,2 0 0 1 2,2v12a2,2 0 0 1 -2,2H5a2,2 0 0 1 -2,-2V6a2,2 0 0 1 2,-2zm0,2v12h14V6H5zm2,2h10v2H7V8zm0,4h6v2H7v-2z</Geometry>
                                     <Style TargetType="{x:Type ScrollBar}" BasedOn="{StaticResource TreeViewScrollBar}" />
@@ -226,8 +226,8 @@
                                 <TreeView.ItemTemplate>
                                     <HierarchicalDataTemplate ItemsSource="{Binding Categories}">
                                         <StackPanel Orientation="Horizontal" Margin="2">
-                                            <Path Data="{StaticResource LanguageIcon}" Fill="{DynamicResource MahApps.Brushes.AccentBase}" Width="16" Height="16" Margin="0,0,5,0"/>
-                                            <TextBlock Text="{Binding Name}" 
+                                            <Path Data="{StaticResource LanguageIcon}" Fill="{DynamicResource MahApps.Brushes.AccentBase}" Width="24" Height="24" Margin="0,0,5,0"/>
+                                            <TextBlock Text="{Binding Name}" VerticalAlignment="Center"
                                                        FontSize="{Binding DataContext.LanguageFontSize, RelativeSource={RelativeSource AncestorType=TreeView}}"
                                                        FontWeight="{Binding DataContext.LanguageFontWeight, RelativeSource={RelativeSource AncestorType=TreeView}, Converter={StaticResource StringToFontWeightConverter}}"/>
                                         </StackPanel>
@@ -235,8 +235,8 @@
                                         <HierarchicalDataTemplate.ItemTemplate>
                                             <HierarchicalDataTemplate ItemsSource="{Binding Snippets}">
                                                 <StackPanel Orientation="Horizontal" Margin="2">
-                                                    <Path Data="{StaticResource CategoryIcon}" Fill="{DynamicResource MahApps.Brushes.AccentBase}" Width="14" Height="14" Margin="0,0,5,0"/>
-                                                    <TextBlock Text="{Binding Name}" 
+                                                    <Path Data="{StaticResource CategoryIcon}" Fill="{DynamicResource MahApps.Brushes.AccentBase}" Width="22" Height="22" Margin="0,0,5,0"/>
+                                                    <TextBlock Text="{Binding Name}" VerticalAlignment="Center"
                                                                FontSize="{Binding DataContext.CategoryFontSize, RelativeSource={RelativeSource AncestorType=TreeView}}"
                                                                FontWeight="{Binding DataContext.CategoryFontWeight, RelativeSource={RelativeSource AncestorType=TreeView}, Converter={StaticResource StringToFontWeightConverter}}"/>
                                                 </StackPanel>
@@ -244,8 +244,8 @@
                                                 <HierarchicalDataTemplate.ItemTemplate>
                                                     <DataTemplate>
                                                         <StackPanel Orientation="Horizontal" Margin="2">
-                                                            <Path x:Name="SnippetIconPath" Data="{StaticResource SnippetIcon}" Fill="{DynamicResource MahApps.Brushes.AccentBase}" Width="12" Height="12" Margin="0,0,5,0"/>
-                                                            <TextBlock Text="{Binding Title}" 
+                                                            <Path x:Name="SnippetIconPath" Data="{StaticResource SnippetIcon}" Fill="{DynamicResource MahApps.Brushes.AccentBase}" Width="22" Height="22" Margin="0,0,5,0"/>
+                                                            <TextBlock Text="{Binding Title}" VerticalAlignment="Center"
                                                                        FontSize="{Binding DataContext.SnippetFontSize, RelativeSource={RelativeSource AncestorType=TreeView}}"
                                                                        FontWeight="{Binding DataContext.SnippetFontWeight, RelativeSource={RelativeSource AncestorType=TreeView}, Converter={StaticResource StringToFontWeightConverter}}"/>
                                                         </StackPanel>
