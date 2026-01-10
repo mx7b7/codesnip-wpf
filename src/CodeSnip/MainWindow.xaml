@@ -117,6 +117,9 @@
             <Button Style="{StaticResource CustomTitlebarButtonStyle}" Click="About_Click" ToolTip="About">
                 <Path Data="{StaticResource InfoCircle}" Fill="{DynamicResource MahApps.Brushes.Accent}"
                       Width="20" Height="20" Stretch="Uniform">
+                    <Path.LayoutTransform>
+                        <ScaleTransform ScaleY="-1"/>
+                    </Path.LayoutTransform>
                 </Path>
             </Button>
             <Button Style="{StaticResource CustomTitlebarButtonStyle}" ToolTip="Theme switch" Click="ThemeSwitch_Click">
@@ -332,9 +335,13 @@
                             </Button>
                             <Button x:Name="btnLangCat"  Margin="2,0,0,0" Command="{Binding OpenLanguageCategoryCommand}"
                                   ToolTip="Language/Category edit&#xA;Ctrl+Shift+L"
-                                  IsEnabled="{Binding IsLoadSnippetEnabled, Converter={StaticResource InverseBooleanConverter}}" >
+                                  IsEnabled="{Binding IsLoadSnippetEnabled, Converter={StaticResource InverseBooleanConverter}}">
                                 <Path Data="{StaticResource CategoryEdit}" Fill="{DynamicResource MahApps.Brushes.AccentBase}"
-                                  Width="20" Height="20" Stretch="Uniform" />
+                                  Width="20" Height="20" Stretch="Uniform">
+                                    <Path.LayoutTransform>
+                                        <ScaleTransform ScaleY="-1"/>
+                                    </Path.LayoutTransform>
+                                </Path>
                             </Button>
                             <Button Margin="2,0,0,0" ToolTip="Load snippets" IsEnabled="{Binding IsLoadSnippetEnabled}"
                                 Command="{Binding LoadSnippetsDatabaseCommand}">
@@ -361,9 +368,13 @@
                                 <Path Data="{StaticResource ZoomOut}" Fill="{DynamicResource MahApps.Brushes.AccentBase}"
                                   Width="20" Height="20" Stretch="Uniform" />
                             </Button>
-                            <Button  Margin="2,0,0,0" Command="{Binding ResetFontSizeCommand}" ToolTip="Reset zoom">
+                            <Button  Margin="2,0,0,0" Command="{Binding ResetFontSizeCommand}" ToolTip="Reset Zoom">
                                 <Path Data="{StaticResource ZoomOutMap}" Fill="{DynamicResource MahApps.Brushes.AccentBase}"
-                                  Width="20" Height="20" Stretch="Uniform" />
+                                  Width="20" Height="20" Stretch="Uniform">
+                                    <Path.LayoutTransform>
+                                        <ScaleTransform ScaleY="-1"/>
+                                    </Path.LayoutTransform>
+                                </Path>
                             </Button>
                             <Button Margin="2,0,0,0" ToolTip="Search Ctrl+F&#xA;Replace Ctrl+H"  Command="{Binding OpenSearchReplaceCommand}" >
                                 <Path Data="{StaticResource TextSearch}" Fill="{DynamicResource MahApps.Brushes.AccentBase}"
@@ -386,7 +397,6 @@
                                 <Path Data="{StaticResource GearBold}" Fill="{DynamicResource MahApps.Brushes.AccentBase}"
                                   Width="20" Height="20" Stretch="Uniform" />
                             </Button>
-
                         </ToolBar>
                     </ToolBarTray>
                     <avalonEdit:TextEditor
