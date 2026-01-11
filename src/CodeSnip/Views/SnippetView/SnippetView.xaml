@@ -24,7 +24,7 @@
         </Grid.RowDefinitions>
         <!-- Blok 1 -->
         <StackPanel Grid.Row="0">
-            <TextBlock Text="Language:"/>
+            <TextBlock Text="Language:" FontWeight="Medium"/>
             <!-- ..... -->
             <ComboBox 
                 ItemsSource="{Binding Languages}" 
@@ -37,7 +37,7 @@
              IsReadOnly="True"
               Visibility="{Binding IsEditMode, Converter={StaticResource BoolToVisibilityConverter}}">
             </TextBox>
-            <TextBlock Text="Category:" Margin="0,10,0,0"/>
+            <TextBlock Text="Category:" FontWeight="Medium" Margin="0,10,0,0"/>
             <!-- ..... -->
             <ComboBox 
                 ItemsSource="{Binding AvailableCategories}" 
@@ -61,7 +61,7 @@
                 <RowDefinition Height="Auto"/>
                 <!-- txtTag -->
             </Grid.RowDefinitions>
-            <TextBlock Text="Title:" Margin="0,10,0,0" Grid.Row="0"/>
+            <TextBlock Text="Title:" FontWeight="Medium" Margin="0,10,0,0" Grid.Row="0"/>
             <TextBox 
                    Text="{Binding Title, 
                    UpdateSourceTrigger=PropertyChanged, 
@@ -72,10 +72,10 @@
                     <KeyBinding Key="Enter" Command="{Binding SaveCommand}" />
                 </TextBox.InputBindings>
             </TextBox>
-            <TextBlock Text="Description:" Margin="0,10,0,0" Grid.Row="2"/>
+            <TextBlock Text="Description:" FontWeight="Medium" Margin="0,10,0,0" Grid.Row="2"/>
             <TextBox x:Name="txtDescription" VerticalAlignment="Stretch" Grid.Row="3" Margin="0,0,0,10" TextWrapping="Wrap"
                      Text="{Binding Snippet.Description}"/>
-            <TextBlock Text="Tags:" Margin="0,10,0,0" Grid.Row="4"/>
+            <TextBlock Text="Tags:" FontWeight="Medium" Margin="0,10,0,0" Grid.Row="4"/>
             <TextBox x:Name="txtTag" Grid.Row="5" ToolTip="Tags can be separated by space, period, comma, colon, semicolon, hyphen"
                      Text="{Binding Snippet.Tag}"/>
         </Grid>

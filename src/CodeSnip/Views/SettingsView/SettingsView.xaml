@@ -26,14 +26,14 @@
                             <Style TargetType="{x:Type GroupBox}" BasedOn="{StaticResource MahApps.Styles.GroupBox}"/>
                         </GroupBox.Resources>
                         <StackPanel>
-                            <TextBlock Text="Base theme:" />
+                            <TextBlock Text="Base theme:" FontWeight="Medium"/>
                             <StackPanel Orientation="Horizontal" Margin="0,5,0,10">
                                 <RadioButton Content="Light"
                                              IsChecked="{Binding IsDarkTheme, Converter={StaticResource InverseBooleanConverter}, Mode=TwoWay}" />
                                 <RadioButton Content="Dark"
                                              IsChecked="{Binding IsDarkTheme, Mode=TwoWay}" Margin="30,0,0,0" />
                             </StackPanel>
-                            <TextBlock Text="Accent:" Margin="0,0,0,5"/>
+                            <TextBlock Text="Accent:" FontWeight="Medium" Margin="0,0,0,5"/>
                             <ComboBox ItemsSource="{Binding AccentColors}"
                                       SelectedItem="{Binding SelectedAccent, Mode=TwoWay}" >
                                 <ComboBox.ItemTemplate>
@@ -56,30 +56,30 @@
                             <Style TargetType="{x:Type GroupBox}" BasedOn="{StaticResource MahApps.Styles.GroupBox}"/>
                         </GroupBox.Resources>
                         <StackPanel>
-                            <TextBlock Text="Language Font Size:" Margin="0,5,0,0" />
+                            <TextBlock Text="Language Font Size:" FontWeight="Medium" Margin="0,5,0,0" />
                             <mah:NumericUpDown Maximum="30" Minimum="8" NumericInputMode="Numbers" InterceptManualEnter="False"
                                              ParsingNumberStyle="Integer" TextAlignment="Center" 
                                              Value="{Binding LanguageFontSize, Mode=TwoWay}" />
 
-                            <TextBlock Text="Language Font Weight:" Margin="0,8,0,0" />
+                            <TextBlock Text="Language Font Weight:" FontWeight="Medium" Margin="0,8,0,0" />
                             <ComboBox ItemsSource="{Binding FontWeights}" 
                                       SelectedItem="{Binding LanguageFontWeight, Mode=TwoWay}" HorizontalContentAlignment="Center" />
 
-                            <TextBlock Text="Category Font Size:" Margin="0,8,0,0" />
+                            <TextBlock Text="Category Font Size:" FontWeight="Medium" Margin="0,8,0,0" />
                             <mah:NumericUpDown Maximum="30" Minimum="8" NumericInputMode="Numbers" InterceptManualEnter="False"
                                              ParsingNumberStyle="Integer" TextAlignment="Center" 
                                              Value="{Binding CategoryFontSize, Mode=TwoWay}" />
 
-                            <TextBlock Text="Category Font Weight:" Margin="0,8,0,0" />
+                            <TextBlock Text="Category Font Weight:" FontWeight="Medium" Margin="0,8,0,0" />
                             <ComboBox ItemsSource="{Binding FontWeights}" 
                                       SelectedItem="{Binding CategoryFontWeight, Mode=TwoWay}" HorizontalContentAlignment="Center" />
 
-                            <TextBlock Text="Snippet Font Size:" Margin="0,8,0,0" />
+                            <TextBlock Text="Snippet Font Size:" FontWeight="Medium" Margin="0,8,0,0" />
                             <mah:NumericUpDown Maximum="30" Minimum="8" NumericInputMode="Numbers" InterceptManualEnter="False"
                                              ParsingNumberStyle="Integer" TextAlignment="Center" 
                                              Value="{Binding SnippetFontSize, Mode=TwoWay}" />
 
-                            <TextBlock Text="Snippet Font Weight:" Margin="0,8,0,0" />
+                            <TextBlock Text="Snippet Font Weight:" FontWeight="Medium" Margin="0,8,0,0" />
                             <ComboBox ItemsSource="{Binding FontWeights}" 
                                       SelectedItem="{Binding SnippetFontWeight, Mode=TwoWay}" HorizontalContentAlignment="Center" />
                         </StackPanel>
@@ -130,17 +130,17 @@
                               IsChecked="{Binding HighlightLine, Mode=TwoWay}" />
                             <CheckBox Content="Show line numbers" Margin="0,8,0,0"
                               IsChecked="{Binding ShowLineNumbers, Mode=TwoWay}" />
-                            <TextBlock Text="Indentation size:" Margin="0,8,0,0"/>
+                            <TextBlock Text="Indentation size:" FontWeight="Medium" Margin="0,8,0,0"/>
                             <mah:NumericUpDown Maximum="10" Minimum="1" NumericInputMode="Numbers"
                                      ParsingNumberStyle="Integer" TextAlignment="Center"
                                      Value="{Binding IntendationSize, Mode=TwoWay}" />
 
-                            <TextBlock Text="Font:" Margin="0,8,0,0"/>
+                            <TextBlock Text="Font:" FontWeight="Medium" Margin="0,8,0,0"/>
                             <ComboBox ItemsSource="{Binding SystemFonts}" 
                               SelectedValue="{Binding EditorFontFamily, Mode=TwoWay}" 
                               SelectedValuePath="Source" HorizontalContentAlignment="Center"/>
 
-                            <TextBlock Text="Font size:" Margin="0,8,0,0"/>
+                            <TextBlock Text="Font size:" FontWeight="Medium" Margin="0,8,0,0"/>
                             <mah:NumericUpDown Maximum="30" Minimum="8" NumericInputMode="Numbers"
                                      ParsingNumberStyle="Integer" TextAlignment="Center"
                                      Value="{Binding EditorFontSize, Mode=TwoWay}" />

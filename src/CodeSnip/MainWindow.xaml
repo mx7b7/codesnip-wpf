@@ -146,7 +146,7 @@
             </mah:WindowCommands.Resources>
             <Button Style="{StaticResource CustomTitlebarButtonStyle}" Click="About_Click" ToolTip="About">
                 <Path Data="{StaticResource InfoCircle}" Fill="{DynamicResource MahApps.Brushes.Accent}"
-                      Width="22" Height="22" Stretch="Uniform">
+                      Width="20" Height="20" Stretch="Uniform">
                     <Path.LayoutTransform>
                         <ScaleTransform ScaleY="-1"/>
                     </Path.LayoutTransform>
@@ -154,14 +154,14 @@
             </Button>
             <Button Style="{StaticResource CustomTitlebarButtonStyle}" ToolTip="Theme switch" Click="ThemeSwitch_Click">
                 <Path Data="{StaticResource ThemeLightDark}" Fill="{DynamicResource MahApps.Brushes.Accent}"
-                      Width="22" Height="22" Stretch="Uniform" >
+                      Width="20" Height="20" Stretch="Uniform" >
                 </Path>
             </Button>
             <Button Style="{StaticResource CustomTitlebarButtonStyle}" 
                     Command="{Binding PickColorCommand}"
                     ToolTip="Pick accent color">
                 <Path Data="{StaticResource ColorPaletteiOS}" Fill="{DynamicResource MahApps.Brushes.Accent}"
-                      Width="22" Height="22" Stretch="Uniform" />
+                      Width="20" Height="20" Stretch="Uniform" />
             </Button>
             <StackPanel>
                 <mah:ColorPicker SelectedColor="{Binding SelectedAccentColor, Mode=TwoWay}" 
@@ -278,7 +278,15 @@
                                                 <HierarchicalDataTemplate.ItemTemplate>
                                                     <DataTemplate>
                                                         <StackPanel Orientation="Horizontal" Margin="2">
-                                                            <Path x:Name="SnippetIconPath" Data="{StaticResource SnippetIcon}" Fill="{DynamicResource MahApps.Brushes.AccentBase}" Width="22" Height="22" Margin="0,0,5,0"/>
+                                                            <Path x:Name="SnippetIconPath" Data="{StaticResource SnippetIcon}" Fill="{DynamicResource MahApps.Brushes.AccentBase}" Width="22" Height="22" Margin="0,0,5,0">
+                                                                <Path.RenderTransform>
+                                                                    <TransformGroup>
+                                                                        <ScaleTransform ScaleY="0.8" ScaleX="1.0"/>
+                                                                        <TranslateTransform Y="1.5"/>
+
+                                                                    </TransformGroup>
+                                                                </Path.RenderTransform>
+                                                            </Path>
                                                             <TextBlock Text="{Binding Title}" VerticalAlignment="Center"
                                                                        FontSize="{Binding DataContext.SnippetFontSize, RelativeSource={RelativeSource AncestorType=TreeView}}"
                                                                        FontWeight="{Binding DataContext.SnippetFontWeight, RelativeSource={RelativeSource AncestorType=TreeView}, Converter={StaticResource StringToFontWeightConverter}}"/>

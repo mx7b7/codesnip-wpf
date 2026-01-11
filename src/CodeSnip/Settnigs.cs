@@ -9,9 +9,9 @@ namespace CodeSnip
         public string LastSnippet { get; set; } = "9:22:3";
         public int X { get; set; } = 50;
         public int Y { get; set; } = 50;
-        public int Height { get; set; } = 760;
+        public int Height { get; set; } = 732;
         public int Width { get; set; } = 1200;
-        public int PanelLength { get; set; } = 350;
+        public int PanelLength { get; set; } = 300;
         public bool ShowEmptyLanguages { get; set; } = false;
         public bool ShowEmptyCategories { get; set; } = false;
         public bool IsSearchExpanded { get; set; } = false;
@@ -44,10 +44,10 @@ namespace CodeSnip
     public class TreeViewFontSettings
     {
         public int LanguageFontSize { get; set; } = 14;
-        public string LanguageFontWeight { get; set; } = "SemiBold";
-        public int CategoryFontSize { get; set; } = 13;
+        public string LanguageFontWeight { get; set; } = "Bold";
+        public int CategoryFontSize { get; set; } = 14;
         public string CategoryFontWeight { get; set; } = "Medium";
-        public int SnippetFontSize { get; set; } = 13;
+        public int SnippetFontSize { get; set; } = 14;
         public string SnippetFontWeight { get; set; } = "Light";
     }
 
