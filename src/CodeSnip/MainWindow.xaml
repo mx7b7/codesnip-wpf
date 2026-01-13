@@ -191,7 +191,7 @@
                         <!-- Snippets expander -->
                     </Grid.RowDefinitions>
                     <Expander Header="Search" Grid.Row="0" IsExpanded="{Binding IsSearchExpanded, Mode=TwoWay}"
-                               mah:HeaderedControlHelper.HeaderFontWeight="Bold" mah:HeaderedControlHelper.HeaderFontSize="14" BorderThickness="1,2,2,1" >
+                               mah:HeaderedControlHelper.HeaderFontWeight="Medium" mah:HeaderedControlHelper.HeaderFontSize="14" BorderThickness="1,2,2,1" >
                         <Expander.Resources>
                             <Style TargetType="{x:Type Expander}" BasedOn="{StaticResource SimpleExpander}">
                                 <Setter Property="mah:HeaderedControlHelper.HeaderForeground" Value="{DynamicResource MahApps.Brushes.AccentBase}" />
@@ -226,7 +226,7 @@
                         </Grid>
                     </Expander>
                     <Expander Header="Snippets" Grid.Row="1" IsExpanded="{Binding IsSnippetsExpanded, Mode=TwoWay}" 
-                              mah:HeaderedControlHelper.HeaderFontWeight="Bold" mah:HeaderedControlHelper.HeaderFontSize="14"
+                              mah:HeaderedControlHelper.HeaderFontWeight="Medium" mah:HeaderedControlHelper.HeaderFontSize="14"
                               BorderThickness="1,1,2,2" Padding="0">
                         <Expander.Resources>
                             <Style TargetType="{x:Type Expander}" BasedOn="{StaticResource SimpleExpander}">
