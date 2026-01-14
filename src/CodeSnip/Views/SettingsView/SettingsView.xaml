@@ -169,7 +169,8 @@
                     <mah:Badged Badge="{Binding IntegrityCheckBadge}" BadgePlacementMode="TopRight"  Margin="0,20,20,20"
                                 BadgeBackground="{Binding IntegrityCheckBadge, Converter={StaticResource ResultToBrushConverter}}">
                         <!--<Button Content="Integrity Check" Command="{Binding IntegrityCheckCommand}" Width="150" />-->
-                        <Button Command="{Binding IntegrityCheckCommand}" Width="150" Height="30" IsTabStop="False">
+                        <Button Command="{Binding IntegrityCheckCommand}" Width="150" Height="30" IsTabStop="False"
+                                ToolTip=" Verifies database file integrity and consistency">
                             <StackPanel Orientation="Horizontal" VerticalAlignment="Center" HorizontalAlignment="Center" >
                                 <Path Data="{StaticResource DatabaseCheck}" Fill="{DynamicResource MahApps.Brushes.AccentBase}"
                                       Width="16" Height="16" Stretch="Uniform" />
@@ -181,7 +182,8 @@
                     <mah:Badged Badge="{Binding VacuumBadge}" BadgePlacementMode="TopRight" Margin="0,0,20,20"
                                 BadgeBackground="{Binding VacuumBadge, Converter={StaticResource ResultToBrushConverter}}">
                         <!--<Button Content="Vacuum Database" Command="{Binding VacuumCommand}" Width="150" />-->
-                        <Button Command="{Binding VacuumCommand}" Width="150" Height="30" IsTabStop="False">
+                        <Button Command="{Binding VacuumCommand}" Width="150" Height="30" IsTabStop="False"
+                                ToolTip="Rebuilds database, removes unused space, optimizes performance">
                             <StackPanel Orientation="Horizontal" VerticalAlignment="Center" HorizontalAlignment="Center" >
                                 <Path Data="{StaticResource DatabaseFillGear}" Fill="{DynamicResource MahApps.Brushes.AccentBase}"
                                  Width="16" Height="16" Stretch="Uniform" />
@@ -194,7 +196,8 @@
                     <mah:Badged Badge="{Binding ReindexBadge}" BadgePlacementMode="TopRight" Margin="0,0,20,20"
                                 BadgeBackground="{Binding ReindexBadge, Converter={StaticResource ResultToBrushConverter}}">
                         <!--<Button Content="Reindex Database" Command="{Binding ReindexCommand}" Width="150" />-->
-                        <Button Command="{Binding ReindexCommand}" Width="150" Height="30" IsTabStop="False">
+                        <Button Command="{Binding ReindexCommand}" Width="150" Height="30" IsTabStop="False"
+                                ToolTip="Rebuilds all indexes for optimal query performance">
                             <StackPanel Orientation="Horizontal" VerticalAlignment="Center" HorizontalAlignment="Center" >
                                 <Path Data="{StaticResource DatabaseFillGear}" Fill="{DynamicResource MahApps.Brushes.AccentBase}"
                                   Width="16" Height="16" Stretch="Uniform" />
@@ -207,7 +210,8 @@
                     <mah:Badged Badge="{Binding BackupBadge}" BadgePlacementMode="TopRight" Margin="0,0,20,20"
                         BadgeBackground="{Binding BackupBadge, Converter={StaticResource ResultToBrushConverter}}">
                         <!--<Button Content="Backup Database" Command="{Binding BackupCommand}" Width="150" />-->
-                        <Button Command="{Binding BackupCommand}" Width="150" Height="30" IsTabStop="False">
+                        <Button Command="{Binding BackupCommand}" Width="150" Height="30" IsTabStop="False"
+                                ToolTip="Creates full backup copy of the SQLite database file">
                             <StackPanel Orientation="Horizontal" VerticalAlignment="Center" HorizontalAlignment="Center" >
                                 <Path Data="{StaticResource DatabaseExport}" Fill="{DynamicResource MahApps.Brushes.AccentBase}"
                                   Width="16" Height="16" Stretch="Uniform" />
