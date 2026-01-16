@@ -768,10 +768,11 @@ namespace CodeSnip
                 EditingSnippet = null;
 
                 StatusMessage = $"Snippet '{snippetTitle}' deleted successfully.";
+                UpdateWindowTitle();
             }
             catch (Exception ex)
             {
-                StatusMessage = $"Error deleting snippet '{SelectedSnippet?.Title}': {ex.Message}";
+                StatusMessage = $"Error deleting snippet '{SelectedSnippet?.Title}'";
                 await DialogService.Instance.ShowMessageAsync("Delete Error", $"Failed to delete snippet '{SelectedSnippet?.Title}'.\n\nDetails: {ex.Message}");
             }
         }
