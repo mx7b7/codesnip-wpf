@@ -105,6 +105,8 @@
     <mah:MetroWindow.InputBindings>
         <!-- F1 : Open About dialog -->
         <KeyBinding Key="F1" Command="{Binding RelativeSource={RelativeSource AncestorType=Window}, Path=OpenAboutCommand}" />
+        <!-- F2 : Theme switch -->
+        <KeyBinding Key="F2" Command="{Binding RelativeSource={RelativeSource AncestorType=Window}, Path=ThemeSwitchCommand}" />
         <!-- Ctrl + S : Save snippet code -->
         <KeyBinding Key="S" Modifiers="Ctrl" Command="{Binding SaveCodeCommand}"/>
         <!-- Ctrll+Shift + A : Add new snippet -->
@@ -151,7 +153,7 @@
             <mah:WindowCommands.Resources>
 
             </mah:WindowCommands.Resources>
-            <Button Style="{StaticResource CustomTitlebarButtonStyle}" Click="About_Click" ToolTip="About">
+            <Button Style="{StaticResource CustomTitlebarButtonStyle}" Click="About_Click" ToolTip="About&#xA;F1">
                 <Path Data="{StaticResource InfoCircle}" Fill="{DynamicResource MahApps.Brushes.Accent}"
                       Width="20" Height="20" Stretch="Uniform">
                     <Path.LayoutTransform>
@@ -159,7 +161,7 @@
                     </Path.LayoutTransform>
                 </Path>
             </Button>
-            <Button Style="{StaticResource CustomTitlebarButtonStyle}" ToolTip="Theme switch" Click="ThemeSwitch_Click">
+            <Button Style="{StaticResource CustomTitlebarButtonStyle}" ToolTip="Theme switch&#xA;F2" Click="ThemeSwitch_Click">
                 <Path Data="{StaticResource ThemeLightDark}" Fill="{DynamicResource MahApps.Brushes.Accent}"
                       Width="20" Height="20" Stretch="Uniform" >
                 </Path>

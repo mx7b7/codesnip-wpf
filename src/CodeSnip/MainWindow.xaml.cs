@@ -47,6 +47,7 @@ namespace CodeSnip
 
 
         public ICommand OpenAboutCommand { get; }
+        public ICommand ThemeSwitchCommand { get; }
 
         // Languages with C-style braces {} that use CSharpIndentationStrategy and BraceFoldingStrategy
         private static readonly HashSet<string> braceStyleLanguages =
@@ -74,6 +75,7 @@ namespace CodeSnip
             ToggleCommentSelectionCommand = new RelayCommand(_ => ToggleCommentSelection_Click(this, new RoutedEventArgs()));
             OpenAboutCommand = new RelayCommand(_ => About_Click(this, new RoutedEventArgs()));
             FormatAllCommand = new RelayCommand(_ => FormatAll_Click(this, new RoutedEventArgs()));
+            ThemeSwitchCommand = new RelayCommand(_ => ThemeSwitch_Click(this, new RoutedEventArgs()));
 
             mainViewModel.PropertyChanged += MainViewModel_PropertyChanged;
 
