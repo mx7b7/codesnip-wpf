@@ -800,10 +800,13 @@ namespace CodeSnip
         [RelayCommand]
         private void OpenSearchReplace()
         {
-            if ((_searchReplacePanel != null && _searchReplacePanel.IsClosed))
-            {
+            if (_searchReplacePanel is null)
+                return;
+
+            if (_searchReplacePanel.IsClosed)
                 _searchReplacePanel.Open();
-            }
+            else
+                _searchReplacePanel.Close();
         }
 
         #endregion
