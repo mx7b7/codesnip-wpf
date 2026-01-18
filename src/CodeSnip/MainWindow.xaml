@@ -137,6 +137,13 @@
         <!-- Ctrl + Shift + F : Format All  -->
         <KeyBinding Key="F" Modifiers="Ctrl+Shift"
                 Command="{Binding RelativeSource={RelativeSource AncestorType=Window}, Path=FormatAllCommand}" />
+
+        <!-- Zoom In -->
+        <KeyBinding Key="OemPlus" Modifiers="Ctrl" Command="{Binding IncreaseFontSizeCommand}"/>
+        <!-- Zoom Out -->
+        <KeyBinding Key="OemMinus" Modifiers="Ctrl" Command="{Binding DecreaseFontSizeCommand}"/>
+        <!-- Reset Zoom -->
+        <KeyBinding Key="D0" Modifiers="Ctrl" Command="{Binding ResetFontSizeCommand}"/>
     </mah:MetroWindow.InputBindings>
 
     <mah:MetroWindow.RightWindowCommands>
@@ -437,17 +444,17 @@
                                       Width="22" Height="22" Stretch="Uniform" />
                             </Button>
                             <Separator />
-                            <Button Command="{Binding IncreaseFontSizeCommand}" ToolTip="Zoom +"
+                            <Button Command="{Binding IncreaseFontSizeCommand}" ToolTip="Zoom In&#xA;Ctrl++"
                                     Style="{StaticResource CustomChromelessButton}">
                                 <Path Data="{StaticResource ZoomIn}" Fill="{DynamicResource MahApps.Brushes.AccentBase}"
                                   Width="20" Height="20" Stretch="Uniform" />
                             </Button>
-                            <Button Command="{Binding DecreaseFontSizeCommand}" ToolTip="Zoom -"
+                            <Button Command="{Binding DecreaseFontSizeCommand}" ToolTip="Zoom Out&#xA;Ctrl+-"
                                     Style="{StaticResource CustomChromelessButton}">
                                 <Path Data="{StaticResource ZoomOut}" Fill="{DynamicResource MahApps.Brushes.AccentBase}"
                                       Width="22" Height="22" Stretch="Uniform" />
                             </Button>
-                            <Button Command="{Binding ResetFontSizeCommand}" ToolTip="Reset Zoom"
+                            <Button Command="{Binding ResetFontSizeCommand}" ToolTip="Reset Zoom&#xA;Ctrl+0"
                                     Style="{StaticResource CustomChromelessButton}">
                                 <Path Data="{StaticResource ZoomOutMap}" Fill="{DynamicResource MahApps.Brushes.AccentBase}"
                                       Width="22" Height="22" Stretch="Uniform">
