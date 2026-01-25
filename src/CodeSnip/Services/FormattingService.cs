@@ -215,6 +215,19 @@ namespace CodeSnip.Services
         {
             string baseDirectory = AppContext.BaseDirectory;
             string toolsDirectory = Path.Combine(baseDirectory, "Tools");
+
+            try
+            {
+                if (!Directory.Exists(toolsDirectory))
+                {
+                    Directory.CreateDirectory(toolsDirectory);
+                }
+            }
+            catch (Exception ex)
+            {
+                return (false, null, $"Failed to create Tools directory: {ex.Message}");
+            }
+
             string localToolPath = Path.Combine(toolsDirectory, executableName);
 
             string executableToRun = localToolPath;
