@@ -887,6 +887,7 @@ namespace CodeSnip
 
             snip.IsSelected = true;
             SelectedSnippet = snip;
+            SelectedCategory = cat; // SlelectedCategory is needed for AddSnippet command
         }
 
         public string SaveSelectedSnippetState()
