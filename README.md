@@ -5,9 +5,9 @@
 ![.NET](https://img.shields.io/badge/.NET-10.0-blue)
 ![Platform](https://img.shields.io/badge/Platform-Windows-lightgrey)
 ![License: MIT](https://img.shields.io/badge/License-MIT-green)
-![Status](https://img.shields.io/badge/Status-Active-success)
+![Status](https://img.shields.io/badge/Status-Maintenance-yellowgreen)
 
-## ⬇️Download
+## ⬇️ Download
 
 [![GitHub Release](https://img.shields.io/github/v/release/mx7b7/codesnip-wpf?sort=semver&display_name=tag)](https://github.com/mx7b7/codesnip-wpf/releases/latest)
 
@@ -142,4 +142,7 @@ A convenient batch script is included in the root directory to create a portable
 ## 📜 License
 
 This project is licensed under the MIT License - see the [LICENSE](LICENSE) file for details.
+
+---
+**Tags**: snippet manager, code runner, WPF, AvalonEdit, syntax highlighting, C#, SQLite, Compiler Explorer, Godbolt, code snippets, developer tools, .NET desktop, Windows app, XSHD editor
 
